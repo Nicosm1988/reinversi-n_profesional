@@ -43,18 +43,38 @@ export default {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
                 ring: 'hsl(var(--ring))',
-                chart: {
-                    '1': 'hsl(var(--chart-1))',
-                    '2': 'hsl(var(--chart-2))',
-                    '3': 'hsl(var(--chart-3))',
-                    '4': 'hsl(var(--chart-4))',
-                    '5': 'hsl(var(--chart-5))'
-                }
             },
             borderRadius: {
                 lg: 'var(--radius)',
                 md: 'calc(var(--radius) - 2px)',
                 sm: 'calc(var(--radius) - 4px)'
+            },
+            fontFamily: {
+                sans: ['var(--font-inter)', 'sans-serif'],
+                heading: ['var(--font-fraunces)', 'serif'],
+            },
+            fontSize: {
+                // Semantic Typography Scale
+                'display': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '400' }], // 72px
+                'h1': ['3.5rem', { lineHeight: '1.2', letterSpacing: '-0.015em', fontWeight: '400' }], // 56px
+                'h2': ['2.5rem', { lineHeight: '1.3', letterSpacing: '-0.01em', fontWeight: '400' }], // 40px
+                'h3': ['2rem', { lineHeight: '1.4', letterSpacing: '-0.005em', fontWeight: '400' }], // 32px
+                'h4': ['1.5rem', { lineHeight: '1.5', letterSpacing: '0em', fontWeight: '500' }], // 24px
+                'body-lg': ['1.125rem', { lineHeight: '1.6', letterSpacing: '0em', fontWeight: '400' }], // 18px
+                'body': ['1rem', { lineHeight: '1.6', letterSpacing: '0em', fontWeight: '400' }], // 16px
+                'small': ['0.875rem', { lineHeight: '1.5', letterSpacing: '0em', fontWeight: '400' }], // 14px
+                'caption': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.02em', fontWeight: '500' }], // 12px
+            },
+            spacing: {
+                '18': '4.5rem', // 72px
+                '26': '6.5rem', // 104px
+                '30': '7.5rem', // 120px
+                '34': '8.5rem', // 136px
+                '40': '10rem',  // 160px
+            },
+            boxShadow: {
+                'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                'subtle': '0 2px 10px -2px rgba(0, 0, 0, 0.02)',
             },
             keyframes: {
                 "accordion-down": {
@@ -65,20 +85,11 @@ export default {
                     from: { height: "var(--radix-accordion-content-height)" },
                     to: { height: "0" },
                 },
-                "fade-in-up": {
-                    "0%": { opacity: "0", transform: "translateY(20px)" },
-                    "100%": { opacity: "1", transform: "translateY(0)" }
-                }
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
-                "fade-in-up": "fade-in-up 0.5s ease-out forwards"
             },
-            fontFamily: {
-                sans: ['var(--font-inter)', 'sans-serif'],
-                heading: ['var(--font-space)', 'sans-serif'],
-            }
         }
     },
     plugins: [require("tailwindcss-animate")],

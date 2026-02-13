@@ -1,106 +1,84 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Rocket, Target, Briefcase, RefreshCw, LayoutGrid } from "lucide-react";
-import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Section, Container } from "@/components/layout/container";
+import { Heading, Text } from "@/components/ui/typography";
+import { FadeIn, StaggerContainer } from "@/components/motion";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const paths = [
     {
-        icon: Rocket,
         title: "Reempleo Acelerado",
         desc: "Optimización quirúrgica de tu perfil para volver al mercado en tiempo récord.",
         badge: "Fast Track",
-        variant: "default" as const
     },
     {
-        icon: RefreshCw,
         title: "Re-skilling Guiado",
         desc: "Identificación de brechas tecnológicas y plan de aprendizaje curado por expertos.",
         badge: "Update",
-        variant: "secondary" as const
     },
     {
-        icon: Target,
         title: "Reposicionamiento Senior",
         desc: "Para líderes que buscan roles de impacto (C-Level, Advisory) y necesitan nueva narrativa.",
         badge: "Executive",
-        variant: "default" as const
     },
     {
-        icon: LayoutGrid,
         title: "Cambio Total (Pivot)",
         desc: "Diseño de una nueva carrera desde cero, aprovechando tus skills transferibles.",
         badge: "Transform",
-        variant: "outline" as const
     },
     {
-        icon: Briefcase,
         title: "Emprendimiento",
         desc: "Validación de ideas de negocio y transición de empleado a fundador con bajo riesgo.",
         badge: "Venture",
-        variant: "secondary" as const
     },
 ];
 
 export function PathsSection() {
     return (
-        <section id="caminos" className="py-24 bg-slate-50 border-t border-slate-200">
-            <div className="container px-4 md:px-6 mx-auto">
-                <div className="mb-12 text-center md:text-left">
-                    <span className="text-secondary font-bold tracking-wide uppercase text-sm">Tu Futuro</span>
-                    <motion.h2
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mt-2 font-heading"
-                    >
+        <Section id="caminos" spacing="lg" background="muted">
+            <Container>
+                <FadeIn className="mb-16 md:mb-24 max-w-2xl">
+                    <Heading level="h2" className="mb-6">
                         5 Caminos Posibles. <br />
-                        <span className="text-muted-foreground">Una Sola Decisión: Empezar.</span>
-                    </motion.h2>
-                </div>
+                        Una Sola Decisión.
+                    </Heading>
+                    <Text variant="lead">
+                        No hay dos trayectorias iguales. Diseñamos la estrategia según tu punto de partida y tu ambición.
+                    </Text>
+                </FadeIn>
 
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {paths.map((path, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
-                        >
-                            <Card className="h-full group hover:shadow-xl transition-all duration-300 relative border-border/60">
-                                <div className="absolute top-4 right-4">
-                                    <Badge variant={path.variant}>{path.badge}</Badge>
+                        <FadeIn key={i}>
+                            <Card className="h-full bg-background border-none shadow-soft hover:shadow-subtle p-8 flex flex-col items-start transition-shadow duration-300">
+                                <div className="mb-6">
+                                    <Badge variant="secondary" className="bg-secondary/10 text-secondary hover:bg-secondary/20 border-none font-medium">
+                                        {path.badge}
+                                    </Badge>
                                 </div>
 
-                                <CardHeader>
-                                    <div className="h-12 w-12 rounded-lg bg-primary/5 text-primary flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-                                        <path.icon className="h-6 w-6" />
-                                    </div>
-                                    <h3 className="text-xl font-bold font-heading group-hover:text-primary transition-colors">
-                                        {path.title}
-                                    </h3>
-                                </CardHeader>
+                                <h3 className="text-xl font-heading font-medium text-foreground mb-4">
+                                    {path.title}
+                                </h3>
 
-                                <CardContent>
-                                    <p className="text-muted-foreground leading-relaxed">
-                                        {path.desc}
-                                    </p>
-                                </CardContent>
+                                <Text className="mb-8 flex-1">
+                                    {path.desc}
+                                </Text>
 
-                                <CardFooter className="mt-auto">
-                                    <Button variant="link" className="px-0 group-hover:translate-x-1 transition-transform" asChild>
-                                        <Link href="#contacto">Ver detalles &rarr;</Link>
-                                    </Button>
-                                </CardFooter>
+                                <Button variant="link" className="p-0 h-auto text-primary font-medium group" asChild>
+                                    <Link href="#contacto">
+                                        Ver detalles <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </Button>
                             </Card>
-                        </motion.div>
+                        </FadeIn>
                     ))}
-                </div>
-            </div>
-        </section>
+                </StaggerContainer>
+            </Container>
+        </Section>
     );
 }

@@ -1,101 +1,72 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Zap, Bot, Users, FileText } from "lucide-react";
+import { Section, Container } from "@/components/layout/container";
+import { Heading, Text } from "@/components/ui/typography";
+import { FadeIn } from "@/components/motion";
+import { Zap, Bot, Users } from "lucide-react";
 
 export function AutomationSection() {
     return (
-        <section className="py-24 bg-slate-950 text-white overflow-hidden relative">
-            <div className="absolute top-0 left-0 w-full h-full opacity-20 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <Section spacing="xl" className="bg-[#1C1C1C] text-[#F7F4EF] py-32 relative overflow-hidden">
+            {/* Abstract Tech Element */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-b from-primary/10 to-transparent rounded-full blur-[120px] pointer-events-none opacity-20"></div>
 
-            <div className="container px-4 md:px-6 mx-auto relative z-10">
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <Container>
+                <div className="grid lg:grid-cols-2 gap-20 items-center">
 
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs mb-4">
-                            <Zap className="h-4 w-4" />
+                    <FadeIn>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-mono text-white/70 mb-8">
+                            <Zap className="h-3 w-3" />
                             <span>POWERED BY N8N + OPENAI</span>
                         </div>
-                        <h2 className="text-3xl font-heading font-bold tracking-tighter sm:text-4xl md:text-5xl mb-6">
+                        <Heading level="h2" className="text-[#F7F4EF] mb-6">
                             Tecnología Invisible, <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
-                                Impacto Humano.
-                            </span>
-                        </h2>
-                        <p className="text-slate-400 text-lg leading-relaxed mb-8">
+                            Impacto Humano.
+                        </Heading>
+                        <Text className="text-white/60 text-lg mb-8">
                             Nuestra arquitectura de automatización elimina la fricción administrativa.
                             Mientras la IA procesa datos y agendas, nuestros expertos se dedican 100% a escucharte.
-                        </p>
+                        </Text>
 
-                        <ul className="space-y-4">
-                            {[
-                                "Análisis de perfil en tiempo real con GPT-4o.",
-                                "Matching automático con el coach ideal.",
-                                "Generación de reportes de branding instantáneos."
-                            ].map((item, i) => (
-                                <li key={i} className="flex items-center gap-3 text-slate-300">
-                                    <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="relative"
-                    >
-                        {/* Mockup Diagram */}
-                        <div className="relative p-6 bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl">
-
-                            {/* Flow */}
-                            <div className="flex flex-col gap-6">
-                                {/* Step 1 */}
-                                <div className="flex items-center gap-4 p-4 bg-slate-800 rounded-lg border border-slate-700">
-                                    <FileText className="text-blue-400 h-6 w-6" />
-                                    <div className="flex-1">
-                                        <div className="h-2 w-24 bg-slate-600 rounded mb-2"></div>
-                                        <div className="h-1.5 w-full bg-slate-700 rounded"></div>
-                                    </div>
-                                    <span className="text-xs font-mono text-slate-500">INPUT</span>
+                        <div className="space-y-6">
+                            <div className="flex items-start gap-4">
+                                <div className="mt-1 bg-primary/20 p-2 rounded-lg">
+                                    <Bot className="h-5 w-5 text-primary-foreground" />
                                 </div>
-
-                                {/* Arrow */}
-                                <div className="h-8 w-px bg-slate-700 mx-auto"></div>
-
-                                {/* Step 2 AI */}
-                                <div className="flex items-center gap-4 p-4 bg-emerald-950/30 rounded-lg border border-emerald-900/50">
-                                    <Bot className="text-emerald-400 h-6 w-6" />
-                                    <div className="flex-1">
-                                        <div className="text-xs text-emerald-400 font-mono mb-1">AI PROCESSING...</div>
-                                        <div className="h-1.5 w-32 bg-emerald-900 rounded"></div>
-                                    </div>
-                                </div>
-
-                                {/* Arrow */}
-                                <div className="h-8 w-px bg-slate-700 mx-auto"></div>
-
-                                {/* Step 3 Human */}
-                                <div className="flex items-center gap-4 p-4 bg-blue-950/30 rounded-lg border border-blue-900/50">
-                                    <Users className="text-blue-400 h-6 w-6" />
-                                    <div className="flex-1">
-                                        <div className="text-xs text-blue-400 font-mono mb-1">HUMAN EXPERT</div>
-                                        <div className="h-1.5 w-full bg-blue-900 rounded"></div>
-                                    </div>
+                                <div>
+                                    <h4 className="text-white font-medium mb-1">Análisis por IA en tiempo real</h4>
+                                    <p className="text-white/50 text-sm">GPT-4o procesa tu perfil instantáneamente para detectar patrones.</p>
                                 </div>
                             </div>
-
+                            <div className="flex items-start gap-4">
+                                <div className="mt-1 bg-secondary/20 p-2 rounded-lg">
+                                    <Users className="h-5 w-5 text-secondary" />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-medium mb-1">Matching Experto</h4>
+                                    <p className="text-white/50 text-sm">Te conectamos con el coach que mejor conoce tu industria, no uno genérico.</p>
+                                </div>
+                            </div>
                         </div>
-                    </motion.div>
+                    </FadeIn>
+
+                    <FadeIn delay={0.2} className="relative">
+                        <div className="aspect-square rounded-2xl bg-white/5 border border-white/10 p-8 flex flex-col justify-center relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent opacity-20"></div>
+                            <code className="text-sm font-mono text-primary-foreground/80 space-y-2 block">
+                                <div className="opacity-50"># System Analysis</div>
+                                <div><span className="text-purple-400">const</span> <span className="text-blue-400">candidate</span> = <span className="text-yellow-400">await</span> analyzeProfile(user);</div>
+                                <div><span className="text-purple-400">if</span> (candidate.potential &gt; <span className="text-green-400">0.9</span>) {'{'}</div>
+                                <div className="pl-4"><span className="text-blue-400">reinventionPath</span>.init();</div>
+                                <div>{'}'}</div>
+                                <div className="mt-4 opacity-50">// Human verified</div>
+                                <div className="text-green-400">✓ Strategy Generated</div>
+                            </code>
+                        </div>
+                    </FadeIn>
 
                 </div>
-            </div>
-        </section>
+            </Container>
+        </Section>
     );
 }

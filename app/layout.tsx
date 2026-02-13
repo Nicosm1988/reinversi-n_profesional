@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google"; // Pivot to Editorial: Fraunces
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
@@ -11,15 +11,16 @@ const inter = Inter({
   display: "swap"
 });
 
-const spaceGrotesk = Space_Grotesk({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-space",
-  display: "swap"
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["SOFT", "WONK", "opsz"] // Use variable axes for character
 });
 
 export const metadata: Metadata = {
-  title: "Reinvención Profesional | Transformación con IA + Expertos",
-  description: "Plataforma híbrida de reinvención profesional. Combina inteligencia artificial y coaching experto para transformar la incertidumbre en dirección estratégica.",
+  title: "Reinvención Profesional | Dirección Estratégica en la Era IA",
+  description: "Estudio de arquitectura de carrera. Acompañamos procesos de reinvención profesional con método, estrategia y calidez humana.",
 };
 
 export default function RootLayout({
@@ -31,13 +32,13 @@ export default function RootLayout({
     <html lang="es" className="scroll-smooth">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased flex flex-col",
+          "min-h-screen bg-background font-sans antialiased flex flex-col selection:bg-secondary/30 selection:text-foreground",
           inter.variable,
-          spaceGrotesk.variable
+          fraunces.variable
         )}
       >
         <Header />
-        <main className="flex-1">
+        <main className="flex-1 flex flex-col">
           {children}
         </main>
         <Footer />

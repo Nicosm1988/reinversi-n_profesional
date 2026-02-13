@@ -1,98 +1,73 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { CheckCircle2, User, Bot } from "lucide-react";
+import { Section, Container } from "@/components/layout/container";
+import { Heading, Text } from "@/components/ui/typography";
+import { FadeIn, StaggerContainer } from "@/components/motion";
+
+const steps = [
+    {
+        step: "01",
+        title: "Diagnóstico Híbrido",
+        desc: "Evaluamos tu perfil con IA para hard skills y entrevista humana para motivaciones profundas.",
+    },
+    {
+        step: "02",
+        title: "Mapa de Brechas",
+        desc: "Identificamos exactamente qué skills te faltan para tu rol objetivo y cómo cubrirlas.",
+    },
+    {
+        step: "03",
+        title: "Branding Estratégico",
+        desc: "Reescribimos tu narrativa. No es mentir, es traducir tu valor al lenguaje del mercado actual.",
+    },
+    {
+        step: "04",
+        title: "Go-to-Market",
+        desc: "Estrategia de networking y aplicación dirigida. Dónde buscar y cómo contactar decisores.",
+    },
+    {
+        step: "05",
+        title: "Simulación de Pitch",
+        desc: "Entrenamos tu entrevista hasta que te sientas invencible y natural.",
+    }
+];
 
 export function MethodSection() {
-    const steps = [
-        {
-            title: "1. Diagnóstico Híbrido",
-            desc: "Evaluamos tu perfil con IA para hard skills y entrevista humana para motivaciones profundas.",
-            icon: Bot
-        },
-        {
-            title: "2. Mapa de Brechas",
-            desc: "Identificamos exactamente qué skills te faltan para tu rol objetivo.",
-            icon: User
-        },
-        {
-            title: "3. Branding Estratégico",
-            desc: "Reescribimos tu narrativa. No es mentir, es traducir tu valor al lenguaje actual.",
-            icon: User
-        },
-        {
-            title: "4. Go-to-Market",
-            desc: "Estrategia de networking y aplicación. Dónde buscar y cómo contactar.",
-            icon: User
-        },
-        {
-            title: "5. Simulación de Pitch",
-            desc: "Entrenamos tu entrevista hasta que te sientas invencible.",
-            icon: User
-        }
-    ];
-
     return (
-        <section id="metodo" className="py-24 bg-background relative overflow-hidden">
-            <div className="container px-4 md:px-6 mx-auto">
-                <div className="mb-20 text-center max-w-3xl mx-auto">
-                    <span className="text-secondary font-bold tracking-widest uppercase text-xs">Nuestra Metodología</span>
-                    <h2 className="text-3xl md:text-5xl font-heading font-bold mt-3 mb-6">
+        <Section id="metodo" spacing="lg">
+            <Container size="sm">
+                <FadeIn className="mb-16">
+                    <span className="text-sm font-medium tracking-widest uppercase text-primary/60 mb-2 block">
+                        Nuestra Metodología
+                    </span>
+                    <Heading level="h2">
                         Ingeniería de Reinvención
-                    </h2>
-                    <p className="text-lg text-muted-foreground">
-                        Dejamos el "echale ganas" de lado. Esto es un proceso estructurado, medible y repetible.
-                    </p>
-                </div>
+                    </Heading>
+                </FadeIn>
 
-                <div className="relative max-w-4xl mx-auto">
-                    {/* Vertical Line */}
-                    <div className="absolute left-[28px] md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2 h-full z-0" />
+                <StaggerContainer className="relative border-l border-border/60 ml-3 md:ml-0 space-y-12 pb-4">
+                    {steps.map((step, i) => (
+                        <FadeIn key={i} className="relative pl-12 md:pl-16">
+                            {/* Marker */}
+                            <div className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full bg-background border-2 border-primary ring-4 ring-background z-10 transition-colors hover:bg-primary"></div>
 
-                    <div className="space-y-12 relative z-10">
-                        {steps.map((step, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-50px" }}
-                                transition={{ duration: 0.5, delay: i * 0.1 }}
-                                className={`flex flex-col md:flex-row items-start ${i % 2 === 0 ? 'md:flex-row-reverse' : ''} gap-8`}
-                            >
-                                <div className="flex-1 md:text-right hidden md:block">
-                                    {i % 2 === 0 && (
-                                        <div className="pr-12">
-                                            <h3 className="text-xl font-bold font-heading mb-2">{step.title}</h3>
-                                            <p className="text-muted-foreground">{step.desc}</p>
-                                        </div>
-                                    )}
+                            <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 group">
+                                <span className="text-sm font-bold text-primary/40 font-mono group-hover:text-primary transition-colors">
+                                    {step.step}
+                                </span>
+                                <div>
+                                    <h3 className="text-xl font-heading font-medium text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
+                                        {step.title}
+                                    </h3>
+                                    <Text>
+                                        {step.desc}
+                                    </Text>
                                 </div>
-
-                                <div className="relative flex-none">
-                                    <div className="h-14 w-14 rounded-full bg-background border-2 border-primary flex items-center justify-center shadow-lg z-20 relative">
-                                        <span className="font-heading font-bold text-primary text-lg">{i + 1}</span>
-                                    </div>
-                                </div>
-
-                                <div className="flex-1 pl-4 md:pl-0">
-                                    <div className={`md:px-12 ${i % 2 !== 0 ? '' : 'md:hidden'}`}>
-                                        <h3 className="text-xl font-bold font-heading mb-2">{step.title}</h3>
-                                        <p className="text-muted-foreground">{step.desc}</p>
-                                    </div>
-                                    {/* Desktop Right Content */}
-                                    {i % 2 !== 0 && (
-                                        <div className="hidden md:block pl-12">
-                                            <h3 className="text-xl font-bold font-heading mb-2">{step.title}</h3>
-                                            <p className="text-muted-foreground">{step.desc}</p>
-                                        </div>
-                                    )}
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                </div>
-            </div>
-        </section>
+                            </div>
+                        </FadeIn>
+                    ))}
+                </StaggerContainer>
+            </Container>
+        </Section>
     );
 }
