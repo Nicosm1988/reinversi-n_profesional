@@ -1,120 +1,94 @@
-"use client"
-
-import { Button } from "@/components/ui/button"
-import { SectionContainer } from "@/components/ui/section-container"
-import { Check } from "lucide-react"
-import Link from "next/link"
+import { Check } from "lucide-react";
 
 const services = [
     {
-        title: "Diagnóstico Express",
-        price: "Gratis",
-        desc: "El primer paso obligatorio. Entendé dónde estás parado.",
-        features: [
-            "Test de perfil (15 min)",
-            "Informe base automatizado",
-            "Puntaje de empleabilidad",
-        ],
+        title: "Diagnóstico",
+        price: "Gratuito",
+        desc: "Punto de partida.",
+        features: ["Test de 15 minutos", "Informe preliminar IA", "Identificación de brechas"],
         cta: "Comenzar Ahora",
-        href: "#diagnostico",
-        variant: "ghost" as const,
+        highlight: false
     },
     {
-        title: "Plan Estratégico",
-        price: "$85.000",
-        period: "/mes",
-        desc: "Acompañamiento híbrido para definir y ejecutar tu cambio.",
-        features: [
-            "Todo lo de Diagnóstico",
-            "2 sesiones con Coach (45 min)",
-            "Optimización LinkedIn SEO",
-            "Revisión de CV con ATS",
-            "Acceso a portal de empleos",
-        ],
-        cta: "Agendar Entrevista",
-        href: "#contacto",
-        primary: true,
+        title: "Pack Triage",
+        price: "$150 USD",
+        desc: "Claridad inmediata.",
+        features: ["Sesión 1:1 con Coach (60m)", "Análisis profundo de perfil", "Mapa de ruta personalizado"],
+        cta: "Agendar Sesión",
+        highlight: false
     },
     {
-        title: "Transformación Total",
-        price: "$150.000",
-        period: "/mes",
-        desc: "Programa intensivo con soporte psicológico y branding.",
+        title: "Reinvención Total",
+        price: "$850 USD",
+        desc: "Transformación completa.",
         features: [
-            "Todo lo de Plan Estratégico",
-            "Sesiones de Psicología Laboral",
+            "Todo lo del Pack Triage",
+            "Branding (CV, LinkedIn, Pitch)",
+            "4 Sesiones de Coaching",
             "Simulacros de entrevista",
-            "Branding Personal Completo",
-            "Soporte directo por WhatsApp",
+            "Acceso a red de contactos"
         ],
-        cta: "Consultar Cupos",
-        href: "#contacto",
-        variant: "default" as const,
-    },
-]
+        cta: "Aplicar al Programa",
+        highlight: true
+    }
+];
 
 export function ServicesSection() {
     return (
-        <SectionContainer id="servicios" className="border-t border-white/10 bg-[#0B1221]">
-            <div className="text-center mb-16">
-                <h2 className="text-sm font-semibold tracking-wide text-blue-400 uppercase">
-                    Inversión en vos
-                </h2>
-                <h3 className="text-3xl md:text-4xl font-bold text-white mt-2">
-                    Modelos de Acompañamiento
-                </h3>
-                <p className="mt-4 text-gray-400">
-                    Precios transparentes y orientativos. Sin contratos ocultos.
-                </p>
-            </div>
+        <section className="py-24 bg-white relative">
+            <div className="container px-4 md:px-6 mx-auto">
+                <div className="text-center max-w-2xl mx-auto mb-16">
+                    <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
+                        Inversión Transparente
+                    </h2>
+                    <p className="text-lg text-slate-500">
+                        Sin costos ocultos ni compromisos a largo plazo obligatorios. Pagas por el valor que necesitas en cada etapa.
+                    </p>
+                </div>
 
-            <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
-                {services.map((service, i) => (
-                    <div
-                        key={i}
-                        className={`relative flex flex-col rounded-2xl p-8 border ${service.primary
-                                ? "bg-blue-600/10 border-blue-500/50 shadow-2xl shadow-blue-900/20"
-                                : "bg-white/5 border-white/10 hover:border-white/20"
-                            }`}
-                    >
-                        {service.primary && (
-                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                                MÁS ELEGIDO
-                            </div>
-                        )}
-
-                        <div className="mb-8">
-                            <h4 className="text-xl font-bold text-white mb-2">{service.title}</h4>
-                            <div className="flex items-baseline gap-1">
-                                <span className="text-3xl font-bold text-white">{service.price}</span>
-                                {service.period && (
-                                    <span className="text-sm text-gray-400">{service.period}</span>
-                                )}
-                            </div>
-                            <p className="text-sm text-gray-400 mt-4 leading-relaxed">{service.desc}</p>
-                        </div>
-
-                        <ul className="space-y-4 mb-8 flex-1">
-                            {service.features.map((feature, j) => (
-                                <li key={j} className="flex items-start text-sm text-gray-300">
-                                    <Check className="h-4 w-4 text-green-400 mr-3 mt-0.5 shrink-0" />
-                                    {feature}
-                                </li>
-                            ))}
-                        </ul>
-
-                        <Button
-                            className={`w-full ${service.primary ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
-                            variant={service.primary ? 'premium' : service.variant}
+                <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    {services.map((plan, i) => (
+                        <div
+                            key={i}
+                            className={`relative p-8 rounded-2xl border ${plan.highlight ? 'border-blue-200 bg-blue-50/50 shadow-xl ring-1 ring-blue-200' : 'border-slate-100 bg-white shadow-sm'} flex flex-col`}
                         >
-                            <Link href={service.href}>{service.cta}</Link>
-                        </Button>
-                    </div>
-                ))}
+                            {plan.highlight && (
+                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-600 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg">
+                                    Más Elegido
+                                </div>
+                            )}
+
+                            <div className="mb-4">
+                                <h3 className="text-lg font-medium text-slate-900">{plan.title}</h3>
+                                <div className="mt-2 flex items-baseline gap-x-2">
+                                    <span className="text-4xl font-bold tracking-tight text-slate-900">{plan.price}</span>
+                                    <span className="text-sm font-semibold leading-6 text-slate-500">/ único</span>
+                                </div>
+                                <p className="mt-4 text-sm leading-6 text-slate-500">{plan.desc}</p>
+                            </div>
+
+                            <ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-slate-600 flex-1">
+                                {plan.features.map((feature) => (
+                                    <li key={feature} className="flex gap-x-3">
+                                        <Check className="h-6 w-5 flex-none text-blue-600" aria-hidden="true" />
+                                        {feature}
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <a
+                                href="#"
+                                className={`mt-8 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${plan.highlight
+                                        ? 'bg-blue-600 text-white hover:bg-blue-500 focus-visible:outline-blue-600 shadow-lg shadow-blue-600/20'
+                                        : 'bg-white text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300'
+                                    }`}
+                            >
+                                {plan.cta}
+                            </a>
+                        </div>
+                    ))}
+                </div>
             </div>
-            <p className="text-center text-xs text-gray-500 mt-12">
-                * Precios orientativos en ARS, sujetos a modificación. Consultar valores vigentes.
-            </p>
-        </SectionContainer>
-    )
+        </section>
+    );
 }

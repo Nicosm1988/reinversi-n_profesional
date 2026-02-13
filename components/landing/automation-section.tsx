@@ -1,92 +1,89 @@
-"use client"
-
-import { SectionContainer } from '@/components/ui/section-container'
-import { ArrowRight, Database, FileText, MessageSquare, UserCheck, Zap } from 'lucide-react'
+import { Zap, Bot, Users, FileText, Send } from "lucide-react";
 
 export function AutomationSection() {
     return (
-        <SectionContainer className="bg-slate-950 border-y border-white/5 overflow-hidden relative">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 className="text-sm font-semibold tracking-wide text-purple-400 uppercase mb-4">
-                        Tecnología Invisible
-                    </h2>
-                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                        Escalabilidad con <br />
-                        Toque Humano
-                    </h3>
-                    <p className="text-gray-400 text-lg leading-relaxed mb-8">
-                        Nuestra arquitectura técnica nos permite enfocarnos en lo que importa: vos.
-                        Automatizamos la burocracia para liberar tiempo de calidad en las sesiones
-                        de estrategia y coaching.
-                    </p>
+        <section className="py-24 bg-slate-950 text-white overflow-hidden relative">
+            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
 
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-4 text-gray-300">
-                            <div className="h-10 w-10 rounded-full bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                                <Zap className="h-5 w-5 text-purple-400" />
-                            </div>
-                            <p>Seguimiento proactivo de postulaciones</p>
+            <div className="container px-4 md:px-6 mx-auto relative z-10">
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+                    <div>
+                        <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs mb-4">
+                            <Zap className="h-4 w-4" />
+                            <span>POWERED BY N8N + OPENAI</span>
                         </div>
-                        <div className="flex items-center gap-4 text-gray-300">
-                            <div className="h-10 w-10 rounded-full bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                                <Database className="h-5 w-5 text-purple-400" />
+                        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-6">
+                            Tecnología Invisible, <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                                Impacto Humano.
+                            </span>
+                        </h2>
+                        <p className="text-slate-400 text-lg leading-relaxed mb-8">
+                            Nuestra arquitectura de automatización elimina la fricción administrativa.
+                            Mientras la IA procesa datos y agendas, nuestros expertos se dedican 100% a escucharte.
+                        </p>
+
+                        <ul className="space-y-4">
+                            {[
+                                "Análisis de perfil en tiempo real con GPT-4o.",
+                                "Matching automático con el coach ideal.",
+                                "Generación de reportes de branding instantáneos."
+                            ].map((item, i) => (
+                                <li key={i} className="flex items-center gap-3 text-slate-300">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="relative">
+                        {/* Mockup Diagram */}
+                        <div className="relative p-6 bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl">
+
+                            {/* Flow */}
+                            <div className="flex flex-col gap-6">
+                                {/* Step 1 */}
+                                <div className="flex items-center gap-4 p-4 bg-slate-800 rounded-lg border border-slate-700 animate-pulse-slow">
+                                    <FileText className="text-blue-400" />
+                                    <div className="flex-1">
+                                        <div className="h-2 w-24 bg-slate-600 rounded mb-2"></div>
+                                        <div className="h-1.5 w-full bg-slate-700 rounded"></div>
+                                    </div>
+                                    <span className="text-xs font-mono text-slate-500">INPUT</span>
+                                </div>
+
+                                {/* Arrow */}
+                                <div className="h-8 w-px bg-slate-700 mx-auto"></div>
+
+                                {/* Step 2 AI */}
+                                <div className="flex items-center gap-4 p-4 bg-emerald-950/30 rounded-lg border border-emerald-900/50">
+                                    <Bot className="text-emerald-400" />
+                                    <div className="flex-1">
+                                        <div className="text-xs text-emerald-400 font-mono mb-1">AI PROCESSING...</div>
+                                        <div className="h-1.5 w-32 bg-emerald-900 rounded"></div>
+                                    </div>
+                                </div>
+
+                                {/* Arrow */}
+                                <div className="h-8 w-px bg-slate-700 mx-auto"></div>
+
+                                {/* Step 3 Human */}
+                                <div className="flex items-center gap-4 p-4 bg-blue-950/30 rounded-lg border border-blue-900/50">
+                                    <Users className="text-blue-400" />
+                                    <div className="flex-1">
+                                        <div className="text-xs text-blue-400 font-mono mb-1">HUMAN EXPERT</div>
+                                        <div className="h-1.5 w-full bg-blue-900 rounded"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <p>Base de datos de mercado en tiempo real</p>
+
                         </div>
                     </div>
-                </div>
 
-                {/* Visual Pipeline Representation */}
-                <div className="relative p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-transparent rounded-3xl pointer-events-none" />
-
-                    <div className="space-y-6 relative z-10">
-                        <div className="flex items-center justify-between p-4 rounded-lg bg-black/20 border border-white/5">
-                            <span className="flex items-center gap-3 text-white font-medium">
-                                <UserCheck className="h-5 w-5 text-green-400" /> Test Diagnóstico
-                            </span>
-                            <ArrowRightMini className="text-gray-600" />
-                            <span className="text-xs text-gray-400 font-mono">CRM Entry</span>
-                        </div>
-
-                        <div className="flex items-center justify-between p-4 rounded-lg bg-black/20 border border-white/5">
-                            <span className="flex items-center gap-3 text-white font-medium">
-                                <Zap className="h-5 w-5 text-blue-400" /> Análisis IA
-                            </span>
-                            <ArrowRightMini className="text-gray-600" />
-                            <span className="text-xs text-gray-400 font-mono">Report JSON</span>
-                        </div>
-
-                        <div className="flex items-center justify-between p-4 rounded-lg bg-black/20 border border-white/5">
-                            <span className="flex items-center gap-3 text-white font-medium">
-                                <MessageSquare className="h-5 w-5 text-orange-400" /> Coach Triage
-                            </span>
-                            <ArrowRightMini className="text-gray-600" />
-                            <span className="text-xs text-gray-400 font-mono">Human Approval</span>
-                        </div>
-
-                        <div className="flex items-center justify-between p-4 rounded-lg bg-black/20 border border-white/5">
-                            <span className="flex items-center gap-3 text-white font-medium">
-                                <FileText className="h-5 w-5 text-pink-400" /> Entregables
-                            </span>
-                            <ArrowRightMini className="text-gray-600" />
-                            <span className="text-xs text-gray-400 font-mono">Auto-Send</span>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </SectionContainer>
-    )
-}
-
-function ArrowRightMini({ className }: { className?: string }) {
-    return (
-        <svg
-            className={className}
-            width="16" height="16" viewBox="0 0 16 16" fill="currentColor"
-        >
-            <path fillRule="evenodd" d="M6 8a.5.5 0 00.5.5h5.793l-2.147 2.146a.5.5 0 00.708.708l3-3a.5.5 0 000-.708l-3-3a.5.5 0 00-.708.708L12.293 7.5H6.5A.5.5 0 006 8zm-2.5 7a.5.5 0 01-.5-.5v-13a.5.5 0 011 0v13a.5.5 0 01-.5.5z" clipRule="evenodd" />
-        </svg>
-    )
+        </section>
+    );
 }

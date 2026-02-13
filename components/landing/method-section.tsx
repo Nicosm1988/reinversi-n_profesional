@@ -1,101 +1,79 @@
-"use client"
-
-import { SectionContainer } from "@/components/ui/section-container"
-import { motion } from "framer-motion"
-
 const steps = [
     {
-        title: "Test Inteligente",
-        duration: "10-15 min",
-        type: "IA",
-        desc: "Diagnóstico inicial para identificar patrones, riesgos y oportunidades de carrera.",
+        number: "01",
+        title: "Diagnóstico Inteligente",
+        description: "Test profundo de 15 minutos que evalúa tus hard y soft skills, valores y momento vital."
     },
     {
+        number: "02",
         title: "Pre-análisis con IA",
-        duration: "Automático",
-        type: "IA",
-        desc: "Nuestros algoritmos procesan tu perfil y generan un informe preliminar de empleabilidad.",
+        description: "Nuestros algoritmos cruzan tu perfil con tendencias de mercado global para detectar oportunidades."
     },
     {
-        title: "Triage con Coach",
-        duration: "45 min",
-        type: "Humano",
-        desc: "Un experto revisa los datos y decide contigo la mejor estrategia. Tecnología + Criterio humano.",
+        number: "03",
+        title: "Triage con Experto",
+        description: "Sesión 1:1 con un estratega senior para validar los hallazgos de la IA y definir la ruta real."
     },
     {
-        title: "Psicología Laboral",
-        duration: "Si aplica",
-        type: "Humano",
-        desc: "Intervención específica para desbloquear barreras emocionales o burnout si es detectado.",
+        number: "04",
+        title: "Estrategia & Branding",
+        description: "Construcción de tu nueva narrativa: CV, LinkedIn y Pitch personal optimizados para conversión."
     },
     {
-        title: "Branding & Estrategia",
-        duration: "2-4 semanas",
-        type: "Híbrido",
-        desc: "Construcción de narrativa, CV, LinkedIn y plan de acción para salir al mercado.",
-    },
-]
+        number: "05",
+        title: "Lanzamiento Guiado",
+        description: "Acciones concretas de networking y aplicación. No te soltamos hasta que estés en camino."
+    }
+];
 
 export function MethodSection() {
     return (
-        <SectionContainer id="metodo" className="bg-[#0F172A]">
-            <div className="text-center mb-16">
-                <h2 className="text-sm font-semibold tracking-wide text-green-400 uppercase">
-                    El Sistema
-                </h2>
-                <h3 className="text-3xl md:text-4xl font-bold text-white mt-2">
-                    Método ReINversión 5.0
-                </h3>
-                <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
-                    Un proceso estructurado donde la Inteligencia Artificial sugiere, pero el experto humano decide.
-                </p>
-            </div>
+        <section id="metodo" className="py-24 bg-white relative overflow-hidden">
+            <div className="container px-4 md:px-6 mx-auto relative z-10">
+                <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-            <div className="relative max-w-4xl mx-auto">
-                {/* Vertical Line */}
-                <div className="absolute left-6 md:left-1/2 md:-ml-px top-0 bottom-0 w-px bg-white/10" />
+                    <div>
+                        <span className="text-blue-600 font-semibold tracking-wide uppercase text-sm">Nuestro Método</span>
+                        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mt-2 mb-6">
+                            Ciencia y Humanidad <br />
+                            <span className="text-slate-400">Trabajando Juntos</span>
+                        </h2>
+                        <p className="text-lg text-slate-600 mb-8 max-w-lg">
+                            No es magia. Es un proceso estructurado en 5 etapas diseñado para eliminar el ruido mental y generar tracción real.
+                        </p>
 
-                <div className="space-y-12">
-                    {steps.map((step, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: i * 0.1 }}
-                            viewport={{ once: true }}
-                            className={`relative flex items-center md:justify-between ${i % 2 === 0 ? "md:flex-row-reverse" : ""
-                                }`}
-                        >
-                            {/* Dot */}
-                            <div className="absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 border-[#16A34A] bg-[#0F172A] z-10" />
+                        {/* Disclaimer Ethics */}
+                        <div className="p-4 bg-slate-50 border-l-4 border-blue-600 rounded-r-lg max-w-md">
+                            <p className="text-sm text-slate-700 italic">
+                                "La IA sugiere caminos basados en datos, pero tú y tu coach deciden la estrategia final. La tecnología es el copiloto, tú eres el piloto."
+                            </p>
+                        </div>
+                    </div>
 
-                            <div className="ml-16 md:ml-0 md:w-[45%]">
-                                <div className="p-6 rounded-xl border border-white/10 bg-white/5 hover:border-white/20 transition-colors">
-                                    <div className="flex justify-between items-center mb-2">
-                                        <span className="text-xs font-mono text-gray-500 uppercase">
-                                            {step.duration}
-                                        </span>
-                                        <span
-                                            className={`text-xs px-2 py-0.5 rounded-full ${step.type === "IA"
-                                                    ? "bg-blue-500/10 text-blue-400"
-                                                    : step.type === "Humano"
-                                                        ? "bg-green-500/10 text-green-400"
-                                                        : "bg-purple-500/10 text-purple-400"
-                                                }`}
-                                        >
-                                            {step.type}
-                                        </span>
-                                    </div>
-                                    <h4 className="text-lg font-bold text-white mb-2">{step.title}</h4>
-                                    <p className="text-sm text-gray-400">{step.desc}</p>
+                    <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
+                        {steps.map((step, i) => (
+                            <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+
+                                {/* Icon / Dot */}
+                                <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-100 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold text-slate-500">
+                                    {i + 1}
                                 </div>
-                            </div>
 
-                            <div className="hidden md:block md:w-[45%]" />
-                        </motion.div>
-                    ))}
+                                {/* Content Card */}
+                                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                                    <div className="flex items-baseline justify-between mb-2">
+                                        <h3 className="font-bold text-slate-900">{step.title}</h3>
+                                        <span className="text-xs font-mono text-slate-300">Phase {step.number}</span>
+                                    </div>
+                                    <p className="text-slate-600 text-sm leading-relaxed">{step.description}</p>
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
             </div>
-        </SectionContainer>
-    )
+        </section>
+    );
 }
