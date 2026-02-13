@@ -4,7 +4,7 @@ import { motion, HTMLMotionProps, Variants } from "framer-motion";
 import { ReactNode } from "react";
 
 // Principles: Sobrio, Fluido, "No Bounce"
-const EASE_ELEGANT = [0.25, 0.1, 0.25, 1]; // Cubic Bezier
+const EASE_ELEGANT = [0.25, 0.1, 0.25, 1] as const; // Cubic Bezier
 
 interface MotionProps extends HTMLMotionProps<"div"> {
     children: ReactNode;
