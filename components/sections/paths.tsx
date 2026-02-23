@@ -12,27 +12,27 @@ import Link from "next/link";
 const paths = [
     {
         title: "Reempleo Acelerado",
-        desc: "Optimización quirúrgica de tu perfil para volver al mercado en tiempo récord.",
+        desc: "Optimización estratégica para profesionales que buscan reinsertarse rápidamente en roles similares, mejorando su narrativa y posicionamiento para reducir el tiempo de búsqueda.",
         badge: "Fast Track",
     },
     {
         title: "Re-skilling Guiado",
-        desc: "Identificación de brechas tecnológicas y plan de aprendizaje curado por expertos.",
-        badge: "Update",
+        desc: "Cierre de brechas para quienes necesitan actualizar sus competencias en herramientas digitales e IA Generativa para recuperar su ventaja competitiva en el mercado actual.",
+        badge: "Digital Update",
     },
     {
         title: "Reposicionamiento Senior",
-        desc: "Para líderes que buscan roles de impacto (C-Level, Advisory) y necesitan nueva narrativa.",
+        desc: "Elevación de perfil para gerentes y directores que apuntan a posiciones C-Level o consultoría estratégica, transformando su narrativa de ejecución a visión de negocio.",
         badge: "Executive",
     },
     {
         title: "Cambio Total (Pivot)",
-        desc: "Diseño de una nueva carrera desde cero, aprovechando tus skills transferibles.",
-        badge: "Transform",
+        desc: "Planificación estructural para quienes desean dar un giro radical de industria o función, transfiriendo sus fortalezas hacia un sector completamente nuevo.",
+        badge: "Pivot",
     },
     {
         title: "Emprendimiento",
-        desc: "Validación de ideas de negocio y transición de empleado a fundador con bajo riesgo.",
+        desc: "Transición segura de la relación de dependencia a la creación de un negocio propio o consultoría, validando el modelo de negocio con una estructura de riesgo controlado.",
         badge: "Venture",
     },
 ];
@@ -70,8 +70,8 @@ export function PathsSection() {
                                 </Text>
 
                                 <Button variant="link" className="p-0 h-auto text-primary font-medium group" asChild>
-                                    <Link href="#contacto">
-                                        Ver detalles <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                    <Link href="/diagnostico">
+                                        Hacer diagnóstico <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Link>
                                 </Button>
                             </Card>

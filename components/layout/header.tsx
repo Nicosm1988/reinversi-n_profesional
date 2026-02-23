@@ -62,7 +62,7 @@ export function Header() {
                         <Link href="#contacto">Agendar Llamada</Link>
                     </Button>
                     <Button size="sm" className="rounded-full px-6" asChild>
-                        <Link href="#diagnostico">Hacer Diagnóstico</Link>
+                        <Link href="/diagnostico">Hacer Diagnóstico</Link>
                     </Button>
                 </div>
 
@@ -89,7 +89,7 @@ export function Header() {
                         ))}
                         <div className="flex flex-col gap-4 w-full px-12 pt-8">
                             <Button className="w-full h-12 text-lg" onClick={() => setIsMobileMenuOpen(false)} asChild>
-                                <Link href="#diagnostico">Hacer Diagnóstico</Link>
+                                <Link href="/diagnostico">Hacer Diagnóstico</Link>
                             </Button>
                             <Button variant="outline" className="w-full h-12 text-lg" onClick={() => setIsMobileMenuOpen(false)} asChild>
                                 <Link href="#contacto">Agendar Llamada</Link>

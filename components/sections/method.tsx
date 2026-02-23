@@ -6,29 +6,24 @@ import { FadeIn, StaggerContainer } from "@/components/motion";
 
 const steps = [
     {
-        step: "01",
-        title: "Diagnóstico Híbrido",
-        desc: "Evaluamos tu perfil con IA para hard skills y entrevista humana para motivaciones profundas.",
+        step: "ETAPA 01",
+        title: "Autoconocimiento",
+        desc: "Conocer tu personalidad, trayectoria, intereses y tus \"no negociables\" para que tu trabajo te motive y esté en profunda sintonía con tus necesidades personales.",
     },
     {
-        step: "02",
-        title: "Mapa de Brechas",
-        desc: "Identificamos exactamente qué skills te faltan para tu rol objetivo y cómo cubrirlas.",
+        step: "ETAPA 02",
+        title: "Mercado y Oportunidades",
+        desc: "Entender las oportunidades que ofrece el entorno laboral actual. Identificamos juntos posibles roles, formaciones o vías de upskilling/reskilling alineadas a un futuro con buena proyección.",
     },
     {
-        step: "03",
-        title: "Branding Estratégico",
-        desc: "Reescribimos tu narrativa. No es mentir, es traducir tu valor al lenguaje del mercado actual.",
+        step: "ETAPA 03",
+        title: "Estrategia e Inserción",
+        desc: "Definir un plan de acción concreto con sentido. Te orientamos en la búsqueda, posicionamiento (CV, herramientas) y salidas laborales para avanzar con eficiencia y confianza.",
     },
     {
-        step: "04",
-        title: "Go-to-Market",
-        desc: "Estrategia de networking y aplicación dirigida. Dónde buscar y cómo contactar decisores.",
-    },
-    {
-        step: "05",
-        title: "Simulación de Pitch",
-        desc: "Entrenamos tu entrevista hasta que te sientas invencible y natural.",
+        step: "CIERRE",
+        title: "Informe y Hoja de Ruta",
+        desc: "¡Tu brújula para el próximo paso! Entrega del informe final detallando fortalezas, perfil de intereses y recomendaciones estratégicas claras de inserción.",
     }
 ];
 
