@@ -19,7 +19,7 @@ export function ServicesSection() {
                             Tu transición puede empezar hoy.
                         </Heading>
                         <Text className="text-primary-foreground/80 text-lg mb-10">
-                            Deja de adivinar. Empieza a construir tu futuro con datos, estrategia y soporte real.
+                            Empieza a construir tu futuro con acompañamiento profesional en cada paso.
                         </Text>
                         <Button variant="secondary" size="lg" className="rounded-full px-10 h-14 text-base shadow-lg" asChild>
                             <Link href="#diagnostico">

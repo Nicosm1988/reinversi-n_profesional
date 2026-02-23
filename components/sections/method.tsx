@@ -18,7 +18,7 @@ const steps = [
     {
         step: "ETAPA 03",
         title: "Estrategia e Inserción",
-        desc: "Definir un plan de acción concreto con sentido. Te orientamos en la búsqueda, posicionamiento (CV, herramientas) y salidas laborales para avanzar con eficiencia y confianza.",
+        desc: "Definir un plan de acción concreto con sentido. Te orientamos en la búsqueda, posicionamiento (CV, herramientas de marca personal) y salidas laborales para avanzar con confianza en cada paso.",
     },
     {
         step: "CIERRE",
