@@ -17,13 +17,13 @@ const steps = [
     },
     {
         step: "ETAPA 03",
-        title: "Estrategia e Inserción",
-        desc: "Definir un plan de acción concreto con sentido. Te orientamos en la búsqueda, posicionamiento (CV, herramientas de marca personal) y salidas laborales para avanzar con confianza en cada paso.",
+        title: "Informe y Hoja de Ruta",
+        desc: "¡Tu brújula para el próximo paso! Entrega del informe final detallando fortalezas, perfil de intereses y recomendaciones estratégicas claras de inserción.",
     },
     {
         step: "CIERRE",
-        title: "Informe y Hoja de Ruta",
-        desc: "¡Tu brújula para el próximo paso! Entrega del informe final detallando fortalezas, perfil de intereses y recomendaciones estratégicas claras de inserción.",
+        title: "Estrategia e Inserción",
+        desc: "Definir un plan de acción concreto con sentido. Te orientamos en la búsqueda, posicionamiento (CV, herramientas) y salidas laborales para avanzar con confianza en cada paso.",
     }
 ];
 
