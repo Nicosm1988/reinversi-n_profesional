@@ -7,23 +7,23 @@ import { FadeIn, StaggerContainer } from "@/components/motion";
 const steps = [
     {
         step: "ETAPA 01",
-        title: "Autoconocimiento",
-        desc: "Conocer tu personalidad, trayectoria, intereses y tus \"no negociables\" para que tu trabajo te motive y esté en profunda sintonía con tus necesidades personales.",
+        title: "Exploración y Autoconocimiento",
+        desc: "Indagamos en tu historia, personalidad, aptitudes y valores \"no negociables\". Descubrimos qué te motiva genuinamente para asegurar que tu próximo paso esté en profunda sintonía con tu proyecto de vida.",
     },
     {
         step: "ETAPA 02",
-        title: "Mercado y Oportunidades",
-        desc: "Entender las oportunidades que ofrece el entorno laboral actual. Identificamos juntos posibles roles, formaciones o vías de upskilling/reskilling alineadas a un futuro con buena proyección.",
+        title: "Análisis de Mercado y Oportunidades",
+        desc: "Cruzamos tu perfil con la realidad del entorno laboral actual. Identificamos juntos posibles roles, áreas de interés, y analizamos planes de estudio o vías de upskilling/reskilling con mayor proyección a futuro.",
     },
     {
         step: "ETAPA 03",
-        title: "Informe y Hoja de Ruta",
-        desc: "¡Tu brújula para el próximo paso! Entrega del informe final detallando fortalezas, perfil de intereses y recomendaciones estratégicas claras de inserción.",
+        title: "Síntesis y Hoja de Ruta",
+        desc: "¡El momento de claridad! Te entregamos un informe integral que consolida tus fortalezas, perfil de intereses y áreas de desarrollo. Esta será tu brújula para tomar decisiones basadas en datos concretos sobre vos mismo.",
     },
     {
-        step: "CIERRE",
-        title: "Estrategia e Inserción",
-        desc: "Definir un plan de acción concreto con sentido. Te orientamos en la búsqueda, posicionamiento (CV, herramientas) y salidas laborales para avanzar con confianza en cada paso.",
+        step: "ETAPA 04",
+        title: "Estrategia de Inserción",
+        desc: "Pasamos a la acción. Con el plan definido, te orientamos y brindamos herramientas clave de posicionamiento (armado estratégico de CV, preparación para entrevistas) para salir al mercado con seguridad y eficacia.",
     }
 ];
 
@@ -33,10 +33,10 @@ export function MethodSection() {
             <Container size="sm">
                 <FadeIn className="mb-16">
                     <span className="text-sm font-medium tracking-widest uppercase text-primary/60 mb-2 block">
-                        Nuestra Metodología
+                        Nuestro Enfoque
                     </span>
                     <Heading level="h2">
-                        Ingeniería de Reinvención
+                        Tu Ruta de Transición
                     </Heading>
                 </FadeIn>
 
