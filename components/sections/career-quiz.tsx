@@ -88,10 +88,10 @@ export function CareerQuiz() {
                                         El GPS interno que orienta tu reinvención.
                                     </Text>
                                     <Text>
-                                        Edgar Schein, pionero del desarrollo organizacional, desarrolló este concepto para identificar los aspectos de tu perfil que garantizan una <strong>&quot;sintonía&quot; real</strong> entre tus expectativas y tu entorno laboral.
+                                        Edgar Schein, psicólogo especializado en el ambito laboral desarrolló este concepto para identificar los aspectos de tu perfil que garantizan una <strong>&quot;sintonía&quot; real</strong> entre tus expectativas y tu entorno laboral.
                                     </Text>
                                     <Text>
-                                        Tu ancla de carrera es esa combinación única de capacidades, motivaciones y valores a los que <strong>no renunciarías</strong> fácilmente. Conocerla es fundamental en una reinvención profesional porque actúa como la fuerza impulsora que te permite gestionar el cambio con resiliencia y propósito.
+                                        Tu ancla de carrera es esa combinación única de capacidades, motivaciones y valores a los que <strong>no renunciarías</strong> fácilmente. Conocerla es fundamental en una reinvención profesional porque actúa como la fuerza impulsora que te permite gestionar el cambio en coherencia durante todo el proceso.
                                     </Text>
                                     <div className="grid md:grid-cols-2 gap-4 mt-6">
                                         <div className="flex gap-3">
