@@ -58,10 +58,10 @@ export function Header() {
 
                 {/* Desktop CTAs */}
                 <div className="hidden md:flex items-center gap-4">
-                    <Button variant="ghost" size="sm" asChild>
-                        <Link href="#contacto">Agendar Llamada</Link>
+                    <Button variant="ghost" size="sm" asChild className="font-medium">
+                        <Link href="/login">Ingresar</Link>
                     </Button>
-                    <Button size="sm" className="rounded-full px-6" asChild>
+                    <Button size="sm" className="rounded-full px-6 shadow-md" asChild>
                         <Link href="/diagnostico">Hacer Diagnóstico</Link>
                     </Button>
                 </div>
@@ -88,11 +88,11 @@ export function Header() {
                             </Link>
                         ))}
                         <div className="flex flex-col gap-4 w-full px-12 pt-8">
-                            <Button className="w-full h-12 text-lg" onClick={() => setIsMobileMenuOpen(false)} asChild>
+                            <Button className="w-full h-12 text-lg shadow-md" onClick={() => setIsMobileMenuOpen(false)} asChild>
                                 <Link href="/diagnostico">Hacer Diagnóstico</Link>
                             </Button>
                             <Button variant="outline" className="w-full h-12 text-lg" onClick={() => setIsMobileMenuOpen(false)} asChild>
-                                <Link href="#contacto">Agendar Llamada</Link>
+                                <Link href="/login">Ingresar a mi cuenta</Link>
                             </Button>
                         </div>
                     </div>

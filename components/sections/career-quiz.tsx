@@ -9,13 +9,17 @@ import { Container } from "@/components/layout/container";
 import { ArrowLeft, ArrowRight, CheckCircle2, ChevronRight, BarChart3, Sparkles } from "lucide-react";
 import quizData from "@/lib/data/anchors.json";
 import Link from "next/link";
+import { PreQuizForm, type PreQuizData } from "@/components/forms/pre-quiz-form";
 
-type Step = "intro" | "questions" | "transition" | "bonus" | "results";
+type Step = "intro" | "pre-quiz" | "questions" | "transition" | "bonus" | "results";
 
 export function CareerQuiz() {
     const [step, setStep] = useState<Step>("intro");
     const [answers, setAnswers] = useState<Record<number, number>>({});
     const [bonusQuestions, setBonusQuestions] = useState<number[]>([]);
+    const [userData, setUserData] = useState<PreQuizData | null>(null);
+    const [aiResult, setAiResult] = useState<any>(null);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -108,10 +112,18 @@ export function CareerQuiz() {
                                         </div>
                                     </div>
                                 </div>
-                                <Button size="lg" className="rounded-full px-12 h-14 text-lg" onClick={() => setStep("questions")}>
+                                <Button size="lg" className="rounded-full px-12 h-14 text-lg" onClick={() => setStep("pre-quiz")}>
                                     Comenzar Test <ArrowRight className="ml-2 h-5 w-5" />
                                 </Button>
                             </motion.div>
+                        )}
+
+                        {/* ─── STEP 1.5: PRE-QUIZ DATA ─── */}
+                        {step === "pre-quiz" && (
+                            <PreQuizForm onSubmit={(data) => {
+                                setUserData(data);
+                                setStep("questions");
+                            }} />
                         )}
 
                         {/* ─── STEP 2: ALL 40 QUESTIONS ON ONE PAGE ─── */}
@@ -273,11 +285,31 @@ export function CareerQuiz() {
                                             <div className="flex gap-2">
                                                 <Button variant="ghost" onClick={() => setStep("transition")}>Atrás</Button>
                                                 <Button
-                                                    disabled={bonusQuestions.length < 3}
+                                                    disabled={bonusQuestions.length < 3 || isAnalyzing}
                                                     className="rounded-full px-8 bg-primary shadow-lg shadow-primary/20"
-                                                    onClick={() => setStep("results")}
+                                                    onClick={async () => {
+                                                        setIsAnalyzing(true);
+                                                        setStep("results");
+                                                        try {
+                                                            // Call to AI SDK
+                                                            const dominantAnchor = calculateResults?.[0];
+                                                            if (dominantAnchor && userData) {
+                                                                const res = await fetch('/api/diagnostics/analyze', {
+                                                                    method: 'POST',
+                                                                    headers: { 'Content-Type': 'application/json' },
+                                                                    body: JSON.stringify({ anchor: dominantAnchor, userData })
+                                                                });
+                                                                const data = await res.json();
+                                                                setAiResult(data);
+                                                            }
+                                                        } catch (err) {
+                                                            console.error(err);
+                                                        } finally {
+                                                            setIsAnalyzing(false);
+                                                        }
+                                                    }}
                                                 >
-                                                    Ver mis resultados <ChevronRight className="ml-2 h-4 w-4" />
+                                                    {isAnalyzing ? "Analizando Perfil..." : "Ver mis resultados"} <ChevronRight className="ml-2 h-4 w-4" />
                                                 </Button>
                                             </div>
                                         </div>
@@ -381,6 +413,68 @@ export function CareerQuiz() {
                                         </Card>
                                     ))}
                                 </div>
+
+                                {/* ── AI PERSONALIZED FEEDBACK ── */}
+                                {isAnalyzing && (
+                                    <Card className="border-secondary/20 shadow-lg bg-secondary/5 mt-10">
+                                        <CardContent className="pt-8 pb-8 text-center space-y-4">
+                                            <div className="w-12 h-12 border-4 border-secondary/20 border-t-secondary rounded-full animate-spin mx-auto"></div>
+                                            <Heading level="h4">La IA de ReINversión está analizando tu perfil...</Heading>
+                                            <Text className="text-muted-foreground">Cruzando tus 40 respuestas con tu perfil como {userData?.occupation || "profesional"}.</Text>
+                                        </CardContent>
+                                    </Card>
+                                )}
+
+                                {aiResult && !isAnalyzing && (
+                                    <div className="mt-12 space-y-10">
+                                        <Heading level="h3">Tu Análisis Ejecutivo Personalizado</Heading>
+                                        <Card className="border-2 border-secondary/20 shadow-xl overflow-hidden">
+                                            <CardHeader className="bg-secondary/5 pb-6">
+                                                <CardTitle className="text-2xl text-secondary">{aiResult.title}</CardTitle>
+                                                <CardDescription className="text-base text-foreground/80 mt-2 font-medium">
+                                                    Análisis Basado en tu Perfil ({userData?.age || ""} años, {userData?.occupation || "Profesional"})
+                                                </CardDescription>
+                                            </CardHeader>
+                                            <CardContent className="pt-8 pb-8 space-y-8">
+                                                <div className="space-y-4">
+                                                    <Text className="text-base leading-relaxed text-foreground/90 font-medium">
+                                                        {aiResult.summary}
+                                                    </Text>
+                                                </div>
+
+                                                <div className="grid md:grid-cols-2 gap-8">
+                                                    <div className="space-y-4 bg-red-50/50 p-6 rounded-2xl border border-red-100">
+                                                        <Heading level="h4" className="text-red-800 text-lg flex items-center gap-2">
+                                                            <div className="w-2 h-2 rounded-full bg-red-500"></div> Puntos probables de fricción
+                                                        </Heading>
+                                                        <ul className="space-y-3">
+                                                            {(aiResult.frictionAreas || []).map((friction: string, i: number) => (
+                                                                <li key={i} className="text-sm text-red-900/80 leading-relaxed flex items-start gap-2">
+                                                                    <span className="text-red-400 font-bold">•</span> {friction}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+
+                                                    <div className="space-y-4 bg-green-50/50 p-6 rounded-2xl border border-green-100">
+                                                        <Heading level="h4" className="text-green-800 text-lg flex items-center gap-2">
+                                                            <div className="w-2 h-2 rounded-full bg-green-500"></div> Tu ecosistema natural
+                                                        </Heading>
+                                                        <Text className="text-sm text-green-900/80 leading-relaxed">
+                                                            {aiResult.idealEcosystem}
+                                                        </Text>
+                                                    </div>
+                                                </div>
+
+                                                <div className="mt-8 p-8 bg-muted/30 rounded-2xl border border-muted text-center space-y-4">
+                                                    <Text variant="lead" className="font-serif italic text-foreground/80">
+                                                        "{aiResult.strategicQuestion}"
+                                                    </Text>
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                    </div>
+                                )}
 
                                 {/* ── CLOSING MESSAGE ── */}
                                 <div className="text-center space-y-8 py-12">
