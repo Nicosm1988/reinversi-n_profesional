@@ -44,15 +44,6 @@ export function PreQuizForm({ onSubmit }: PreQuizFormProps) {
             transition={{ duration: 0.4 }}
         >
             <Card className="max-w-xl mx-auto border-primary/20 shadow-xl bg-background/95 backdrop-blur-sm">
-                <CardHeader className="text-center pb-6 border-b bg-muted/20">
-                    <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                        <UserCircle2 className="w-6 h-6 text-primary" />
-                    </div>
-                    <CardTitle className="text-2xl font-bold">Antes de empezar</CardTitle>
-                    <CardDescription className="text-base mt-2">
-                        Necesitamos algo de contexto para que tu diagnóstico sea preciso y accionable a tu situación actual.
-                    </CardDescription>
-                </CardHeader>
                 <CardContent className="pt-8">
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -99,7 +90,7 @@ export function PreQuizForm({ onSubmit }: PreQuizFormProps) {
                                 disabled={!isValid || isSubmitting}
                                 className="w-full h-14 rounded-full text-lg shadow-lg"
                             >
-                                Comenzar Diagnóstico <ArrowRight className="ml-2 w-5 h-5" />
+                                {isSubmitting ? "Analizando..." : "Ver mis resultados"} <ArrowRight className="ml-2 w-5 h-5" />
                             </Button>
                         </div>
                     </form>

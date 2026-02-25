@@ -10,8 +10,10 @@ import { ArrowLeft, ArrowRight, CheckCircle2, ChevronRight, BarChart3, Sparkles 
 import quizData from "@/lib/data/anchors.json";
 import Link from "next/link";
 import { PreQuizForm, type PreQuizData } from "@/components/forms/pre-quiz-form";
+import { createClient } from "@/utils/supabase/client";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-type Step = "intro" | "pre-quiz" | "questions" | "transition" | "bonus" | "results";
+type Step = "intro" | "questions" | "transition" | "bonus" | "pre-quiz" | "results";
 
 export function CareerQuiz() {
     const [step, setStep] = useState<Step>("intro");
@@ -20,6 +22,40 @@ export function CareerQuiz() {
     const [userData, setUserData] = useState<PreQuizData | null>(null);
     const [aiResult, setAiResult] = useState<any>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+    // Auth and Flow states
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const [isAuthLoading, setIsAuthLoading] = useState<string | null>(null);
+    const [isCheckingSession, setIsCheckingSession] = useState(true);
+    const supabase = createClient();
+
+    // Rehydrate state after OAuth redirect
+    useEffect(() => {
+        const checkSessionAndSavedState = async () => {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                const savedStateStr = localStorage.getItem('careerQuizState');
+
+                if (savedStateStr) {
+                    const savedState = JSON.parse(savedStateStr);
+                    setAnswers(savedState.answers || {});
+                    setBonusQuestions(savedState.bonusQuestions || []);
+
+                    if (session?.user && savedState.status === 'awaiting_results') {
+                        // User is logged in and completed questions, move to pre-quiz for details
+                        setStep("pre-quiz");
+                        localStorage.removeItem('careerQuizState');
+                    }
+                }
+            } catch (error) {
+                console.error("Error evaluating session:", error);
+            } finally {
+                setIsCheckingSession(false);
+            }
+        };
+
+        checkSessionAndSavedState();
+    }, [supabase.auth]);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -39,6 +75,65 @@ export function CareerQuiz() {
             }
             return prev;
         });
+    };
+
+    const handleOAuthLogin = async (provider: 'google' | 'linkedin_oidc') => {
+        try {
+            setIsAuthLoading(provider);
+            // Save state before redirecting out of the app
+            localStorage.setItem('careerQuizState', JSON.stringify({
+                answers,
+                bonusQuestions,
+                status: 'awaiting_results'
+            }));
+
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider,
+                options: {
+                    redirectTo: `${window.location.origin}/auth/callback?next=/diagnostico/ancla-de-carrera`,
+                },
+            });
+            if (error) throw error;
+        } catch (error) {
+            console.error(`Error logging in with ${provider}:`, error);
+            setIsAuthLoading(null);
+        }
+    };
+
+    const submitAndAnalyze = async (data: PreQuizData) => {
+        setUserData(data);
+        setIsAnalyzing(true);
+        setStep("results");
+        try {
+            const dominantAnchor = calculateResults?.[0];
+            if (dominantAnchor) {
+                // Call AI SDK Analyze
+                const res = await fetch('/api/diagnostics/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ anchor: dominantAnchor, userData: data })
+                });
+                const aiData = await res.json();
+                setAiResult(aiData);
+
+                // Save to Profile
+                await fetch('/api/diagnostics/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        diagnosticType: 'career_anchor',
+                        userData: data,
+                        rawAnswers: { ...answers, bonus: bonusQuestions },
+                        dominantResult: dominantAnchor,
+                        aiFeedback: aiData
+                    })
+                }).catch(e => console.error("Not saved (possibly unauthenticated)", e));
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsAnalyzing(false);
+        }
     };
 
     const allAnswered = Object.keys(answers).length >= quizData.questions.length;
@@ -63,6 +158,15 @@ export function CareerQuiz() {
 
         return results.sort((a, b) => b.score - a.score);
     }, [answers, bonusQuestions, allAnswered]);
+
+    // Avoid flashing Intro if we're checking session and redirecting
+    if (isCheckingSession) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background via-muted/20 to-background">
+                <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-background via-muted/20 to-background">
@@ -112,18 +216,10 @@ export function CareerQuiz() {
                                         </div>
                                     </div>
                                 </div>
-                                <Button size="lg" className="rounded-full px-12 h-14 text-lg" onClick={() => setStep("pre-quiz")}>
+                                <Button size="lg" className="rounded-full px-12 h-14 text-lg" onClick={() => setStep("questions")}>
                                     Comenzar Test <ArrowRight className="ml-2 h-5 w-5" />
                                 </Button>
                             </motion.div>
-                        )}
-
-                        {/* ─── STEP 1.5: PRE-QUIZ DATA ─── */}
-                        {step === "pre-quiz" && (
-                            <PreQuizForm onSubmit={(data) => {
-                                setUserData(data);
-                                setStep("questions");
-                            }} />
                         )}
 
                         {/* ─── STEP 2: ALL 40 QUESTIONS ON ONE PAGE ─── */}
@@ -233,7 +329,7 @@ export function CareerQuiz() {
                             </motion.div>
                         )}
 
-                        {/* ─── STEP 4: BONUS SELECTION (ALL 40 AGAIN) ─── */}
+                        {/* ─── STEP 4: BONUS SELECTION ─── */}
                         {step === "bonus" && (
                             <motion.div
                                 key="bonus"
@@ -285,49 +381,41 @@ export function CareerQuiz() {
                                             <div className="flex gap-2">
                                                 <Button variant="ghost" onClick={() => setStep("transition")}>Atrás</Button>
                                                 <Button
-                                                    disabled={bonusQuestions.length < 3 || isAnalyzing}
+                                                    disabled={bonusQuestions.length < 3}
                                                     className="rounded-full px-8 bg-primary shadow-lg shadow-primary/20"
                                                     onClick={async () => {
-                                                        setIsAnalyzing(true);
-                                                        setStep("results");
-                                                        try {
-                                                            // Call to AI SDK
-                                                            const dominantAnchor = calculateResults?.[0];
-                                                            if (dominantAnchor && userData) {
-                                                                const res = await fetch('/api/diagnostics/analyze', {
-                                                                    method: 'POST',
-                                                                    headers: { 'Content-Type': 'application/json' },
-                                                                    body: JSON.stringify({ anchor: dominantAnchor, userData })
-                                                                });
-                                                                const data = await res.json();
-                                                                setAiResult(data);
-
-                                                                // Guardar en Perfil (solo tiene éxito si está auth, fallará silenciosamente si no lo está en el try-catch de API)
-                                                                await fetch('/api/diagnostics/save', {
-                                                                    method: 'POST',
-                                                                    headers: { 'Content-Type': 'application/json' },
-                                                                    body: JSON.stringify({
-                                                                        diagnosticType: 'career_anchor',
-                                                                        userData,
-                                                                        rawAnswers: { ...answers, bonus: bonusQuestions },
-                                                                        dominantResult: dominantAnchor,
-                                                                        aiFeedback: data
-                                                                    })
-                                                                }).catch(e => console.error("Not saved (possibly unauthenticated)", e));
-                                                            }
-                                                        } catch (err) {
-                                                            console.error(err);
-                                                        } finally {
-                                                            setIsAnalyzing(false);
+                                                        const { data: { user } } = await supabase.auth.getUser();
+                                                        if (user) {
+                                                            setStep("pre-quiz");
+                                                        } else {
+                                                            setIsAuthModalOpen(true);
                                                         }
                                                     }}
                                                 >
-                                                    {isAnalyzing ? "Analizando Perfil..." : "Ver mis resultados"} <ChevronRight className="ml-2 h-4 w-4" />
+                                                    Conocer mi resultado <ChevronRight className="ml-2 h-4 w-4" />
                                                 </Button>
                                             </div>
                                         </div>
                                     </CardFooter>
                                 </Card>
+                            </motion.div>
+                        )}
+
+                        {/* ─── STEP 4.5: DEMOGRAPHIC DATA (PRE-QUIZ) ─── */}
+                        {step === "pre-quiz" && (
+                            <motion.div
+                                key="pre-quiz"
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 1.05 }}
+                            >
+                                <div className="mb-8 text-center">
+                                    <Heading level="h2">Ya tenemos procesadas tus respuestas</Heading>
+                                    <Text className="text-muted-foreground mt-2 max-w-xl mx-auto">
+                                        Para que nuestra Inteligencia Artificial evalúe de manera hiperpersonalizada tu Ancla Dominante, necesitamos algunos datos básicos sobre tu contexto actual.
+                                    </Text>
+                                </div>
+                                <PreQuizForm onSubmit={submitAndAnalyze} />
                             </motion.div>
                         )}
 
@@ -339,6 +427,7 @@ export function CareerQuiz() {
                                 animate={{ opacity: 1, y: 0 }}
                                 className="space-y-12"
                             >
+                                {/* Results logic... */}
                                 <div className="text-center space-y-4">
                                     <div className="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-bold bg-green-100 text-green-700 border border-green-200">
                                         ¡Análisis Completado!
@@ -516,6 +605,73 @@ export function CareerQuiz() {
                     </AnimatePresence>
                 </div>
             </Container>
+
+            {/* Auth Modal via Dialog */}
+            <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
+                <DialogContent className="sm:max-w-lg p-0 border-none bg-transparent shadow-none">
+                    <Card className="border-primary/10 shadow-2xl bg-background/95 backdrop-blur-xl">
+                        <CardHeader className="text-center pb-8 pt-8 space-y-4">
+                            <div className="mx-auto w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-2">
+                                <Sparkles className="w-6 h-6 text-primary" />
+                            </div>
+                            <DialogTitle className="text-2xl font-bold font-heading">
+                                Tus resultados están listos
+                            </DialogTitle>
+                            <DialogDescription className="text-base">
+                                Ingresá para guardar el progreso y ver tu Ancla de Carrera con la evaluación hiperpersonalizada por IA.
+                            </DialogDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4 pb-8">
+                            <Button
+                                variant="outline"
+                                className="w-full h-14 rounded-full border-muted-foreground/20 hover:bg-muted/50 transition-all font-medium text-base relative overflow-hidden group"
+                                onClick={() => handleOAuthLogin('google')}
+                                disabled={isAuthLoading !== null}
+                            >
+                                <span className={`flex items-center justify-center gap-3 transition-transform duration-300 ${isAuthLoading === 'google' ? 'translate-y-[-150%]' : 'translate-y-0'}`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-5 h-5">
+                                        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                                        <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                                        <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                                        <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                                    </svg>
+                                    Ingresar con Google
+                                </span>
+                                {isAuthLoading === 'google' && (
+                                    <div className="absolute inset-0 flex items-center justify-center text-blue-500">
+                                        <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                    </div>
+                                )}
+                            </Button>
+
+                            <Button
+                                variant="outline"
+                                className="w-full h-14 rounded-full border-muted-foreground/20 hover:bg-[#0077b5]/5 transition-all font-medium text-base relative overflow-hidden group"
+                                onClick={() => handleOAuthLogin('linkedin_oidc')}
+                                disabled={isAuthLoading !== null}
+                            >
+                                <span className={`flex items-center justify-center gap-3 transition-transform duration-300 ${isAuthLoading === 'linkedin_oidc' ? 'translate-y-[-150%]' : 'translate-y-0'}`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5">
+                                        <path fill="#0a66c2" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                    </svg>
+                                    Ingresar con LinkedIn
+                                </span>
+                                {isAuthLoading === 'linkedin_oidc' && (
+                                    <div className="absolute inset-0 flex items-center justify-center text-[#0077b5]">
+                                        <div className="w-5 h-5 border-2 border-[#0077b5] border-t-transparent rounded-full animate-spin"></div>
+                                    </div>
+                                )}
+                            </Button>
+
+                            <div className="mt-4 text-center px-4">
+                                <Text variant="small" className="text-muted-foreground">
+                                    El registro es seguro y nos permite almacenar tus resultados para sesiones posteriores.
+                                </Text>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </DialogContent>
+            </Dialog>
 
             <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {

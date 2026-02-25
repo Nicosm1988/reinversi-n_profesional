@@ -70,7 +70,7 @@ export function PathsSection() {
                                 </Text>
 
                                 <Button variant="link" className="p-0 h-auto text-primary font-medium group" asChild>
-                                    <Link href="/diagnostico">
+                                    <Link href="/diagnostico/ancla-de-carrera">
                                         Hacer diagnóstico <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Link>
                                 </Button>

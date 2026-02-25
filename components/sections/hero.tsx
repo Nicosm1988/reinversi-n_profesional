@@ -39,7 +39,7 @@ export function HeroSection() {
                     <SlideUp delay={0.3}>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                             <Button size="lg" className="h-14 px-8 text-base w-full sm:w-auto rounded-full" asChild>
-                                <Link href="/diagnostico">
+                                <Link href="/diagnostico/ancla-de-carrera">
                                     Comenzar Diagnóstico <ArrowRight className="ml-2 h-4 w-4" />
                                 </Link>
                             </Button>
