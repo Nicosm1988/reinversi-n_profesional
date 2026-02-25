@@ -34,7 +34,7 @@ export function Header() {
                     : 'bg-transparent py-4'
             )}
         >
-            <div className="container px-4 md:px-6 mx-auto flex items-center justify-between">
+            <div className="container relative px-4 md:px-6 mx-auto flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 z-50">
                     <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold text-xl">
@@ -43,15 +43,8 @@ export function Header() {
                     <span className="font-heading font-bold text-lg tracking-tight">Reinvención<span className="text-secondary">.Pro</span></span>
                 </Link>
 
-                {/* Desktop Nav Capsule */}
-                <div className="hidden lg:flex items-center gap-5">
-                    <Link
-                        href="/login"
-                        className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                        Ingresar
-                    </Link>
-
+                {/* Desktop Nav Capsule - Centered */}
+                <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                     <nav className="flex items-center gap-1 rounded-full border border-slate-200 bg-white p-1.5 pl-3 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
                         {navLinks.map((link) => (
                             <Link
@@ -65,20 +58,30 @@ export function Header() {
 
                         <Link
                             href="/diagnostico/ancla-de-carrera"
-                            className="inline-flex h-10 items-center rounded-full bg-[#D7EA62] px-6 text-sm font-semibold text-[#142B55] transition-colors hover:bg-[#CADD58]"
+                            className="inline-flex h-10 items-center rounded-full bg-transparent px-6 text-sm font-semibold text-slate-700 transition-colors hover:bg-[#D7EA62] hover:text-[#142B55]"
                         >
                             Hacer Diagnóstico
                         </Link>
                     </nav>
                 </div>
 
-                {/* Mobile Toggle */}
-                <button
-                    className="lg:hidden z-50 p-2 text-foreground"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                    {isMobileMenuOpen ? <X /> : <Menu />}
-                </button>
+                {/* Right Actions */}
+                <div className="flex items-center gap-5 z-50">
+                    <Link
+                        href="/login"
+                        className="hidden lg:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                        Ingresar
+                    </Link>
+
+                    {/* Mobile Toggle */}
+                    <button
+                        className="lg:hidden p-2 text-foreground"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    >
+                        {isMobileMenuOpen ? <X /> : <Menu />}
+                    </button>
+                </div>
 
                 {/* Mobile Menu Overlay */}
                 {isMobileMenuOpen && (
