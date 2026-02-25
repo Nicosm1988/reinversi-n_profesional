@@ -3,26 +3,18 @@
 import { Button } from "@/components/ui/button";
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
-import { FadeIn, StaggerContainer, SlideUp } from "@/components/motion";
+import { StaggerContainer, SlideUp } from "@/components/motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export function HeroSection() {
     return (
-        <Section spacing="lg" className="pt-32 pb-20 md:pt-48 md:pb-32 relative">
+        <Section spacing="lg" className="pt-24 pb-14 md:pt-36 md:pb-20 relative">
             {/* Background Texture Subtle */}
             <div className="absolute inset-0 z-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
 
             <Container className="relative z-10 text-center">
                 <StaggerContainer>
-
-                    <SlideUp>
-                        <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary mb-8">
-                            <span className="mr-2 h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></span>
-                            Nueva Arquitectura de Carrera 2025
-                        </div>
-                    </SlideUp>
-
                     <SlideUp delay={0.1}>
                         <Heading level="h1" className="mb-6 max-w-4xl mx-auto">
                             No perdiste el rumbo. <br className="hidden md:block" />

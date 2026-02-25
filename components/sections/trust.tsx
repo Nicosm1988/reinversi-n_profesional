@@ -54,7 +54,7 @@ export function TrustSection() {
                 </StaggerContainer>
 
                 {/* Logos Placeholder - Monochrome */}
-                <FadeIn className="mt-24 pt-12 border-t border-border/30 flex flex-wrap justify-center gap-12 opacity-40 grayscale mix-blend-multiply">
+                <FadeIn className="mt-16 pt-8 border-t border-border/30 flex flex-wrap justify-center gap-12 opacity-40 grayscale mix-blend-multiply">
                     {["MercadoLibre", "Globant", "Nubank", "Google", "Amazon"].map((company) => (
                         <span key={company} className="text-lg font-bold font-heading">{company}</span>
                     ))}

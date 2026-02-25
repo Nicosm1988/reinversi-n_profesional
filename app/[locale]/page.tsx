@@ -4,7 +4,6 @@ import { ProblemSection } from "@/components/sections/problem";
 import { MethodSection } from "@/components/sections/method";
 import { PathsSection } from "@/components/sections/paths";
 import { ServicesSection } from "@/components/sections/services";
-import { AutomationSection } from "@/components/sections/automation";
 import { FAQSection } from "@/components/sections/faq";
 
 // El layout se maneja en cada sección usando los componentes de Layout (Section/Container)
@@ -22,7 +21,6 @@ export default function Home() {
       <MethodSection />
       <PathsSection />
       <ServicesSection />
-      <AutomationSection />
       <FAQSection />
     </div>
   );

@@ -7,7 +7,7 @@ import { FadeIn } from "@/components/motion";
 
 export function FAQSection() {
     const faqs = [
-        { q: "¿Es terapia psicológica?", a: "No. Aunque usamos herramientas de psicología laboral y neurociencia, este es un proceso estratégico orientado a objetivos profesionales concretos (conseguir empleo, emprender, ascender). No tratamos patologías ni crisis de salud mental." },
+        { q: "¿Es terapia psicológica?", a: "Nuestro equipo es multidisciplinario e incluye perfiles de psicología, pero este servicio está orientado a estrategia y coaching de carrera para objetivos profesionales concretos (conseguir empleo, emprender, ascender). No reemplaza procesos de psicoterapia clínica ni tratamiento psiquiátrico." },
         { q: "¿Cuánto dura el proceso?", a: "El diagnóstico es inmediato. El Pack Triage es una sesión única de 60 minutos. El programa de Reinvención Total dura típicamente entre 4 y 8 semanas, dependiendo de tu ritmo de implementación." },
         { q: "¿Qué pasa si no sé qué quiero hacer?", a: "Es el mejor momento para empezar. Nuestro módulo de 'Diagnóstico Híbrido' está diseñado específicamente para desenmarañar la confusión y encontrar patrones de interés y habilidad que quizás no estás viendo." },
         { q: "¿Es online o presencial?", a: "Es 100% online para maximizar flexibilidad, pero mantenemos la calidez de la interacción humana síncrona en todas las sesiones clave." }

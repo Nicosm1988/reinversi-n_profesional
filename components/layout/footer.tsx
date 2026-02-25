@@ -63,7 +63,7 @@ export function Footer() {
 
                 {/* Disclaimer */}
                 <div className="mt-8 p-4 bg-slate-100 rounded-lg text-[10px] text-slate-500 text-center leading-relaxed max-w-3xl mx-auto">
-                    <strong>Aviso Importante:</strong> Este servicio ofrece acompañamiento estratégico y coaching de carrera. No constituye terapia psicológica clínica ni asesoramiento psiquiátrico. Si estás atravesando una crisis de salud mental, por favor contacta a un profesional de la salud matriculado.
+                    <strong>Aviso Importante:</strong> Nuestro equipo es multidisciplinario e incluye profesionales de distintas especialidades, entre ellas psicología. Este servicio está enfocado en acompañamiento estratégico y coaching de carrera, por lo que no reemplaza procesos de psicoterapia clínica ni tratamiento psiquiátrico. Si estás atravesando una crisis de salud mental, te recomendamos contactar a un profesional matriculado o al servicio de emergencia de tu zona.
                 </div>
             </div>
         </footer>

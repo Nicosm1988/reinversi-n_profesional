@@ -9,10 +9,10 @@ interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Section = ({ className, spacing = "lg", background = "default", ...props }: SectionProps) => {
     const spacingStyles = {
         none: "",
-        sm: "py-12 md:py-16",
-        md: "py-16 md:py-24", // 64px - 96px
-        lg: "py-20 md:py-32", // 80px - 128px
-        xl: "py-24 md:py-40", // 96px - 160px
+        sm: "py-10 md:py-12",
+        md: "py-12 md:py-16", // 48px - 64px
+        lg: "py-16 md:py-24", // 64px - 96px
+        xl: "py-20 md:py-28", // 80px - 112px
     }
 
     const bgStyles = {
