@@ -47,7 +47,7 @@ export function HeroSection() {
     return (
         <section className="relative w-full pt-20">
             {/* Dark background container for the Carousel */}
-            <div className="bg-primary text-primary-foreground py-12 lg:py-24 relative overflow-hidden">
+            <div className="bg-primary text-primary-foreground py-16 lg:py-32 relative overflow-hidden">
                 {/* Subtle texture over primary bg */}
                 <div className="absolute inset-0 z-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none mix-blend-overlay"></div>
 
@@ -58,28 +58,28 @@ export function HeroSection() {
                             loop: true,
                             align: "start",
                         }}
-                        className="w-full max-w-6xl"
+                        className="w-full max-w-4xl text-center"
                     >
                         <CarouselContent>
                             {slides.map((slide, index) => (
                                 <CarouselItem key={index}>
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center pt-8 pb-12">
-                                        {/* Left Side: Text Box */}
-                                        <div className="flex flex-col space-y-8 lg:pr-12">
+                                    <div className="flex flex-col items-center justify-center pt-8 pb-12">
+
+                                        <div className="flex flex-col items-center space-y-8">
                                             <SlideUp delay={0.1}>
-                                                <Heading level="h1" className="text-primary-foreground text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
+                                                <Heading level="h1" className="text-primary-foreground text-4xl sm:text-5xl lg:text-7xl leading-[1.1] max-w-3xl mx-auto">
                                                     {slide.title}
                                                 </Heading>
                                             </SlideUp>
 
                                             <SlideUp delay={0.2}>
-                                                <Text variant="lead" className="text-primary-foreground/80 max-w-lg">
+                                                <Text variant="lead" className="text-primary-foreground/80 max-w-2xl mx-auto">
                                                     {slide.description}
                                                 </Text>
                                             </SlideUp>
 
                                             <SlideUp delay={0.3}>
-                                                <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+                                                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                                                     <Button
                                                         size="lg"
                                                         className="h-14 px-8 text-base w-full sm:w-auto rounded-full bg-[#D7EA62] text-[#142B55] hover:bg-[#CADD58] transition-colors font-semibold"
@@ -103,10 +103,6 @@ export function HeroSection() {
                                             </SlideUp>
                                         </div>
 
-                                        {/* Right Side: Visual */}
-                                        <SlideUp delay={0.4} className="h-full">
-                                            {slide.visual}
-                                        </SlideUp>
                                     </div>
                                 </CarouselItem>
                             ))}
@@ -114,8 +110,8 @@ export function HeroSection() {
 
                         {/* Custom position for arrows to match the wide feeling */}
                         <div className="hidden lg:block">
-                            <CarouselPrevious className="absolute -left-4 xl:-left-12 top-1/2 -translate-y-1/2 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:text-primary-foreground" />
-                            <CarouselNext className="absolute -right-4 xl:-right-12 top-1/2 -translate-y-1/2 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:text-primary-foreground" />
+                            <CarouselPrevious className="absolute -left-12 xl:-left-32 top-1/2 -translate-y-1/2 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:text-primary-foreground h-12 w-12" />
+                            <CarouselNext className="absolute -right-12 xl:-right-32 top-1/2 -translate-y-1/2 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20 hover:text-primary-foreground h-12 w-12" />
                         </div>
                     </Carousel>
 
