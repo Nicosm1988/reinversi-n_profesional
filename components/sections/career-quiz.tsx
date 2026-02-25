@@ -301,6 +301,19 @@ export function CareerQuiz() {
                                                                 });
                                                                 const data = await res.json();
                                                                 setAiResult(data);
+
+                                                                // Guardar en Perfil (solo tiene éxito si está auth, fallará silenciosamente si no lo está en el try-catch de API)
+                                                                await fetch('/api/diagnostics/save', {
+                                                                    method: 'POST',
+                                                                    headers: { 'Content-Type': 'application/json' },
+                                                                    body: JSON.stringify({
+                                                                        diagnosticType: 'career_anchor',
+                                                                        userData,
+                                                                        rawAnswers: { ...answers, bonus: bonusQuestions },
+                                                                        dominantResult: dominantAnchor,
+                                                                        aiFeedback: data
+                                                                    })
+                                                                }).catch(e => console.error("Not saved (possibly unauthenticated)", e));
                                                             }
                                                         } catch (err) {
                                                             console.error(err);
