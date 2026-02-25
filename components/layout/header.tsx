@@ -31,7 +31,7 @@ export function Header() {
                 'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out border-b border-transparent',
                 isScrolled
                     ? 'bg-background/80 backdrop-blur-md border-border/40 py-3 shadow-sm'
-                    : 'bg-transparent py-5'
+                    : 'bg-transparent py-4'
             )}
         >
             <div className="container px-4 md:px-6 mx-auto flex items-center justify-between">
@@ -43,32 +43,38 @@ export function Header() {
                     <span className="font-heading font-bold text-lg tracking-tight">Reinvención<span className="text-secondary">.Pro</span></span>
                 </Link>
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                </nav>
+                {/* Desktop Nav Capsule */}
+                <div className="hidden lg:flex items-center gap-5">
+                    <Link
+                        href="/login"
+                        className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                        Ingresar
+                    </Link>
 
-                {/* Desktop CTAs */}
-                <div className="hidden md:flex items-center gap-4">
-                    <Button variant="ghost" size="sm" asChild className="font-medium">
-                        <Link href="/login">Ingresar</Link>
-                    </Button>
-                    <Button size="sm" className="rounded-full px-6 shadow-md" asChild>
-                        <Link href="/diagnostico/ancla-de-carrera">Hacer Diagnóstico</Link>
-                    </Button>
+                    <nav className="flex items-center gap-1 rounded-full border border-slate-200 bg-white p-1.5 pl-3 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className="px-3.5 py-2 text-sm font-medium text-slate-700 hover:text-primary transition-colors"
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
+
+                        <Link
+                            href="/diagnostico/ancla-de-carrera"
+                            className="inline-flex h-10 items-center rounded-full bg-[#D7EA62] px-6 text-sm font-semibold text-[#142B55] transition-colors hover:bg-[#CADD58]"
+                        >
+                            Hacer Diagnóstico
+                        </Link>
+                    </nav>
                 </div>
 
                 {/* Mobile Toggle */}
                 <button
-                    className="md:hidden z-50 p-2 text-foreground"
+                    className="lg:hidden z-50 p-2 text-foreground"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
                     {isMobileMenuOpen ? <X /> : <Menu />}
@@ -76,7 +82,7 @@ export function Header() {
 
                 {/* Mobile Menu Overlay */}
                 {isMobileMenuOpen && (
-                    <div className="fixed inset-0 bg-background/95 backdrop-blur-sm z-40 flex flex-col items-center justify-center space-y-8 animate-fade-in-up md:hidden">
+                    <div className="fixed inset-0 bg-background/95 backdrop-blur-sm z-40 flex flex-col items-center justify-center space-y-8 animate-fade-in-up lg:hidden">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
