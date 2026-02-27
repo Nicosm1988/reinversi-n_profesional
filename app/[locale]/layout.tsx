@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google"; // Pivot to Editorial: Fraunces
+import { Inter, Poppins } from "next/font/google"; // Pivot to Geometry/Friendly: Poppins
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
@@ -13,11 +13,11 @@ const inter = Inter({
   display: "swap"
 });
 
-const fraunces = Fraunces({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  display: "swap",
-  axes: ["SOFT", "WONK", "opsz"] // Use variable axes for character
+  variable: "--font-poppins",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap"
 });
 
 export const metadata: Metadata = {
@@ -44,7 +44,7 @@ export default async function RootLayout(
         className={cn(
           "min-h-screen bg-background font-sans antialiased flex flex-col selection:bg-secondary/30 selection:text-foreground",
           inter.variable,
-          fraunces.variable
+          poppins.variable
         )}
       >
         <NextIntlClientProvider messages={messages}>

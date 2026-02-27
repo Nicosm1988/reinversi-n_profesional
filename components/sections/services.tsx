@@ -22,8 +22,8 @@ export function ServicesSection() {
                             Empieza a construir tu futuro con acompañamiento profesional en cada paso.
                         </Text>
                         <Button variant="secondary" size="lg" className="rounded-full px-10 h-14 text-base shadow-lg" asChild>
-                            <Link href="#diagnostico">
-                                Hacé tu diagnóstico ahora
+                            <Link href="/diagnostico/ancla-de-carrera">
+                                Quiero mi diagnóstico
                             </Link>
                         </Button>
                     </div>

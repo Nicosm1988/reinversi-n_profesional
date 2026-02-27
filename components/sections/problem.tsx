@@ -29,12 +29,12 @@ export function ProblemSection() {
                     <FadeIn>
                         <div className="sticky top-32">
                             <Heading level="h2" className="mb-6">
-                                ¿Por qué se siente tan difícil cambiar?
+                                Entendemos el peso de esta transición.
                             </Heading>
                             <Text variant="body-lg" className="mb-8">
-                                No es falta de capacidad. Es que las reglas del juego de carrera cambiaron y nadie te avisó.
+                                No es falta de capacidad ni que el mercado te haya dejado atrás. Es que las reglas del juego cambiaron y necesitas un espacio seguro para rearmar tu estrategia.
                                 <br /><br />
-                                La intuición ya no alcanza. Necesitas un sistema.
+                                Déjate acompañar. La intuición ya no alcanza, construyamos un sistema.
                             </Text>
                         </div>
                     </FadeIn>

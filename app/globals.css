@@ -3,81 +3,72 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        /* Base: Warm White / Charcoal */
-        /* #F7F4EF -> 38 33% 95% */
-        --background: 38 33% 95%;
-        /* #1C1C1C -> 0 0% 11% */
-        --foreground: 0 0% 11%;
+  :root {
+    /* Base: Soft Lavender / Azul Marino */
+    --background: 255 100% 97%; /* #F3EFFF */
+    --foreground: 223 100% 17%; /* #001959 */
 
-        /* Brand: Deep Olive / Forest */
-        /* #2F3E30 -> 124 14% 21% */
-        --primary: 124 14% 21%;
-        --primary-foreground: 38 33% 95%;
+    /* Brand: Deep Navy */
+    --primary: 223 100% 17%;
+    --primary-foreground: 255 100% 97%;
 
-        /* Accent: Soft Terracota / Clay */
-        /* #C57B57 -> 20 48% 56% */
-        --secondary: 20 48% 56%;
-        --secondary-foreground: 0 0% 100%;
+    /* Accent: Neon Lime */
+    --secondary: 67 82% 73%; /* #E6F381 */
+    --secondary-foreground: 223 100% 17%;
 
-        /* Surfaces */
-        --card: 38 33% 95%;
-        --card-foreground: 0 0% 11%;
+    /* Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 223 100% 17%;
 
-        --popover: 38 33% 95%;
-        --popover-foreground: 0 0% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 223 100% 17%;
 
-        /* Functional Colors */
-        --muted: 36 20% 90%;
-        /* Soft warm gray */
-        --muted-foreground: 0 0% 40%;
-        /* Softer charcoal */
+    /* Functional Colors */
+    --muted: 255 50% 92%;
+    --muted-foreground: 249 41% 25%; /* #2E265C */
 
-        --accent: 36 20% 90%;
-        --accent-foreground: 124 14% 21%;
-        /* Olive text on accent */
+    --accent: 255 50% 92%;
+    --accent-foreground: 223 100% 17%;
 
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-        --border: 36 10% 85%;
-        --input: 36 10% 85%;
-        --ring: 124 14% 21%;
+    --border: 255 50% 90%;
+    --input: 255 50% 90%;
+    --ring: 223 100% 17%;
 
-        --radius: 0.5rem;
-        /* Softer, but not rounded like SaaS */
-    }
+    --radius: 1.5rem;
+    /* Organic soft radius for cards */
+  }
 
-    .dark {
-        /* Inverting for Dark Mode while keeping warmth */
-        --background: 20 10% 10%;
-        /* Warm Dark Gray */
-        --foreground: 38 20% 90%;
+  .dark {
+    /* Inverting for Dark Mode while keeping brand */
+    --background: 249 41% 15%;
+    --foreground: 255 100% 97%;
 
-        --card: 20 10% 12%;
-        --card-foreground: 38 20% 90%;
+    --card: 249 41% 18%;
+    --card-foreground: 255 100% 97%;
 
-        --popover: 20 10% 12%;
-        --popover-foreground: 38 20% 90%;
+    --popover: 249 41% 18%;
+    --popover-foreground: 255 100% 97%;
 
-        --primary: 124 14% 30%;
-        /* Lighter Olive */
-        --primary-foreground: 38 20% 90%;
+    --primary: 67 82% 73%;
+    --primary-foreground: 223 100% 17%;
 
-        --secondary: 20 48% 56%;
-        --secondary-foreground: 0 0% 100%;
+    --secondary: 255 50% 92%;
+    --secondary-foreground: 223 100% 17%;
 
-        --muted: 20 10% 16%;
-        --muted-foreground: 38 10% 60%;
+    --muted: 249 41% 20%;
+    --muted-foreground: 255 50% 85%;
 
-        --accent: 20 10% 16%;
-        --accent-foreground: 38 20% 90%;
+    --accent: 249 41% 20%;
+    --accent-foreground: 255 100% 97%;
 
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 38 20% 90%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 38 20% 90%;
 
-        --border: 20 10% 20%;
-        --input: 20 10% 20%;
-        --ring: 124 14% 30%;
-    }
+    --border: 249 41% 25%;
+    --input: 249 41% 25%;
+    --ring: 67 82% 73%;
+  }
 }

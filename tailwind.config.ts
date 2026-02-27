@@ -51,7 +51,7 @@ export default {
             },
             fontFamily: {
                 sans: ['var(--font-inter)', 'sans-serif'],
-                heading: ['var(--font-fraunces)', 'serif'],
+                heading: ['var(--font-poppins)', 'sans-serif'],
             },
             fontSize: {
                 // Semantic Typography Scale

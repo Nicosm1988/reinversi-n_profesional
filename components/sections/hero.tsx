@@ -15,27 +15,27 @@ import {
 
 const slides = [
     {
-        title: <>No perdiste el rumbo. <br className="hidden lg:block" />Estás en <span className="italic font-serif text-secondary">transición</span>.</>,
-        description: "Transformamos la incertidumbre laboral en un espacio de exploración personal y profesional, trazando nuevos puentes desde el presente hacia el futuro y validando tu recorrido.",
-        primaryAction: { label: "Comenzar Diagnóstico", href: "/diagnostico/ancla-de-carrera" },
+        title: <>¿Y si dejar de luchar <br className="hidden lg:block" />fuera el <span className="italic text-secondary">primer paso</span>?</>,
+        description: "Entendemos tu burnout. Transformamos la incertidumbre laboral en un espacio seguro de exploración personal, acompañándote a dar el siguiente gran salto como un acto de evolución estratégica.",
+        primaryAction: { label: "Quiero mi diagnóstico", href: "/diagnostico/ancla-de-carrera" },
         secondaryAction: { label: "Conocer Método", href: "#metodo" },
         // A simple abstract shape/gradient placeholder for the image to maintain the premium feel
         visual: (
             <div className="w-full h-full min-h-[300px] lg:min-h-[500px] rounded-2xl bg-gradient-to-br from-primary-foreground/10 to-transparent border border-primary-foreground/5 flex items-center justify-center relative overflow-hidden">
                 <div className="absolute w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-secondary/20 via-transparent to-transparent opacity-50 blur-2xl top-0 right-0" />
-                <Text variant="body" className="text-primary-foreground/40 font-serif italic z-10">Exploración Profesional</Text>
+                <Text variant="body" className="text-primary-foreground/40 italic z-10">Exploración Profesional</Text>
             </div>
         )
     },
     {
-        title: <>Encuentra en la reinvención <br className="hidden lg:block" />tu <span className="italic font-serif text-[#D7EA62]">espacio seguro</span>.</>,
-        description: "Explora tus opciones sin juicios y acompañado de nuestra metodología ágil e intensiva de transición y reposicionamiento laboral.",
-        primaryAction: { label: "Ver Servicios", href: "#servicios" },
-        secondaryAction: { label: "Agendar Sesión", href: "/contacto" },
+        title: <>Diseñemos juntos tu <br className="hidden lg:block" /><span className="italic text-secondary">próximo capítulo</span>.</>,
+        description: "Descomponemos el desafío de la reinvención en pasos claros y predecibles. Escuchamos, diseñamos y acompañamos tu transición de forma contenida y sin juicios.",
+        primaryAction: { label: "Agendar mi primera sesión", href: "/contacto" },
+        secondaryAction: { label: "Ver Servicios", href: "#servicios" },
         visual: (
             <div className="w-full h-full min-h-[300px] lg:min-h-[500px] rounded-2xl bg-gradient-to-bl from-primary-foreground/10 to-transparent border border-primary-foreground/5 flex items-center justify-center relative overflow-hidden">
                 <div className="absolute w-[140%] h-[140%] bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-[#D7EA62]/10 via-transparent to-transparent opacity-50 blur-2xl bottom-0 left-0" />
-                <Text variant="body" className="text-primary-foreground/40 font-serif italic z-10">Metodología Ágil</Text>
+                <Text variant="body" className="text-primary-foreground/40 italic z-10">Metodología Ágil</Text>
             </div>
         )
     }
