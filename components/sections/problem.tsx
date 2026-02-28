@@ -37,7 +37,7 @@ export function ProblemSection() {
                 <br />
                 <br />
                 Darle espacio al cambio es la mejor forma de construir algo
-                real. Cada proceso es único — te acompañamos a transitar el
+                real. Cada proceso es único, te acompañamos a transitar el
                 tuyo.
               </Text>
             </div>
