@@ -51,7 +51,7 @@ export function HeroSection() {
                 {/* Subtle texture over primary bg */}
                 <div className="absolute inset-0 z-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none mix-blend-overlay"></div>
 
-                <div className="container mx-auto px-4 md:px-6 md:px-12 relative z-10 flex flex-col items-center">
+                <div className="container mx-auto px-4 md:px-12 relative z-10 flex flex-col items-center">
 
                     <Carousel
                         opts={{
@@ -82,7 +82,7 @@ export function HeroSection() {
                                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                                                     <Button
                                                         size="lg"
-                                                        className="h-14 px-8 text-base w-full sm:w-auto rounded-full bg-[#D7EA62] text-[#142B55] hover:bg-[#CADD58] transition-colors font-semibold"
+                                                        className="h-14 px-8 text-base w-full sm:w-auto rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors font-semibold"
                                                         asChild
                                                     >
                                                         <Link href={slide.primaryAction.href}>

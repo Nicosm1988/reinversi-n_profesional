@@ -4,71 +4,77 @@
 
 @layer base {
   :root {
-    /* Base: Soft Lavender / Azul Marino */
-    --background: 255 100% 97%; /* #F3EFFF */
-    --foreground: 223 100% 17%; /* #001959 */
+    /* ═══════════════════════════════════════════════
+       Reinvención.Pro — Design System 2026
+       Paleta: Purple / Orange / Forest Green
+       ═══════════════════════════════════════════════ */
 
-    /* Brand: Deep Navy */
-    --primary: 223 100% 17%;
-    --primary-foreground: 255 100% 97%;
+    /* Base surface */
+    --background: 270 30% 97%; /* #F7F3FC — off-white with purple tint */
+    --foreground: 270 60% 12%; /* #1E0E33 — deep purple-black */
 
-    /* Accent: Neon Lime */
-    --secondary: 67 82% 73%; /* #E6F381 */
-    --secondary-foreground: 223 100% 17%;
+    /* Brand: Deep Purple */
+    --primary: 270 80% 25%; /* #3D0A82 — deep royal purple */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    /* Accent: Vibrant Orange */
+    --secondary: 30 100% 50%; /* #FF8C00 — vivid orange */
+    --secondary-foreground: 0 0% 100%;
 
     /* Surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 223 100% 17%;
+    --card-foreground: 270 60% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 223 100% 17%;
+    --popover: 270 40% 95%; /* soft purple tint for popover bg */
+    --popover-foreground: 270 60% 12%;
 
     /* Functional Colors */
-    --muted: 255 50% 92%;
-    --muted-foreground: 249 41% 25%; /* #2E265C */
+    --muted: 270 20% 93%; /* light lavender */
+    --muted-foreground: 270 30% 35%;
 
-    --accent: 255 50% 92%;
-    --accent-foreground: 223 100% 17%;
+    /* Accent: Forest/Olive Green (for badges, highlights) */
+    --accent: 120 35% 32%; /* #366136 — forest green */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 255 50% 90%;
-    --input: 255 50% 90%;
-    --ring: 223 100% 17%;
+    --border: 270 20% 90%;
+    --input: 270 20% 90%;
+    --ring: 270 80% 50%; /* medium purple ring */
 
     --radius: 1.5rem;
-    /* Organic soft radius for cards */
   }
 
   .dark {
-    /* Inverting for Dark Mode while keeping brand */
-    --background: 249 41% 15%;
-    --foreground: 255 100% 97%;
+    /* ═══ Dark Mode ═══ */
+    --background: 270 50% 8%; /* #120821 — very deep purple */
+    --foreground: 270 20% 95%; /* #F2EFF7 */
 
-    --card: 249 41% 18%;
-    --card-foreground: 255 100% 97%;
+    --card: 270 45% 12%;
+    --card-foreground: 270 20% 95%;
 
-    --popover: 249 41% 18%;
-    --popover-foreground: 255 100% 97%;
+    --popover: 270 45% 12%;
+    --popover-foreground: 270 20% 95%;
 
-    --primary: 67 82% 73%;
-    --primary-foreground: 223 100% 17%;
+    /* In dark mode, primary is the brighter purple */
+    --primary: 270 80% 65%; /* #A855F7 — bright purple */
+    --primary-foreground: 270 50% 8%;
 
-    --secondary: 255 50% 92%;
-    --secondary-foreground: 223 100% 17%;
+    --secondary: 30 100% 55%; /* #FF9F1A — warm orange */
+    --secondary-foreground: 270 50% 8%;
 
-    --muted: 249 41% 20%;
-    --muted-foreground: 255 50% 85%;
+    --muted: 270 40% 15%;
+    --muted-foreground: 270 20% 75%;
 
-    --accent: 249 41% 20%;
-    --accent-foreground: 255 100% 97%;
+    --accent: 100 30% 45%; /* olive/sage green */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 38 20% 90%;
+    --destructive-foreground: 0 0% 95%;
 
-    --border: 249 41% 25%;
-    --input: 249 41% 25%;
-    --ring: 67 82% 73%;
+    --border: 270 40% 18%;
+    --input: 270 40% 18%;
+    --ring: 30 100% 55%; /* orange ring in dark mode */
   }
 }

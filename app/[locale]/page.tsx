@@ -3,6 +3,8 @@ import { TrustSection } from "@/components/sections/trust";
 import { ProblemSection } from "@/components/sections/problem";
 import { MethodSection } from "@/components/sections/method";
 import { PathsSection } from "@/components/sections/paths";
+import { BusinessEnglishSection } from "@/components/sections/business-english";
+import { TherapySection } from "@/components/sections/therapy";
 import { ServicesSection } from "@/components/sections/services";
 import { FAQSection } from "@/components/sections/faq";
 
@@ -20,8 +22,11 @@ export default function Home() {
       <ProblemSection />
       <MethodSection />
       <PathsSection />
+      <BusinessEnglishSection />
+      <TherapySection />
       <ServicesSection />
       <FAQSection />
     </div>
   );
 }
+
