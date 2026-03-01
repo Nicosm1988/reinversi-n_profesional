@@ -4,6 +4,9 @@ import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { CookieBanner } from "@/components/layout/cookie-banner";
+import { TherapyFloat } from "@/components/layout/therapy-float";
+import { CookieProvider } from "@/lib/cookie-context";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
@@ -48,13 +51,18 @@ export default async function RootLayout(
         )}
       >
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="flex-1 flex flex-col">
-            {children}
-          </main>
-          <Footer />
+          <CookieProvider>
+            <Header />
+            <main className="flex-1 flex flex-col">
+              {children}
+            </main>
+            <Footer />
+            <TherapyFloat />
+            <CookieBanner />
+          </CookieProvider>
         </NextIntlClientProvider>
       </body>
     </html>
   );
 }
+
