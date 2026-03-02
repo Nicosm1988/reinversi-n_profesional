@@ -54,7 +54,7 @@ export function Footer() {
                                 type="submit"
                                 className="rounded-full bg-secondary text-secondary-foreground px-6 py-2.5 text-sm font-semibold hover:bg-secondary/90 transition-colors"
                             >
-                                Subscribirme
+                                Suscribirme
                             </button>
                         </form>
                     </div>
