@@ -214,7 +214,7 @@ export default function TherapyPage() {
                                         <Badge className="bg-accent/10 text-accent border-none text-xs font-bold">20% OFF</Badge>
                                     </div>
                                     <div className="flex items-baseline gap-1 mb-6">
-                                        <span className="text-3xl font-heading font-bold text-foreground">USD 39,75</span>
+                                        <span className="text-3xl font-heading font-bold text-foreground">USD 39</span>
                                         <span className="text-sm text-muted-foreground">/ por sesión</span>
                                     </div>
 
