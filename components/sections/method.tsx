@@ -7,23 +7,23 @@ import { FadeIn, StaggerContainer } from "@/components/motion";
 const steps = [
     {
         step: "ETAPA 01",
-        title: "Exploración y Autoconocimiento",
-        desc: "Indagamos en tu historia, personalidad, aptitudes y valores \"no negociables\". Descubrimos qué te motiva genuinamente para asegurar que tu próximo paso esté en profunda sintonía con tu proyecto de vida.",
+        title: "Descubrir quién eres hoy",
+        desc: "Nos tomamos el tiempo de escucharte. Exploramos tu trayectoria, tus talentos, lo que te importa de verdad y lo que ya no te representa. El objetivo es que tu próximo movimiento nazca de un lugar auténtico.",
     },
     {
         step: "ETAPA 02",
-        title: "Análisis de Mercado y Oportunidades",
-        desc: "Cruzamos tu perfil con la realidad del entorno laboral actual. Identificamos juntos posibles roles, áreas de interés, y analizamos planes de estudio o vías de upskilling/reskilling con mayor proyección a futuro.",
+        title: "Entender hacia dónde ir",
+        desc: "Conectamos tu perfil con las oportunidades reales del mercado actual. Juntos mapeamos roles, sectores y caminos de formación que se alineen con lo que descubrimos en la primera etapa.",
     },
     {
         step: "ETAPA 03",
-        title: "Síntesis y Hoja de Ruta",
-        desc: "¡El momento de claridad! Te entregamos un informe integral que consolida tus fortalezas, perfil de intereses y áreas de desarrollo. Esta será tu brújula para tomar decisiones basadas en datos concretos sobre ti mismo.",
+        title: "Tu mapa de claridad",
+        desc: "Todo cobra sentido acá. Recibes un informe personalizado que integra tus fortalezas, intereses y áreas de crecimiento. Es la herramienta que necesitas para tomar decisiones con confianza y con datos reales sobre ti.",
     },
     {
         step: "ETAPA 04",
-        title: "Estrategia de Inserción",
-        desc: "Pasamos a la acción. Con el plan definido, te orientamos y brindamos herramientas clave de posicionamiento (armado estratégico de CV, preparación para entrevistas) para salir al mercado con seguridad y eficacia.",
+        title: "Salir al mundo preparado",
+        desc: "Con el plan en mano, te equipamos con todo lo necesario para posicionarte: CV estratégico, preparación para entrevistas y las herramientas para dar tu próximo paso con seguridad.",
     }
 ];
 
