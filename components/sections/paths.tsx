@@ -12,27 +12,27 @@ import Link from "next/link";
 const paths = [
     {
         title: "Reempleo Acelerado",
-        desc: "Optimización estratégica para profesionales que buscan reinsertarse rápidamente en roles similares, mejorando su narrativa y posicionamiento para reducir el tiempo de búsqueda.",
+        desc: "Para quienes quieren reinsertarse rápidamente en un rol similar. Optimizamos tu narrativa profesional y posicionamiento para reducir el tiempo de búsqueda.",
         badge: "Fast Track",
     },
     {
-        title: "Re-skilling Guiado",
-        desc: "Cierre de brechas para quienes necesitan actualizar sus competencias en herramientas digitales e IA Generativa para recuperar su ventaja competitiva en el mercado actual.",
-        badge: "Digital Update",
+        title: "Actualización Digital + IA",
+        desc: "Si sientes que las nuevas herramientas te dejaron atrás, te ayudamos a cerrar la brecha y recuperar tu ventaja competitiva en el mercado de hoy.",
+        badge: "Upskilling",
     },
     {
         title: "Reposicionamiento Senior",
-        desc: "Elevación de perfil para gerentes y directores que apuntan a posiciones C-Level o consultoría estratégica, transformando su narrativa de ejecución a visión de negocio.",
+        desc: "Para directivos y gerentes que apuntan a posiciones C-Level o consultoría estratégica. Transformamos tu narrativa de ejecución a visión de negocio.",
         badge: "Executive",
     },
     {
-        title: "Cambio Total (Pivot)",
-        desc: "Planificación estructural para quienes desean dar un giro radical de industria o función, transfiriendo sus fortalezas hacia un sector completamente nuevo.",
+        title: "Cambio de Rumbo",
+        desc: "Quieres dar un giro de industria o función, pero no sabes cómo. Diseñamos un plan para transferir tus fortalezas hacia un sector completamente nuevo.",
         badge: "Pivot",
     },
     {
         title: "Emprendimiento",
-        desc: "Transición segura de la relación de dependencia a la creación de un negocio propio o consultoría, validando el modelo de negocio con una estructura de riesgo controlado.",
+        desc: "De la relación de dependencia a tu propio proyecto. Validamos tu idea de negocio con una estructura de riesgo controlado y pasos claros.",
         badge: "Venture",
     },
 ];
@@ -47,7 +47,7 @@ export function PathsSection() {
                         Una Sola Decisión.
                     </Heading>
                     <Text variant="lead">
-                        No hay dos trayectorias iguales. Diseñamos la estrategia según tu punto de partida y tu ambición.
+                        No hay dos trayectorias iguales. Diseñamos la estrategia según tu punto de partida y tu horizonte.
                     </Text>
                 </FadeIn>
 
@@ -69,9 +69,9 @@ export function PathsSection() {
                                     {path.desc}
                                 </Text>
 
-                                <Button variant="link" className="p-0 h-auto text-primary font-medium group" asChild>
+                                <Button variant="link" className="p-0 h-auto text-secondary font-medium group" asChild>
                                     <Link href="/diagnostico/ancla-de-carrera">
-                                        Quiero mi diagnóstico <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                        Comenzar mi diagnóstico <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Link>
                                 </Button>
                             </Card>

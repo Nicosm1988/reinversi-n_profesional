@@ -45,12 +45,12 @@ export function Header() {
 
                 {/* Desktop Nav Capsule - Centered */}
                 <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <nav className="flex items-center gap-1 rounded-full border border-slate-200 bg-white p-1.5 pl-3 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
+                    <nav className="flex items-center gap-1 rounded-full border border-border bg-card p-1.5 pl-3 shadow-soft">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="px-3.5 py-2 text-sm font-medium text-slate-700 hover:text-primary transition-colors"
+                                className="px-3.5 py-2 text-sm font-medium text-foreground/70 hover:text-primary transition-colors"
                             >
                                 {link.name}
                             </Link>
@@ -58,7 +58,7 @@ export function Header() {
 
                         <Link
                             href="/diagnostico/ancla-de-carrera"
-                            className="inline-flex h-10 items-center rounded-full bg-transparent px-6 text-sm font-semibold text-slate-700 transition-colors hover:bg-[#D7EA62] hover:text-[#142B55]"
+                            className="inline-flex h-10 items-center rounded-full bg-transparent px-6 text-sm font-semibold text-foreground/70 transition-colors hover:bg-secondary hover:text-secondary-foreground"
                         >
                             Hacer Diagnóstico
                         </Link>

@@ -1,25 +1,25 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
 
 const testimonials = [
     {
-        quote: "No necesitaba un coach que me dijera 'tú puedes'. Necesitaba una estrategia para traducir 15 años de banca a fintech. El método fue quirúrgico.",
+        quote: "Llevaba meses sin saber para dónde ir. El diagnóstico me dio un mapa claro de mis fortalezas y un plan concreto. Hoy estoy en un rol que me apasiona.",
+        author: "Martina V.",
+        role: "Product Manager",
+    },
+    {
+        quote: "La IA me hizo sentir que mis 15 años de experiencia ya no valían. Este proceso me ayudó a traducir toda esa trayectoria al lenguaje del mercado actual.",
         author: "Carlos M.",
-        role: "VP de Operaciones",
+        role: "Director de Operaciones",
     },
     {
-        quote: "Estaba paralizada por el síndrome del impostor. El diagnóstico me mostró objetivamente mi valor en el mercado actual. En 6 semanas cerré mi transición.",
-        author: "Sofia L.",
-        role: "Product Owner",
-    },
-    {
-        quote: "La inversión más inteligente que hice en mi carrera. Dejé la relación de dependencia y validé mi consultora en 3 meses con su framework.",
-        author: "Javier R.",
-        role: "Consultor Estratégico",
+        quote: "No sabía si emprender o buscar empleo. Necesitaba alguien que me ayudara a pensar con claridad, sin presión. Eso encontré acá.",
+        author: "Sofía L.",
+        role: "Consultora Independiente",
     }
 ];
 
@@ -28,8 +28,8 @@ export function TrustSection() {
         <Section spacing="lg" background="muted">
             <Container>
                 <div className="text-center mb-16">
-                    <Text variant="caption">Trust & Resultados</Text>
-                    <Heading level="h2" className="mt-2">Historias Reales de Transformación</Heading>
+                    <Text variant="caption">Historias reales</Text>
+                    <Heading level="h2" className="mt-2">Profesionales que encontraron su rumbo</Heading>
                 </div>
 
                 <StaggerContainer className="grid md:grid-cols-3 gap-8">
@@ -37,7 +37,7 @@ export function TrustSection() {
                         <FadeIn key={i}>
                             <Card className="h-full bg-background border-none p-8 md:p-10 shadow-soft">
                                 <blockquote className="flex flex-col h-full">
-                                    <span className="text-6xl text-primary/20 font-serif leading-none -ml-4 -mt-4 mb-4">“</span>
+                                    <span className="text-6xl text-secondary/30 font-serif leading-none -ml-4 -mt-4 mb-4">&ldquo;</span>
                                     <Text variant="body-lg" className="flex-1 mb-8 text-foreground font-medium italic">
                                         {t.quote}
                                     </Text>

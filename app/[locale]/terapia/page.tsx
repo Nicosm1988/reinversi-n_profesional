@@ -61,7 +61,7 @@ export default function TherapyPage() {
         <div className="flex flex-col bg-background">
 
             {/* ═══ Hero ═══ */}
-            <section className="relative bg-gradient-to-b from-primary to-[hsl(270,60%,30%)] text-primary-foreground py-20 lg:py-32 overflow-hidden">
+            <section className="relative bg-primary text-primary-foreground py-20 lg:py-32 overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/10 via-transparent to-transparent pointer-events-none" />
                 <Container>
                     <FadeIn className="max-w-2xl mx-auto text-center relative z-10">

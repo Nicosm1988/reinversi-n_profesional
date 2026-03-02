@@ -1,22 +1,21 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
 
-const problems = [
+const situations = [
   {
-    title: "Parálisis por Análisis",
-    desc: "La sobreoferta de opciones (IA, remoto, emprender) genera un ruido ensordecedor. El miedo a equivocarte te mantiene inmóvil en un rol que ya no te representa.",
+    title: "La IA cambió las reglas del juego",
+    desc: "Lo que funcionaba ayer ya no alcanza. Herramientas nuevas, roles que desaparecen, industrias que se transforman. Es lógico preguntarse: ¿cómo me adapto sin perder lo que construí?",
   },
   {
-    title: "Burnout Corporativo",
-    desc: "Tu rol actual consume tu energía vital, pero no ves un puente claro hacia otro sector sin sentir que empiezas de cero y pierdes tu seniority.",
+    title: "No sabes por dónde empezar",
+    desc: "Hay demasiadas opciones y poco tiempo para detenerte a pensar. Remote, freelance, emprender, reconvertirte... La incertidumbre paraliza, pero quedarte quieto no es la solución.",
   },
   {
-    title: "Síndrome del Impostor",
-    desc: "El mercado cambió radicalmente mientras trabajabas. Sientes que tu experiencia de 10 años vale menos hoy que ayer frente a las nuevas herramientas.",
+    title: "Tu experiencia sigue siendo valiosa",
+    desc: "Tal vez sientes que tus años de trayectoria pesan menos en este nuevo contexto. La verdad es que tu experiencia es tu mayor activo — solo necesitas un puente hacia lo que viene.",
   },
 ];
 
@@ -28,12 +27,13 @@ export function ProblemSection() {
           <FadeIn>
             <div className="sticky top-32">
               <Heading level="h2" className="mb-6">
-                Entendemos el peso de esta transición.
+                ¿Te identificas?
               </Heading>
               <Text variant="body-lg" className="mb-8">
-                No es falta de capacidad ni que el mercado te haya dejado atrás.
-                Es que las reglas del juego cambiaron y necesitas un espacio
-                seguro para rearmar tu estrategia.
+                No estás solo en esto. Miles de profesionales están navegando
+                el mismo momento de incertidumbre. La diferencia está en
+                elegir un espacio seguro para pensar tu próximo paso con
+                claridad.
                 <br />
                 <br />
                 Darle espacio al cambio es la mejor forma de construir algo
@@ -44,10 +44,10 @@ export function ProblemSection() {
           </FadeIn>
 
           <StaggerContainer className="space-y-8">
-            {problems.map((item, i) => (
+            {situations.map((item, i) => (
               <FadeIn key={i} className="group">
-                <div className="pl-8 border-l-2 border-primary/20 group-hover:border-primary transition-colors duration-500">
-                  <h3 className="text-xl font-heading font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
+                <div className="pl-8 border-l-2 border-secondary/30 group-hover:border-secondary transition-colors duration-500">
+                  <h3 className="text-xl font-heading font-medium text-foreground mb-3 group-hover:text-secondary transition-colors">
                     {item.title}
                   </h3>
                   <Text>{item.desc}</Text>

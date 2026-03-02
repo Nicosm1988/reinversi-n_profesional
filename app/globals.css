@@ -6,75 +6,75 @@
   :root {
     /* ═══════════════════════════════════════════════
        Reinvención.Pro — Design System 2026
-       Paleta: Purple / Orange / Forest Green
+       Paleta: Warm Charcoal / Terracotta / Sage Green
+       Estética: Minimalismo emocional, calidez premium
        ═══════════════════════════════════════════════ */
 
-    /* Base surface */
-    --background: 270 30% 97%; /* #F7F3FC — off-white with purple tint */
-    --foreground: 270 60% 12%; /* #1E0E33 — deep purple-black */
+    /* Base surface — warm off-white */
+    --background: 40 30% 97%;       /* #FAF8F5 — sand white */
+    --foreground: 220 15% 18%;      /* #272D33 — warm charcoal */
 
-    /* Brand: Deep Purple */
-    --primary: 270 80% 25%; /* #3D0A82 — deep royal purple */
-    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+    /* Brand: Warm Charcoal (confianza, autoridad, sin frialdad) */
+    --primary: 220 20% 22%;         /* #2D3340 — deep warm charcoal */
+    --primary-foreground: 40 30% 97%;
 
-    /* Accent: Vibrant Orange */
-    --secondary: 30 100% 50%; /* #FF8C00 — vivid orange */
-    --secondary-foreground: 0 0% 100%;
+    /* Accent CTA: Terracotta Coral (calidez, invitación) */
+    --secondary: 16 65% 55%;        /* #D0724A — warm terracotta */
+    --secondary-foreground: 40 30% 97%;
 
     /* Surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 270 60% 12%;
+    --card-foreground: 220 15% 18%;
 
-    --popover: 270 40% 95%; /* soft purple tint for popover bg */
-    --popover-foreground: 270 60% 12%;
+    --popover: 40 20% 96%;
+    --popover-foreground: 220 15% 18%;
 
-    /* Functional Colors */
-    --muted: 270 20% 93%; /* light lavender */
-    --muted-foreground: 270 30% 35%;
+    /* Muted — warm sand */
+    --muted: 35 25% 93%;            /* #F0EBE3 — light sand */
+    --muted-foreground: 220 10% 42%;
 
-    /* Accent: Forest/Olive Green (for badges, highlights) */
-    --accent: 120 35% 32%; /* #366136 — forest green */
-    --accent-foreground: 0 0% 100%;
+    /* Accent: Sage Green (transformación, crecimiento orgánico) */
+    --accent: 150 25% 42%;          /* #4F8A6E — sage green */
+    --accent-foreground: 40 30% 97%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 270 20% 90%;
-    --input: 270 20% 90%;
-    --ring: 270 80% 50%; /* medium purple ring */
+    --border: 35 18% 88%;           /* warm gray border */
+    --input: 35 18% 88%;
+    --ring: 16 65% 55%;             /* terracotta ring focus */
 
     --radius: 1.5rem;
   }
 
   .dark {
     /* ═══ Dark Mode ═══ */
-    --background: 270 50% 8%; /* #120821 — very deep purple */
-    --foreground: 270 20% 95%; /* #F2EFF7 */
+    --background: 220 18% 10%;      /* #161A21 — warm dark */
+    --foreground: 40 15% 92%;       /* #EDE9E3 */
 
-    --card: 270 45% 12%;
-    --card-foreground: 270 20% 95%;
+    --card: 220 16% 14%;
+    --card-foreground: 40 15% 92%;
 
-    --popover: 270 45% 12%;
-    --popover-foreground: 270 20% 95%;
+    --popover: 220 16% 14%;
+    --popover-foreground: 40 15% 92%;
 
-    /* In dark mode, primary is the brighter purple */
-    --primary: 270 80% 65%; /* #A855F7 — bright purple */
-    --primary-foreground: 270 50% 8%;
+    --primary: 40 20% 88%;          /* light warm for dark bg */
+    --primary-foreground: 220 18% 10%;
 
-    --secondary: 30 100% 55%; /* #FF9F1A — warm orange */
-    --secondary-foreground: 270 50% 8%;
+    --secondary: 16 65% 60%;        /* brighter terracotta */
+    --secondary-foreground: 220 18% 10%;
 
-    --muted: 270 40% 15%;
-    --muted-foreground: 270 20% 75%;
+    --muted: 220 15% 16%;
+    --muted-foreground: 40 10% 65%;
 
-    --accent: 100 30% 45%; /* olive/sage green */
-    --accent-foreground: 0 0% 100%;
+    --accent: 150 25% 50%;          /* brighter sage */
+    --accent-foreground: 220 18% 10%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 95%;
 
-    --border: 270 40% 18%;
-    --input: 270 40% 18%;
-    --ring: 30 100% 55%; /* orange ring in dark mode */
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 16 65% 60%;
   }
 }

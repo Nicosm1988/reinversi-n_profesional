@@ -3,7 +3,7 @@ import { Twitter, Linkedin, Instagram, Mail } from 'lucide-react';
 
 export function Footer() {
     return (
-        <footer className="bg-slate-50 border-t border-slate-200 py-12 lg:py-16">
+        <footer className="bg-muted border-t border-border py-12 lg:py-16">
             <div className="container px-4 md:px-6 mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
 
@@ -16,12 +16,12 @@ export function Footer() {
                             <span className="font-heading font-bold text-lg">Reinvención.Pro</span>
                         </Link>
                         <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
-                            Plataforma híbrida de transformación profesional. Combinamos la precisión de la IA con la empatía y estrategia de expertos humanos para navegar tu transición.
+                            Plataforma de orientación vocacional-profesional. Combinamos ciencia psicométrica, acompañamiento humano experto e inteligencia artificial para guiarte en tu transición profesional.
                         </p>
                         <div className="flex gap-4 pt-2">
-                            <a href="#" className="text-slate-400 hover:text-primary transition-colors"><Linkedin className="h-5 w-5" /></a>
-                            <a href="#" className="text-slate-400 hover:text-primary transition-colors"><Twitter className="h-5 w-5" /></a>
-                            <a href="#" className="text-slate-400 hover:text-primary transition-colors"><Instagram className="h-5 w-5" /></a>
+                            <a href="#" className="text-muted-foreground/60 hover:text-primary transition-colors"><Linkedin className="h-5 w-5" /></a>
+                            <a href="#" className="text-muted-foreground/60 hover:text-primary transition-colors"><Twitter className="h-5 w-5" /></a>
+                            <a href="#" className="text-muted-foreground/60 hover:text-primary transition-colors"><Instagram className="h-5 w-5" /></a>
                         </div>
                     </div>
 
@@ -47,12 +47,12 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
+                <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground/60">
                     <p>&copy; {new Date().getFullYear()} Reinvención Profesional. Todos los derechos reservados.</p>
 
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-2">
-                            <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                            <span className="h-2 w-2 rounded-full bg-accent"></span>
                             <span>Sistemas Operativos</span>
                         </div>
                         <a href="mailto:hola@reinvencion.pro" className="hover:text-primary flex items-center gap-1">
@@ -62,10 +62,11 @@ export function Footer() {
                 </div>
 
                 {/* Disclaimer */}
-                <div className="mt-8 p-4 bg-slate-100 rounded-lg text-[10px] text-slate-500 text-center leading-relaxed max-w-3xl mx-auto">
-                    <strong>Aviso Importante:</strong> Nuestro equipo es multidisciplinario e incluye profesionales de distintas especialidades, entre ellas psicología. Este servicio está enfocado en acompañamiento estratégico y coaching de carrera, por lo que no reemplaza procesos de psicoterapia clínica ni tratamiento psiquiátrico. Si estás atravesando una crisis de salud mental, te recomendamos contactar a un profesional matriculado o al servicio de emergencia de tu zona.
+                <div className="mt-8 p-4 bg-muted/60 rounded-lg text-[10px] text-muted-foreground/70 text-center leading-relaxed max-w-3xl mx-auto">
+                    <strong>Aviso Importante:</strong> Nuestro equipo es multidisciplinario e incluye profesionales de distintas especialidades, entre ellas psicología. Este servicio está enfocado en orientación vocacional-profesional y acompañamiento estratégico de carrera, por lo que no reemplaza procesos de psicoterapia clínica ni tratamiento psiquiátrico. Si estás atravesando una crisis de salud mental, te recomendamos contactar a un profesional matriculado o al servicio de emergencia de tu zona.
                 </div>
             </div>
         </footer>
     );
 }
+

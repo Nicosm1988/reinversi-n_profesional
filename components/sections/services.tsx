@@ -16,14 +16,15 @@ export function ServicesSection() {
 
                     <div className="relative z-10 max-w-2xl mx-auto">
                         <Heading level="h2" className="text-primary-foreground mb-6">
-                            Tu transición puede empezar hoy.
+                            Tu siguiente paso puede empezar hoy.
                         </Heading>
                         <Text className="text-primary-foreground/80 text-lg mb-10">
-                            Empieza a construir tu futuro con acompañamiento profesional en cada paso.
+                            El primer diagnóstico es gratuito. Descubre tus anclas de carrera y recibe un informe
+                            personalizado para empezar a construir tu próximo capítulo con claridad.
                         </Text>
                         <Button variant="secondary" size="lg" className="rounded-full px-10 h-14 text-base shadow-lg" asChild>
                             <Link href="/diagnostico/ancla-de-carrera">
-                                Quiero mi diagnóstico
+                                Comenzar mi diagnóstico
                             </Link>
                         </Button>
                     </div>

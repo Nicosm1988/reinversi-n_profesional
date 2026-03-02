@@ -18,7 +18,7 @@ const steps = [
     {
         step: "ETAPA 03",
         title: "Síntesis y Hoja de Ruta",
-        desc: "¡El momento de claridad! Te entregamos un informe integral que consolida tus fortalezas, perfil de intereses y áreas de desarrollo. Esta será tu brújula para tomar decisiones basadas en datos concretos sobre vos mismo.",
+        desc: "¡El momento de claridad! Te entregamos un informe integral que consolida tus fortalezas, perfil de intereses y áreas de desarrollo. Esta será tu brújula para tomar decisiones basadas en datos concretos sobre ti mismo.",
     },
     {
         step: "ETAPA 04",

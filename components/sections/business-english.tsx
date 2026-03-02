@@ -13,25 +13,25 @@ const benefits = [
     {
         icon: MessageSquare,
         title: "Entrevistas en Inglés",
-        desc: "Prepárate para entrevistas laborales en inglés con confianza. Practicamos situaciones reales del mundo corporativo global.",
+        desc: "Prepárate para entrevistas laborales en inglés con confianza. Practicamos situaciones reales que vas a encontrar en el mercado global.",
         badge: "Speaking",
     },
     {
         icon: Globe,
         title: "Networking Internacional",
-        desc: "Aprende a construir relaciones profesionales en inglés: desde LinkedIn hasta conferencias internacionales.",
+        desc: "Aprende a construir relaciones profesionales en inglés: desde LinkedIn hasta conferencias y reuniones con equipos distribuidos.",
         badge: "Networking",
     },
     {
         icon: FileText,
         title: "Comunicación Ejecutiva",
-        desc: "Emails, presentaciones y reportes con vocabulario profesional. Comunica tus ideas con la claridad que tu rol exige.",
+        desc: "Emails, presentaciones y reportes con vocabulario profesional. Comunica tus ideas con la claridad que tu próximo rol exige.",
         badge: "Writing",
     },
     {
         icon: Users,
         title: "Reuniones y Negociación",
-        desc: "Domina las reuniones en inglés: desde small talk hasta negociaciones complejas con stakeholders globales.",
+        desc: "Domina las reuniones en inglés: desde small talk hasta negociaciones con stakeholders de distintos países y culturas.",
         badge: "Business",
     },
 ];
@@ -48,7 +48,7 @@ export function BusinessEnglishSection() {
                         Potencia tu inglés profesional.
                     </Heading>
                     <Text variant="lead">
-                        En el mercado global de 2026, el inglés dejó de ser un plus para convertirse en una herramienta esencial. Te ayudamos a dominarlo con foco en tu realidad profesional.
+                        En el mercado global de 2026, el inglés es una herramienta esencial para acceder a mejores oportunidades. Te ayudamos a dominarlo con foco en tu realidad profesional.
                     </Text>
                 </FadeIn>
 
@@ -65,7 +65,7 @@ export function BusinessEnglishSection() {
                                     </Badge>
                                 </div>
 
-                                <h3 className="text-xl font-heading font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
+                                <h3 className="text-xl font-heading font-medium text-foreground mb-3 group-hover:text-secondary transition-colors">
                                     {item.title}
                                 </h3>
 
