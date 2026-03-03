@@ -1,0 +1,278 @@
+{
+    "anchors": [
+        {
+            "id": "technical",
+            "name": "Técnica/Funcional",
+            "article": "la",
+            "description": "Personas más interesadas en el contenido y fondo del trabajo que en el contexto. Buscan convertirse en expertos y elevar sus habilidades en su área específica.",
+            "longDescription": "Tu resultado indica que el motor más profundo de tu carrera está vinculado a la excelencia técnica y al dominio de tu especialidad. Esto significa que te sentís más pleno y realizado cuando podés profundizar en lo que sabés, perfeccionar tus habilidades y ser reconocido como un referente en tu campo.\n\nEs probable que hayas experimentado momentos de incomodidad cuando te pidieron alejarte de tu área de expertise para asumir roles más generalistas o de gestión pura. Eso no significa que no puedas liderar; significa que tu forma de liderar está profundamente conectada con tu conocimiento técnico. Tu autoridad nace de lo que sabés, no del cargo que ocupás.\n\nEn un proceso de reinvención profesional, es fundamental que cualquier movimiento que hagas preserve y potencie esta conexión con tu especialidad. Un cambio que te desconecte de tu saber técnico puede generar una profunda insatisfacción, incluso si el nuevo rol parece más prestigioso o mejor remunerado.\n\nLa buena noticia es que en el mercado actual, los perfiles técnicos especializados están entre los más valorados. La clave está en encontrar el espacio donde tu expertise se conecte con las necesidades del mercado de una manera que te desafíe sin alejarte de lo que te apasiona.",
+            "questions": [
+                1,
+                9,
+                17,
+                25,
+                33
+            ]
+        },
+        {
+            "id": "management",
+            "name": "Dirección General",
+            "article": "la",
+            "description": "Ambición y deseo de responsabilidad. Desarrollan capacidades para liderar grupos, inteligencia emocional y orientación a resultados corporativos.",
+            "longDescription": "Tu perfil refleja una orientación natural hacia el liderazgo y la toma de decisiones a gran escala. No se trata simplemente de ambición; se trata de que tu satisfacción profesional está íntimamente ligada a la capacidad de influir, coordinar esfuerzos y ver el impacto de tus decisiones en los resultados de una organización.\n\nProbablemente te hayas sentido frustrado en roles donde tu capacidad de decisión estaba limitada o donde no podías ver el panorama completo. Las personas con esta ancla suelen tener una habilidad natural para integrar distintas perspectivas, gestionar la complejidad y movilizar equipos hacia objetivos compartidos.\n\nEs importante reconocer que esta orientación implica también una relación particular con la responsabilidad: no te la rehusás, la buscás. Te energiza saber que tus decisiones tienen consecuencias reales y que podés generar un impacto tangible.\n\nEn tu proceso de reinvención, es esencial que cualquier nuevo paso te acerque a posiciones de mayor influencia estratégica. Un rol que te relegue a la ejecución sin visión de conjunto probablemente te genere un desgaste silencioso pero profundo. Tu próximo movimiento debería posicionarte donde puedas ejercer el liderazgo integral que tu perfil necesita.",
+            "questions": [
+                2,
+                10,
+                18,
+                26,
+                34
+            ]
+        },
+        {
+            "id": "autonomy",
+            "name": "Autonomía/Independencia",
+            "article": "la",
+            "description": "Resistencia a la supervisión cercana y reglas externas. Buscan flexibilidad en tiempo y forma para hacer las cosas con estilo propio.",
+            "longDescription": "Tu resultado revela algo que probablemente ya intuías: necesitás hacer las cosas a tu manera. No se trata de rebeldía ni de incapacidad para trabajar en equipo; se trata de que tu mejor versión profesional aparece cuando tenés la libertad de definir cómo, cuándo y dónde trabajar.\n\nLas personas con esta ancla suelen sentirse sofocadas en ambientes con excesivo control, micromanagement o estructuras rígidas. Si alguna vez te encontraste en un empleo que te pagaba bien pero donde cada paso estaba predefinido, es probable que hayas sentido una inquietud difícil de explicar. Esa inquietud tiene nombre: tu ancla de autonomía estaba siendo comprimida.\n\nEsto no significa que no puedas tener jefes o trabajar dentro de organizaciones. Significa que necesitás negociar (o construir) espacios donde tu criterio propio sea valorado y donde tengas margen para innovar en tu forma de abordar los desafíos.\n\nEn tu reinvención profesional, es crucial que evalúes no solo QUÉ vas a hacer sino CÓMO lo vas a hacer. Un rol con excelente contenido pero nula autonomía va a generar fricción interna rápidamente. Explorá formatos como consultoría independiente, roles remotos con alto grado de autogestión o posiciones donde la confianza en tu criterio sea parte de la cultura.",
+            "questions": [
+                3,
+                11,
+                19,
+                27,
+                35
+            ]
+        },
+        {
+            "id": "security",
+            "name": "Seguridad/Estabilidad",
+            "article": "la",
+            "description": "Priorizan la seguridad financiera y laboral. Valoran la lealtad y prefieren 'echar raíces' en empleos sin riesgos.",
+            "longDescription": "Tu resultado indica que la previsibilidad y la estabilidad son pilares fundamentales en tu relación con el trabajo. Esto no es una debilidad ni un signo de falta de ambición; es un valor legítimo que refleja tu necesidad de construir sobre bases sólidas.\n\nLas personas con esta ancla suelen ser leales, confiables y profundamente comprometidas con las organizaciones donde trabajan. Valorás saber qué esperar: un ingreso estable, un plan de carrera claro, beneficios predecibles. Cuando estos elementos están presentes, tu productividad y tu bienestar se potencian enormemente.\n\nEs posible que el contexto actual de cambio acelerado, automatización e incertidumbre económica te genere una ansiedad particular. Y es natural: tu sistema de valores está siendo desafiado por un entorno que parece premiar la volatilidad. Pero acá hay un matiz importante: buscar estabilidad no significa quedarse quieto. Significa encontrar la forma de construir seguridad en un mundo que se mueve.\n\nEn tu proceso de reinvención, el objetivo no es que abandones tu necesidad de seguridad sino que la actualices. Esto puede significar diversificar tus fuentes de ingreso, desarrollar habilidades que te hagan indispensable, o encontrar organizaciones sólidas que valoren la permanencia y el compromiso a largo plazo.",
+            "questions": [
+                4,
+                12,
+                20,
+                28,
+                36
+            ]
+        },
+        {
+            "id": "entrepreneurial",
+            "name": "Creatividad Emprendedora",
+            "article": "la",
+            "description": "Huyen de organizaciones tradicionales para poner en marcha su propio negocio. Aplican innovación y estrategias disruptivas.",
+            "longDescription": "Tu resultado apunta a una fuerza creadora que necesita expresarse. No se trata solamente de querer ser tu propio jefe; se trata de una necesidad profunda de construir algo que sea genuinamente tuyo, de dejar una marca tangible en el mundo a través de tu capacidad de crear.\n\nLas personas con esta ancla sienten una energía particular cuando imaginan nuevos productos, servicios o formas de hacer las cosas. Probablemente tengas una libreta (física o mental) llena de ideas de negocios, proyectos y conceptos que querés desarrollar. Y es probable que en empleos tradicionales hayas sentido que esa energía creadora estaba contenida.\n\nEs importante distinguir esta motivación de la simple insatisfacción laboral. No querés salir de tu empleo porque estés enojado; querés construir porque eso es lo que te da sentido. La propiedad, visible y tangible, de lo que creás es parte fundamental de tu identidad profesional.\n\nEn tu reinvención, el camino natural es hacia alguna forma de emprendimiento, pero no tiene que ser un salto al vacío. Un proceso estructurado de validación, con acompañamiento experto, puede ayudarte a transformar esa energía creadora en un proyecto viable sin exponer tu estabilidad actual más de lo necesario.",
+            "questions": [
+                5,
+                13,
+                21,
+                29,
+                37
+            ]
+        },
+        {
+            "id": "service",
+            "name": "Servicio/Dedicación",
+            "article": "el",
+            "description": "Aplican sus valores para mejorar su entorno. Enfocados en la resolución de problemas y el aporte hacia los demás.",
+            "longDescription": "Tu resultado revela que el propósito social de tu trabajo no es un complemento agradable sino una necesidad central. Para vos, el éxito profesional está indisolublemente ligado a la sensación de estar contribuyendo a algo más grande que vos mismo.\n\nLas personas con esta ancla suelen experimentar un conflicto particular: pueden ser excelentes en lo que hacen y estar bien remuneradas, pero si sienten que su trabajo no genera un impacto positivo en los demás o en la sociedad, algo falta. Esa sensación de vacío no se llena con un aumento de sueldo ni con un ascenso.\n\nEs probable que a lo largo de tu carrera hayas tomado decisiones que, vistas desde afuera, parecían poco estratégicas: rechazar ofertas mejor pagas por quedarte donde sentías que tu trabajo importaba, elegir proyectos por su impacto antes que por su rentabilidad. Esas decisiones no fueron errores; fueron tu ancla operando.\n\nEn tu proceso de reinvención, es vital que el componente de servicio y contribución esté presente desde el diseño mismo de tu próximo paso. No como una aspiración futura sino como un criterio de decisión presente. Tu siguiente movimiento profesional tiene que responder a la pregunta: ¿a quién voy a ayudar y cómo?",
+            "questions": [
+                6,
+                14,
+                22,
+                30,
+                38
+            ]
+        },
+        {
+            "id": "challenge",
+            "name": "Desafío Puro",
+            "article": "el",
+            "description": "Su éxito es la superación de obstáculos aparentemente imposibles o desafíos titánicos que ponen a prueba sus capacidades.",
+            "longDescription": "Tu resultado muestra que lo que te moviliza no es la tranquilidad sino la conquista. Tu energía profesional se enciende frente a problemas complejos, situaciones límite y desafíos que otros consideran imposibles. No buscás comodidad; buscás la adrenalina de superar lo difícil.\n\nLas personas con esta ancla suelen aburrirse rápidamente en roles rutinarios o predecibles. Si alguna vez tuviste un empleo estable, bien pago, pero donde ya no había nada nuevo que resolver, es probable que hayas sentido una inquietud creciente. No era ingratitud; era tu naturaleza competitiva buscando un nuevo campo de batalla.\n\nEsta orientación tiene una enorme fortaleza: te hace resiliente, adaptable y capaz de rendir bajo presión. Pero también tiene un riesgo que es importante reconocer: la tendencia a buscar el desafío por el desafío mismo, sin evaluar si ese desafío está alineado con tus otros valores y objetivos de vida.\n\nEn tu reinvención, la pregunta clave no es solo \"¿es difícil?\" sino \"¿es el tipo correcto de difícil?\". Un acompañamiento estratégico puede ayudarte a canalizar esa energía competitiva hacia desafíos que no solo te estimulen sino que te lleven hacia donde querés estar profesionalmente en los próximos años.",
+            "questions": [
+                7,
+                15,
+                23,
+                31,
+                39
+            ]
+        },
+        {
+            "id": "lifestyle",
+            "name": "Estilo de Vida",
+            "article": "el",
+            "description": "Buscan que el trabajo se adapte a sus necesidades vitales y familiares. Priorizan la flexibilidad para compaginar ambas esferas.",
+            "longDescription": "Tu resultado refleja algo que en el contexto laboral actual suele ser malinterpretado: para vos, el trabajo no es el centro de tu vida sino una parte importante de un todo más amplio. Y eso no es falta de compromiso; es claridad sobre lo que realmente importa.\n\nLas personas con esta ancla buscan activamente que su carrera se integre armoniosamente con su vida personal, familiar y sus intereses fuera del ámbito laboral. Has aprendido —quizás por experiencia propia— que ningún éxito profesional compensa el deterioro de tu salud, tus relaciones o tu bienestar emocional.\n\nEs probable que hayas rechazado oportunidades que otros habrían aceptado sin dudar: ascensos que implicaban horarios imposibles, traslados que rompían tu equilibrio, proyectos fascinantes pero que consumían todo tu tiempo. Esas decisiones no fueron cobardía; fueron actos de coherencia con tus valores más profundos.\n\nEn tu proceso de reinvención, el diseño de tu próximo paso profesional debe partir desde tu vida, no al revés. Esto significa definir primero cómo querés vivir y luego encontrar el modelo profesional que se adapte a esa visión. No se trata de resignar ambición sino de redefinirla: tu éxito se mide en equilibrio integral, no solo en logros laborales.",
+            "questions": [
+                8,
+                16,
+                24,
+                32,
+                40
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "id": 1,
+            "text": "Me gustaría ser tan bueno en lo que hago que la gente me pida continuamente consejos y sugerencias"
+        },
+        {
+            "id": 2,
+            "text": "Me encuentro más satisfecho con mi trabajo cuando puedo integrar y gestionar los esfuerzos de los demás"
+        },
+        {
+            "id": 3,
+            "text": "Me gustaría tener una carrera que me permita autonomía y decidir los plazos"
+        },
+        {
+            "id": 4,
+            "text": "La seguridad y la estabilidad son más importantes para mí que la libertad y autonomía"
+        },
+        {
+            "id": 5,
+            "text": "Siempre estoy buscando ideas que me permitan tener mi propio negocio"
+        },
+        {
+            "id": 6,
+            "text": "Considero que alcanzo el éxito en mi carrera sólo si tengo la sensación de haber contribuido al bienestar común"
+        },
+        {
+            "id": 7,
+            "text": "Me gustaría una carrera en la que pueda resolver problemas o salir ganando en situaciones muy desafiantes"
+        },
+        {
+            "id": 8,
+            "text": "Preferiría dejar mi empresa antes que ocupar un puesto que comprometiera mi atención a mi familia y vida personal"
+        },
+        {
+            "id": 9,
+            "text": "Para mí el éxito consiste en desarrollar mis capacidades técnicas o funcionales hasta convertirme en un experto"
+        },
+        {
+            "id": 10,
+            "text": "Me gustaría estar a cargo de una organización compleja y tomar decisiones que afecten a muchas personas"
+        },
+        {
+            "id": 11,
+            "text": "Estoy más satisfecho cuando tengo plena libertad para definir mis propias actividades, plazos y procedimientos"
+        },
+        {
+            "id": 12,
+            "text": "Preferiría dejar mi empresa antes que aceptar un proyecto que afectara mi seguridad dentro de la organización"
+        },
+        {
+            "id": 13,
+            "text": "Crear mi propio negocio es más importante que alcanzar un puesto directivo de alto nivel en otra organización"
+        },
+        {
+            "id": 14,
+            "text": "Me encuentro más satisfecho con mi carrera cuando puedo poner mi talento al servicio de los demás"
+        },
+        {
+            "id": 15,
+            "text": "Alcanzo el éxito en mi carrera sólo si me enfrento y supero grandes desafíos y retos"
+        },
+        {
+            "id": 16,
+            "text": "Me gustaría una carrera que me permita integrar mis necesidades personales, familiares y profesionales"
+        },
+        {
+            "id": 17,
+            "text": "Me atrae más llegar a ser un directivo senior dentro de mi área funcional antes que llegar a ser Director General"
+        },
+        {
+            "id": 18,
+            "text": "Alcanzo el éxito en mi carrera sólo si llego a ser director general de alguna empresa"
+        },
+        {
+            "id": 19,
+            "text": "Alcanzo el éxito en mi carrera sólo si logro autonomía y libertad plena"
+        },
+        {
+            "id": 20,
+            "text": "Busco trabajo dentro de organizaciones que me proporcionen seguridad y estabilidad"
+        },
+        {
+            "id": 21,
+            "text": "Me encuentro más satisfecho con mi carrera cuando he creado algo que es el resultado de mis propias ideas y esfuerzos"
+        },
+        {
+            "id": 22,
+            "text": "Es más importante para mí utilizar mis capacidades para crear un mundo donde se viva y trabaje mejor que tener un puesto directivo de alto nivel"
+        },
+        {
+            "id": 23,
+            "text": "Me he encontrado más satisfecho en mi carrera cuando he resuelto problemas aparentemente sin solución o he vencido cuando parecía imposible hacerlo"
+        },
+        {
+            "id": 24,
+            "text": "Me encuentro satisfecho con mi vida sólo cuando consigo alcanzar un equilibrio entre las exigencias de mi vida personal, familiar y profesional"
+        },
+        {
+            "id": 25,
+            "text": "Preferiría dejar mi empresa antes que aceptar un proyecto que me obligara a dejar mi área de especialización"
+        },
+        {
+            "id": 26,
+            "text": "Me atrae más llegar a ser director general que un directivo senior dentro de mi área de especialización"
+        },
+        {
+            "id": 27,
+            "text": "La oportunidad de realizar un trabajo según mis propios criterios, sin normas y limitaciones es más importante para mí que la seguridad"
+        },
+        {
+            "id": 28,
+            "text": "Me encuentro más satisfecho con mi trabajo cuando considero que he alcanzado seguridad financiera y profesional"
+        },
+        {
+            "id": 29,
+            "text": "Considero que alcanzo el éxito en mi carrera sólo si consigo crear o construir algo que es completamente mi propio producto o idea"
+        },
+        {
+            "id": 30,
+            "text": "Me gustaría tener una carrera que suponga una gran contribución a la humanidad y a la sociedad"
+        },
+        {
+            "id": 31,
+            "text": "Busco oportunidades de trabajo que pongan a prueba mi capacidad para resolver problemas o para competir"
+        },
+        {
+            "id": 32,
+            "text": "Encontrar el equilibrio entre las exigencias de mi vida personal y profesional es más importante que conseguir un puesto directivo de alto nivel"
+        },
+        {
+            "id": 33,
+            "text": "Me encuentro más satisfecho con mi trabajo cuando tengo oportunidad de usar mis capacidades y talentos"
+        },
+        {
+            "id": 34,
+            "text": "Preferiría dejar mi empresa antes que aceptar un puesto que me aleje del camino hacia la dirección general"
+        },
+        {
+            "id": 35,
+            "text": "Preferiría dejar mi empresa antes que aceptar un puesto que limite mi autonomía y libertad"
+        },
+        {
+            "id": 36,
+            "text": "Me gustaría tener una carrera que me permita sentir un cierto nivel de seguridad y estabilidad"
+        },
+        {
+            "id": 37,
+            "text": "Me gustaría crear y construir mi propio negocio"
+        },
+        {
+            "id": 38,
+            "text": "Preferiría dejar mi empresa antes que aceptar un proyecto que limitara mi capacidad de ayudar a los demás"
+        },
+        {
+            "id": 39,
+            "text": "Trabajar con problemas que aparentemente no tienen solución es más importante que alcanzar un puesto directivo de alto nivel"
+        },
+        {
+            "id": 40,
+            "text": "He buscado siempre oportunidades profesionales que no interfieran demasiado con mis preocupaciones personales y familiares"
+        }
+    ]
+}

@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ═══════════════════════════════════════════════
+       Reinvención.Pro — Design System 2026
+       Paleta: Warm Charcoal / Terracotta / Sage Green
+       Estética: Minimalismo emocional, calidez premium
+       ═══════════════════════════════════════════════ */
+
+    /* Base surface — warm off-white */
+    --background: 40 30% 97%;       /* #FAF8F5 — sand white */
+    --foreground: 220 15% 18%;      /* #272D33 — warm charcoal */
+
+    /* Brand: Warm Charcoal (confianza, autoridad, sin frialdad) */
+    --primary: 220 20% 22%;         /* #2D3340 — deep warm charcoal */
+    --primary-foreground: 40 30% 97%;
+
+    /* Accent CTA: Terracotta Coral (calidez, invitación) */
+    --secondary: 16 65% 55%;        /* #D0724A — warm terracotta */
+    --secondary-foreground: 40 30% 97%;
+
+    /* Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 18%;
+
+    --popover: 40 20% 96%;
+    --popover-foreground: 220 15% 18%;
+
+    /* Muted — warm sand */
+    --muted: 35 25% 93%;            /* #F0EBE3 — light sand */
+    --muted-foreground: 220 10% 42%;
+
+    /* Accent: Sage Green (transformación, crecimiento orgánico) */
+    --accent: 150 25% 42%;          /* #4F8A6E — sage green */
+    --accent-foreground: 40 30% 97%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 35 18% 88%;           /* warm gray border */
+    --input: 35 18% 88%;
+    --ring: 16 65% 55%;             /* terracotta ring focus */
+
+    --radius: 1.5rem;
+  }
+
+  .dark {
+    /* ═══ Dark Mode ═══ */
+    --background: 220 18% 10%;      /* #161A21 — warm dark */
+    --foreground: 40 15% 92%;       /* #EDE9E3 */
+
+    --card: 220 16% 14%;
+    --card-foreground: 40 15% 92%;
+
+    --popover: 220 16% 14%;
+    --popover-foreground: 40 15% 92%;
+
+    --primary: 40 20% 88%;          /* light warm for dark bg */
+    --primary-foreground: 220 18% 10%;
+
+    --secondary: 16 65% 60%;        /* brighter terracotta */
+    --secondary-foreground: 220 18% 10%;
+
+    --muted: 220 15% 16%;
+    --muted-foreground: 40 10% 65%;
+
+    --accent: 150 25% 50%;          /* brighter sage */
+    --accent-foreground: 220 18% 10%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 16 65% 60%;
+  }
+}
