@@ -29,7 +29,7 @@ export function TherapySection() {
                                     alt="Bienestar emocional y autocuidado"
                                     width={260}
                                     height={195}
-                                    className="object-contain opacity-85 hidden md:block"
+                                    className="object-contain opacity-85 hidden md:block rounded-[2rem]"
                                 />
                             </div>
 

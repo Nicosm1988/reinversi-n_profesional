@@ -30,14 +30,14 @@ export function TrustSection() {
             <Container>
                 <div className="text-center mb-16">
                     <Text variant="caption">Historias reales</Text>
-                    <Heading level="h2" className="mt-2">Profesionales que encontraron su rumbo</Heading>
+                    <Heading level="h2" className="mt-2">Experiencias en primera persona</Heading>
                     <div className="flex justify-center mt-6">
                         <Image
                             src="/illustrations/trust.png"
                             alt="Personas compartiendo experiencias"
                             width={340}
                             height={255}
-                            className="object-contain opacity-90"
+                            className="object-contain opacity-90 rounded-[2rem]"
                         />
                     </div>
                 </div>

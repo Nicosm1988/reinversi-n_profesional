@@ -217,7 +217,7 @@ export function PathsSection() {
                             alt="Múltiples caminos profesionales"
                             width={310}
                             height={232}
-                            className="object-contain opacity-85 flex-shrink-0"
+                            className="object-contain opacity-85 flex-shrink-0 rounded-[2rem]"
                         />
                     </div>
                 </FadeIn>

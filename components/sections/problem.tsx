@@ -47,7 +47,7 @@ export function ProblemSection() {
                   alt="Persona reflexionando sobre su carrera"
                   width={380}
                   height={285}
-                  className="object-contain opacity-85"
+                  className="object-contain opacity-85 rounded-[2rem]"
                 />
               </div>
             </div>

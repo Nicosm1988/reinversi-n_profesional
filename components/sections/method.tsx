@@ -47,7 +47,7 @@ export function MethodSection() {
                             alt="Camino de progreso profesional"
                             width={280}
                             height={210}
-                            className="object-contain opacity-85"
+                            className="object-contain opacity-85 rounded-[2rem]"
                         />
                     </div>
                 </FadeIn>

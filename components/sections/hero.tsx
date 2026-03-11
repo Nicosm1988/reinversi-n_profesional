@@ -110,7 +110,7 @@ export function HeroSection() {
                         alt="Ilustración de reinvención profesional"
                         width={460}
                         height={345}
-                        className="object-contain drop-shadow-lg"
+                        className="object-contain drop-shadow-lg rounded-[2rem]"
                         priority
                     />
                 </div>

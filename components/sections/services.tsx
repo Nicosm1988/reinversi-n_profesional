@@ -22,7 +22,7 @@ export function ServicesSection() {
                             alt=""
                             width={240}
                             height={180}
-                            className="object-contain"
+                            className="object-contain rounded-[2rem]"
                             aria-hidden="true"
                         />
                     </div>
