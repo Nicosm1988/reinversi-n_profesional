@@ -24,7 +24,7 @@ export function ProblemSection() {
   return (
     <Section spacing="lg" background="muted">
       <Container>
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
           <FadeIn>
             <div className="sticky top-32">
               <Heading level="h2" className="mb-6">

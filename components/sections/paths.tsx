@@ -201,7 +201,7 @@ export function PathsSection() {
     return (
         <Section id="caminos" spacing="lg" background="muted">
             <Container>
-                <FadeIn className="mb-16 md:mb-24">
+                <FadeIn className="mb-8 md:mb-12">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
                         <div className="max-w-2xl">
                             <Heading level="h2" className="mb-6">

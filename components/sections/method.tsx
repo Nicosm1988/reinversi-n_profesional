@@ -32,7 +32,7 @@ export function MethodSection() {
     return (
         <Section id="metodo" spacing="lg">
             <Container size="sm">
-                <FadeIn className="mb-16">
+                <FadeIn className="mb-8">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                         <div>
                             <span className="text-sm font-medium tracking-widest uppercase text-primary/60 mb-2 block">
@@ -52,7 +52,7 @@ export function MethodSection() {
                     </div>
                 </FadeIn>
 
-                <StaggerContainer className="relative border-l border-border/60 ml-3 md:ml-0 space-y-12 pb-4">
+                <StaggerContainer className="relative border-l border-border/60 ml-3 md:ml-0 space-y-6 pb-4">
                     {steps.map((step, i) => (
                         <FadeIn key={i} className="relative pl-12 md:pl-16">
                             {/* Marker */}

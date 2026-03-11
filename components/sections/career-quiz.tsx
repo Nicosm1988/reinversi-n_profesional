@@ -450,7 +450,7 @@ export function CareerQuiz() {
                                 key="results"
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="space-y-12"
+                                className="space-y-6"
                             >
                                 {/* Results logic... */}
                                 <div className="text-center space-y-4">

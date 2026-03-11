@@ -40,7 +40,7 @@ export function BusinessEnglishSection() {
     return (
         <Section id="ingles-negocios" spacing="lg" background="default">
             <Container>
-                <FadeIn className="mb-16 md:mb-20 max-w-2xl">
+                <FadeIn className="mb-8 md:mb-12 max-w-2xl">
                     <span className="text-sm font-medium tracking-widest uppercase text-secondary mb-2 block">
                         Servicio complementario
                     </span>

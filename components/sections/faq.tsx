@@ -17,7 +17,7 @@ export function FAQSection() {
     return (
         <Section id="faq" spacing="lg">
             <Container size="tight">
-                <FadeIn className="text-center mb-16">
+                <FadeIn className="text-center mb-8">
                     <Heading level="h2" className="mb-4">Preguntas Frecuentes</Heading>
                     <Text>Claridad ante todo.</Text>
                 </FadeIn>

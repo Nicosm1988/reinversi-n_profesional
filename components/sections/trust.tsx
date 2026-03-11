@@ -28,7 +28,7 @@ export function TrustSection() {
     return (
         <Section spacing="lg" background="muted">
             <Container>
-                <div className="text-center mb-16">
+                <div className="text-center mb-8">
                     <Text variant="caption">Historias reales</Text>
                     <Heading level="h2" className="mt-2">Experiencias en primera persona</Heading>
                     <div className="flex justify-center mt-6">

@@ -38,7 +38,7 @@ export function HeroSection() {
                 <div className="absolute inset-0 z-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none mix-blend-overlay"></div>
 
                 <div className="container mx-auto px-4 md:px-12 relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
                         {/* Left Column: Carousel */}
                         <Carousel
                             opts={{
