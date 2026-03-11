@@ -27,8 +27,8 @@ export function TherapySection() {
                                 <Image
                                     src="/illustrations/therapy.png"
                                     alt="Bienestar emocional y autocuidado"
-                                    width={180}
-                                    height={135}
+                                    width={260}
+                                    height={195}
                                     className="object-contain opacity-85 hidden md:block"
                                 />
                             </div>

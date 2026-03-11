@@ -35,8 +35,8 @@ export function TrustSection() {
                         <Image
                             src="/illustrations/trust.png"
                             alt="Personas compartiendo experiencias"
-                            width={260}
-                            height={195}
+                            width={340}
+                            height={255}
                             className="object-contain opacity-90"
                         />
                     </div>

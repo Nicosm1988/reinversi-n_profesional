@@ -45,8 +45,8 @@ export function MethodSection() {
                         <Image
                             src="/illustrations/method.png"
                             alt="Camino de progreso profesional"
-                            width={200}
-                            height={150}
+                            width={280}
+                            height={210}
                             className="object-contain opacity-85"
                         />
                     </div>

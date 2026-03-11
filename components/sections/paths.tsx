@@ -215,8 +215,8 @@ export function PathsSection() {
                         <Image
                             src="/illustrations/paths.png"
                             alt="Múltiples caminos profesionales"
-                            width={220}
-                            height={165}
+                            width={310}
+                            height={232}
                             className="object-contain opacity-85 flex-shrink-0"
                         />
                     </div>

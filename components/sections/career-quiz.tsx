@@ -17,6 +17,7 @@ type Step = "intro" | "questions" | "transition" | "bonus" | "pre-quiz" | "resul
 
 export function CareerQuiz() {
     const [step, setStep] = useState<Step>("intro");
+    const [currentSection, setCurrentSection] = useState(0);
     const [answers, setAnswers] = useState<Record<number, number>>({});
     const [bonusQuestions, setBonusQuestions] = useState<number[]>([]);
     const [userData, setUserData] = useState<PreQuizData | null>(null);
@@ -222,10 +223,10 @@ export function CareerQuiz() {
                             </motion.div>
                         )}
 
-                        {/* ─── STEP 2: ALL 40 QUESTIONS ON ONE PAGE ─── */}
+                        {/* ─── STEP 2: QUESTIONS PAGINATED (10 per section) ─── */}
                         {step === "questions" && (
                             <motion.div
-                                key="questions"
+                                key={`questions-${currentSection}`}
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
@@ -234,7 +235,7 @@ export function CareerQuiz() {
                                     <CardHeader className="text-center pb-2 sticky top-0 bg-background/95 backdrop-blur-sm z-10 border-b">
                                         <div className="flex justify-between items-center mb-2">
                                             <Text variant="small" className="text-muted-foreground">
-                                                Respondidas: {Object.keys(answers).length} de {quizData.questions.length}
+                                                Sección {currentSection + 1} de 4 (Respondidas: {Object.keys(answers).length} de {quizData.questions.length})
                                             </Text>
                                             <div className="w-40 h-2 bg-muted rounded-full overflow-hidden">
                                                 <motion.div
@@ -246,9 +247,17 @@ export function CareerQuiz() {
                                         </div>
                                         <CardTitle>Cuestionario de Identificación</CardTitle>
                                         <CardDescription>Responde cada pregunta según la escala: 1 (Nunca) hasta 6 (Siempre)</CardDescription>
+                                        
+                                        {/* Progress message tailored to section */}
+                                        <div className="mt-4 p-3 bg-secondary/10 text-secondary border border-secondary/20 rounded-lg text-sm font-medium">
+                                            {currentSection === 0 && "Iniciando el recorrido. Sé lo más sincero posible con cada afirmación."}
+                                            {currentSection === 1 && "¡Excelente ritmo! Estás más cerca de conocer tu resultado."}
+                                            {currentSection === 2 && "Ya pasaste la mitad. Seguí reflexionando qué es lo más importante para tu carrera."}
+                                            {currentSection === 3 && "Último tramo, ¡ya casi terminamos y descubrimos tu ancla!"}
+                                        </div>
                                     </CardHeader>
                                     <CardContent className="space-y-10 pt-8 pb-8">
-                                        {quizData.questions.map((q) => (
+                                        {quizData.questions.slice(currentSection * 10, (currentSection + 1) * 10).map((q) => (
                                             <div key={q.id} className="space-y-4">
                                                 <div className="flex gap-4">
                                                     <span className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm transition-colors ${answers[q.id] !== undefined ? "bg-primary text-white" : "bg-primary/10 text-primary"}`}>
@@ -277,16 +286,32 @@ export function CareerQuiz() {
                                             </div>
                                         ))}
                                     </CardContent>
-                                    <CardFooter className="flex justify-between border-t bg-muted/30 rounded-b-xl p-6 sticky bottom-0 backdrop-blur-sm">
-                                        <Button variant="ghost" onClick={() => setStep("intro")}>
+                                    <CardFooter className="flex justify-between border-t bg-muted/30 rounded-b-xl p-6 sticky bottom-0 backdrop-blur-sm z-10">
+                                        <Button 
+                                            variant="ghost" 
+                                            onClick={() => {
+                                                if (currentSection > 0) setCurrentSection(currentSection - 1);
+                                                else setStep("intro");
+                                            }}
+                                        >
                                             <ArrowLeft className="mr-2 h-4 w-4" /> Volver
                                         </Button>
                                         <Button
-                                            disabled={!allAnswered}
-                                            onClick={() => setStep("transition")}
+                                            disabled={quizData.questions.slice(currentSection * 10, (currentSection + 1) * 10).filter(q => answers[q.id] !== undefined).length < 10}
+                                            onClick={() => {
+                                                if (currentSection < 3) {
+                                                    setCurrentSection(currentSection + 1);
+                                                    window.scrollTo({ top: 0, behavior: "smooth" });
+                                                } else {
+                                                    setStep("transition");
+                                                }
+                                            }}
                                             className="rounded-full px-8 bg-secondary hover:bg-secondary/90 text-white"
                                         >
-                                            {allAnswered ? "Continuar" : `Faltan ${quizData.questions.length - Object.keys(answers).length} respuestas`} <ArrowRight className="ml-2 h-4 w-4" />
+                                            {quizData.questions.slice(currentSection * 10, (currentSection + 1) * 10).filter(q => answers[q.id] !== undefined).length < 10 
+                                                ? "Completá esta sección" 
+                                                : (currentSection < 3 ? "Siguiente" : "Continuar")
+                                            } <ArrowRight className="ml-2 h-4 w-4" />
                                         </Button>
                                     </CardFooter>
                                 </Card>
@@ -313,10 +338,10 @@ export function CareerQuiz() {
                                         Ahora te vamos a mostrar las 40 preguntas una vez más.
                                     </Text>
                                     <Text>
-                                        Esta vez, necesitamos que elijas las <strong>3 preguntas que sentís como verdades absolutas</strong> sobre tu perfil profesional. Esas que, sin importar las circunstancias, siempre te representan.
+                                        <strong>Ahora elige los 3 enunciados que sean los que más te identifiquen en tu realidad actual o algo así.</strong> Estas elecciones nos servirán para darle un peso mayor a esas motivaciones profundas en el cálculo final.
                                     </Text>
                                     <Text variant="small" className="text-muted-foreground">
-                                        A esas 3 elecciones les asignaremos un bono de +4 puntos para definir con mayor precisión tu ancla dominante.
+                                        A esas 3 elecciones les asignaremos un bono adicional para definir con mayor precisión tu ancla dominante.
                                     </Text>
                                 </div>
                                 <Button

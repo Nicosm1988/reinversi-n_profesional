@@ -20,8 +20,8 @@ export function ServicesSection() {
                         <Image
                             src="/illustrations/services.png"
                             alt=""
-                            width={160}
-                            height={120}
+                            width={240}
+                            height={180}
                             className="object-contain"
                             aria-hidden="true"
                         />

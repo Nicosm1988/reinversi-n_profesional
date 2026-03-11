@@ -108,8 +108,8 @@ export function HeroSection() {
                     <Image
                         src="/illustrations/hero.png"
                         alt="Ilustración de reinvención profesional"
-                        width={340}
-                        height={255}
+                        width={460}
+                        height={345}
                         className="object-contain drop-shadow-lg"
                         priority
                     />

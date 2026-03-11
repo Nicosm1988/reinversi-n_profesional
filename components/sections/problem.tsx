@@ -45,8 +45,8 @@ export function ProblemSection() {
                 <Image
                   src="/illustrations/problem.png"
                   alt="Persona reflexionando sobre su carrera"
-                  width={280}
-                  height={210}
+                  width={380}
+                  height={285}
                   className="object-contain opacity-85"
                 />
               </div>
