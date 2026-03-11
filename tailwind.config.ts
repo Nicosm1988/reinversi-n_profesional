@@ -75,6 +75,12 @@ export default {
             boxShadow: {
                 'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
                 'subtle': '0 2px 10px -2px rgba(0, 0, 0, 0.02)',
+                'neo': '4px 4px 0px 0px rgba(0,0,0,1)',
+                'neo-sm': '2px 2px 0px 0px rgba(0,0,0,1)',
+                'neo-hover': '6px 6px 0px 0px rgba(0,0,0,1)',
+            },
+            borderWidth: {
+                '3': '3px',
             },
             keyframes: {
                 "accordion-down": {
