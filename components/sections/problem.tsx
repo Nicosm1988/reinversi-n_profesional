@@ -31,7 +31,7 @@ export function ProblemSection() {
                 ¿Te identificas?
               </Heading>
               <Text variant="body-lg" className="mb-8">
-                No estás solo en esto. Miles de profesionales están navegando
+                No transites este proceso en soledad. Miles de profesionales están navegando
                 el mismo momento de incertidumbre. La diferencia está en
                 elegir un espacio seguro para pensar tu próximo paso con
                 claridad.
