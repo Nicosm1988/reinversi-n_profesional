@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
+import Image from "next/image";
 
 const testimonials = [
     {
@@ -30,6 +31,15 @@ export function TrustSection() {
                 <div className="text-center mb-16">
                     <Text variant="caption">Historias reales</Text>
                     <Heading level="h2" className="mt-2">Profesionales que encontraron su rumbo</Heading>
+                    <div className="flex justify-center mt-6">
+                        <Image
+                            src="/illustrations/trust.png"
+                            alt="Personas compartiendo experiencias"
+                            width={260}
+                            height={195}
+                            className="object-contain opacity-90"
+                        />
+                    </div>
                 </div>
 
                 <StaggerContainer className="grid md:grid-cols-3 gap-8">

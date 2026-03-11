@@ -5,6 +5,7 @@ import { Heading, Text } from "@/components/ui/typography";
 import { SlideUp } from "@/components/motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import {
     Carousel,
     CarouselContent,
@@ -100,6 +101,18 @@ export function HeroSection() {
                         </div>
                     </Carousel>
 
+                </div>
+
+                {/* Decorative illustration */}
+                <div className="flex justify-center mt-8 lg:mt-0 lg:absolute lg:bottom-0 lg:right-8 xl:right-16 z-0 opacity-80 pointer-events-none">
+                    <Image
+                        src="/illustrations/hero.png"
+                        alt="Ilustración de reinvención profesional"
+                        width={340}
+                        height={255}
+                        className="object-contain drop-shadow-lg"
+                        priority
+                    />
                 </div>
             </div>
         </section>

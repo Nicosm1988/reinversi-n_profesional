@@ -9,6 +9,7 @@ import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
 import { ArrowRight, BookOpen, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Book {
     title: string;
@@ -200,14 +201,25 @@ export function PathsSection() {
     return (
         <Section id="caminos" spacing="lg" background="muted">
             <Container>
-                <FadeIn className="mb-16 md:mb-24 max-w-2xl">
-                    <Heading level="h2" className="mb-6">
-                        5 Caminos Posibles. <br />
-                        Una Sola Decisión.
-                    </Heading>
-                    <Text variant="lead">
-                        No hay dos trayectorias iguales. Diseñamos la estrategia según tu punto de partida y tu horizonte.
-                    </Text>
+                <FadeIn className="mb-16 md:mb-24">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+                        <div className="max-w-2xl">
+                            <Heading level="h2" className="mb-6">
+                                5 Caminos Posibles. <br />
+                                Una Sola Decisión.
+                            </Heading>
+                            <Text variant="lead">
+                                No hay dos trayectorias iguales. Diseñamos la estrategia según tu punto de partida y tu horizonte.
+                            </Text>
+                        </div>
+                        <Image
+                            src="/illustrations/paths.png"
+                            alt="Múltiples caminos profesionales"
+                            width={220}
+                            height={165}
+                            className="object-contain opacity-85 flex-shrink-0"
+                        />
+                    </div>
                 </FadeIn>
 
                 <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

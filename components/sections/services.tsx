@@ -5,6 +5,7 @@ import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn } from "@/components/motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export function ServicesSection() {
     return (
@@ -13,6 +14,18 @@ export function ServicesSection() {
                 <FadeIn className="bg-primary rounded-2xl p-8 md:p-16 text-center text-primary-foreground relative overflow-hidden">
                     {/* Decorative circle */}
                     <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                    {/* Decorative illustration */}
+                    <div className="absolute bottom-4 left-4 md:left-8 opacity-30 pointer-events-none hidden md:block">
+                        <Image
+                            src="/illustrations/services.png"
+                            alt=""
+                            width={160}
+                            height={120}
+                            className="object-contain"
+                            aria-hidden="true"
+                        />
+                    </div>
 
                     <div className="relative z-10 max-w-2xl mx-auto">
                         <Heading level="h2" className="text-primary-foreground mb-6">

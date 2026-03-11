@@ -3,6 +3,7 @@
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
+import Image from "next/image";
 
 const situations = [
   {
@@ -40,6 +41,15 @@ export function ProblemSection() {
                 real. Cada proceso es único, te acompañamos a transitar el
                 tuyo.
               </Text>
+              <div className="hidden lg:flex justify-start mt-4">
+                <Image
+                  src="/illustrations/problem.png"
+                  alt="Persona reflexionando sobre su carrera"
+                  width={280}
+                  height={210}
+                  className="object-contain opacity-85"
+                />
+              </div>
             </div>
           </FadeIn>
 

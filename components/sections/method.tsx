@@ -3,6 +3,7 @@
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
+import Image from "next/image";
 
 const steps = [
     {
@@ -32,12 +33,23 @@ export function MethodSection() {
         <Section id="metodo" spacing="lg">
             <Container size="sm">
                 <FadeIn className="mb-16">
-                    <span className="text-sm font-medium tracking-widest uppercase text-primary/60 mb-2 block">
-                        Nuestro Enfoque
-                    </span>
-                    <Heading level="h2">
-                        Tu Ruta de Transición
-                    </Heading>
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                        <div>
+                            <span className="text-sm font-medium tracking-widest uppercase text-primary/60 mb-2 block">
+                                Nuestro Enfoque
+                            </span>
+                            <Heading level="h2">
+                                Tu Ruta de Transición
+                            </Heading>
+                        </div>
+                        <Image
+                            src="/illustrations/method.png"
+                            alt="Camino de progreso profesional"
+                            width={200}
+                            height={150}
+                            className="object-contain opacity-85"
+                        />
+                    </div>
                 </FadeIn>
 
                 <StaggerContainer className="relative border-l border-border/60 ml-3 md:ml-0 space-y-12 pb-4">

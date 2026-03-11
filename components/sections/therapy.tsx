@@ -6,6 +6,7 @@ import { FadeIn } from "@/components/motion";
 import { Button } from "@/components/ui/button";
 import { Heart, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export function TherapySection() {
     return (
@@ -18,9 +19,18 @@ export function TherapySection() {
                         <div className="absolute -top-10 -right-10 w-48 h-48 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
 
                         <div className="relative z-10 flex flex-col md:flex-row gap-8 items-start">
-                            {/* Icon */}
-                            <div className="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                                <Heart className="w-7 h-7 text-secondary" />
+                            {/* Icon + illustration */}
+                            <div className="flex flex-col items-center gap-4 flex-shrink-0">
+                                <div className="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                                    <Heart className="w-7 h-7 text-secondary" />
+                                </div>
+                                <Image
+                                    src="/illustrations/therapy.png"
+                                    alt="Bienestar emocional y autocuidado"
+                                    width={180}
+                                    height={135}
+                                    className="object-contain opacity-85 hidden md:block"
+                                />
                             </div>
 
                             {/* Content */}
