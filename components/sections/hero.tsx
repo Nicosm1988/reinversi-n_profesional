@@ -16,8 +16,8 @@ import {
 
 const slides = [
     {
-        title: <>En un mundo que cambia, <br className="hidden lg:block" />te ayudamos a encontrar <span className="italic text-secondary">tu rumbo</span>.</>,
-        description: "La inteligencia artificial transformó el mercado laboral. Es normal sentir incertidumbre. Te acompañamos a descubrir tu próximo paso profesional con claridad, contención y una metodología probada.",
+        title: <>Transformá la incertidumbre en <br className="hidden lg:block" /><span className="italic text-secondary">tu motor de cambio</span>.</>,
+        description: "Entre el avance de la IA y la sobreoferta laboral, la incertidumbre es la norma. No se trata de esperar a que aclare, sino de aprender a navegar. Te acompañamos a recuperar la claridad sobre tu carrera y a definir tu próximo movimiento profesional con un método que integra tus objetivos con las demandas del mercado actual.",
         primaryAction: { label: "Comenzar mi diagnóstico", href: "/diagnostico/ancla-de-carrera" },
         secondaryAction: { label: "Conocer el Método", href: "#metodo" },
     },
@@ -108,30 +108,6 @@ export function HeroSection() {
                                     className="object-contain drop-shadow-lg rounded-tl-[3rem] rounded-tr-[3rem] rounded-br-[3rem] rounded-bl-lg"
                                     priority
                                 />
-                            </div>
-
-                            {/* Floating Badge 1: Terapia */}
-                            <div className="absolute -top-6 -right-4 lg:-right-8 z-20 bg-background text-foreground px-4 py-3 rounded-2xl rounded-br-sm border-2 border-black shadow-neo-sm transform rotate-3 animate-pulse duration-[3000ms] flex items-center gap-2">
-                                <span className="bg-green-100 text-green-700 p-1.5 rounded-full">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                                </span>
-                                <span className="font-semibold text-sm">Terapia</span>
-                            </div>
-
-                            {/* Floating Badge 2: Inglés */}
-                            <div className="absolute top-1/2 -left-4 lg:-left-10 z-20 bg-background text-foreground px-4 py-3 rounded-2xl rounded-bl-sm border-2 border-black shadow-neo-sm transform -rotate-3 hover:scale-105 transition-transform flex items-center gap-2">
-                                <span className="bg-blue-100 text-blue-700 p-1.5 rounded-full">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
-                                </span>
-                                <span className="font-semibold text-sm">Inglés para trabajar</span>
-                            </div>
-
-                            {/* Floating Badge 3: CV & LinkedIn */}
-                            <div className="absolute -bottom-6 right-8 z-20 bg-background text-foreground px-4 py-3 rounded-2xl rounded-tl-sm border-2 border-black shadow-neo-sm transform rotate-2 hover:scale-105 transition-transform flex items-center gap-2">
-                                <span className="bg-purple-100 text-purple-700 p-1.5 rounded-full">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 18H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2h-1"/><circle cx="16" cy="18" r="4"/><path d="m22 22-2-2"/></svg>
-                                </span>
-                                <span className="font-semibold text-sm">Mejora de tu CV</span>
                             </div>
                         </div>
                     </div>
