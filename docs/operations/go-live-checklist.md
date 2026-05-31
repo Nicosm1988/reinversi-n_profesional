@@ -43,7 +43,7 @@ npm run verify:deploy -- --base-url https://staging.example.com --retries 3 --re
 
 This checks:
 - `/`
-- `/diagnostico/ancla-de-carrera`
+- `/diagnostico/ancla-de-carrera` redirects anonymous users to `/login`
 - `/contacto`
 - `/login`
 - `/api/health` (HTTP + health payload)

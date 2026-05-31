@@ -57,6 +57,18 @@ async function checkEndpoint(baseUrl, path, expectedStatuses) {
   };
 }
 
+async function checkAuthRedirect(baseUrl, path) {
+  const check = await checkEndpoint(baseUrl, path, [307, 308]);
+  const location = check.headers.get("location") ?? "";
+  const redirectsToLogin = location.includes("/login") && location.includes("next=");
+
+  return {
+    ...check,
+    ok: check.ok && redirectsToLogin,
+    expected: "307/308 redirect to /login with next param",
+  };
+}
+
 async function checkHealth(baseUrl) {
   const url = new URL("/api/health", baseUrl).toString();
   const diagnosticsToken = process.env.HEALTHCHECK_DIAGNOSTICS_TOKEN;
@@ -120,7 +132,7 @@ async function main() {
 
     const checks = [];
     checks.push(await checkEndpoint(baseUrl, "/", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/diagnostico/ancla-de-carrera", [200]));
+    checks.push(await checkAuthRedirect(baseUrl, "/diagnostico/ancla-de-carrera"));
     checks.push(await checkEndpoint(baseUrl, "/contacto", [200]));
     checks.push(await checkEndpoint(baseUrl, "/login", [200]));
     checks.push(await checkEndpoint(baseUrl, "/api/health", [200]));
