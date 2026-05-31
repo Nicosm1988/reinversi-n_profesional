@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
 import { limitRequest } from "@/lib/rate-limit";
 import { getClientIp, getRequestId } from "@/lib/http/request-context";
 import { withRequestHeaders } from "@/lib/http/response-headers";
 import { logEvent } from "@/lib/observability/logger";
-import { hasSupabaseAdminConfig, hasSupabasePublicConfig } from "@/lib/supabase/config";
+import { getAuthenticatedUser } from "@/lib/supabase/auth";
 
 const saveDiagnosticSchema = z.object({
   diagnosticType: z.string().trim().min(2).max(60),
@@ -43,32 +41,27 @@ export async function POST(req: Request) {
   const ip = getClientIp(req);
 
   try {
-    const publicConfigAvailable = hasSupabasePublicConfig();
-    const adminConfigAvailable = hasSupabaseAdminConfig();
+    const auth = await getAuthenticatedUser();
+    if (!auth.ok) {
+      logEvent(auth.status === 503 ? "error" : "warn", "diagnostics.save.auth_blocked", {
+        requestId,
+        ip,
+        reason: auth.reason,
+      });
 
-    let supabase: Awaited<ReturnType<typeof createClient>> | null = null;
-    let userId: string | null = null;
-
-    if (publicConfigAvailable) {
-      supabase = await createClient();
-      const {
-        data: { user },
-        error: authError,
-      } = await supabase.auth.getUser();
-
-      if (authError) {
-        logEvent("warn", "diagnostics.save.auth_lookup_failed", {
-          requestId,
-          ip,
-          message: authError.message,
-        });
-      }
-
-      userId = user?.id ?? null;
+      return NextResponse.json(
+        {
+          error:
+            auth.reason === "supabase-unavailable"
+              ? "Authentication is temporarily unavailable."
+              : "You must sign in with Google before saving the diagnostic.",
+        },
+        { status: auth.status, headers: withRequestHeaders(requestId) },
+      );
     }
 
     const rateLimit = await limitRequest({
-      key: `${userId ?? "anonymous"}:${ip}`,
+      key: `${auth.user.id}:${ip}`,
       prefix: "diagnostics:save",
       limit: SAVE_LIMIT,
       windowMs: SAVE_WINDOW_MS,
@@ -81,7 +74,7 @@ export async function POST(req: Request) {
     });
 
     if (limited) {
-      logEvent("warn", "diagnostics.save.rate_limited", { requestId, userId, ip });
+      logEvent("warn", "diagnostics.save.rate_limited", { requestId, userId: auth.user.id, ip });
       return NextResponse.json(
         { error: "Too many requests. Please try again in one minute." },
         { status: 429, headers: rateHeaders },
@@ -100,24 +93,10 @@ export async function POST(req: Request) {
 
     const payload = parsed.data;
 
-    if (!userId && !adminConfigAvailable) {
-      logEvent("info", "diagnostics.save.skipped", {
-        requestId,
-        ip,
-        reason: publicConfigAvailable ? "anonymous_without_admin" : "supabase_unavailable",
-      });
-
-      return NextResponse.json(
-        { success: true, persisted: false },
-        { headers: rateHeaders },
-      );
-    }
-
-    const saveClient = userId && supabase ? supabase : createAdminClient();
-    const { data, error } = await saveClient
+    const { data, error } = await auth.supabase
       .from("user_diagnostics")
       .insert({
-        user_id: userId,
+        user_id: auth.user.id,
         diagnostic_type: payload.diagnosticType,
         user_data: payload.userData,
         raw_answers: payload.rawAnswers,
@@ -130,7 +109,7 @@ export async function POST(req: Request) {
     if (error) {
       logEvent("error", "diagnostics.save.db_error", {
         requestId,
-        userId,
+        userId: auth.user.id,
         code: error.code,
         message: error.message,
       });
@@ -142,8 +121,8 @@ export async function POST(req: Request) {
 
     logEvent("info", "diagnostics.save.success", {
       requestId,
-      userId,
-      persistedAs: userId ? "authenticated" : "anonymous",
+      userId: auth.user.id,
+      persistedAs: "authenticated",
     });
     return NextResponse.json({ success: true, persisted: true, data }, { headers: rateHeaders });
   } catch (error) {

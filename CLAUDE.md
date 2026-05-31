@@ -45,6 +45,8 @@ API routes under `app/api/`:
 - `POST /api/diagnostics/save` — Persists results to `user_diagnostics` table (requires Supabase auth)
 - `GET /api/auth/callback` — OAuth callback handler
 
+Diagnostic access is gated by Supabase Auth. Users must sign in with Google before taking `/diagnostico/ancla-de-carrera`; anonymous diagnostics are intentionally blocked at both page and API layers.
+
 ### Component Architecture
 
 - `components/layout/` — Header (with services dropdown + mobile menu), Footer, CookieBanner, `therapy-float.tsx` (floating CTA bubble)

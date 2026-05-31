@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import { sanitizeNextPath } from "@/lib/security/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Container } from "@/components/layout/container";
@@ -15,26 +16,55 @@ export default function LoginPage() {
   const supabase = createClient();
   const isAuthAvailable = Boolean(supabase);
 
-  const handleOAuthLogin = async (provider: "google" | "linkedin_oidc") => {
+  function getNextPath() {
+    const fallback = window.location.pathname.startsWith("/en")
+      ? "/en/diagnostico/ancla-de-carrera"
+      : "/diagnostico/ancla-de-carrera";
+    const params = new URLSearchParams(window.location.search);
+    return sanitizeNextPath(params.get("next"), fallback);
+  }
+
+  useEffect(() => {
+    if (!supabase) return;
+
+    let active = true;
+    void (async () => {
+      const { data } = await supabase.auth.getUser();
+      if (active && data.user) {
+        window.location.replace(getNextPath());
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [supabase]);
+
+  const handleOAuthLogin = async () => {
     if (!supabase) {
       console.error("Supabase no esta configurado para OAuth.");
       return;
     }
 
     try {
-      setIsLoading(provider);
-      const isEnglishLocale = window.location.pathname.startsWith("/en");
-      const nextPath = isEnglishLocale ? "/en/diagnostico/ancla-de-carrera" : "/diagnostico/ancla-de-carrera";
+      setIsLoading("google");
+      const nextPath = getNextPath();
       const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
 
       const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: { redirectTo },
+        provider: "google",
+        options: {
+          redirectTo,
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
+        },
       });
 
       if (error) throw error;
     } catch (error) {
-      console.error(`Error logging in with ${provider}:`, error);
+      console.error("Error logging in with Google:", error);
       setIsLoading(null);
     }
   };
@@ -58,7 +88,7 @@ export default function LoginPage() {
                 <Button
                   variant="outline"
                   className="w-full h-14 rounded-full transition-all font-medium text-base relative overflow-hidden group"
-                  onClick={() => handleOAuthLogin("google")}
+                  onClick={handleOAuthLogin}
                   disabled={isLoading !== null || !isAuthAvailable}
                 >
                   <span className={`flex items-center justify-center gap-3 transition-transform duration-300 ${isLoading === "google" ? "translate-y-[-150%]" : "translate-y-0"}`}>
@@ -73,25 +103,6 @@ export default function LoginPage() {
                   {isLoading === "google" && (
                     <div className="absolute inset-0 flex items-center justify-center text-blue-500">
                       <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-                    </div>
-                  )}
-                </Button>
-
-                <Button
-                  variant="outline"
-                  className="w-full h-14 rounded-full transition-all font-medium text-base relative overflow-hidden group"
-                  onClick={() => handleOAuthLogin("linkedin_oidc")}
-                  disabled={isLoading !== null || !isAuthAvailable}
-                >
-                  <span className={`flex items-center justify-center gap-3 transition-transform duration-300 ${isLoading === "linkedin_oidc" ? "translate-y-[-150%]" : "translate-y-0"}`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5">
-                      <path fill="#0a66c2" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                    {t("continueLinkedin")}
-                  </span>
-                  {isLoading === "linkedin_oidc" && (
-                    <div className="absolute inset-0 flex items-center justify-center text-[#0077b5]">
-                      <div className="w-5 h-5 border-2 border-[#0077b5] border-t-transparent rounded-full animate-spin" />
                     </div>
                   )}
                 </Button>

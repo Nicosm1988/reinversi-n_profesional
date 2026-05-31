@@ -62,13 +62,18 @@ const warmSecondaryButtonClass =
   "rounded-full border-[#d4c0ad] bg-[#fbf5ee] text-[#2f3647] shadow-[0_18px_36px_-26px_rgba(47,54,71,0.45)] hover:bg-[#efe3d5]";
 const warmSectionEyebrowClass = "font-semibold uppercase tracking-[0.18em] text-[#cf724e]";
 
-export function CareerQuiz() {
+type CareerQuizProps = {
+  userEmail?: string | null;
+};
+
+export function CareerQuiz({ userEmail }: CareerQuizProps) {
   const [step, setStep] = useState<Step>("intro");
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [bonusQuestions, setBonusQuestions] = useState<number[]>([]);
   const [userData, setUserData] = useState<PreQuizData | null>(null);
   const [aiResult, setAiResult] = useState<AiDiagnosticResult | null>(null);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saved" | "error">("idle");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [questionPageIndex, setQuestionPageIndex] = useState(0);
   const [bonusPageIndex, setBonusPageIndex] = useState(0);
@@ -136,6 +141,7 @@ export function CareerQuiz() {
     setUserData(null);
     setAiResult(null);
     setAnalysisError(null);
+    setSaveStatus("idle");
     setIsAnalyzing(false);
     setQuestionPageIndex(0);
     setBonusPageIndex(0);
@@ -148,6 +154,7 @@ export function CareerQuiz() {
     setUserData(safeUserData);
     setAiResult(null);
     setAnalysisError(null);
+    setSaveStatus("idle");
     setIsAnalyzing(true);
     setStep("results");
 
@@ -170,6 +177,13 @@ export function CareerQuiz() {
 
       const aiData = await analyzeResponse.json();
       if (!analyzeResponse.ok) {
+        if (analyzeResponse.status === 401) {
+          const currentPath = window.location.pathname;
+          const loginPath = currentPath.startsWith("/en") ? "/en/login" : "/login";
+          window.location.assign(`${loginPath}?next=${encodeURIComponent(currentPath)}&reason=auth-required`);
+          return;
+        }
+
         throw new Error(aiData?.error ?? "No se pudo generar el diagnostico");
       }
 
@@ -188,7 +202,17 @@ export function CareerQuiz() {
       });
 
       if (!saveResponse.ok) {
+        if (saveResponse.status === 401) {
+          const currentPath = window.location.pathname;
+          const loginPath = currentPath.startsWith("/en") ? "/en/login" : "/login";
+          window.location.assign(`${loginPath}?next=${encodeURIComponent(currentPath)}&reason=auth-required`);
+          return;
+        }
+
+        setSaveStatus("error");
         console.error("Diagnostic result was generated but could not be persisted");
+      } else {
+        setSaveStatus("saved");
       }
     } catch (error) {
       console.error(error);
@@ -264,10 +288,10 @@ export function CareerQuiz() {
                         </div>
                         <div className="rounded-2xl border border-[#e6c9be] bg-[#f7e5dc] p-4">
                           <Text variant="small" className="font-semibold text-[#cf724e]">
-                            Resultado sin login
+                            Sesion segura
                           </Text>
                           <Text variant="small" className="mt-1 text-[#6b6170]">
-                            No necesitas iniciar sesion para recibir tu diagnostico.
+                            Tus respuestas quedan guardadas en tu cuenta para retomarlas luego.
                           </Text>
                         </div>
                       </div>
@@ -485,8 +509,8 @@ export function CareerQuiz() {
                       A esas 3 elecciones les sumamos un bono de precision para definir con mayor claridad tu ancla
                       dominante.
                     </Text>
-                    <Text variant="small" className="text-muted-foreground">
-                      No hace falta crear una cuenta para recibir tu diagnostico.
+                      <Text variant="small" className="text-muted-foreground">
+                      Ya estas en una sesion segura. Tu seleccion se asociara a tu cuenta.
                     </Text>
                   </CardContent>
                 </Card>
@@ -612,7 +636,7 @@ export function CareerQuiz() {
                     </div>
 
                     <Text variant="small" className="text-center text-muted-foreground">
-                      No necesitas iniciar sesion para ver tu resultado.
+                      Este resultado se guardara en Supabase dentro de tu cuenta.
                     </Text>
                   </CardFooter>
                 </Card>
@@ -633,7 +657,8 @@ export function CareerQuiz() {
                     Para personalizar mejor tu lectura final, necesitamos algunos datos basicos de tu contexto actual.
                   </Text>
                   <Text variant="small" className="text-[#e9d8c8]/80">
-                    No hace falta crear una cuenta para recibir tu diagnostico.
+                    Tus datos se usan para personalizar y guardar el diagnostico en tu cuenta
+                    {userEmail ? ` (${userEmail})` : ""}.
                   </Text>
                 </div>
 
@@ -780,7 +805,14 @@ export function CareerQuiz() {
 
                 {aiResult && !isAnalyzing && (
                   <div className="space-y-8">
-                    <Heading level="h3" className="text-[#f6efe7]">Tu analisis personalizado</Heading>
+                    <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                      <Heading level="h3" className="text-[#f6efe7]">Tu analisis personalizado</Heading>
+                      {saveStatus === "saved" && (
+                        <div className="rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-2 text-sm font-semibold text-[#2f3647]">
+                          Guardado en tu cuenta
+                        </div>
+                      )}
+                    </div>
                     <Card className="overflow-hidden border-[#d7c3ae] bg-[#f6efe7]/95 shadow-xl">
                       <CardHeader className="bg-[#f0dfd1]">
                         <CardTitle className="text-2xl text-[#2f3647]">{aiResult.title}</CardTitle>
@@ -823,6 +855,16 @@ export function CareerQuiz() {
                         </div>
                       </CardContent>
                     </Card>
+                    {saveStatus === "error" && (
+                      <Card className="border-[#e2c5ac] bg-[#faede3] shadow-sm">
+                        <CardContent className="py-5 text-center">
+                          <Text className="text-[#9a5f45]">
+                            El analisis se genero, pero no pudimos guardarlo en Supabase. Revisa la configuracion de
+                            produccion antes de usarlo con usuarios reales.
+                          </Text>
+                        </CardContent>
+                      </Card>
+                    )}
                   </div>
                 )}
 

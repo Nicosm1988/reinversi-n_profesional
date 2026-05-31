@@ -222,10 +222,10 @@
   },
   "Login": {
     "title": "Bienvenido",
-    "description": "Inicia sesión para acceder a tu historial de diagnósticos y sesiones de reinvención.",
+    "description": "Inicia sesión con Google para hacer el diagnóstico y guardar tus resultados en tu cuenta.",
     "continueGoogle": "Continuar con Google",
     "continueLinkedin": "Continuar con LinkedIn",
-    "termsNotice": "Al continuar, aceptas nuestros términos de servicio y políticas de privacidad."
+    "termsNotice": "Al continuar, aceptas nuestros términos de servicio y políticas de privacidad. Tus diagnósticos quedan asociados a tu cuenta."
   },
   "Contact": {
     "heroTitle": "Hablemos de tu",

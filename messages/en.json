@@ -71,10 +71,10 @@
   },
   "Login": {
     "title": "Welcome",
-    "description": "Sign in to access your diagnostics history and reinvention sessions.",
+    "description": "Sign in with Google to take the diagnostic and save your results to your account.",
     "continueGoogle": "Continue with Google",
     "continueLinkedin": "Continue with LinkedIn",
-    "termsNotice": "By continuing, you accept our terms of service and privacy policies."
+    "termsNotice": "By continuing, you accept our terms of service and privacy policies. Your diagnostics are linked to your account."
   },
   "Contact": {
     "heroTitle": "Let's talk about your",

@@ -72,6 +72,7 @@ Migraciones relevantes:
 - `supabase/migrations/20260303170000_lead_requests.sql`
 - `supabase/migrations/20260303203000_lead_requests_hardening.sql`
 - `supabase/migrations/20260304100000_lead_requests_lockdown.sql`
+- `supabase/migrations/20260531183000_require_auth_for_diagnostics.sql`
 
 Comandos recomendados:
 
@@ -80,6 +81,19 @@ supabase login
 supabase link --project-ref <PROJECT_REF>
 supabase db push
 ```
+
+## Auth requerida para diagnosticos
+
+- El test de Ancla de Carrera requiere sesion activa de Supabase Auth.
+- El login disponible para diagnosticos es Google OAuth.
+- Las APIs `POST /api/diagnostics/analyze` y `POST /api/diagnostics/save` rechazan usuarios anonimos.
+- Los resultados se guardan en `public.user_diagnostics` con `user_id` obligatorio y RLS por usuario.
+
+Configurar en produccion:
+
+1. Habilitar Google en Supabase Auth Providers.
+2. Registrar `https://reinvension-profesional.vercel.app/auth/callback` como redirect/callback URL.
+3. Cargar en Vercel `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL` y `OPENAI_API_KEY`.
 
 ## Deploy y operaciones
 

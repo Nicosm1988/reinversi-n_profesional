@@ -7,6 +7,7 @@ import { getClientIp, getRequestId } from "@/lib/http/request-context";
 import { withRequestHeaders } from "@/lib/http/response-headers";
 import { logEvent } from "@/lib/observability/logger";
 import { verifyTurnstileToken } from "@/lib/security/turnstile";
+import { getAuthenticatedUser } from "@/lib/supabase/auth";
 
 const diagnosticResultSchema = z.object({
   title: z.string().describe("Short but strong career anchor archetype."),
@@ -67,8 +68,27 @@ export async function POST(req: Request) {
   const requestHostname = new URL(req.url).hostname;
 
   try {
+    const auth = await getAuthenticatedUser();
+    if (!auth.ok) {
+      logEvent(auth.status === 503 ? "error" : "warn", "diagnostics.analyze.auth_blocked", {
+        requestId,
+        ip,
+        reason: auth.reason,
+      });
+
+      return NextResponse.json(
+        {
+          error:
+            auth.reason === "supabase-unavailable"
+              ? "Authentication is temporarily unavailable."
+              : "You must sign in with Google before taking the diagnostic.",
+        },
+        { status: auth.status, headers: withRequestHeaders(requestId) },
+      );
+    }
+
     const rateLimit = await limitRequest({
-      key: ip,
+      key: `${auth.user.id}:${ip}`,
       prefix: "diagnostics:analyze",
       limit: ANALYZE_LIMIT,
       windowMs: ANALYZE_WINDOW_MS,
@@ -81,7 +101,7 @@ export async function POST(req: Request) {
     });
 
     if (limited) {
-      logEvent("warn", "diagnostics.analyze.rate_limited", { requestId, ip });
+      logEvent("warn", "diagnostics.analyze.rate_limited", { requestId, userId: auth.user.id, ip });
       return NextResponse.json(
         { error: "Too many requests. Please try again in one minute." },
         { status: 429, headers: rateHeaders },
@@ -108,7 +128,12 @@ export async function POST(req: Request) {
         expectedHostname: requestHostname,
       });
       if (!turnstile.passed) {
-        logEvent("warn", "diagnostics.analyze.captcha_failed", { requestId, ip, errors: turnstile.errors });
+        logEvent("warn", "diagnostics.analyze.captcha_failed", {
+          requestId,
+          userId: auth.user.id,
+          ip,
+          errors: turnstile.errors,
+        });
         return NextResponse.json(
           { error: "Captcha verification failed" },
           { status: 403, headers: rateHeaders },
@@ -119,6 +144,7 @@ export async function POST(req: Request) {
     if (!process.env.OPENAI_API_KEY) {
       logEvent("warn", "diagnostics.analyze.fallback", {
         requestId,
+        userId: auth.user.id,
         ip,
         anchor: anchor.name,
         reason: "openai_api_key_missing",
@@ -155,11 +181,12 @@ Tono:
         temperature: 0.5,
       });
 
-      logEvent("info", "diagnostics.analyze.success", { requestId, ip, anchor: anchor.name });
+      logEvent("info", "diagnostics.analyze.success", { requestId, userId: auth.user.id, ip, anchor: anchor.name });
       return NextResponse.json(result.object, { headers: rateHeaders });
     } catch (error) {
       logEvent("warn", "diagnostics.analyze.fallback", {
         requestId,
+        userId: auth.user.id,
         ip,
         anchor: anchor.name,
         reason: error instanceof Error ? error.message : "openai_unknown_error",
