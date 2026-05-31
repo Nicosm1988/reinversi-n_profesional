@@ -23,10 +23,10 @@ export function FAQSection() {
                 </FadeIn>
 
                 <FadeIn>
-                    <Accordion type="single" collapsible className="w-full">
+                    <Accordion type="single" collapsible className="w-full rounded-2xl border border-border bg-white px-4 shadow-soft">
                         {faqs.map((item, i) => (
-                            <AccordionItem key={i} value={`item-${i}`} className="border-b-border/40 px-2">
-                                <AccordionTrigger className="text-lg md:text-xl font-heading text-left hover:text-secondary transition-colors py-6">
+                            <AccordionItem key={i} value={`item-${i}`} className="border-b-border/50 px-2">
+                                <AccordionTrigger className="text-lg md:text-xl font-heading text-left text-primary transition-colors py-6">
                                     {item.q}
                                 </AccordionTrigger>
                                 <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-6">

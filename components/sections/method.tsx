@@ -3,78 +3,70 @@
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
-import Image from "next/image";
+import { StairIllustration } from "@/components/illustrations/pastel-illustrations";
 
 const steps = [
-    {
-        step: "ETAPA 01",
-        title: "Descubrir quién eres hoy",
-        desc: "Nos tomamos el tiempo de escucharte. Exploramos tu trayectoria, tus talentos, lo que te importa de verdad y lo que ya no te representa. El objetivo es que tu próximo movimiento nazca de un lugar auténtico.",
-    },
-    {
-        step: "ETAPA 02",
-        title: "Entender hacia dónde ir",
-        desc: "Conectamos tu perfil con las oportunidades reales del mercado actual. Juntos mapeamos roles, sectores y caminos de formación que se alineen con lo que descubrimos en la primera etapa.",
-    },
-    {
-        step: "ETAPA 03",
-        title: "Tu mapa de claridad",
-        desc: "Todo cobra sentido acá. Recibes un informe personalizado que integra tus fortalezas, intereses y áreas de crecimiento. Es la herramienta que necesitas para tomar decisiones con confianza y con datos reales sobre ti.",
-    },
-    {
-        step: "ETAPA 04",
-        title: "Salir al mundo preparado",
-        desc: "Con el plan en mano, te equipamos con todo lo necesario para posicionarte: CV estratégico, preparación para entrevistas y las herramientas para dar tu próximo paso con seguridad.",
-    }
+  {
+    step: "ETAPA 01",
+    title: "Escuchar y ordenar",
+    desc: "Abrimos un espacio para entender tu momento, lo que te pesa hoy y lo que ya no quieres seguir sosteniendo.",
+  },
+  {
+    step: "ETAPA 02",
+    title: "Detectar patrones y fortalezas",
+    desc: "Traducimos tu recorrido a capacidades transferibles, motivaciones de fondo y condiciones laborales que te hacen bien.",
+  },
+  {
+    step: "ETAPA 03",
+    title: "Definir caminos viables",
+    desc: "No trabajamos con fantasia vacia: conectamos tus opciones con escenarios reales, mercado y tiempos posibles.",
+  },
+  {
+    step: "ETAPA 04",
+    title: "Bajar claridad a accion",
+    desc: "Convertimos el diagnostico en decisiones concretas, narrativa profesional y un plan de movimiento con sentido.",
+  },
 ];
 
 export function MethodSection() {
-    return (
-        <Section id="metodo" spacing="lg">
-            <Container size="sm">
-                <FadeIn className="mb-8">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                        <div>
-                            <span className="text-sm font-medium tracking-widest uppercase text-primary/60 mb-2 block">
-                                Nuestro Enfoque
-                            </span>
-                            <Heading level="h2">
-                                Tu Ruta de Transición
-                            </Heading>
-                        </div>
-                        <Image
-                            src="/illustrations/method.png"
-                            alt="Camino de progreso profesional"
-                            width={280}
-                            height={210}
-                            className="object-contain opacity-85 rounded-[2rem]"
-                        />
-                    </div>
+  return (
+    <Section id="metodo" spacing="lg" className="bg-[#31384a] text-[#f6efe7]">
+      <Container>
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.95fr]">
+          <div className="space-y-8">
+            <FadeIn>
+              <Text variant="caption" className="text-[#f0b08d]">
+                Nuestro metodo
+              </Text>
+              <Heading level="h2" className="mt-3 text-[#f6efe7]">
+                Una escalera posible para atravesar la transicion.
+              </Heading>
+              <Text variant="body-lg" className="mt-5 max-w-2xl text-[#e9d8c8]/84">
+                La claridad no aparece de golpe. Se construye paso a paso, con preguntas correctas, contexto y una
+                estructura que te permita avanzar sin perderte.
+              </Text>
+            </FadeIn>
+
+            <StaggerContainer className="space-y-4">
+              {steps.map((step) => (
+                <FadeIn key={step.step}>
+                  <article className="rounded-[28px] border border-white/10 bg-white/8 p-6 shadow-[0_18px_44px_-34px_rgba(0,0,0,0.65)]">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#f0b08d]">{step.step}</p>
+                    <h3 className="mt-3 font-heading text-2xl font-semibold text-[#f6efe7]">{step.title}</h3>
+                    <Text className="mt-3 text-[#e7d7c8]/82">{step.desc}</Text>
+                  </article>
                 </FadeIn>
+              ))}
+            </StaggerContainer>
+          </div>
 
-                <StaggerContainer className="relative border-l border-border/60 ml-3 md:ml-0 space-y-6 pb-4">
-                    {steps.map((step, i) => (
-                        <FadeIn key={i} className="relative pl-12 md:pl-16">
-                            {/* Marker */}
-                            <div className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full bg-background border-2 border-primary ring-4 ring-background z-10 transition-colors hover:bg-primary"></div>
-
-                            <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 group">
-                                <span className="text-sm font-bold text-primary/40 font-mono group-hover:text-primary transition-colors">
-                                    {step.step}
-                                </span>
-                                <div>
-                                    <h3 className="text-xl font-heading font-medium text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                                        {step.title}
-                                    </h3>
-                                    <Text>
-                                        {step.desc}
-                                    </Text>
-                                </div>
-                            </div>
-                        </FadeIn>
-                    ))}
-                </StaggerContainer>
-            </Container>
-        </Section>
-    );
+          <FadeIn>
+            <div className="overflow-hidden rounded-[34px] border border-white/10 bg-[#f6efe7] p-4 shadow-[0_28px_80px_-42px_rgba(16,21,33,0.9)]">
+              <StairIllustration className="rounded-[26px]" />
+            </div>
+          </FadeIn>
+        </div>
+      </Container>
+    </Section>
+  );
 }

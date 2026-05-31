@@ -3,68 +3,59 @@
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
-import Image from "next/image";
+import { PuzzleIllustration } from "@/components/illustrations/pastel-illustrations";
 
 const situations = [
   {
-    title: "La IA cambió las reglas del juego",
-    desc: "Lo que funcionaba ayer ya no alcanza. Herramientas nuevas, roles que desaparecen, industrias que se transforman. Es lógico preguntarse: ¿cómo me adapto sin perder lo que construí?",
+    title: "La IA y el mercado te cambiaron el tablero",
+    desc: "Herramientas nuevas, reglas nuevas y una sensacion de tener que reaccionar antes de entender bien hacia donde ir.",
   },
   {
-    title: "No sabes por dónde empezar",
-    desc: "Hay demasiadas opciones y poco tiempo para detenerte a pensar. Remote, freelance, emprender, reconvertirte... La incertidumbre paraliza, pero quedarte quieto no es la solución.",
+    title: "Hay demasiadas opciones y poca claridad",
+    desc: "Seguir igual, cambiar de rol, reconvertirte, emprender o actualizarte. Cuando todo parece posible, decidir cuesta mas.",
   },
   {
-    title: "Tu experiencia sigue siendo valiosa",
-    desc: "Tal vez sientes que tus años de trayectoria pesan menos en este nuevo contexto. La verdad es que tu experiencia es tu mayor activo — solo necesitas un puente hacia lo que viene.",
+    title: "Tu experiencia vale, pero necesita traduccion",
+    desc: "No se trata de empezar de cero, sino de reinterpretar lo que ya construiste para el contexto que viene.",
   },
 ];
 
 export function ProblemSection() {
   return (
-    <Section spacing="lg" background="muted">
+    <Section spacing="lg" background="muted" className="bg-[#f8efe6]">
       <Container>
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
           <FadeIn>
-            <div className="sticky top-32">
-              <Heading level="h2" className="mb-6">
-                ¿Te identificas?
-              </Heading>
-              <Text variant="body-lg" className="mb-8">
-                No transites este proceso en soledad. Miles de profesionales están navegando
-                el mismo momento de incertidumbre. La diferencia está en
-                elegir un espacio seguro para pensar tu próximo paso con
-                claridad.
-                <br />
-                <br />
-                Darle espacio al cambio es la mejor forma de construir algo
-                real. Cada proceso es único, te acompañamos a transitar el
-                tuyo.
-              </Text>
-              <div className="hidden lg:flex justify-start mt-4">
-                <Image
-                  src="/illustrations/problem.png"
-                  alt="Persona reflexionando sobre su carrera"
-                  width={380}
-                  height={285}
-                  className="object-contain opacity-85 rounded-[2rem]"
-                />
-              </div>
+            <div className="overflow-hidden rounded-[34px] border border-[#dcc8b5] bg-[#fffaf4] p-4 shadow-[0_24px_60px_-36px_rgba(47,54,71,0.45)]">
+              <PuzzleIllustration className="rounded-[26px]" />
             </div>
           </FadeIn>
 
-          <StaggerContainer className="space-y-8">
-            {situations.map((item, i) => (
-              <FadeIn key={i} className="group">
-                <div className="pl-8 border-l-2 border-secondary/30 group-hover:border-secondary transition-colors duration-500">
-                  <h3 className="text-xl font-heading font-medium text-foreground mb-3 group-hover:text-secondary transition-colors">
-                    {item.title}
-                  </h3>
-                  <Text>{item.desc}</Text>
-                </div>
-              </FadeIn>
-            ))}
-          </StaggerContainer>
+          <div className="space-y-8">
+            <FadeIn>
+              <Text variant="caption" className="text-[#cf724e]">
+                El problema no eres tu
+              </Text>
+              <Heading level="h2" className="mt-3 text-[#2f3647]">
+                Cuando todo cambia al mismo tiempo, pensar con claridad se vuelve dificil.
+              </Heading>
+              <Text variant="body-lg" className="mt-5 max-w-2xl text-[#5c6272]">
+                Lo que hoy llamas confusion muchas veces es saturacion. Por eso el primer paso no es apurarte a
+                decidir, sino ordenar tu panorama interno y externo.
+              </Text>
+            </FadeIn>
+
+            <StaggerContainer className="space-y-4">
+              {situations.map((item) => (
+                <FadeIn key={item.title}>
+                  <article className="rounded-[28px] border border-[#dcc8b5] bg-[#fffaf4] p-6 shadow-[0_18px_44px_-36px_rgba(47,54,71,0.4)]">
+                    <h3 className="font-heading text-xl font-semibold text-[#2f3647]">{item.title}</h3>
+                    <Text className="mt-3 text-[#5d6372]">{item.desc}</Text>
+                  </article>
+                </FadeIn>
+              ))}
+            </StaggerContainer>
+          </div>
         </div>
       </Container>
     </Section>

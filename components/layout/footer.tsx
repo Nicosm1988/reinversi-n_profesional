@@ -1,88 +1,212 @@
-"use client";
+﻿"use client";
 
-import Link from 'next/link';
-import { Youtube, Instagram, Linkedin } from 'lucide-react';
+import Link from "next/link";
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Youtube, Instagram, Linkedin, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TurnstileWidget } from "@/components/security/turnstile-widget";
 
 export function Footer() {
-    return (
-        <footer className="bg-muted border-t border-border py-16">
-            <div className="container px-4 md:px-6 mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+  const t = useTranslations("Footer");
 
-                    {/* Column 1: Inicio */}
-                    <div className="space-y-4">
-                        <h4 className="font-heading font-bold text-foreground text-lg italic">Inicio</h4>
-                        <ul className="space-y-3 text-sm text-muted-foreground">
-                            <li><Link href="/quienes-somos" className="hover:text-primary transition-colors">Quiénes somos</Link></li>
-                            <li><a href="mailto:contacto@reinvencion.pro" className="hover:text-primary transition-colors">Contacto: contacto@reinvencion.pro</a></li>
-                            <li><Link href="/privacidad" className="hover:text-primary transition-colors">Política de privacidad</Link></li>
-                            <li><Link href="/terminos" className="hover:text-primary transition-colors">Términos y condiciones</Link></li>
-                        </ul>
-                    </div>
+  const [email, setEmail] = useState("");
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | undefined>();
+  const captchaEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
 
-                    {/* Column 2: Servicios */}
-                    <div className="space-y-4">
-                        <h4 className="font-heading font-bold text-foreground text-lg italic">Servicios</h4>
-                        <ul className="space-y-3 text-sm text-muted-foreground">
-                            <li><Link href="/orientacion-vocacional" className="hover:text-primary transition-colors">Orientación Vocacional</Link></li>
-                            <li><Link href="/servicios/ingles-profesional" className="hover:text-primary transition-colors">Inglés Profesional</Link></li>
-                            <li><Link href="/terapia" className="hover:text-primary transition-colors">Terapia Online</Link></li>
-                            <li><Link href="/diagnostico/ancla-de-carrera" className="hover:text-primary transition-colors">Diagnóstico Gratuito</Link></li>
-                        </ul>
-                    </div>
+  async function handleNewsletterSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (isSubmitting || !acceptedTerms || !email.trim()) {
+      return;
+    }
 
-                    {/* Column 3: Newsletter */}
-                    <div className="space-y-4">
-                        <h4 className="font-heading font-bold text-foreground text-lg italic">Newsletter</h4>
-                        <p className="text-sm text-muted-foreground">
-                            Pequeños cambios, grandes transformaciones.<br />
-                            Dejanos tu correo y recibí contenido estratégico.
-                        </p>
-                        <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                className="w-full px-4 py-3 rounded-lg bg-background border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50"
-                            />
-                            <p className="text-[10px] text-muted-foreground/60 leading-relaxed">
-                                Al suscribirte acepto recibir correos electrónicos de Reinvención.Pro, los{" "}
-                                <Link href="/terminos" className="underline hover:text-primary">Términos y Condiciones</Link>{" "}
-                                y la{" "}
-                                <Link href="/privacidad" className="underline hover:text-primary">Política de Privacidad</Link>.
-                            </p>
-                            <button
-                                type="submit"
-                                className="rounded-full bg-secondary text-secondary-foreground px-6 py-2.5 text-sm font-semibold hover:bg-secondary/90 transition-colors"
-                            >
-                                Suscribirme
-                            </button>
-                        </form>
-                    </div>
-                </div>
+    setIsSubmitting(true);
+    setStatusMessage(null);
 
-                {/* Social + Copyright */}
-                <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="flex items-center gap-4">
-                        <a href="#" className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/80 transition-colors">
-                            <Youtube className="h-4 w-4" />
-                        </a>
-                        <a href="#" className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/80 transition-colors">
-                            <Instagram className="h-4 w-4" />
-                        </a>
-                        <a href="#" className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground hover:bg-primary/80 transition-colors">
-                            <Linkedin className="h-4 w-4" />
-                        </a>
-                    </div>
-                    <p className="text-xs text-muted-foreground/60">
-                        &copy; {new Date().getFullYear()} Reinvención Profesional — All Rights Reserved
-                    </p>
-                </div>
+    try {
+      const locale = window.location.pathname.startsWith("/en") ? "en" : "es";
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "newsletter",
+          email,
+          sourcePage: window.location.pathname,
+          locale,
+          consentAccepted: true,
+          captchaToken,
+          metadata: { channel: "footer-newsletter" },
+        }),
+      });
 
-                {/* Disclaimer */}
-                <div className="mt-8 p-4 bg-muted/60 rounded-lg text-[10px] text-muted-foreground/70 text-center leading-relaxed max-w-3xl mx-auto">
-                    <strong>Aviso Importante:</strong> Nuestro equipo es multidisciplinario e incluye profesionales de distintas especialidades, entre ellas psicología. Este servicio está enfocado en orientación vocacional-profesional y acompañamiento estratégico de carrera, por lo que no reemplaza procesos de psicoterapia clínica ni tratamiento psiquiátrico. Si estás atravesando una crisis de salud mental, te recomendamos contactar a un profesional matriculado o al servicio de emergencia de tu zona.
-                </div>
-            </div>
-        </footer>
-    );
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(payload?.error ?? "No se pudo procesar la suscripcion");
+      }
+
+      setEmail("");
+      setAcceptedTerms(false);
+      setCaptchaToken(undefined);
+      setStatusMessage("Suscripcion registrada. Te contactaremos pronto.");
+    } catch (error) {
+      setStatusMessage(error instanceof Error ? error.message : "Error inesperado al suscribirte.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  return (
+    <footer className="relative mt-20 overflow-hidden border-t border-primary/20 bg-primary text-primary-foreground">
+      <div className="absolute -right-32 -top-20 h-72 w-72 rounded-full bg-secondary/15 blur-3xl" />
+      <div className="absolute -left-32 bottom-0 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
+
+      <div className="container relative mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-20">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1fr_1.3fr]">
+          <div>
+            <h4 className="font-heading text-lg font-semibold text-white">{t("colHome")}</h4>
+            <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
+              <li>
+                <Link href="/quienes-somos" className="hover:text-secondary">
+                  {t("linkAbout")}
+                </Link>
+              </li>
+              <li>
+                <a href="mailto:contacto@reinvencion.pro" className="hover:text-secondary">
+                  {t("linkContactEmail")}
+                </a>
+              </li>
+              <li>
+                <Link href="/privacidad" className="hover:text-secondary">
+                  {t("linkPrivacy")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/terminos" className="hover:text-secondary">
+                  {t("linkTerms")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-heading text-lg font-semibold text-white">{t("colServices")}</h4>
+            <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
+              <li>
+                <Link href="/orientacion-vocacional" className="hover:text-secondary">
+                  {t("linkVocational")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/servicios/ingles-profesional" className="hover:text-secondary">
+                  {t("linkEnglish")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/terapia" className="hover:text-secondary">
+                  {t("linkTherapy")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/diagnostico/ancla-de-carrera" className="hover:text-secondary">
+                  {t("linkDiagnosticFree")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-heading text-lg font-semibold text-white">{t("colNewsletter")}</h4>
+            <p className="mt-4 whitespace-pre-line text-sm text-primary-foreground/75">{t("newsletterDesc")}</p>
+
+            <form className="mt-5 space-y-3" onSubmit={handleNewsletterSubmit}>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t("newsletterPlaceholder")}
+                  className="h-12 w-full rounded-xl border border-white/15 bg-white/95 px-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary"
+                />
+                <Button
+                  type="submit"
+                  disabled={isSubmitting || !acceptedTerms || (captchaEnabled && !captchaToken)}
+                  variant="secondary"
+                  className="h-12 min-w-[170px] rounded-xl"
+                >
+                  {isSubmitting ? "Enviando..." : t("newsletterSubmit")}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+
+              <label className="flex items-start gap-2 text-[11px] leading-relaxed text-primary-foreground/70">
+                <input
+                  type="checkbox"
+                  className="mt-0.5"
+                  checked={acceptedTerms}
+                  onChange={(e) => setAcceptedTerms(e.target.checked)}
+                  required
+                />
+                <span>
+                  Al suscribirte acepto recibir correos electronicos de Reinvencion.Pro, los{" "}
+                  <Link href="/terminos" className="underline hover:text-secondary">
+                    {t("linkTerms")}
+                  </Link>{" "}
+                  y la{" "}
+                  <Link href="/privacidad" className="underline hover:text-secondary">
+                    {t("linkPrivacy")}
+                  </Link>
+                  .
+                </span>
+              </label>
+
+              {statusMessage && <p className="text-xs text-white">{statusMessage}</p>}
+              <TurnstileWidget onTokenChange={setCaptchaToken} action="lead_newsletter" className="min-h-[65px]" />
+            </form>
+          </div>
+        </div>
+
+        <div className="mt-14 flex flex-col gap-6 border-t border-white/10 pt-8 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3">
+            <a
+              href="https://www.youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-secondary hover:text-primary"
+              aria-label="Youtube"
+            >
+              <Youtube className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-secondary hover:text-primary"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-secondary hover:text-primary"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+          </div>
+
+          <p className="text-xs text-primary-foreground/65">{t("copyright", { year: new Date().getFullYear() })}</p>
+        </div>
+
+        <div className="mt-6 rounded-xl border border-white/10 bg-white/5 p-4 text-center text-[11px] leading-relaxed text-primary-foreground/65">
+          <strong>{t("disclaimerTitle")}</strong> {t("disclaimerText")}
+        </div>
+      </div>
+    </footer>
+  );
 }

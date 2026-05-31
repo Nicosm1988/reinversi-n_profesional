@@ -69,7 +69,7 @@ const tools = [
 
 export default function DiagnosticoPage() {
     return (
-        <div className="flex flex-col bg-background">
+        <div className="wati-page-shell flex flex-col">
 
             {/* ─── HEADER ─── */}
             <section className="pt-32 pb-16 md:pt-44 md:pb-24 relative">
@@ -114,7 +114,7 @@ export default function DiagnosticoPage() {
                             const Icon = tool.icon;
                             return (
                                 <FadeIn key={i}>
-                                    <Card className={`h-full border bg-background shadow-soft hover:shadow-subtle transition-all duration-300 flex flex-col ${tool.available ? "border-primary/20 ring-1 ring-primary/5" : "border-muted"}`}>
+                                    <Card className={`h-full border bg-background hover:shadow-subtle transition-all duration-300 flex flex-col ${tool.available ? "border-primary/20 ring-1 ring-primary/5" : "border-muted"}`}>
                                         <CardHeader className="pb-4">
                                             <div className="flex items-start justify-between mb-4">
                                                 <div className={`p-3 rounded-xl ${tool.iconColor}`}>
@@ -148,7 +148,7 @@ export default function DiagnosticoPage() {
                                                 asChild={tool.available}
                                                 disabled={!tool.available}
                                                 className={`w-full rounded-full h-12 font-bold text-base mt-2 ${tool.available ? "shadow-lg shadow-primary/15" : "opacity-60"}`}
-                                                variant={tool.available ? "default" : "outline"}
+                                                variant={tool.available ? "secondary" : "outline"}
                                             >
                                                 {tool.available ? (
                                                     <Link href={tool.href}>
@@ -229,8 +229,8 @@ export default function DiagnosticoPage() {
                             <Text className="text-foreground/80 max-w-xl mx-auto italic">
                                 Un espacio confidencial, estratégico y personalizado para analizar tu situación y definir próximos pasos concretos.
                             </Text>
-                            <Button asChild size="lg" className="rounded-full px-12 h-14 text-lg shadow-xl">
-                                <Link href="#contacto">
+                            <Button asChild size="lg" variant="secondary" className="rounded-full px-12 h-14 text-lg">
+                                <Link href="/contacto">
                                     <Calendar className="mr-2 h-5 w-5" />
                                     Agendar mi sesión 1:1
                                 </Link>

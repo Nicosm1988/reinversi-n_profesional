@@ -1,101 +1,128 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { motion, AnimatePresence } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, UserCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { TurnstileWidget } from "@/components/security/turnstile-widget";
 
-const preQuizSchema = z.object({
-    name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
-    age: z.string().refine((val) => !isNaN(Number(val)) && Number(val) >= 18 && Number(val) <= 90, {
-        message: "Debes ingresar una edad válida (18-90)",
-    }),
-    occupation: z.string().min(3, "La ocupación es requerida"),
-    city: z.string().min(2, "La ciudad es requerida"),
-    country: z.string().min(2, "El país es requerido"),
-});
-
-export type PreQuizData = z.infer<typeof preQuizSchema>;
+export type PreQuizData = {
+  name: string;
+  age: string;
+  occupation: string;
+  city: string;
+  country: string;
+  captchaToken?: string;
+};
 
 interface PreQuizFormProps {
-    onSubmit: (data: PreQuizData) => void;
+  onSubmit: (data: PreQuizData) => void;
 }
 
 export function PreQuizForm({ onSubmit }: PreQuizFormProps) {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isValid, isSubmitting },
-    } = useForm<PreQuizData>({
-        resolver: zodResolver(preQuizSchema),
-        mode: "onChange",
-    });
+  const t = useTranslations("PreQuizForm");
+  const captchaEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+  const [captchaToken, setCaptchaToken] = React.useState<string | undefined>();
+  const warmInputClass =
+    "border-[#d7c3ae] bg-[#fffaf4] text-[#2f3647] placeholder:text-[#8d8278] focus-visible:ring-[#e47c56]";
 
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.4 }}
-        >
-            <Card className="max-w-xl mx-auto border-primary/20 shadow-xl bg-background/95 backdrop-blur-sm">
-                <CardContent className="pt-8">
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <Input
-                                label="¿Cómo te llamas?"
-                                placeholder="Ej. Martín"
-                                {...register("name")}
-                                error={errors.name?.message}
-                            />
-                            <Input
-                                label="¿Qué edad tienes?"
-                                placeholder="Ej. 34"
-                                type="number"
-                                {...register("age")}
-                                error={errors.age?.message}
-                            />
-                        </div>
+  const preQuizSchema = z.object({
+    name: z.string().min(2, t("validationNameMin")),
+    age: z.string().refine((val) => !isNaN(Number(val)) && Number(val) >= 18 && Number(val) <= 90, {
+      message: t("validationAge"),
+    }),
+    occupation: z.string().min(3, t("validationOccupation")),
+    city: z.string().min(2, t("validationCity")),
+    country: z.string().min(2, t("validationCountry")),
+  });
 
-                        <Input
-                            label="¿Cuál es tu ocupación o rol principal actual?"
-                            placeholder="Ej. Líder de Operaciones, Arquitecto, etc."
-                            {...register("occupation")}
-                            error={errors.occupation?.message}
-                        />
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isSubmitting },
+  } = useForm<PreQuizData>({
+    resolver: zodResolver(preQuizSchema),
+    mode: "onChange",
+  });
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <Input
-                                label="Ciudad"
-                                placeholder="Ej. Buenos Aires"
-                                {...register("city")}
-                                error={errors.city?.message}
-                            />
-                            <Input
-                                label="País"
-                                placeholder="Ej. Argentina"
-                                {...register("country")}
-                                error={errors.country?.message}
-                            />
-                        </div>
+  const canSubmit = isValid && !isSubmitting && (!captchaEnabled || Boolean(captchaToken));
 
-                        <div className="pt-4 border-t mt-8">
-                            <Button
-                                type="submit"
-                                disabled={!isValid || isSubmitting}
-                                className="w-full h-14 rounded-full text-lg shadow-lg"
-                            >
-                                {isSubmitting ? "Analizando..." : "Ver mis resultados"} <ArrowRight className="ml-2 w-5 h-5" />
-                            </Button>
-                        </div>
-                    </form>
-                </CardContent>
-            </Card>
-        </motion.div>
-    );
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.4 }}
+    >
+      <Card className="mx-auto max-w-xl border-[#d7c3ae] bg-[#f6efe7]/95 shadow-[0_28px_80px_-42px_rgba(17,24,39,0.45)] backdrop-blur-sm">
+        <CardContent className="pt-8">
+          <form
+            onSubmit={handleSubmit((data) => onSubmit({ ...data, captchaToken }))}
+            className="space-y-6"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input
+                label={t("labelName")}
+                placeholder={t("placeholderName")}
+                className={warmInputClass}
+                {...register("name")}
+                error={errors.name?.message}
+              />
+              <Input
+                label={t("labelAge")}
+                placeholder={t("placeholderAge")}
+                type="number"
+                className={warmInputClass}
+                {...register("age")}
+                error={errors.age?.message}
+              />
+            </div>
+
+            <Input
+              label={t("labelOccupation")}
+              placeholder={t("placeholderOccupation")}
+              className={warmInputClass}
+              {...register("occupation")}
+              error={errors.occupation?.message}
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input
+                label={t("labelCity")}
+                placeholder={t("placeholderCity")}
+                className={warmInputClass}
+                {...register("city")}
+                error={errors.city?.message}
+              />
+              <Input
+                label={t("labelCountry")}
+                placeholder={t("placeholderCountry")}
+                className={warmInputClass}
+                {...register("country")}
+                error={errors.country?.message}
+              />
+            </div>
+
+            <div className="mt-8 border-t border-[#dcc7b3] pt-4">
+              <TurnstileWidget onTokenChange={setCaptchaToken} action="diagnostic_prequiz" className="mb-4" />
+              <Button
+                type="submit"
+                disabled={!canSubmit}
+                variant="default"
+                className="h-14 w-full rounded-full border-[#d86f49] bg-[#e47c56] text-lg text-white shadow-[0_18px_40px_-18px_rgba(228,124,86,0.9)] hover:border-[#c85f3a] hover:bg-[#d86f49]"
+              >
+                {isSubmitting ? t("submitLoading") : t("submitDefault")} <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
 }

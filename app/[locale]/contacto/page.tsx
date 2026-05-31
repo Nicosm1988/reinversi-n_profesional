@@ -1,242 +1,251 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn } from "@/components/motion";
 import { ArrowRight, Mail, MessageCircle, Clock, Send, CheckCircle2 } from "lucide-react";
-
-const contactReasons = [
-    "Quiero hacer mi diagnóstico de carrera",
-    "Orientación vocacional",
-    "Terapia online",
-    "Inglés profesional",
-    "Consulta general",
-    "Otro",
-];
+import { TurnstileWidget } from "@/components/security/turnstile-widget";
 
 export default function ContactoPage() {
-    const [submitted, setSubmitted] = useState(false);
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        reason: "",
-        message: "",
-    });
+  const t = useTranslations("Contact");
 
-    function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
-        // For now, open mailto with the form data
-        const subject = encodeURIComponent(`[Reinvención.Pro] ${formData.reason || "Consulta"}`);
-        const body = encodeURIComponent(
-            `Nombre: ${formData.name}\nEmail: ${formData.email}\nMotivo: ${formData.reason}\n\nMensaje:\n${formData.message}`
-        );
-        window.open(`mailto:contacto@reinvencion.pro?subject=${subject}&body=${body}`, "_blank");
-        setSubmitted(true);
+  const contactReasons = [
+    t("reasonDiagnostic"),
+    t("reasonVocational"),
+    t("reasonTherapy"),
+    t("reasonEnglish"),
+    t("reasonGeneral"),
+    t("reasonOther"),
+  ];
+
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | undefined>();
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const captchaEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    reason: "",
+    message: "",
+  });
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (isSubmitting || !acceptedTerms) return;
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const locale = window.location.pathname.startsWith("/en") ? "en" : "es";
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "contact",
+          fullName: formData.name,
+          email: formData.email,
+          reason: formData.reason,
+          message: formData.message,
+          sourcePage: window.location.pathname,
+          locale,
+          consentAccepted: true,
+          captchaToken,
+        }),
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(payload?.error ?? "No se pudo enviar tu consulta");
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "Error inesperado al enviar la consulta");
+    } finally {
+      setIsSubmitting(false);
     }
+  }
 
-    return (
-        <div className="flex flex-col bg-background">
+  return (
+    <div className="wati-page-shell flex flex-col">
+      <section className="wati-page-hero py-20 lg:py-28">
+        <Container>
+          <FadeIn className="max-w-2xl mx-auto text-center relative z-10">
+            <Heading level="h1" className="text-primary text-4xl sm:text-5xl lg:text-6xl mb-6">
+              {t("heroTitle")} <span className="italic text-secondary">{t("heroTitleAccent")}</span>
+            </Heading>
+            <Text variant="lead" className="max-w-xl mx-auto">{t("heroDescription")}</Text>
+          </FadeIn>
+        </Container>
+      </section>
 
-            {/* ═══ Hero ═══ */}
-            <section className="relative bg-primary text-primary-foreground py-20 lg:py-28 overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-secondary/10 via-transparent to-transparent pointer-events-none" />
-                <Container>
-                    <FadeIn className="max-w-2xl mx-auto text-center relative z-10">
-                        <Heading level="h1" className="text-primary-foreground text-4xl sm:text-5xl lg:text-6xl mb-6">
-                            Hablemos de tu{" "}
-                            <span className="italic text-secondary">próximo paso</span>
-                        </Heading>
-                        <Text variant="lead" className="text-primary-foreground/80 max-w-xl mx-auto">
-                            Contanos en qué momento estás y cómo podemos ayudarte.
-                            Te respondemos en menos de 24 horas.
-                        </Text>
-                    </FadeIn>
-                </Container>
-            </section>
-
-            {/* ═══ Contact Form + Info ═══ */}
-            <Section spacing="lg">
-                <Container>
-                    <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-
-                        {/* Left: Form (3 cols) */}
-                        <FadeIn className="lg:col-span-3">
-                            {!submitted ? (
-                                <Card className="bg-background border shadow-soft p-8 md:p-10">
-                                    <h2 className="text-2xl font-heading font-medium text-foreground mb-8">
-                                        Envianos tu consulta
-                                    </h2>
-                                    <form onSubmit={handleSubmit} className="space-y-6">
-                                        <div className="grid md:grid-cols-2 gap-6">
-                                            <div>
-                                                <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">
-                                                    Nombre completo
-                                                </label>
-                                                <input
-                                                    id="contact-name"
-                                                    type="text"
-                                                    required
-                                                    value={formData.name}
-                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                    className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow"
-                                                    placeholder="Tu nombre"
-                                                />
-                                            </div>
-                                            <div>
-                                                <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-2">
-                                                    Email
-                                                </label>
-                                                <input
-                                                    id="contact-email"
-                                                    type="email"
-                                                    required
-                                                    value={formData.email}
-                                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                    className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow"
-                                                    placeholder="tu@email.com"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="contact-reason" className="block text-sm font-medium text-foreground mb-2">
-                                                ¿Sobre qué querés consultar?
-                                            </label>
-                                            <select
-                                                id="contact-reason"
-                                                required
-                                                value={formData.reason}
-                                                onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                                                className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow appearance-none"
-                                            >
-                                                <option value="">Selecciona un motivo</option>
-                                                {contactReasons.map((reason) => (
-                                                    <option key={reason} value={reason}>{reason}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-2">
-                                                Tu mensaje
-                                            </label>
-                                            <textarea
-                                                id="contact-message"
-                                                rows={5}
-                                                required
-                                                value={formData.message}
-                                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                                className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow resize-none"
-                                                placeholder="Contanos en qué momento estás y cómo podemos ayudarte..."
-                                            />
-                                        </div>
-
-                                        <Button
-                                            type="submit"
-                                            size="lg"
-                                            className="rounded-full px-10 h-14 text-base bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold w-full md:w-auto"
-                                        >
-                                            Enviar consulta <Send className="ml-2 h-4 w-4" />
-                                        </Button>
-                                    </form>
-                                </Card>
-                            ) : (
-                                <Card className="bg-background border shadow-soft p-8 md:p-12 text-center">
-                                    <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
-                                        <CheckCircle2 className="h-8 w-8 text-accent" />
-                                    </div>
-                                    <h2 className="text-2xl font-heading font-medium text-foreground mb-4">
-                                        ¡Gracias por escribirnos!
-                                    </h2>
-                                    <Text variant="body-lg" className="mb-8 max-w-md mx-auto">
-                                        Recibimos tu consulta. Te vamos a responder en menos de 24 horas
-                                        a tu correo electrónico.
-                                    </Text>
-                                    <Button
-                                        variant="outline"
-                                        className="rounded-full px-8"
-                                        onClick={() => {
-                                            setSubmitted(false);
-                                            setFormData({ name: "", email: "", reason: "", message: "" });
-                                        }}
-                                    >
-                                        Enviar otra consulta
-                                    </Button>
-                                </Card>
-                            )}
-                        </FadeIn>
-
-                        {/* Right: Contact Info (2 cols) */}
-                        <FadeIn className="lg:col-span-2">
-                            <div className="space-y-8">
-                                <div>
-                                    <h3 className="font-heading font-medium text-foreground text-lg mb-4">
-                                        Otras formas de contactarnos
-                                    </h3>
-                                    <div className="space-y-5">
-                                        <div className="flex items-start gap-4 group">
-                                            <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
-                                                <Mail className="h-5 w-5 text-secondary" />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-medium text-foreground">Email</p>
-                                                <a href="mailto:contacto@reinvencion.pro" className="text-sm text-muted-foreground hover:text-secondary transition-colors">
-                                                    contacto@reinvencion.pro
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex items-start gap-4 group">
-                                            <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
-                                                <MessageCircle className="h-5 w-5 text-secondary" />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-medium text-foreground">WhatsApp</p>
-                                                <a href="https://wa.me/5491112345678" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-secondary transition-colors">
-                                                    +54 9 11 1234-5678
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex items-start gap-4 group">
-                                            <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
-                                                <Clock className="h-5 w-5 text-secondary" />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-medium text-foreground">Horario de atención</p>
-                                                <p className="text-sm text-muted-foreground">Lunes a viernes, 9:00 a 19:00 (AR)</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="border-t border-border pt-8">
-                                    <h3 className="font-heading font-medium text-foreground text-lg mb-4">
-                                        ¿Preferís empezar ahora?
-                                    </h3>
-                                    <Text className="text-sm mb-6">
-                                        Si ya sabés que querés hacer tu diagnóstico de carrera, no necesitás
-                                        esperar. Es gratuito e inmediato.
-                                    </Text>
-                                    <Button
-                                        variant="default"
-                                        size="lg"
-                                        className="rounded-full px-8 h-12 w-full font-semibold"
-                                        asChild
-                                    >
-                                        <a href="/diagnostico/ancla-de-carrera">
-                                            Hacer diagnóstico gratis <ArrowRight className="ml-2 h-4 w-4" />
-                                        </a>
-                                    </Button>
-                                </div>
-                            </div>
-                        </FadeIn>
+      <Section spacing="lg">
+        <Container>
+          <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
+            <FadeIn className="lg:col-span-3">
+              {!submitted ? (
+                <Card className="bg-background p-8 md:p-10">
+                  <h2 className="text-2xl font-heading font-medium text-foreground mb-8">{t("formTitle")}</h2>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">{t("labelName")}</label>
+                        <input
+                          id="contact-name"
+                          type="text"
+                          required
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow"
+                          placeholder={t("placeholderName")}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-2">{t("labelEmail")}</label>
+                        <input
+                          id="contact-email"
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow"
+                          placeholder={t("placeholderEmail")}
+                        />
+                      </div>
                     </div>
-                </Container>
-            </Section>
-        </div>
-    );
+
+                    <div>
+                      <label htmlFor="contact-reason" className="block text-sm font-medium text-foreground mb-2">{t("labelReason")}</label>
+                      <select
+                        id="contact-reason"
+                        required
+                        value={formData.reason}
+                        onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
+                        className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow appearance-none"
+                      >
+                        <option value="">{t("placeholderReason")}</option>
+                        {contactReasons.map((reason) => (
+                          <option key={reason} value={reason}>{reason}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-2">{t("labelMessage")}</label>
+                      <textarea
+                        id="contact-message"
+                        rows={5}
+                        required
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow resize-none"
+                        placeholder={t("placeholderMessage")}
+                      />
+                    </div>
+
+                    <label className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <input
+                        type="checkbox"
+                        className="mt-1"
+                        checked={acceptedTerms}
+                        onChange={(e) => setAcceptedTerms(e.target.checked)}
+                        required
+                      />
+                      <span>
+                        Acepto los <Link href="/terminos" className="underline hover:text-primary">Terminos y Condiciones</Link> y la{" "}
+                        <Link href="/privacidad" className="underline hover:text-primary">Politica de Privacidad</Link>.
+                      </span>
+                    </label>
+
+                    {errorMessage && <p className="text-sm text-destructive">{errorMessage}</p>}
+                    <TurnstileWidget onTokenChange={setCaptchaToken} action="lead_contact" className="min-h-[65px]" />
+
+                    <Button type="submit" size="lg" variant="secondary" disabled={isSubmitting || !acceptedTerms || (captchaEnabled && !captchaToken)} className="rounded-full px-10 h-14 text-base w-full md:w-auto">
+                      {isSubmitting ? "Enviando..." : t("submitButton")} <Send className="ml-2 h-4 w-4" />
+                    </Button>
+                  </form>
+                </Card>
+              ) : (
+                <Card className="bg-background p-8 md:p-12 text-center">
+                  <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle2 className="h-8 w-8 text-accent" />
+                  </div>
+                  <h2 className="text-2xl font-heading font-medium text-foreground mb-4">{t("successTitle")}</h2>
+                  <Text variant="body-lg" className="mb-8 max-w-md mx-auto">{t("successDescription")}</Text>
+                  <Button
+                    variant="outline"
+                    className="rounded-full px-8"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setAcceptedTerms(false);
+                      setFormData({ name: "", email: "", reason: "", message: "" });
+                    }}
+                  >
+                    {t("successAnother")}
+                  </Button>
+                </Card>
+              )}
+            </FadeIn>
+
+            <FadeIn className="lg:col-span-2">
+              <div className="space-y-8">
+                <div>
+                  <h3 className="font-heading font-medium text-foreground text-lg mb-4">{t("sidebarTitle")}</h3>
+                  <div className="space-y-5">
+                    <div className="flex items-start gap-4 group">
+                      <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
+                        <Mail className="h-5 w-5 text-secondary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{t("sidebarEmailLabel")}</p>
+                        <a href="mailto:contacto@reinvencion.pro" className="text-sm text-muted-foreground hover:text-secondary transition-colors">contacto@reinvencion.pro</a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 group">
+                      <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
+                        <MessageCircle className="h-5 w-5 text-secondary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{t("sidebarWhatsappLabel")}</p>
+                        <a href="https://wa.me/5491112345678" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-secondary transition-colors">+54 9 11 1234-5678</a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 group">
+                      <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
+                        <Clock className="h-5 w-5 text-secondary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{t("sidebarHoursLabel")}</p>
+                        <p className="text-sm text-muted-foreground">{t("sidebarHoursValue")}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-border pt-8">
+                  <h3 className="font-heading font-medium text-foreground text-lg mb-4">{t("sidebarCtaTitle")}</h3>
+                  <Text className="text-sm mb-6">{t("sidebarCtaDescription")}</Text>
+                  <Button variant="default" size="lg" className="rounded-full px-8 h-12 w-full font-semibold" asChild>
+                    <Link href="/diagnostico/ancla-de-carrera">
+                      {t("sidebarCtaButton")} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </Container>
+      </Section>
+    </div>
+  );
 }

@@ -11,17 +11,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev      # Start development server
-npm run build    # Production build
-npm run start    # Start production server
-npm run lint     # Run ESLint
+npm run dev          # Start development server
+npm run build        # Production build
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run typecheck    # Run TypeScript checks
+npm run test:unit    # Run Vitest unit tests with coverage
+npm run test:e2e     # Run Playwright smoke tests
+npm run release:check # Run the local release pipeline
 ```
 
-No test runner is configured.
+For frontend work involving modern browser APIs, form UX, accessibility, animation, privacy, or performance, use the local Modern Web Guidance skill at `.agent/skills/modern_web_guidance/SKILL.md`. It references `GoogleChrome/modern-web-guidance-src` at snapshot `c2e8cb6bb635e5465314ba151a222d3e837d7399` and should be queried with `DISABLE_TELEMETRY=1 npx modern-web-guidance@latest search "<task>"`.
 
 ## Stack
 
-- **Next.js 15 (App Router)** with React 19, TypeScript
+- **Next.js 16 (App Router)** with React 19, TypeScript
 - **Supabase** — Postgres + Auth (RLS enabled on all user-facing tables)
 - **Vercel AI SDK** + OpenAI (`generateObject` for structured AI outputs)
 - **next-intl** — i18n with server-side rendering (locales: `es` default, `en`)

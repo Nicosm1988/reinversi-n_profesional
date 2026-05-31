@@ -1,297 +1,226 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { useState, useEffect, useRef } from "react";
-import { Menu, X, ChevronDown, ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
-
-const navLinks = [
-    { name: "El Método", href: "/#metodo" },
-    { name: "Caminos", href: "/#caminos" },
-];
-
-const serviceLinks = [
-    { name: "Orientación Vocacional", href: "/orientacion-vocacional", desc: "Encontrá tu camino profesional" },
-    { name: "Inglés Profesional", href: "/servicios/ingles-profesional", desc: "Potencia tu carrera global" },
-    { name: "Terapia Online", href: "/terapia", desc: "Acompañamiento emocional experto" },
-];
+import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function Header() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [servicesOpen, setServicesOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const t = useTranslations("Header");
 
-    // Scroll awareness
-    useEffect(() => {
-        function handleScroll() {
-            setScrolled(window.scrollY > 20);
-        }
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        handleScroll();
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+  const navLinks = [
+    { name: t("navMethod"), href: "/#metodo" },
+    { name: t("navPaths"), href: "/#caminos" },
+  ];
 
-    // Close dropdown on click outside
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setServicesOpen(false);
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+  const serviceLinks = [
+    { name: t("serviceVocational"), href: "/orientacion-vocacional", desc: t("serviceVocationalDesc") },
+    { name: t("serviceEnglish"), href: "/servicios/ingles-profesional", desc: t("serviceEnglishDesc") },
+    { name: t("serviceTherapy"), href: "/terapia", desc: t("serviceTherapyDesc") },
+  ];
 
-    // Hover intent for dropdown (desktop)
-    function handleMouseEnter() {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        setServicesOpen(true);
-    }
-    function handleMouseLeave() {
-        timeoutRef.current = setTimeout(() => setServicesOpen(false), 200);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 8);
     }
 
-    return (
-        <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-                scrolled
-                    ? "bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-[0_1px_20px_rgba(0,0,0,0.04)]"
-                    : "bg-background/70 backdrop-blur-md border-b border-transparent"
-            }`}
-        >
-            <div className="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between relative">
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
 
-                {/* Logo */}
-                <Link href="/" className="flex items-center gap-2.5 z-10 group">
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="h-9 w-9 bg-primary rounded-xl flex items-center justify-center text-primary-foreground font-bold text-base shadow-sm group-hover:shadow-md transition-shadow duration-300"
-                    >
-                        R
-                    </motion.div>
-                    <span className="font-heading font-bold text-lg hidden sm:block text-foreground group-hover:text-primary transition-colors duration-300">
-                        Reinvención.Pro
-                    </span>
-                </Link>
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-                {/* Desktop Nav — centered pill */}
-                <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <nav className="flex items-center gap-0.5 rounded-full border border-border/60 bg-card/80 backdrop-blur-sm p-1.5 shadow-soft">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className="relative px-4 py-2 text-sm font-medium text-foreground/65 hover:text-foreground transition-colors duration-300 rounded-full group"
-                            >
-                                <span className="relative z-10">{link.name}</span>
-                                {/* Hover bg pill */}
-                                <span className="absolute inset-0 rounded-full bg-muted/0 group-hover:bg-muted/80 transition-all duration-300 scale-90 group-hover:scale-100 opacity-0 group-hover:opacity-100" />
-                            </Link>
-                        ))}
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setServicesOpen(false);
+      }
+    }
 
-                        {/* Services Dropdown */}
-                        <div
-                            className="relative"
-                            ref={dropdownRef}
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  function handleMouseEnter() {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setServicesOpen(true);
+  }
+
+  function handleMouseLeave() {
+    timeoutRef.current = setTimeout(() => setServicesOpen(false), 150);
+  }
+
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? "border-b border-[#e7d9cc] bg-white/94 backdrop-blur-xl" : "border-b border-transparent bg-white/86"
+      }`}
+    >
+      <div className="container mx-auto flex h-[78px] max-w-6xl items-center justify-between px-5 md:px-8">
+        <Link href="/" className="group z-10 flex items-center gap-3">
+          <motion.div
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[#2f3647] bg-[#2f3647] text-base font-black text-[#f6efe7]"
+          >
+            R
+          </motion.div>
+          <span className="hidden font-heading text-lg font-semibold tracking-tight text-primary sm:block">{t("logo")}</span>
+        </Link>
+
+        <div className="hidden lg:flex items-center gap-2">
+          <nav className="flex items-center gap-1 rounded-full border border-[#eadfd4] bg-[#fffaf4] px-2 py-1.5 shadow-[0_18px_36px_-30px_rgba(47,54,71,0.45)]">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="rounded-full px-4 py-2 text-sm font-semibold text-[#6a7080] hover:bg-[#f2e6d9] hover:text-[#2f3647]"
+              >
+                {link.name}
+              </Link>
+            ))}
+
+            <div ref={dropdownRef} className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+              <button
+                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold text-[#6a7080] hover:bg-[#f2e6d9] hover:text-[#2f3647]"
+                onClick={() => setServicesOpen((v) => !v)}
+              >
+                {t("navServices")}
+                <motion.span animate={{ rotate: servicesOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                  <ChevronDown className="h-4 w-4" />
+                </motion.span>
+              </button>
+
+              <AnimatePresence>
+                {servicesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute left-1/2 top-full z-20 mt-3 w-[340px] -translate-x-1/2 overflow-hidden rounded-2xl border border-[#eadfd4] bg-[#fffaf4] shadow-[0_24px_60px_-34px_rgba(47,54,71,0.45)]"
+                  >
+                    <div className="p-2">
+                      {serviceLinks.map((link) => (
+                        <Link
+                          key={link.name}
+                          href={link.href}
+                          className="block rounded-xl px-4 py-3 hover:bg-[#f4e9de]"
+                          onClick={() => setServicesOpen(false)}
                         >
-                            <button
-                                onClick={() => setServicesOpen(!servicesOpen)}
-                                className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground/65 hover:text-foreground transition-colors duration-300 rounded-full group"
-                            >
-                                <span className="relative z-10 flex items-center gap-1">
-                                    Servicios
-                                    <motion.span
-                                        animate={{ rotate: servicesOpen ? 180 : 0 }}
-                                        transition={{ duration: 0.25, ease: "easeOut" }}
-                                    >
-                                        <ChevronDown className="h-3.5 w-3.5" />
-                                    </motion.span>
-                                </span>
-                                <span className="absolute inset-0 rounded-full bg-muted/0 group-hover:bg-muted/80 transition-all duration-300 scale-90 group-hover:scale-100 opacity-0 group-hover:opacity-100" />
-                            </button>
-
-                            <AnimatePresence>
-                                {servicesOpen && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 bg-card rounded-2xl border border-border/60 shadow-xl overflow-hidden"
-                                        style={{
-                                            boxShadow: "0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04)",
-                                        }}
-                                        onMouseEnter={handleMouseEnter}
-                                        onMouseLeave={handleMouseLeave}
-                                    >
-                                        <div className="p-2">
-                                            {serviceLinks.map((link) => (
-                                                <Link
-                                                    key={link.name}
-                                                    href={link.href}
-                                                    className="flex flex-col gap-0.5 px-4 py-3 rounded-xl text-foreground/80 hover:text-foreground hover:bg-muted/60 transition-all duration-200 group/item"
-                                                    onClick={() => setServicesOpen(false)}
-                                                >
-                                                    <span className="text-sm font-medium group-hover/item:text-secondary transition-colors duration-200">
-                                                        {link.name}
-                                                    </span>
-                                                    <span className="text-xs text-muted-foreground group-hover/item:text-muted-foreground/80">
-                                                        {link.desc}
-                                                    </span>
-                                                </Link>
-                                            ))}
-                                        </div>
-                                        <div className="border-t border-border/40 p-2">
-                                            <Link
-                                                href="/contacto"
-                                                className="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-medium text-secondary hover:bg-secondary/5 transition-all duration-200"
-                                                onClick={() => setServicesOpen(false)}
-                                            >
-                                                Contactanos
-                                                <ArrowRight className="h-3.5 w-3.5" />
-                                            </Link>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-
-                        {/* Divider */}
-                        <div className="w-px h-5 bg-border/50 mx-1" />
-
-                        {/* Diagnóstico CTA */}
-                        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                            <Link
-                                href="/diagnostico/ancla-de-carrera"
-                                className="inline-flex h-9 items-center rounded-full bg-secondary/10 px-5 text-sm font-semibold text-secondary transition-all duration-300 hover:bg-secondary hover:text-secondary-foreground hover:shadow-md"
-                            >
-                                Hacer Diagnóstico
-                            </Link>
-                        </motion.div>
-                    </nav>
-                </div>
-
-                {/* Desktop CTA */}
-                <div className="hidden lg:flex items-center gap-3">
-                    <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                        <Button size="sm" variant="ghost" className="text-sm rounded-full hover:bg-muted/60" asChild>
-                            <Link href="/login">Ingresar</Link>
-                        </Button>
-                    </motion.div>
-                </div>
-
-                {/* Mobile Menu Button */}
-                <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    className="lg:hidden p-2 text-foreground rounded-lg hover:bg-muted/60 transition-colors"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    aria-label="Menú"
-                >
-                    <AnimatePresence mode="wait">
-                        {mobileMenuOpen ? (
-                            <motion.div
-                                key="close"
-                                initial={{ rotate: -90, opacity: 0 }}
-                                animate={{ rotate: 0, opacity: 1 }}
-                                exit={{ rotate: 90, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <X className="h-6 w-6" />
-                            </motion.div>
-                        ) : (
-                            <motion.div
-                                key="menu"
-                                initial={{ rotate: 90, opacity: 0 }}
-                                animate={{ rotate: 0, opacity: 1 }}
-                                exit={{ rotate: -90, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <Menu className="h-6 w-6" />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </motion.button>
+                          <p className="text-sm font-semibold text-primary">{link.name}</p>
+                          <p className="mt-1 text-xs text-muted-foreground">{link.desc}</p>
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="border-t border-[#eadfd4] bg-[#f7efe6] p-2">
+                      <Link
+                        href="/contacto"
+                        className="inline-flex w-full items-center justify-between rounded-xl px-4 py-2 text-sm font-semibold text-primary hover:bg-[#fffaf4]"
+                        onClick={() => setServicesOpen(false)}
+                      >
+                        {t("dropdownContact")}
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {mobileMenuOpen && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                        className="lg:hidden bg-card border-t border-border overflow-hidden"
+            <Link
+              href="/diagnostico/ancla-de-carrera"
+              className="rounded-full border border-[#d86f49] bg-[#f3ddd0] px-5 py-2 text-sm font-semibold text-[#e47c56] transition-colors hover:bg-[#edd3c4]"
+            >
+              {t("ctaDiagnostic")}
+            </Link>
+          </nav>
+        </div>
+
+        <div className="hidden lg:flex items-center">
+          <Link href="/login" className="text-sm font-semibold text-[#2f3647] hover:text-[#e47c56]">
+            {t("ctaLogin")}
+          </Link>
+        </div>
+
+        <button
+          className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#eadfd4] bg-[#fffaf4] text-primary"
+          onClick={() => setMobileMenuOpen((v) => !v)}
+          aria-label={t("mobileMenu")}
+        >
+          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden border-t border-[#eadfd4] bg-[#fffaf4]"
+          >
+            <div className="container mx-auto max-w-6xl space-y-3 px-5 py-6 md:px-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="block rounded-xl border border-[#eadfd4] px-4 py-3 text-sm font-semibold text-primary hover:bg-[#f4e9de]"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))}
+
+              <div className="rounded-2xl border border-[#eadfd4] bg-[#f7efe6] p-2">
+                <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  {t("navServices")}
+                </p>
+                <div className="space-y-1">
+                  {serviceLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className="block rounded-xl px-3 py-3 hover:bg-[#fffaf4]"
+                      onClick={() => setMobileMenuOpen(false)}
                     >
-                        <div className="p-6 space-y-1">
-                            {navLinks.map((link, i) => (
-                                <motion.div
-                                    key={link.name}
-                                    initial={{ x: -20, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    transition={{ delay: i * 0.05, duration: 0.3 }}
-                                >
-                                    <Link
-                                        href={link.href}
-                                        className="block text-foreground/70 hover:text-foreground py-3 px-3 font-medium rounded-xl hover:bg-muted/50 transition-all"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                    >
-                                        {link.name}
-                                    </Link>
-                                </motion.div>
-                            ))}
+                      <p className="text-sm font-semibold text-primary">{link.name}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">{link.desc}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
 
-                            <motion.div
-                                initial={{ x: -20, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ delay: 0.1, duration: 0.3 }}
-                                className="border-t border-border pt-4 mt-3"
-                            >
-                                <p className="text-xs text-muted-foreground uppercase tracking-widest mb-3 px-3">Servicios</p>
-                                {serviceLinks.map((link, i) => (
-                                    <motion.div
-                                        key={link.name}
-                                        initial={{ x: -20, opacity: 0 }}
-                                        animate={{ x: 0, opacity: 1 }}
-                                        transition={{ delay: 0.15 + i * 0.05, duration: 0.3 }}
-                                    >
-                                        <Link
-                                            href={link.href}
-                                            className="block py-3 px-3 rounded-xl hover:bg-muted/50 transition-all"
-                                            onClick={() => setMobileMenuOpen(false)}
-                                        >
-                                            <span className="block text-foreground/70 hover:text-foreground font-medium">{link.name}</span>
-                                            <span className="block text-xs text-muted-foreground mt-0.5">{link.desc}</span>
-                                        </Link>
-                                    </motion.div>
-                                ))}
-                            </motion.div>
-
-                            <motion.div
-                                initial={{ x: -20, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ delay: 0.3, duration: 0.3 }}
-                                className="border-t border-border pt-4 space-y-3"
-                            >
-                                <Button className="w-full rounded-full h-12 font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/90" asChild>
-                                    <Link href="/diagnostico/ancla-de-carrera" onClick={() => setMobileMenuOpen(false)}>
-                                        Hacer Diagnóstico
-                                    </Link>
-                                </Button>
-                                <Button variant="ghost" className="w-full rounded-full h-12" asChild>
-                                    <Link href="/login" onClick={() => setMobileMenuOpen(false)}>Ingresar</Link>
-                                </Button>
-                            </motion.div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </header>
-    );
+              <Button
+                variant="default"
+                className="h-12 w-full rounded-full border-[#d86f49] bg-[#e47c56] text-white hover:border-[#c85f3a] hover:bg-[#d86f49]"
+                asChild
+              >
+                <Link href="/diagnostico/ancla-de-carrera" onClick={() => setMobileMenuOpen(false)}>
+                  {t("ctaDiagnostic")}
+                </Link>
+              </Button>
+              <Button variant="outline" className="h-12 w-full rounded-full border-[#d3c0ad] bg-[#fbf5ee] text-[#2f3647] hover:bg-[#f0e3d5]" asChild>
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                  {t("ctaLogin")}
+                </Link>
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
 }

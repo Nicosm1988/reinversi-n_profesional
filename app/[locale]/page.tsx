@@ -9,13 +9,13 @@ import { FAQSection } from "@/components/sections/faq";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-background selection:bg-secondary/20">
+    <div className="flex min-h-screen flex-col bg-[#fcf5ec]">
       <HeroSection />
-      <TrustSection />
       <ProblemSection />
       <MethodSection />
       <PathsSection />
       <TherapySection />
+      <TrustSection />
       <ServicesSection />
       <FAQSection />
     </div>

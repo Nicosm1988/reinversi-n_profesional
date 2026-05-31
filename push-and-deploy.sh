@@ -1,33 +1,45 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Asegura detener el script si hay errores
-set -e
+set -euo pipefail
 
-# Imprimir paso actual
-echo "🚀 Iniciando proceso de Auto-Deploy a GitHub y Vercel..."
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  cat <<'EOF'
+Usage:
+  ./push-and-deploy.sh "commit message"
 
-# Verifica si hay cambios
-if [[ -z $(git status -s) ]]; then
-  echo "✅ No hay cambios para commitear. El repositorio está limpio."
+Options:
+  SKIP_CHECKS=true   Skip quality checks before commit/push.
+EOF
   exit 0
 fi
 
-# Añade todos los cambios
-echo "📦 Añadiendo archivos..."
-git add .
-
-# Pregunta por el mensaje del commit o usa uno genérico temporal si se pasa -y
-COMMIT_MSG=$1
-if [ -z "$COMMIT_MSG" ]; then
-    COMMIT_MSG="Auto-deploy: Actualización de features (Supabase UI & Build Fixes) - $(date +'%Y-%m-%d %H:%M:%S')"
+if [[ -z "$(git status --short)" ]]; then
+  echo "No changes detected. Nothing to deploy."
+  exit 0
 fi
 
-echo "📝 Creando commit: '$COMMIT_MSG'"
-git commit -m "$COMMIT_MSG"
+CURRENT_BRANCH="$(git branch --show-current)"
+if [[ -z "${CURRENT_BRANCH}" ]]; then
+  echo "Cannot determine current branch (detached HEAD)."
+  exit 1
+fi
 
-# Empuja a la rama actual (por defecto main)
-echo "☁️ Subiendo a GitHub..."
-CURRENT_BRANCH=$(git branch --show-current)
-git push origin "$CURRENT_BRANCH"
+if [[ "${SKIP_CHECKS:-false}" != "true" ]]; then
+  echo "Running release checks..."
+  npm run release:check
+fi
 
-echo "✅ ¡Listo! Los cambios ya están en GitHub y Vercel debería estar comenzando el Build automático."
+git add .
+
+COMMIT_MSG="${1:-}"
+if [[ -z "${COMMIT_MSG}" ]]; then
+  COMMIT_MSG="chore: deploy update ($(date +'%Y-%m-%d %H:%M:%S'))"
+fi
+
+echo "Committing changes..."
+git commit -m "${COMMIT_MSG}"
+
+echo "Pushing ${CURRENT_BRANCH} to origin..."
+git push origin "${CURRENT_BRANCH}"
+
+echo "Push completed. CI/CD deployment should start automatically."

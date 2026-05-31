@@ -4,66 +4,63 @@ import { Card } from "@/components/ui/card";
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
-import Image from "next/image";
 
 const testimonials = [
-    {
-        quote: "Llevaba meses sin saber para dónde ir. El diagnóstico me dio un mapa claro de mis fortalezas y un plan concreto. Hoy estoy en un rol que me apasiona.",
-        author: "Martina V.",
-        role: "Product Manager",
-    },
-    {
-        quote: "La IA me hizo sentir que mis 15 años de experiencia ya no valían. Este proceso me ayudó a traducir toda esa trayectoria al lenguaje del mercado actual.",
-        author: "Carlos M.",
-        role: "Director de Operaciones",
-    },
-    {
-        quote: "No sabía si emprender o buscar empleo. Necesitaba alguien que me ayudara a pensar con claridad, sin presión. Eso encontré acá.",
-        author: "Sofía L.",
-        role: "Consultora Independiente",
-    }
+  {
+    quote:
+      "Venia postergando decisiones desde hacia meses. El proceso me devolvio foco y un criterio para moverme sin improvisar.",
+    author: "Martina V.",
+    role: "Product Manager",
+  },
+  {
+    quote:
+      "Pensaba que mi experiencia ya no encajaba con el mercado actual. Aprendi a traducirla y recuperar confianza para dar el siguiente paso.",
+    author: "Carlos M.",
+    role: "Director de Operaciones",
+  },
+  {
+    quote:
+      "Necesitaba un espacio para pensar sin presion. Salio una hoja de ruta clara y una sensacion de alivio enorme.",
+    author: "Sofia L.",
+    role: "Consultora Independiente",
+  },
 ];
 
 export function TrustSection() {
-    return (
-        <Section spacing="lg" background="muted">
-            <Container>
-                <div className="text-center mb-8">
-                    <Text variant="caption">Historias reales</Text>
-                    <Heading level="h2" className="mt-2">Experiencias en primera persona</Heading>
-                    <div className="flex justify-center mt-6">
-                        <Image
-                            src="/illustrations/trust.png"
-                            alt="Personas compartiendo experiencias"
-                            width={340}
-                            height={255}
-                            className="object-contain opacity-90 rounded-[2rem]"
-                        />
-                    </div>
-                </div>
+  return (
+    <Section spacing="lg" background="default" className="relative">
+      <Container>
+        <FadeIn className="mx-auto mb-14 max-w-2xl text-center">
+          <Text variant="caption" className="text-[#cf724e]">
+            Historias reales
+          </Text>
+          <Heading level="h2" className="mt-3 text-[#2f3647]">
+            Profesionales que volvieron a encontrar claridad
+          </Heading>
+          <Text className="mt-5 text-[#5d6372]">
+            No prometemos formulas magicas. Creamos un proceso serio y amable para que puedas decidir mejor.
+          </Text>
+        </FadeIn>
 
-                <StaggerContainer className="grid md:grid-cols-3 gap-8">
-                    {testimonials.map((t, i) => (
-                        <FadeIn key={i}>
-                            <Card className="h-full bg-background border-none p-8 md:p-10 shadow-soft">
-                                <blockquote className="flex flex-col h-full">
-                                    <span className="text-6xl text-secondary/30 font-serif leading-none -ml-4 -mt-4 mb-4">&ldquo;</span>
-                                    <Text variant="body-lg" className="flex-1 mb-8 text-foreground font-medium italic">
-                                        {t.quote}
-                                    </Text>
-                                    <footer className="mt-auto border-t border-border/50 pt-6">
-                                        <cite className="not-italic">
-                                            <div className="font-bold text-foreground font-heading">{t.author}</div>
-                                            <div className="text-sm text-muted-foreground">{t.role}</div>
-                                        </cite>
-                                    </footer>
-                                </blockquote>
-                            </Card>
-                        </FadeIn>
-                    ))}
-                </StaggerContainer>
-
-            </Container>
-        </Section>
-    );
+        <StaggerContainer className="grid gap-6 md:grid-cols-3">
+          {testimonials.map((item) => (
+            <FadeIn key={item.author}>
+              <Card className="h-full border-[#dcc8b5] bg-[#fffaf4] p-7 shadow-[0_20px_50px_-36px_rgba(47,54,71,0.45)]">
+                <blockquote className="flex h-full flex-col">
+                  <span className="mb-5 text-5xl leading-none text-[#e0b59a]">“</span>
+                  <Text variant="body-lg" className="mb-8 flex-1 text-[#3f4758]">
+                    {item.quote}
+                  </Text>
+                  <footer className="border-t border-[#ebded2] pt-5">
+                    <p className="font-heading text-base font-semibold text-[#2f3647]">{item.author}</p>
+                    <p className="text-sm text-[#7b7280]">{item.role}</p>
+                  </footer>
+                </blockquote>
+              </Card>
+            </FadeIn>
+          ))}
+        </StaggerContainer>
+      </Container>
+    </Section>
+  );
 }

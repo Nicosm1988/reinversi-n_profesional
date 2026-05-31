@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
     darkMode: ["class"],
@@ -50,16 +51,16 @@ export default {
                 sm: 'calc(var(--radius) - 4px)'
             },
             fontFamily: {
-                sans: ['var(--font-inter)', 'sans-serif'],
-                heading: ['var(--font-poppins)', 'sans-serif'],
+                sans: ['var(--font-dm-sans)', 'sans-serif'],
+                heading: ['var(--font-outfit)', 'sans-serif'],
             },
             fontSize: {
                 // Semantic Typography Scale
-                'display': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '400' }], // 72px
-                'h1': ['3.5rem', { lineHeight: '1.2', letterSpacing: '-0.015em', fontWeight: '400' }], // 56px
-                'h2': ['2.5rem', { lineHeight: '1.3', letterSpacing: '-0.01em', fontWeight: '400' }], // 40px
-                'h3': ['2rem', { lineHeight: '1.4', letterSpacing: '-0.005em', fontWeight: '400' }], // 32px
-                'h4': ['1.5rem', { lineHeight: '1.5', letterSpacing: '0em', fontWeight: '500' }], // 24px
+                'display': ['4.5rem', { lineHeight: '1.08', letterSpacing: '-0.03em', fontWeight: '700' }], // 72px
+                'h1': ['3.5rem', { lineHeight: '1.12', letterSpacing: '-0.025em', fontWeight: '700' }], // 56px
+                'h2': ['2.5rem', { lineHeight: '1.18', letterSpacing: '-0.02em', fontWeight: '700' }], // 40px
+                'h3': ['2rem', { lineHeight: '1.25', letterSpacing: '-0.015em', fontWeight: '600' }], // 32px
+                'h4': ['1.5rem', { lineHeight: '1.35', letterSpacing: '-0.01em', fontWeight: '600' }], // 24px
                 'body-lg': ['1.125rem', { lineHeight: '1.6', letterSpacing: '0em', fontWeight: '400' }], // 18px
                 'body': ['1rem', { lineHeight: '1.6', letterSpacing: '0em', fontWeight: '400' }], // 16px
                 'small': ['0.875rem', { lineHeight: '1.5', letterSpacing: '0em', fontWeight: '400' }], // 14px
@@ -73,14 +74,8 @@ export default {
                 '40': '10rem',  // 160px
             },
             boxShadow: {
-                'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-                'subtle': '0 2px 10px -2px rgba(0, 0, 0, 0.02)',
-                'neo': '4px 4px 0px 0px rgba(0,0,0,1)',
-                'neo-sm': '2px 2px 0px 0px rgba(0,0,0,1)',
-                'neo-hover': '6px 6px 0px 0px rgba(0,0,0,1)',
-            },
-            borderWidth: {
-                '3': '3px',
+                'soft': '0 12px 16px -4px rgba(10, 13, 18, 0.08)',
+                'subtle': '0 4px 10px -2px rgba(10, 13, 18, 0.06)',
             },
             keyframes: {
                 "accordion-down": {
@@ -98,5 +93,5 @@ export default {
             },
         }
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [tailwindcssAnimate],
 } satisfies Config;

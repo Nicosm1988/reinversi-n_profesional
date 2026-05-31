@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Reinvencion Profesional
 
-## Getting Started
+Plataforma web en Next.js 16 (App Router) para orientacion profesional, diagnosticos y captacion de leads.
 
-First, run the development server:
+## Requisitos
+
+- Node.js 20+
+- npm 10+
+
+## Setup
+
+1. Instalar dependencias:
+
+```bash
+npm install
+```
+
+2. Crear `.env.local` desde `.env.example` y completar claves.
+
+3. Validar entorno:
+
+```bash
+npm run verify:env
+```
+
+4. Ejecutar en desarrollo:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts principales
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `npm run dev`: desarrollo local
+- `npm run lint`: lint ESLint
+- `npm run typecheck`: chequeo de tipos TypeScript
+- `npm run test:unit`: tests unitarios (Vitest + coverage)
+- `npm run test:e2e`: smoke e2e (Playwright)
+- `npm run build`: build de produccion
+- `npm run start`: levantar build de produccion
+- `npm run verify:env`: valida env requerido y alerta por opcionales faltantes
+- `npm run verify:env:strict`: valida env en modo estricto (incluye opcionales criticos)
+- `npm run verify:deploy -- --base-url <url>`: smoke post-deploy sobre una URL
+- `npm run release:check`: pipeline local completo de calidad
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Referencias tecnicas
 
-## Learn More
+- `GoogleChrome/modern-web-guidance-src`: referencia incorporada para decisiones de UX web moderna, performance, accesibilidad, privacidad y progressive enhancement.
+- Skill local: `.agent/skills/modern_web_guidance/SKILL.md`
+- Snapshot revisado: `c2e8cb6bb635e5465314ba151a222d3e837d7399`
 
-To learn more about Next.js, take a look at the following resources:
+## Seguridad y hardening
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Rate limiting en APIs con soporte distribuido por Upstash (`UPSTASH_REDIS_*`) y fallback en memoria.
+- Verificacion de captcha Cloudflare Turnstile con validacion de `action/hostname` y enforcement en produccion.
+- Sanitizacion de redirects OAuth y validacion de payloads con Zod.
+- Insercion de leads por backend con Supabase `service_role` (`SUPABASE_SERVICE_ROLE_KEY`) para evitar bypass directo por cliente.
+- Request ID en responses y logs estructurados en rutas criticas.
+- Headers de seguridad en `next.config.ts` y `proxy.ts`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Endpoints operativos
 
-## Deploy on Vercel
+- `POST /api/diagnostics/analyze`
+- `POST /api/diagnostics/save`
+- `POST /api/leads`
+- `GET /api/health`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Base de datos (Supabase)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Migraciones relevantes:
+
+- `supabase/migrations/20260303170000_lead_requests.sql`
+- `supabase/migrations/20260303203000_lead_requests_hardening.sql`
+- `supabase/migrations/20260304100000_lead_requests_lockdown.sql`
+
+Comandos recomendados:
+
+```bash
+supabase login
+supabase link --project-ref <PROJECT_REF>
+supabase db push
+```
+
+## Deploy y operaciones
+
+- Checklist go-live: `docs/operations/go-live-checklist.md`
+- Runbook de incidentes: `docs/operations/runbook.md`
+- Baseline de SLO/alertas: `docs/operations/slo-alerting.md`
+
+Smoke manual de deploy (GitHub Actions):
+- Workflow: `.github/workflows/deploy-smoke.yml`
+- Input requerido: `base_url`
+
+## CI
+
+GitHub Actions de CI:
+
+1. lint
+2. typecheck
+3. unit tests
+4. build
+5. smoke e2e
+
+Workflow: `.github/workflows/ci.yml`

@@ -50,28 +50,28 @@ const benefits = [
 
 export default function InglesProfesionalPage() {
     return (
-        <div className="flex flex-col bg-background">
+        <div className="wati-page-shell flex flex-col">
 
             {/* ═══ Hero ═══ */}
-            <section className="relative bg-primary text-primary-foreground py-20 lg:py-32 overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/10 via-transparent to-transparent pointer-events-none" />
+            <section className="wati-page-hero py-20 lg:py-32">
                 <Container>
                     <FadeIn className="max-w-2xl mx-auto text-center relative z-10">
                         <span className="text-sm font-medium tracking-widest uppercase text-secondary/80 mb-4 block">
                             Servicio complementario
                         </span>
-                        <Heading level="h1" className="text-primary-foreground text-4xl sm:text-5xl lg:text-6xl mb-6">
+                        <Heading level="h1" className="text-primary text-4xl sm:text-5xl lg:text-6xl mb-6">
                             Potencia tu inglés <br className="hidden md:block" />
                             <span className="italic text-secondary">profesional</span>
                         </Heading>
-                        <Text variant="lead" className="text-primary-foreground/80 mb-10 max-w-xl mx-auto">
+                        <Text variant="lead" className="mb-10 max-w-xl mx-auto">
                             En el mercado global de 2026, el inglés es una herramienta esencial para
                             acceder a mejores oportunidades. Te ayudamos a dominarlo con foco en tu
                             realidad profesional.
                         </Text>
                         <Button
                             size="lg"
-                            className="rounded-full px-10 h-14 text-base bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold"
+                            variant="secondary"
+                            className="rounded-full px-10 h-14 text-base font-semibold"
                             asChild
                         >
                             <Link href="/contacto">
@@ -123,8 +123,8 @@ export default function InglesProfesionalPage() {
             {/* ═══ CTA ═══ */}
             <Section spacing="lg" background="muted">
                 <Container size="sm">
-                    <FadeIn className="bg-primary rounded-2xl p-8 md:p-16 text-center text-primary-foreground relative overflow-hidden">
-                        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+                    <FadeIn className="wati-dark-cta p-8 md:p-16 text-center relative overflow-hidden">
+                        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none"></div>
                         <div className="relative z-10 max-w-xl mx-auto">
                             <Heading level="h2" className="text-primary-foreground mb-6">
                                 Tu inglés profesional, al nivel que tu carrera necesita.
@@ -133,7 +133,7 @@ export default function InglesProfesionalPage() {
                                 Clases individuales y personalizadas. Modalidad 100% online.
                                 Enfocadas en tu industria y tus objetivos reales.
                             </Text>
-                            <Button variant="secondary" size="lg" className="rounded-full px-10 h-14 text-base shadow-lg" asChild>
+                            <Button variant="secondary" size="lg" className="rounded-full px-10 h-14 text-base" asChild>
                                 <Link href="/contacto">
                                     Reservar mi primera clase <ArrowRight className="ml-2 h-4 w-4" />
                                 </Link>

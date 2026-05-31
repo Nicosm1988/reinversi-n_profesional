@@ -11,10 +11,10 @@ export const Heading = ({ className, level = "h2", as, ...props }: HeadingProps)
     const Component = as || level
 
     const styles = {
-        h1: "text-4xl md:text-5xl lg:text-h1 font-heading leading-tight tracking-tight",
-        h2: "text-3xl md:text-4xl lg:text-h2 font-heading leading-snug tracking-tight",
-        h3: "text-2xl md:text-3xl lg:text-h3 font-heading leading-snug font-normal",
-        h4: "text-xl md:text-2xl lg:text-h4 font-heading font-medium",
+        h1: "text-4xl md:text-5xl lg:text-h1 font-heading leading-[1.05] tracking-tight font-semibold",
+        h2: "text-3xl md:text-4xl lg:text-h2 font-heading leading-[1.1] tracking-tight font-semibold",
+        h3: "text-2xl md:text-3xl lg:text-h3 font-heading leading-[1.15] tracking-tight font-semibold",
+        h4: "text-xl md:text-2xl lg:text-h4 font-heading leading-[1.2] font-semibold",
     }
 
     return (
@@ -38,8 +38,8 @@ export const Text = ({ className, variant = "body", as = "p", ...props }: TextPr
         "body-lg": "text-lg md:text-body-lg text-muted-foreground leading-relaxed",
         "body": "text-base md:text-body text-muted-foreground leading-relaxed",
         "small": "text-sm text-muted-foreground/80 leading-normal",
-        "caption": "text-xs text-muted-foreground/70 uppercase tracking-widest font-medium",
-        "lead": "text-xl md:text-2xl text-muted-foreground font-light leading-relaxed",
+        "caption": "text-xs text-muted-foreground/80 uppercase tracking-[0.18em] font-semibold",
+        "lead": "text-xl md:text-2xl text-muted-foreground leading-relaxed",
     }
 
     return (

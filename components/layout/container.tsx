@@ -9,15 +9,15 @@ interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Section = ({ className, spacing = "lg", background = "default", ...props }: SectionProps) => {
     const spacingStyles = {
         none: "",
-        sm: "py-8 md:py-10",
-        md: "py-10 md:py-12", // ~40px - 48px
-        lg: "py-12 md:py-16", // ~48px - 64px
-        xl: "py-16 md:py-20", // ~64px - 80px
+        sm: "py-12 md:py-16",
+        md: "py-16 md:py-20",
+        lg: "py-20 md:py-28",
+        xl: "py-24 md:py-32",
     }
 
     const bgStyles = {
         default: "bg-background",
-        muted: "bg-muted/30",
+        muted: "bg-muted/60",
         brand: "bg-primary text-primary-foreground",
     }
 
@@ -40,14 +40,14 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const Container = ({ className, size = "default", ...props }: ContainerProps) => {
     const sizeStyles = {
-        default: "max-w-7xl", // ~1280px
+        default: "max-w-6xl", // ~1152px
         sm: "max-w-5xl",      // ~1024px
-        tight: "max-w-3xl",   // ~768px (Editorial Reading)
+        tight: "max-w-3xl",   // ~768px
     }
 
     return (
         <div
-            className={cn("container mx-auto px-4 md:px-6", sizeStyles[size], className)}
+            className={cn("container mx-auto px-5 md:px-8", sizeStyles[size], className)}
             {...props}
         />
     )

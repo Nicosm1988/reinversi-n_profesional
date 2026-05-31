@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google"; // Pivot to Geometry/Friendly: Poppins
+import { DM_Sans, Outfit } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
@@ -10,16 +10,17 @@ import { CookieProvider } from "@/lib/cookie-context";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700"],
   display: "swap"
 });
 
-const poppins = Poppins({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-poppins",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-outfit",
+  weight: ["500", "600", "700"],
   display: "swap"
 });
 
@@ -45,9 +46,9 @@ export default async function RootLayout(
     <html lang={locale} className="scroll-smooth">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased flex flex-col selection:bg-secondary/30 selection:text-foreground",
-          inter.variable,
-          poppins.variable
+          "min-h-screen bg-background font-sans antialiased flex flex-col",
+          dmSans.variable,
+          outfit.variable
         )}
       >
         <NextIntlClientProvider messages={messages}>

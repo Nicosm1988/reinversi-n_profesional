@@ -80,24 +80,24 @@ const reportIncludes = [
 
 export default function OrientacionVocacionalPage() {
     return (
-        <div className="flex flex-col bg-background">
+        <div className="wati-page-shell flex flex-col">
 
             {/* ═══ Hero ═══ */}
-            <section className="relative bg-primary text-primary-foreground py-20 lg:py-32 overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-secondary/10 via-transparent to-transparent pointer-events-none" />
+            <section className="wati-page-hero py-20 lg:py-32">
                 <Container>
                     <FadeIn className="max-w-2xl mx-auto text-center relative z-10">
-                        <Heading level="h1" className="text-primary-foreground text-4xl sm:text-5xl lg:text-6xl mb-6">
+                        <Heading level="h1" className="text-primary text-4xl sm:text-5xl lg:text-6xl mb-6">
                             Orientación Vocacional: <br className="hidden md:block" />
                             <span className="italic text-secondary">Encontrá tu camino</span>
                         </Heading>
-                        <Text variant="lead" className="text-primary-foreground/80 mb-10 max-w-xl mx-auto">
+                        <Text variant="lead" className="mb-10 max-w-xl mx-auto">
                             No importa si tienes 18 o 50 años. Si estás en un momento de transición, incertidumbre
                             o simplemente sentís que llegó la hora de un cambio, este proceso es para ti.
                         </Text>
                         <Button
                             size="lg"
-                            className="rounded-full px-10 h-14 text-base bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold"
+                            variant="secondary"
+                            className="rounded-full px-10 h-14 text-base font-semibold"
                             asChild
                         >
                             <a href="#proceso">
@@ -163,7 +163,7 @@ export default function OrientacionVocacionalPage() {
                             Te guiamos hacia el encuentro con tu verdadera vocación, para que puedas
                             dedicarte a algo que te motive y disfrutes.
                         </Text>
-                        <Button size="lg" className="rounded-full px-10 h-14 text-base bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold" asChild>
+                        <Button size="lg" variant="secondary" className="rounded-full px-10 h-14 text-base font-semibold" asChild>
                             <Link href="/contacto">
                                 Quiero comenzar <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
@@ -312,8 +312,8 @@ export default function OrientacionVocacionalPage() {
             {/* ═══ Final CTA ═══ */}
             <Section spacing="lg">
                 <Container size="sm">
-                    <FadeIn className="bg-primary rounded-2xl p-8 md:p-16 text-center text-primary-foreground relative overflow-hidden">
-                        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+                    <FadeIn className="wati-dark-cta p-8 md:p-16 text-center relative overflow-hidden">
+                        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-secondary/15 rounded-full blur-3xl pointer-events-none"></div>
                         <div className="relative z-10 max-w-xl mx-auto">
                             <Heading level="h2" className="text-primary-foreground mb-6">
                                 Tu futuro profesional merece claridad.
@@ -322,7 +322,7 @@ export default function OrientacionVocacionalPage() {
                                 Empieza tu proceso de orientación vocacional con acompañamiento
                                 profesional y herramientas validadas. 100% online.
                             </Text>
-                            <Button variant="secondary" size="lg" className="rounded-full px-10 h-14 text-base shadow-lg" asChild>
+                            <Button variant="secondary" size="lg" className="rounded-full px-10 h-14 text-base" asChild>
                                 <Link href="/contacto">
                                     Quiero comenzar mi proceso <ArrowRight className="ml-2 h-4 w-4" />
                                 </Link>
