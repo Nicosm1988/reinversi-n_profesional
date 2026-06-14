@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 export interface CookiePreferences {
   essential: boolean;
@@ -30,15 +30,7 @@ const defaultPreferences: CookiePreferences = {
   analytics: false,
 };
 
-function getInitialCookieState() {
-  if (typeof window === "undefined") {
-    return {
-      preferences: defaultPreferences,
-      hasConsented: true,
-      showBanner: false,
-    };
-  }
-
+function readStoredCookieState() {
   const consent = localStorage.getItem(CONSENT_KEY) === "true";
   const saved = localStorage.getItem(STORAGE_KEY);
 
@@ -77,11 +69,26 @@ function getInitialCookieState() {
 const CookieContext = createContext<CookieContextType | undefined>(undefined);
 
 export function CookieProvider({ children }: { children: ReactNode }) {
-  const initial = getInitialCookieState();
+  const [preferences, setPreferences] = useState<CookiePreferences>(defaultPreferences);
+  const [hasConsented, setHasConsented] = useState(true);
+  const [showBanner, setShowBanner] = useState(false);
 
-  const [preferences, setPreferences] = useState<CookiePreferences>(initial.preferences);
-  const [hasConsented, setHasConsented] = useState(initial.hasConsented);
-  const [showBanner, setShowBanner] = useState(initial.showBanner);
+  useEffect(() => {
+    let canceled = false;
+
+    queueMicrotask(() => {
+      if (canceled) return;
+
+      const initial = readStoredCookieState();
+      setPreferences(initial.preferences);
+      setHasConsented(initial.hasConsented);
+      setShowBanner(initial.showBanner);
+    });
+
+    return () => {
+      canceled = true;
+    };
+  }, []);
 
   const persist = (prefs: CookiePreferences) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
