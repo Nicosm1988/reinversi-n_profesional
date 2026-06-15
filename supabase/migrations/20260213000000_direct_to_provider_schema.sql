@@ -8,7 +8,7 @@ create type ledger_entry_type as enum ('credit', 'debit');
 
 -- 1. PROVIDERS (Perfiles de Vendedores)
 create table public.providers (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   user_id uuid references auth.users not null,
   business_name text not null,
   contact_email text not null,
@@ -36,7 +36,7 @@ create table public.provider_credentials (
 
 -- 3. ORDERS (La compra del usuario)
 create table public.orders (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   customer_id uuid references auth.users, -- Puede ser null si es guest
   provider_id uuid references public.providers(id) not null,
   
@@ -50,7 +50,7 @@ create table public.orders (
 
 -- 4. TRANSACTIONS (Intentos de cobro en Gateway)
 create table public.transactions (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   order_id uuid references public.orders(id),
   provider_id uuid references public.providers(id),
   
@@ -68,7 +68,7 @@ create table public.transactions (
 -- 5. LEDGER (Libro Mayor - La verdad financiera)
 -- Registra cuánto debe el proveedor a la plataforma (comisiones)
 create table public.ledger (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   provider_id uuid references public.providers(id) not null,
   transaction_id uuid references public.transactions(id), -- Link a la tx que originó esto
   

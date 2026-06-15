@@ -19,7 +19,7 @@ CREATE POLICY "Usuarios pueden actualizar su propio perfil" ON public.profiles F
 
 -- 2. Definición de Diagnósticos (Catálogo de tests)
 CREATE TABLE public.diagnostics (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   slug TEXT UNIQUE NOT NULL,
   title TEXT NOT NULL,
   description TEXT,
@@ -33,7 +33,7 @@ CREATE POLICY "Cualquiera puede ver diagnósticos activos" ON public.diagnostics
 
 -- 3. Sesiones de Diagnóstico del Usuario
 CREATE TABLE public.diagnostic_sessions (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
   diagnostic_id UUID REFERENCES public.diagnostics(id) ON DELETE CASCADE NOT NULL,
   status TEXT NOT NULL DEFAULT 'in_progress' CHECK (status IN ('in_progress', 'completed', 'abandoned')),
@@ -51,7 +51,7 @@ CREATE POLICY "Usuarios pueden actualizar sus propias sesiones" ON public.diagno
 
 -- 4. Resultados Analizados de Diagnósticos
 CREATE TABLE public.diagnostic_results (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   session_id UUID REFERENCES public.diagnostic_sessions(id) ON DELETE CASCADE NOT NULL UNIQUE,
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
   result_data JSONB NOT NULL, -- El JSON resultante (Ej: ancla predominante, puntajes)
@@ -65,7 +65,7 @@ CREATE POLICY "Usuarios pueden ver sus propios resultados" ON public.diagnostic_
 
 -- 5. Aplicaciones (Para agendamiento 1:1)
 CREATE TABLE public.applications (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'booked')),
   answers JSONB NOT NULL, -- Respuestas del formulario de aplicación
