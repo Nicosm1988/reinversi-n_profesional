@@ -7,7 +7,7 @@ import { PuzzleIllustration } from "@/components/illustrations/pastel-illustrati
 
 const situations = [
   {
-    title: "La IA y el mercado te cambiaron el tablero",
+    title: "Los discursos sobre IA y Trabajo generando incertidumbre",
     desc: "Herramientas nuevas, reglas nuevas y una sensacion de tener que reaccionar antes de entender bien hacia donde ir.",
   },
   {
@@ -15,8 +15,8 @@ const situations = [
     desc: "Seguir igual, cambiar de rol, reconvertirte, emprender o actualizarte. Cuando todo parece posible, decidir cuesta mas.",
   },
   {
-    title: "Tu experiencia vale, pero necesita traduccion",
-    desc: "No se trata de empezar de cero, sino de reinterpretar lo que ya construiste para el contexto que viene.",
+    title: "Tu experiencia y trayectorias son valiosas",
+    desc: "No se trata de empezar de cero, sino de posicionarte desde lo que has construido para el contexto actual y futuro.",
   },
 ];
 
