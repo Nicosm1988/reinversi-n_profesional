@@ -13,6 +13,9 @@ test("smoke: landing is accessible and diagnostic requires login", async ({ page
   await page.goto("/diagnostico/ancla-de-carrera");
   await expect(page).toHaveURL(/\/login\?next=.*diagnostico%2Fancla-de-carrera/);
   await expect(page.getByRole("button", { name: /google/i })).toBeVisible();
+
+  await page.goto("/panel");
+  await expect(page).toHaveURL(/\/login\?next=%2Fpanel/);
 });
 
 test("technical discovery files are valid and public", async ({ request }) => {

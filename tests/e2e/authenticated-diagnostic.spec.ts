@@ -10,7 +10,7 @@ test.describe("authenticated career diagnostic", () => {
     await page.goto("/diagnostico/ancla-de-carrera");
     await expect(page).not.toHaveURL(/\/login/);
     await expect(page.getByRole("heading", { name: /ancla de carrera|career anchor/i })).toBeVisible();
-    await expect(page.getByRole("link", { name: /mi recorrido|my journey/i })).toBeVisible();
+    await expect(page.getByRole("link", { name: /mi recorrido|my journey/i })).toHaveAttribute("href", /\/panel$/);
     await expect(page.getByRole("link", { name: /ingresar|sign in/i })).toHaveCount(0);
   });
 });

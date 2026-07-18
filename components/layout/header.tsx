@@ -12,7 +12,23 @@ import type { AuthChangeEvent, Session, UserResponse } from "@supabase/supabase-
 type AuthState =
   | { status: "loading" }
   | { status: "anonymous" }
-  | { status: "authenticated"; email: string | null };
+  | { status: "authenticated"; email: string | null; fullName: string; avatarUrl: string | null };
+
+function authenticatedState(user: Session["user"]): AuthState {
+  const metadata = user.user_metadata ?? {};
+  return {
+    status: "authenticated",
+    email: user.email ?? null,
+    fullName: metadata.full_name ?? metadata.name ?? "",
+    avatarUrl: metadata.avatar_url ?? null,
+  };
+}
+
+function userInitials(fullName: string, email: string | null) {
+  const nameParts = fullName.trim().split(/\s+/).filter(Boolean);
+  if (nameParts.length) return nameParts.slice(0, 2).map((part) => part[0]).join("").toUpperCase();
+  return (email ?? "S").slice(0, 2).toUpperCase();
+}
 
 export function Header() {
   const t = useTranslations("Header");
@@ -58,7 +74,7 @@ export function Header() {
       if (!active) return;
       setAuthState(
         data.user
-          ? { status: "authenticated", email: data.user.email ?? null }
+          ? authenticatedState(data.user)
           : { status: "anonymous" },
       );
     });
@@ -67,7 +83,7 @@ export function Header() {
       if (!active) return;
       setAuthState(
         session?.user
-          ? { status: "authenticated", email: session.user.email ?? null }
+          ? authenticatedState(session.user)
           : { status: "anonymous" },
       );
     });
@@ -188,10 +204,18 @@ export function Header() {
           {authState.status === "authenticated" ? (
             <div className="flex items-center gap-2">
               <Link
-                href="/diagnostico/ancla-de-carrera"
+                href="/panel"
                 title={authState.email ?? undefined}
-                className="rounded-full border border-[#d7c3ae] bg-[#f5e9dc] px-4 py-2 text-sm font-semibold text-[#2f3647] hover:bg-[#eedbc9] dark:border-white/15 dark:bg-white/10 dark:text-[#f6efe7] dark:hover:bg-white/15"
+                className="flex items-center gap-2 rounded-full border border-[#d7c3ae] bg-[#f5e9dc] py-1.5 pl-1.5 pr-4 text-sm font-semibold text-[#2f3647] hover:bg-[#eedbc9] dark:border-white/15 dark:bg-white/10 dark:text-[#f6efe7] dark:hover:bg-white/15"
               >
+                {authState.avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={authState.avatarUrl} alt="" className="h-7 w-7 rounded-full object-cover" referrerPolicy="no-referrer" />
+                ) : (
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#2f3647] text-[10px] font-bold text-[#f6efe7] dark:bg-[#f6efe7] dark:text-[#2f3647]">
+                    {userInitials(authState.fullName, authState.email)}
+                  </span>
+                )}
                 {t("ctaAccount")}
               </Link>
               <button
@@ -268,7 +292,7 @@ export function Header() {
               {authState.status === "authenticated" ? (
                 <>
                   <Button variant="outline" className="h-12 w-full rounded-full border-[#d3c0ad] bg-[#fbf5ee] text-[#2f3647] hover:bg-[#f0e3d5]" asChild>
-                    <Link href="/diagnostico/ancla-de-carrera" onClick={() => setMobileMenuOpen(false)}>
+                    <Link href="/panel" onClick={() => setMobileMenuOpen(false)}>
                       {t("ctaAccount")}
                     </Link>
                   </Button>

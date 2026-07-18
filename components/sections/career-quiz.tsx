@@ -217,14 +217,14 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
   const bonusBlockEnd = Math.min(bonusBlockStart + QUESTIONS_PER_PAGE - 1, quizData.questions.length);
 
   return (
-    <div className="career-quiz relative min-h-screen overflow-hidden bg-[#31384a]">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(253,241,229,0.18),transparent_34%),linear-gradient(180deg,#31384a_0%,#374055_34%,#2a3243_100%)]" />
+    <div className="career-quiz relative min-h-screen overflow-hidden bg-[#f7eee4] transition-colors dark:bg-[#31384a]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(228,124,86,0.14),transparent_38%),linear-gradient(180deg,#fffaf4_0%,#f7eee4_42%,#efe1d2_100%)] dark:bg-[radial-gradient(circle_at_top,rgba(253,241,229,0.18),transparent_34%),linear-gradient(180deg,#31384a_0%,#374055_34%,#2a3243_100%)]" />
       <div className="pointer-events-none absolute left-[-8%] top-16 h-80 w-80 rounded-full bg-[#f2c8a7]/16 blur-3xl" />
       <div className="pointer-events-none absolute right-[-8%] top-24 h-[28rem] w-[28rem] rounded-full bg-[#df8d67]/14 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 left-1/2 h-72 w-[44rem] -translate-x-1/2 rounded-full bg-[#f5efe7]/8 blur-3xl" />
 
       <Container className="relative z-10">
-        <div className="mx-auto max-w-5xl py-12 md:py-20">
+        <div className="mx-auto max-w-5xl pb-12 pt-28 md:pb-20 md:pt-32">
           <AnimatePresence mode="wait">
             {step === "intro" && (
               <motion.div
@@ -240,11 +240,11 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     Modelo de Edgar Schein
                   </div>
 
-                  <Heading level="h2" className="text-4xl text-[#f6efe7] md:text-5xl">
+                  <Heading level="h2" className="text-4xl text-[#2f3647] dark:text-[#f6efe7] md:text-5xl">
                     ¿Cuál es tu Ancla de Carrera?
                   </Heading>
 
-                  <Text variant="lead" className="mx-auto max-w-3xl text-[#efe1d2]/88">
+                  <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#efe1d2]/88">
                     Un diagnóstico inicial, cálido y claro para entender qué necesita tu carrera para sentirse en eje.
                   </Text>
                 </div>
@@ -478,10 +478,10 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 </div>
 
                 <div className="space-y-4">
-                  <Heading level="h2" className="text-3xl text-[#f6efe7] md:text-4xl">
+                  <Heading level="h2" className="text-3xl text-[#2f3647] dark:text-[#f6efe7] md:text-4xl">
                     Ya casi llegas a tu resultado
                   </Heading>
-                  <Text variant="lead" className="mx-auto max-w-3xl text-[#efe1d2]/88">
+                  <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#efe1d2]/88">
                     Ahora vamos a refinar tu diagnóstico con una ultima seleccion personal.
                   </Text>
                 </div>
@@ -639,11 +639,11 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 className="space-y-8"
               >
                 <div className="space-y-3 text-center">
-                  <Heading level="h2" className="text-[#f6efe7]">Ya tenemos procesadas tus respuestas</Heading>
-                  <Text className="mx-auto max-w-2xl text-[#efe1d2]/86">
+                  <Heading level="h2" className="text-[#2f3647] dark:text-[#f6efe7]">Ya tenemos procesadas tus respuestas</Heading>
+                  <Text className="mx-auto max-w-2xl text-[#596173] dark:text-[#efe1d2]/86">
                     Para personalizar mejor tu lectura final, necesitamos algunos datos basicos de tu contexto actual.
                   </Text>
-                  <Text variant="small" className="text-[#e9d8c8]/80">
+                  <Text variant="small" className="text-[#687080] dark:text-[#e9d8c8]/80">
                     Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta
                     {userEmail ? ` (${userEmail})` : ""}.
                   </Text>
@@ -664,8 +664,8 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                   <div className="inline-flex items-center rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-1.5 text-sm font-bold text-[#cf724e]">
                     Diagnostico listo
                   </div>
-                  <Heading level="h2" className="text-[#f6efe7]">Tu Mapa Estrategico de Carrera</Heading>
-                  <Text className="mx-auto max-w-2xl italic text-[#e7d7c8]/86">
+                  <Heading level="h2" className="text-[#2f3647] dark:text-[#f6efe7]">Tu Mapa Estrategico de Carrera</Heading>
+                  <Text className="mx-auto max-w-2xl italic text-[#596173] dark:text-[#e7d7c8]/86">
                     &quot;El ancla de carrera es una combinacion unica de competencias, talentos, motivaciones y valores que nunca se abandonaran.&quot; - Edgar Schein
                   </Text>
                 </div>
@@ -725,7 +725,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 </Card>
 
                 <div className="space-y-8">
-                  <Heading level="h3" className="text-[#f6efe7]">Tu perfil en profundidad</Heading>
+                  <Heading level="h3" className="text-[#2f3647] dark:text-[#f6efe7]">Tu perfil en profundidad</Heading>
 
                   {calculateResults.slice(0, 3).map((result, index) => (
                     <Card
@@ -793,7 +793,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 {aiResult && !isAnalyzing && (
                   <div className="space-y-8">
                     <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                      <Heading level="h3" className="text-[#f6efe7]">Tu análisis personalizado</Heading>
+                      <Heading level="h3" className="text-[#2f3647] dark:text-[#f6efe7]">Tu análisis personalizado</Heading>
                       {saveStatus === "saved" && (
                         <div className="rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-2 text-sm font-semibold text-[#2f3647]">
                           Guardado en tu cuenta
@@ -855,10 +855,10 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
 
                 <div className="space-y-8 py-6 text-center">
                   <div className="mx-auto max-w-2xl space-y-4">
-                    <Heading level="h3" className="text-2xl text-[#f6efe7] md:text-3xl">
+                    <Heading level="h3" className="text-2xl text-[#2f3647] dark:text-[#f6efe7] md:text-3xl">
                       Tu proceso merece una mirada humana
                     </Heading>
-                    <Text className="text-lg leading-relaxed text-[#efe1d2]/88">
+                    <Text className="text-lg leading-relaxed text-[#596173] dark:text-[#efe1d2]/88">
                       Tu diagnóstico queda disponible para que vuelvas a consultarlo cuando quieras. Si sentís que
                       necesitás profundizar lo que apareció, podemos escucharte y ayudarte a encontrar el tipo de
                       acompañamiento profesional más adecuado para vos.
@@ -869,7 +869,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     <Link href="/contacto">Conversar con el equipo</Link>
                   </Button>
 
-                  <Text className="text-sm text-[#efe1d2]/75">
+                  <Text className="text-sm text-[#687080] dark:text-[#efe1d2]/75">
                     Este resultado es orientativo y no reemplaza una evaluación profesional personalizada.
                   </Text>
                 </div>

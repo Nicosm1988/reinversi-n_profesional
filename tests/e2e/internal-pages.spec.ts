@@ -10,6 +10,7 @@ const routes = [
   "/privacidad",
   "/terminos",
   "/login",
+  "/panel",
 ];
 
 for (const route of routes) {
