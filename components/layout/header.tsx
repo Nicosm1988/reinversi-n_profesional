@@ -141,7 +141,7 @@ export function Header() {
 
             <Link
               href="/diagnostico/ancla-de-carrera"
-              className="rounded-full border border-[#d86f49] bg-[#f3ddd0] px-5 py-2 text-sm font-semibold text-[#e47c56] transition-colors hover:bg-[#edd3c4]"
+              className="rounded-full border border-[#a84729] bg-[#f3ddd0] px-5 py-2 text-sm font-semibold text-[#8f4028] transition-colors hover:bg-[#edd3c4]"
             >
               {t("ctaDiagnostic")}
             </Link>
@@ -205,7 +205,7 @@ export function Header() {
 
               <Button
                 variant="default"
-                className="h-12 w-full rounded-full border-[#d86f49] bg-[#e47c56] text-white hover:border-[#c85f3a] hover:bg-[#d86f49]"
+                className="h-12 w-full rounded-full border-[#a84729] bg-[#bd5734] text-white hover:border-[#963f25] hover:bg-[#a84729]"
                 asChild
               >
                 <Link href="/diagnostico/ancla-de-carrera" onClick={() => setMobileMenuOpen(false)}>
