@@ -119,26 +119,21 @@ export async function POST(req: Request) {
     }
 
     const { anchor, userData } = parsed.data;
-    const shouldVerifyCaptcha =
-      Boolean(process.env.TURNSTILE_SECRET_KEY?.trim()) || process.env.TURNSTILE_ENFORCED === "true";
-
-    if (shouldVerifyCaptcha) {
-      const turnstile = await verifyTurnstileToken(parsed.data.captchaToken, ip, {
-        expectedAction: "diagnostic_prequiz",
-        expectedHostname: requestHostname,
+    const turnstile = await verifyTurnstileToken(parsed.data.captchaToken, ip, {
+      expectedAction: "diagnostic_prequiz",
+      expectedHostname: requestHostname,
+    });
+    if (!turnstile.passed) {
+      logEvent("warn", "diagnostics.analyze.captcha_failed", {
+        requestId,
+        userId: auth.user.id,
+        ip,
+        errors: turnstile.errors,
       });
-      if (!turnstile.passed) {
-        logEvent("warn", "diagnostics.analyze.captcha_failed", {
-          requestId,
-          userId: auth.user.id,
-          ip,
-          errors: turnstile.errors,
-        });
-        return NextResponse.json(
-          { error: "Captcha verification failed" },
-          { status: 403, headers: rateHeaders },
-        );
-      }
+      return NextResponse.json(
+        { error: "Captcha verification failed" },
+        { status: 403, headers: rateHeaders },
+      );
     }
 
     if (!process.env.OPENAI_API_KEY) {

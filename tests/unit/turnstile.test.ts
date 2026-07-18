@@ -6,6 +6,7 @@ const originalFetch = global.fetch;
 afterEach(() => {
   delete process.env.TURNSTILE_SECRET_KEY;
   delete process.env.TURNSTILE_ENFORCED;
+  vi.unstubAllEnvs();
   global.fetch = originalFetch;
   vi.restoreAllMocks();
 });
@@ -31,6 +32,16 @@ describe("verifyTurnstileToken", () => {
     process.env.TURNSTILE_ENFORCED = "true";
 
     const result = await verifyTurnstileToken("token", "127.0.0.1");
+    expect(result.passed).toBe(false);
+    expect(result.skipped).toBe(false);
+    expect(result.errors).toContain("turnstile-secret-missing");
+  });
+
+  it("fails closed in production when the secret key is missing", async () => {
+    vi.stubEnv("NODE_ENV", "production");
+
+    const result = await verifyTurnstileToken("token", "127.0.0.1");
+
     expect(result.passed).toBe(false);
     expect(result.skipped).toBe(false);
     expect(result.errors).toContain("turnstile-secret-missing");
