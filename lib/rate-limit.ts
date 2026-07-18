@@ -1,5 +1,6 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { logEvent } from "@/lib/observability/logger";
 
 type MemoryBucket = {
   count: number;
@@ -119,10 +120,18 @@ export async function limitRequest({ key, prefix, limit, windowMs }: RateLimitPa
     return runMemoryLimiter(storageKey, limit, windowMs);
   }
 
-  const result = await upstashLimiter.limit(storageKey);
-  return {
-    limited: !result.success,
-    remaining: Math.max(result.remaining, 0),
-    resetAt: result.reset,
-  };
+  try {
+    const result = await upstashLimiter.limit(storageKey);
+    return {
+      limited: !result.success,
+      remaining: Math.max(result.remaining, 0),
+      resetAt: result.reset,
+    };
+  } catch (error) {
+    logEvent("error", "rate_limit.upstash_unavailable", {
+      prefix,
+      message: error instanceof Error ? error.message : "unknown-error",
+    });
+    return runMemoryLimiter(storageKey, limit, windowMs);
+  }
 }
