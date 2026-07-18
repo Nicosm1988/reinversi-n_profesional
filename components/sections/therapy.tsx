@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight, Heart } from "lucide-react";
 import { Section, Container } from "@/components/layout/container";
@@ -25,7 +23,7 @@ export function TherapySection() {
                 <Heart className="h-7 w-7" />
               </div>
 
-              <Text variant="caption" className="text-[#cf724e]">
+              <Text variant="caption" className="text-[#9b472d]">
                 Acompanamiento emocional
               </Text>
               <Heading level="h2" className="mt-3 text-[#2f3647]">
@@ -41,7 +39,7 @@ export function TherapySection() {
                 <Button
                   size="lg"
                   variant="default"
-                  className="h-12 rounded-full border-[#d86f49] bg-[#e47c56] px-8 text-white hover:border-[#c85f3a] hover:bg-[#d86f49]"
+                  className="h-12 rounded-full border-[#a84729] bg-[#bd5734] px-8 text-white hover:border-[#963f25] hover:bg-[#a84729]"
                   asChild
                 >
                   <Link href="/terapia">

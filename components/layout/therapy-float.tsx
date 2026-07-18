@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Heart, X, ArrowRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 export function TherapyFloat() {
   const t = useTranslations("TherapyFloat");
@@ -32,19 +31,12 @@ export function TherapyFloat() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [bubbleOpen]);
 
+  if (!visible) return null;
+
   return (
-    <AnimatePresence>
-      {visible && (
         <div className="fixed bottom-6 left-6 z-50" ref={bubbleRef}>
-          <AnimatePresence>
             {bubbleOpen && (
-              <motion.div
-                initial={{ y: 16, opacity: 0, scale: 0.9 }}
-                animate={{ y: 0, opacity: 1, scale: 1 }}
-                exit={{ y: 16, opacity: 0, scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                className="absolute bottom-16 left-0 w-72 sm:w-80 bg-card rounded-2xl shadow-soft border border-border overflow-hidden"
-              >
+              <div className="absolute bottom-16 left-0 w-72 sm:w-80 bg-card rounded-2xl shadow-soft border border-border overflow-hidden">
                 <div className="bg-muted px-5 py-4 flex items-center justify-between border-b border-border">
                   <div className="flex items-center gap-2">
                     <Heart className="h-4 w-4 fill-[#e47c56] text-[#e47c56]" />
@@ -82,7 +74,7 @@ export function TherapyFloat() {
                 <div className="px-5 pb-5">
                   <Link
                     href="/terapia"
-                    className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-[#d86f49] bg-[#e47c56] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#d86f49]"
+                    className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-[#a84729] bg-[#bd5734] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#a84729]"
                     onClick={() => setBubbleOpen(false)}
                   >
                     {t("cta")} <ArrowRight className="w-4 h-4" />
@@ -90,36 +82,24 @@ export function TherapyFloat() {
                 </div>
 
                 <div className="absolute -bottom-2 left-8 w-4 h-4 bg-card border-r border-b border-border rotate-45" />
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
 
-          <motion.div
-            initial={{ y: 40, opacity: 0, scale: 0.8 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: 40, opacity: 0, scale: 0.8 }}
-            transition={{ type: "spring", stiffness: 300, damping: 24 }}
-          >
+          <div>
             <button
               onClick={() => setBubbleOpen(!bubbleOpen)}
-              className="group flex items-center gap-2.5 rounded-full border-2 border-[#d86f49] bg-[#e47c56] py-2.5 pl-4 pr-5 text-white shadow-[4px_4px_0_0_rgba(47,54,71,0.9)] transition-all duration-300 hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#d86f49] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d86f49]/50 focus-visible:ring-offset-2"
-              aria-label={t("floatLabel")}
+              className="group flex items-center gap-2.5 rounded-full border-2 border-[#a84729] bg-[#bd5734] py-2.5 pl-4 pr-5 text-white shadow-[4px_4px_0_0_rgba(47,54,71,0.9)] transition-all duration-300 hover:translate-x-[1px] hover:translate-y-[1px] hover:bg-[#a84729] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#a84729]/50 focus-visible:ring-offset-2"
+              aria-label={bubbleOpen ? t("floatClose") : t("floatOpen")}
             >
-              <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
-                className="flex items-center justify-center"
-              >
+              <span className="flex items-center justify-center">
                 <Heart className="w-[18px] h-[18px] fill-current" />
-              </motion.span>
+              </span>
 
               <span className="text-sm font-semibold whitespace-nowrap">
                 {bubbleOpen ? t("floatClose") : t("floatOpen")}
               </span>
             </button>
-          </motion.div>
+          </div>
         </div>
-      )}
-    </AnimatePresence>
   );
 }

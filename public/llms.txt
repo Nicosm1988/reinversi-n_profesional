@@ -1,0 +1,14 @@
+# Reinvención Profesional
+
+> Plataforma de orientación profesional con herramientas de autoconocimiento y acompañamiento humano.
+
+## Sitio principal
+
+- [Inicio](https://reinvension-profesional.vercel.app/)
+- [Diagnósticos](https://reinvension-profesional.vercel.app/diagnostico)
+- [Orientación vocacional](https://reinvension-profesional.vercel.app/orientacion-vocacional)
+- [Contacto](https://reinvension-profesional.vercel.app/contacto)
+
+## Información importante
+
+El test gratuito de Anclas de Carrera ofrece una devolución orientativa. No constituye un diagnóstico clínico ni sustituye el acompañamiento de un profesional humano.

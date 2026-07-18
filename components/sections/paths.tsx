@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section, Container } from "@/components/layout/container";
@@ -44,7 +42,7 @@ export function PathsSection() {
         <div className="grid items-start gap-10 lg:grid-cols-[0.92fr_1.08fr]">
           <FadeIn className="space-y-6">
             <div>
-              <Text variant="caption" className="text-[#cf724e]">
+              <Text variant="caption" className="text-[#9b472d]">
                 Caminos posibles
               </Text>
               <Heading level="h2" className="mt-3 text-[#2f3647]">
@@ -65,12 +63,12 @@ export function PathsSection() {
             {paths.map((path) => (
               <FadeIn key={path.title}>
                 <article className="flex h-full flex-col rounded-[28px] border border-[#dcc8b5] bg-[#fffaf4] p-6 shadow-[0_18px_44px_-36px_rgba(47,54,71,0.4)]">
-                  <Badge className="mb-5 w-fit border-none bg-[#f1dfd1] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#cf724e]">
+                  <Badge className="mb-5 w-fit border-none bg-[#f1dfd1] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#8f4028]">
                     {path.badge}
                   </Badge>
                   <h3 className="font-heading text-xl font-semibold text-[#2f3647]">{path.title}</h3>
                   <Text className="mt-3 flex-1 text-[#5d6372]">{path.desc}</Text>
-                  <Button variant="link" className="mt-6 h-auto justify-start p-0 text-[#cf724e] hover:text-[#b95d3e]" asChild>
+                  <Button variant="link" className="mt-6 h-auto justify-start p-0 text-[#9b472d] hover:text-[#7f3925]" asChild>
                     <Link href="/diagnostico/ancla-de-carrera">
                       Empezar por mi diagnostico
                       <ArrowRight className="ml-2 h-4 w-4" />

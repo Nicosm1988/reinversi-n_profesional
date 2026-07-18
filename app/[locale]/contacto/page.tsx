@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn } from "@/components/motion";
-import { ArrowRight, Mail, MessageCircle, Clock, Send, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Mail, Clock, Send, CheckCircle2 } from "lucide-react";
 import { TurnstileWidget } from "@/components/security/turnstile-widget";
 
 export default function ContactoPage() {
@@ -207,16 +207,6 @@ export default function ContactoPage() {
                       <div>
                         <p className="text-sm font-medium text-foreground">{t("sidebarEmailLabel")}</p>
                         <a href="mailto:contacto@reinvencion.pro" className="text-sm text-muted-foreground hover:text-secondary transition-colors">contacto@reinvencion.pro</a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4 group">
-                      <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
-                        <MessageCircle className="h-5 w-5 text-secondary" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-foreground">{t("sidebarWhatsappLabel")}</p>
-                        <a href="https://wa.me/5491112345678" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-secondary transition-colors">+54 9 11 1234-5678</a>
                       </div>
                     </div>
 

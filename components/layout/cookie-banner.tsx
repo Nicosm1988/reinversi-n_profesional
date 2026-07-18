@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { useCookies } from "@/lib/cookie-context";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 function Toggle({ checked, onChange, disabled }: { checked: boolean; onChange: (v: boolean) => void; disabled?: boolean }) {
   return (
@@ -60,7 +59,7 @@ function CategoryItem({
 
 export function CookieBanner() {
   const t = useTranslations("CookieBanner");
-  const { showBanner, setShowBanner, acceptAll, rejectAll, savePreferences, preferences } = useCookies();
+  const { showBanner, acceptAll, rejectAll, savePreferences, preferences } = useCookies();
 
   const [showPreferences, setShowPreferences] = useState(false);
   const [localPrefs, setLocalPrefs] = useState(preferences);
@@ -75,23 +74,17 @@ export function CookieBanner() {
     setShowPreferences(false);
   };
 
+  if (!showBanner) return null;
+
   return (
-    <AnimatePresence>
-      {showBanner && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed inset-0 z-[60] flex items-end justify-center p-4 pointer-events-none"
-        >
+        <div className="fixed inset-0 z-[60] flex items-end justify-center p-4 pointer-events-none">
           <div className="pointer-events-auto w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-2xl border border-border bg-white shadow-soft">
             {!showPreferences ? (
               <div className="p-6 md:p-8">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-heading font-bold text-foreground">{t("title")}</h3>
                   <button
-                    onClick={() => setShowBanner(false)}
+                    onClick={rejectAll}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                     aria-label={t("closeLabel")}
                   >
@@ -180,8 +173,6 @@ export function CookieBanner() {
               </div>
             )}
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
   );
 }

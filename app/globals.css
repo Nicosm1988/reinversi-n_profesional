@@ -16,7 +16,7 @@
     --primary: 223 16% 24%;
     --primary-foreground: 34 48% 96%;
 
-    --secondary: 18 73% 61%; /* #E47C56 */
+    --secondary: 14 56% 47%; /* #BD5734, AA contrast with white */
     --secondary-foreground: 0 0% 100%;
 
     --muted: 29 34% 91%; /* #EFE5DA */
@@ -30,7 +30,7 @@
 
     --border: 30 32% 79%;
     --input: 30 32% 79%;
-    --ring: 18 73% 61%;
+    --ring: 14 56% 47%;
 
     --radius: 1rem;
   }

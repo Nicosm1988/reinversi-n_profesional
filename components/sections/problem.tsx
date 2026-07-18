@@ -1,5 +1,3 @@
-"use client";
-
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
@@ -33,7 +31,7 @@ export function ProblemSection() {
 
           <div className="space-y-8">
             <FadeIn>
-              <Text variant="caption" className="text-[#cf724e]">
+              <Text variant="caption" className="text-[#9b472d]">
                 El problema no eres tu
               </Text>
               <Heading level="h2" className="mt-3 text-[#2f3647]">

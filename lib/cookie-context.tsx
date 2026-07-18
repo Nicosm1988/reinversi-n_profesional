@@ -25,8 +25,8 @@ const CONSENT_KEY = "reinvencion_cookie_consent";
 
 const defaultPreferences: CookiePreferences = {
   essential: true,
-  marketing: true,
-  personalization: true,
+  marketing: false,
+  personalization: false,
   analytics: false,
 };
 

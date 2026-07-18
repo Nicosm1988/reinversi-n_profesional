@@ -1,5 +1,3 @@
-"use client";
-
 import { Card } from "@/components/ui/card";
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
@@ -31,14 +29,14 @@ export function TrustSection() {
     <Section spacing="lg" background="default" className="relative">
       <Container>
         <FadeIn className="mx-auto mb-14 max-w-2xl text-center">
-          <Text variant="caption" className="text-[#cf724e]">
-            Historias reales
+          <Text variant="caption" className="text-[#9b472d]">
+            Situaciones frecuentes
           </Text>
           <Heading level="h2" className="mt-3 text-[#2f3647]">
-            Profesionales que volvieron a encontrar claridad
+            Lo que puede cambiar cuando recuperás claridad
           </Heading>
           <Text className="mt-5 text-[#5d6372]">
-            No prometemos formulas magicas. Creamos un proceso serio y amable para que puedas decidir mejor.
+            Estos ejemplos son orientativos: cada recorrido y cada resultado son diferentes.
           </Text>
         </FadeIn>
 
@@ -52,8 +50,8 @@ export function TrustSection() {
                     {item.quote}
                   </Text>
                   <footer className="border-t border-[#ebded2] pt-5">
-                    <p className="font-heading text-base font-semibold text-[#2f3647]">{item.author}</p>
-                    <p className="text-sm text-[#7b7280]">{item.role}</p>
+                    <p className="font-heading text-base font-semibold text-[#2f3647]">Ejemplo representativo</p>
+                    <p className="text-sm text-[#655e6b]">{item.role}</p>
                   </footer>
                 </blockquote>
               </Card>

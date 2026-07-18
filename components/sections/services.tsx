@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section, Container } from "@/components/layout/container";
@@ -31,7 +29,7 @@ export function ServicesSection() {
               <Button
                 size="lg"
                 variant="default"
-                className="h-12 rounded-full border-[#d86f49] bg-[#e47c56] px-8 text-white hover:border-[#c85f3a] hover:bg-[#d86f49]"
+                className="h-12 rounded-full border-[#a84729] bg-[#bd5734] px-8 text-white hover:border-[#963f25] hover:bg-[#a84729]"
                 asChild
               >
                 <Link href="/diagnostico/ancla-de-carrera">

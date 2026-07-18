@@ -24,10 +24,20 @@ const outfit = Outfit({
   display: "swap"
 });
 
-export const metadata: Metadata = {
-  title: "Reinvención Profesional | Dirección Estratégica en la Era IA",
-  description: "Estudio de arquitectura de carrera. Acompañamos procesos de reinvención profesional con método, estrategia y calidez humana.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const isEnglish = locale === "en";
+
+  return {
+    title: isEnglish
+      ? "Professional Reinvention | Strategic Career Direction"
+      : "Reinvención Profesional | Dirección Estratégica en la Era IA",
+    description: isEnglish
+      ? "Career guidance and professional reinvention with method, strategy and human support."
+      : "Estudio de arquitectura de carrera. Acompañamos procesos de reinvención profesional con método, estrategia y calidez humana.",
+    robots: isEnglish ? { index: false, follow: true } : { index: true, follow: true },
+  };
+}
 
 export default async function RootLayout(
   props: Readonly<{
