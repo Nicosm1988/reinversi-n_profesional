@@ -77,7 +77,7 @@ export function SendaJourney() {
           <div className="mt-14 grid gap-5 md:grid-cols-3">
             {moments.map((moment) => (
               <article key={moment.number} className="group rounded-[2rem] border border-[#20372f]/12 bg-[#faf7ee] p-7 transition-transform hover:-translate-y-1">
-                <span className="text-sm font-bold text-[#b56e4c]">{moment.number}</span>
+                <span className="text-sm font-bold text-[#8d4e32]">{moment.number}</span>
                 <h3 className="mt-10 font-heading text-2xl font-semibold">{moment.title}</h3>
                 <p className="mt-3 leading-7 text-[#65746d]">{moment.text}</p>
               </article>
@@ -90,7 +90,7 @@ export function SendaJourney() {
         <div className="absolute left-1/2 top-0 h-full w-px bg-[#20372f]/12" />
         <div className="relative mx-auto max-w-6xl">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-bold uppercase tracking-[.22em] text-[#6a765f]">Cruce de caminos</p>
+            <p className="text-sm font-bold uppercase tracking-[.22em] text-[#4f604a]">Cruce de caminos</p>
             <h2 className="mt-5 font-heading text-4xl font-semibold tracking-[-.035em] md:text-6xl">Una vida profesional tiene más de una senda.</h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[#53665e]">Podés explorar una, volver atrás o conectar varias. El recorrido se construye con preguntas, no con fórmulas.</p>
           </div>

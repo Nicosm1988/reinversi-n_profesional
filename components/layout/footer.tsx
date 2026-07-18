@@ -66,7 +66,7 @@ export function Footer() {
       <div className="container relative mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-20">
         <div className="grid gap-10 lg:grid-cols-[1fr_1fr_1.3fr]">
           <div>
-            <h4 className="font-heading text-lg font-semibold text-white">{t("colHome")}</h4>
+            <h2 className="font-heading text-lg font-semibold text-white">{t("colHome")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
               <li>
                 <Link href="/quienes-somos" className="hover:text-secondary">
@@ -92,7 +92,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-heading text-lg font-semibold text-white">{t("colServices")}</h4>
+            <h2 className="font-heading text-lg font-semibold text-white">{t("colServices")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
               <li>
                 <Link href="/orientacion-vocacional" className="hover:text-secondary">
@@ -118,7 +118,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-heading text-lg font-semibold text-white">{t("colNewsletter")}</h4>
+            <h2 className="font-heading text-lg font-semibold text-white">{t("colNewsletter")}</h2>
             <p className="mt-4 whitespace-pre-line text-sm text-primary-foreground/75">{t("newsletterDesc")}</p>
 
             <form className="mt-5 space-y-3" onSubmit={handleNewsletterSubmit}>
