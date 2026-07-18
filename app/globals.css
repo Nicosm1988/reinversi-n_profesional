@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: 43 38% 94%;
-    --foreground: 157 27% 17%;
+    --background: 34 48% 96%;
+    --foreground: 223 16% 24%;
 
     --card: 0 0% 100%;
     --card-foreground: 45 6% 11%;
@@ -13,24 +13,24 @@
     --popover: 0 0% 100%;
     --popover-foreground: 45 6% 11%;
 
-    --primary: 157 43% 16%;
-    --primary-foreground: 43 45% 94%;
+    --primary: 223 16% 24%;
+    --primary-foreground: 34 48% 96%;
 
-    --secondary: 21 48% 42%;
+    --secondary: 14 56% 47%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 99 20% 86%;
-    --muted-foreground: 153 11% 39%;
+    --muted: 29 34% 91%;
+    --muted-foreground: 223 11% 43%;
 
-    --accent: 99 22% 62%;
-    --accent-foreground: 157 27% 17%;
+    --accent: 104 18% 65%;
+    --accent-foreground: 223 16% 24%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 99 18% 76%;
-    --input: 99 18% 76%;
-    --ring: 21 48% 42%;
+    --border: 30 32% 79%;
+    --input: 30 32% 79%;
+    --ring: 14 56% 47%;
 
     --radius: 1rem;
   }
@@ -77,8 +77,8 @@
     @apply min-h-screen bg-background text-foreground antialiased;
     background-image:
       radial-gradient(circle at 12% -4%, hsl(var(--accent) / 0.14), transparent 34%),
-      radial-gradient(circle at 88% 4%, hsl(var(--secondary) / 0.1), transparent 30%),
-      linear-gradient(180deg, #faf7ee 0%, #f3efe4 45%, #faf7ee 100%);
+      radial-gradient(circle at 88% 4%, hsl(var(--secondary) / 0.12), transparent 30%),
+      linear-gradient(180deg, #fffaf4 0%, #fcf5ec 38%, #fffaf4 100%);
     text-rendering: optimizeLegibility;
   }
 
