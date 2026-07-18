@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createLeadSchema, toLeadInsert, type CreateLead } from "@/lib/leads/create-lead";
+import { readJsonBody } from "@/lib/http/json-body";
 import { limitRequest } from "@/lib/rate-limit";
 import { getClientIp, getRequestId } from "@/lib/http/request-context";
 import { withRequestHeaders } from "@/lib/http/response-headers";
@@ -9,22 +10,10 @@ import { logEvent } from "@/lib/observability/logger";
 import { verifyTurnstileToken } from "@/lib/security/turnstile";
 import { hasSupabaseAdminConfig, hasSupabasePublicConfig } from "@/lib/supabase/config";
 
-const createLeadSchema = z.object({
-  type: z.enum(["contact", "newsletter", "therapy"]),
-  fullName: z.string().trim().min(2).max(120).optional(),
-  email: z.string().trim().email().max(160),
-  reason: z.string().trim().max(200).optional(),
-  message: z.string().trim().max(5000).optional(),
-  sourcePage: z.string().trim().max(120).optional(),
-  locale: z.enum(["es", "en"]).optional(),
-  consentAccepted: z.literal(true),
-  captchaToken: z.string().trim().optional(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
-});
-
 const LEADS_LIMIT = 6;
 const LEADS_WINDOW_MS = 60_000;
-const LEAD_TURNSTILE_ACTIONS: Record<z.infer<typeof createLeadSchema>["type"], string> = {
+const LEADS_MAX_BODY_BYTES = 16 * 1024;
+const LEAD_TURNSTILE_ACTIONS: Record<CreateLead["type"], string> = {
   contact: "lead_contact",
   newsletter: "lead_newsletter",
   therapy: "lead_therapy",
@@ -65,8 +54,16 @@ export async function POST(req: Request) {
       );
     }
 
-    const json = await req.json();
-    const parsed = createLeadSchema.safeParse(json);
+    const body = await readJsonBody(req, LEADS_MAX_BODY_BYTES);
+    if (!body.ok) {
+      const status = body.reason === "too-large" ? 413 : body.reason === "invalid-content-type" ? 415 : 400;
+      return NextResponse.json(
+        { error: "Invalid request body", reason: body.reason },
+        { status, headers: rateHeaders },
+      );
+    }
+
+    const parsed = createLeadSchema.safeParse(body.value);
 
     if (!parsed.success) {
       return NextResponse.json(
@@ -99,17 +96,7 @@ export async function POST(req: Request) {
 
     const payload = parsed.data;
 
-    const { error } = await supabaseAdmin.from("lead_requests").insert({
-      user_id: userId,
-      lead_type: payload.type,
-      full_name: payload.fullName ?? null,
-      email: payload.email,
-      reason: payload.reason ?? null,
-      message: payload.message ?? null,
-      source_page: payload.sourcePage ?? null,
-      locale: payload.locale ?? "es",
-      metadata: payload.metadata ?? {},
-    });
+    const { error } = await supabaseAdmin.from("lead_requests").insert(toLeadInsert(payload, userId));
 
     if (error) {
       logEvent("error", "leads.create.db_error", {

@@ -61,7 +61,7 @@ npm run dev
 ## Endpoints operativos
 
 - `POST /api/diagnostics/analyze`
-- `POST /api/diagnostics/save`
+- `POST /api/diagnostics/save` (retirado; responde `410 Gone`)
 - `POST /api/leads`
 - `GET /api/health`
 
@@ -86,7 +86,8 @@ supabase db push
 
 - El test de Ancla de Carrera requiere sesion activa de Supabase Auth.
 - El login disponible para diagnosticos es Google OAuth.
-- Las APIs `POST /api/diagnostics/analyze` y `POST /api/diagnostics/save` rechazan usuarios anonimos.
+- La API `POST /api/diagnostics/analyze` requiere autenticacion y guarda el resultado en el mismo flujo seguro.
+- El antiguo endpoint `POST /api/diagnostics/save` esta retirado para impedir escrituras separadas o manipuladas.
 - Los resultados se guardan en `public.user_diagnostics` con `user_id` obligatorio y RLS por usuario.
 
 Configurar en produccion:

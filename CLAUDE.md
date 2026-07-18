@@ -42,7 +42,7 @@ Key routes: home (`/`), `/diagnostico/ancla-de-carrera`, `/orientacion-vocaciona
 
 API routes under `app/api/`:
 - `POST /api/diagnostics/analyze` — Sends career anchor test answers to OpenAI (gpt-4o) via Vercel AI SDK and returns a structured report
-- `POST /api/diagnostics/save` — Persists results to `user_diagnostics` table (requires Supabase auth)
+- `POST /api/diagnostics/save` — Retired (`410 Gone`); analyze persists results atomically through secure RPCs
 - `GET /api/auth/callback` — OAuth callback handler
 
 Diagnostic access is gated by Supabase Auth. Users must sign in with Google before taking `/diagnostico/ancla-de-carrera`; anonymous diagnostics are intentionally blocked at both page and API layers.
