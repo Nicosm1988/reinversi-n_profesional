@@ -173,7 +173,6 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          anchor: dominantAnchor,
           userData: safeUserData,
           rawAnswers: {
             answers,
