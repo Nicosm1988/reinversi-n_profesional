@@ -1,6 +1,6 @@
-# Reinvencion Profesional
+# Senda
 
-Plataforma web en Next.js 16 (App Router) para orientacion profesional, diagnosticos y captacion de leads.
+Mapa digital en Next.js 16 para explorar trabajo, identidad, aprendizaje y propósito con herramientas de orientación y acompañamiento humano.
 
 ## Requisitos
 

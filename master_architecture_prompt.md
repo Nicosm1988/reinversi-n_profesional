@@ -1,4 +1,4 @@
-# Master Architecture Prompt — Reinvención.Pro
+# Master Architecture Prompt — Senda
 
 > **Documento maestro inamovible.** Toda decisión técnica, de diseño o de producto debe alinearse con este archivo. Si un agente o desarrollador contradice algo escrito aquí, este documento tiene prioridad.
 
@@ -6,7 +6,7 @@
 
 ## 1. Visión del Producto
 
-**Reinvención.Pro** es una plataforma premium de orientación vocacional-ocupacional (OVO) y acompañamiento a la reinvención profesional, asistida por inteligencia artificial y supervisada por un equipo de psicólogos especializados.
+**Senda** es un mapa vivo de orientación vocacional-ocupacional y acompañamiento profesional. La experiencia se organiza como un recorrido por trabajo, identidad, aprendizaje, propósito y tecnología, con herramientas digitales y supervisión humana especializada.
 
 ### Propuesta de Valor
 
@@ -22,7 +22,7 @@ La plataforma combina ciencia psicométrica validada, acompañamiento humano exp
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | **Producto principal** | Programa estructurado de acompañamiento OVO + inserción laboral (High-ticket)                                                            |
 | **Modelo de ingresos** | Venta de programa High-ticket (NO suscripción, NO infoproducto)                                                                          |
-| **Embudo actual**      | Landing → Test diagnóstico gratuito → Informe de resultados → Agendar cita 1:1 → Venta del programa                                      |
+| **Recorrido actual**   | Umbral → Ubicación personal → Exploración de sendas → Herramienta orientativa → Contacto humano opcional                                  |
 | **Escalamiento**       | A través de la IA como copiloto 24/7 + rutas de carrera automatizadas, reduciendo la carga del equipo humano en las fases más operativas |
 
 ---

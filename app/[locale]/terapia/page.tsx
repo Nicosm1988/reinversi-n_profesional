@@ -120,7 +120,7 @@ export default function TherapyPage() {
       <Section spacing="lg" background="muted">
         <Container>
           <FadeIn className="text-center mb-16">
-            <Heading level="h2" className="mb-4">Por que elegir ReinvencionPro para iniciar terapia?</Heading>
+            <Heading level="h2" className="mb-4">Por que elegir Senda para iniciar terapia?</Heading>
           </FadeIn>
 
           <StaggerContainer className="grid md:grid-cols-3 gap-8">

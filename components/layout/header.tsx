@@ -10,8 +10,8 @@ export function Header() {
   const t = useTranslations("Header");
 
   const navLinks = [
-    { name: t("navMethod"), href: "/#metodo" },
-    { name: t("navPaths"), href: "/#caminos" },
+    { name: t("navMethod"), href: "/#donde-estoy" },
+    { name: t("navPaths"), href: "/#cruce-de-caminos" },
   ];
 
   const serviceLinks = [
@@ -62,14 +62,14 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "border-b border-[#e7d9cc] bg-white/94 backdrop-blur-xl" : "border-b border-transparent bg-white/86"
+      className={`fixed inset-x-0 top-0 z-50 border-b bg-[#f8f5ec]/95 backdrop-blur-xl transition-all duration-300 ${
+        scrolled ? "border-[#ced8ca] shadow-[0_12px_35px_-30px_rgba(23,59,49,.7)]" : "border-[#ced8ca]/60"
       }`}
     >
       <div className="container mx-auto flex h-[78px] max-w-6xl items-center justify-between px-5 md:px-8">
         <Link href="/" className="group z-10 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[#2f3647] bg-[#2f3647] text-base font-black text-[#f6efe7] transition-transform group-hover:scale-[1.03] group-active:scale-[0.98]">
-            R
+          <div className="flex h-10 w-10 items-center justify-center rounded-[14px] border-2 border-[#173b31] bg-[#173b31] text-base font-black text-[#f8f2e6] transition-transform group-hover:scale-[1.03] group-active:scale-[0.98]">
+            S
           </div>
           <span className="hidden font-heading text-lg font-semibold tracking-tight text-primary sm:block">{t("logo")}</span>
         </Link>

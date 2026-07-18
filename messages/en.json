@@ -1,12 +1,12 @@
 {
   "Index": {
-    "title": "Reinvention.Pro"
+    "title": "Senda"
   },
   "Header": {
-    "logo": "Reinvention.Pro",
-    "navMethod": "Method",
-    "navPaths": "Paths",
-    "navServices": "Services",
+    "logo": "Senda",
+    "navMethod": "Find your bearings",
+    "navPaths": "Explore paths",
+    "navServices": "Resources",
     "serviceVocational": "Vocational Guidance",
     "serviceVocationalDesc": "Find your professional path",
     "serviceEnglish": "Professional English",
@@ -33,7 +33,7 @@
     "newsletterDesc": "Small changes, big transformations.\nLeave your email and get strategic insights.",
     "newsletterPlaceholder": "Email",
     "newsletterSubmit": "Subscribe",
-    "copyright": "� {year} Professional Reinvention - All Rights Reserved",
+    "copyright": "© {year} Senda - All Rights Reserved",
     "disclaimerTitle": "Important Notice:",
     "disclaimerText": "Our team is multidisciplinary and includes professionals from different specialties, including psychology. This service focuses on vocational and professional guidance and strategic career support, and does not replace clinical psychotherapy or psychiatric treatment."
   },

@@ -1,4 +1,4 @@
-# Reinvención Profesional
+# Senda
 
 > Plataforma de orientación profesional con herramientas de autoconocimiento y acompañamiento humano.
 

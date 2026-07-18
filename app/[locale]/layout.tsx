@@ -31,12 +31,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   return {
     title: isEnglish
-      ? "Professional Reinvention | Strategic Career Direction"
-      : "Reinvención Profesional | Dirección Estratégica en la Era IA",
+      ? "Senda | A clearer path through professional change"
+      : "Senda | Orientación para tu camino profesional",
     description: isEnglish
-      ? "Career guidance and professional reinvention with method, strategy and human support."
-      : "Estudio de arquitectura de carrera. Acompañamos procesos de reinvención profesional con método, estrategia y calidez humana.",
+      ? "Explore work, identity and purpose with thoughtful tools and human support."
+      : "Un mapa vivo para explorar trabajo, identidad y propósito con herramientas y acompañamiento humano.",
     robots: isEnglish ? { index: false, follow: true } : { index: true, follow: true },
+    icons: { icon: "/senda-mark.svg" },
   };
 }
 

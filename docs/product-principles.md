@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Reinvención Profesional ofrece herramientas de orientación para ayudar a una persona a comprender mejor su situación laboral y decidir con más claridad. La tecnología acompaña el proceso; no reemplaza el criterio, la escucha ni la responsabilidad de un profesional humano.
+Senda ofrece herramientas de orientación para ayudar a una persona a comprender mejor su situación laboral y decidir con más claridad. La tecnología acompaña el proceso; no reemplaza el criterio, la escucha ni la responsabilidad de un profesional humano.
 
 ## Principios de comunicación
 

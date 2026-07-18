@@ -17,7 +17,7 @@ export default function TerminosPage() {
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">1. Descripcion del servicio</h2>
               <p className="leading-relaxed text-foreground/80">
-                Reinvencion.Pro ofrece orientacion vocacional-profesional y acompanamiento estrategico de carrera. Nuestros recursos no reemplazan psicoterapia clinica ni tratamiento psiquiatrico.
+                Senda ofrece orientacion vocacional-profesional y acompanamiento estrategico de carrera. Nuestros recursos no reemplazan psicoterapia clinica ni tratamiento psiquiatrico.
               </p>
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">2. Registro y cuenta</h2>
@@ -42,7 +42,7 @@ export default function TerminosPage() {
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">6. Propiedad intelectual</h2>
               <p className="leading-relaxed text-foreground/80">
-                El contenido, metodologia y materiales de la plataforma son propiedad de Reinvencion Profesional y no pueden reproducirse sin autorizacion.
+                El contenido, metodologia y materiales de la plataforma son propiedad de Senda y no pueden reproducirse sin autorizacion.
               </p>
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">7. Limitacion de responsabilidad</h2>

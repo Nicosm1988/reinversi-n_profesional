@@ -1,4 +1,11 @@
-# Reinvension Profesional: reglas permanentes
+# Senda: reglas permanentes
+
+## Identidad y experiencia
+
+- La marca y el nombre del producto son **Senda**.
+- La experiencia se organiza como un recorrido: umbral, ubicación personal, cruces de caminos, herramientas e hitos.
+- Evitar presentar el sitio como una landing comercial tradicional o usar “reinvención profesional” como identidad de marca.
+- El cambio profesional puede aparecer como situación del usuario, pero la metáfora rectora es la senda.
 
 ## Experiencia y tono
 

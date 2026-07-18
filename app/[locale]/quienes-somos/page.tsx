@@ -54,7 +54,7 @@ export default function QuienesSomosPage() {
               Nuestra mision
             </Heading>
             <Text variant="body-lg" className="mx-auto max-w-2xl">
-              Reinvencion.Pro nacio para ofrecer un espacio donde pensar el futuro profesional con calma, estrategia y acompanamiento experto en un mercado laboral transformado por IA.
+              Senda nacio para ofrecer un espacio donde pensar el futuro profesional con calma, estrategia y acompanamiento experto en un mercado laboral transformado por IA.
             </Text>
           </FadeIn>
         </Container>

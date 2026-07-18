@@ -1,2 +1,3 @@
 package.json whitespace=-trailing-space
 package-lock.json whitespace=-trailing-space
+messages/*.json whitespace=-trailing-space

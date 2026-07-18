@@ -151,7 +151,7 @@ export function Footer() {
                   required
                 />
                 <span>
-                  Al suscribirte acepto recibir correos electronicos de Reinvencion.Pro, los{" "}
+                  Al suscribirte acepto recibir correos electronicos de Senda, los{" "}
                   <Link href="/terminos" className="underline hover:text-secondary">
                     {t("linkTerms")}
                   </Link>{" "}

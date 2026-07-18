@@ -77,10 +77,10 @@ export function CookieBanner() {
   if (!showBanner) return null;
 
   return (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center p-4 pointer-events-none">
-          <div className="pointer-events-auto w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-2xl border border-border bg-white shadow-soft">
+        <div className="fixed inset-0 z-[60] flex items-end justify-center p-3 pointer-events-none sm:justify-end sm:p-5">
+          <div className="pointer-events-auto w-full max-w-md max-h-[72vh] overflow-y-auto rounded-2xl border border-border bg-white shadow-[0_24px_70px_-28px_rgba(23,59,49,.5)]">
             {!showPreferences ? (
-              <div className="p-6 md:p-8">
+              <div className="p-5 md:p-6">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-heading font-bold text-foreground">{t("title")}</h3>
                   <button

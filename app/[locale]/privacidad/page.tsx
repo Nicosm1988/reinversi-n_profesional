@@ -17,7 +17,7 @@ export default function PrivacidadPage() {
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">1. Informacion que recopilamos</h2>
               <p className="leading-relaxed text-foreground/80">
-                En Reinvencion.Pro recopilamos la información que proporcionás al utilizar nuestros servicios: nombre, correo electrónico, información profesional, respuestas y resultados de diagnósticos, consultas enviadas y datos técnicos esenciales para seguridad y funcionamiento.
+                En Senda recopilamos la información que proporcionás al utilizar nuestros servicios: nombre, correo electrónico, información profesional, respuestas y resultados de diagnósticos, consultas enviadas y datos técnicos esenciales para seguridad y funcionamiento.
               </p>
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">2. Uso de la informacion</h2>
