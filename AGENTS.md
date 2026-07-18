@@ -1,5 +1,13 @@
 # Senda: reglas permanentes
 
+## Nombres operativos de los proyectos
+
+- **original**: proyecto productivo principal de Senda, ubicado en `v0-reinvention-web-platform` y publicado actualmente en `reinvension-profesional.vercel.app`.
+- **cosmos**: variante visual espacial e independiente, ubicada en `senda-cosmos` y publicada en `senda-cosmos.vercel.app`.
+- Cuando una instrucción mencione **original**, modificar exclusivamente el proyecto original.
+- Cuando una instrucción mencione **cosmos**, modificar exclusivamente el proyecto cosmos.
+- Nunca propagar cambios, credenciales o despliegues entre ambos proyectos salvo pedido explícito del usuario.
+
 ## Identidad y experiencia
 
 - La marca y el nombre del producto son **Senda**.
