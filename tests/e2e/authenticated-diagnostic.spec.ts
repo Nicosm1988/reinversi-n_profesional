@@ -10,7 +10,16 @@ test.describe("authenticated career diagnostic", () => {
     await page.goto("/diagnostico/ancla-de-carrera");
     await expect(page).not.toHaveURL(/\/login/);
     await expect(page.getByRole("heading", { name: /ancla de carrera|career anchor/i })).toBeVisible();
-    await expect(page.getByRole("link", { name: /mi recorrido|my journey/i })).toHaveAttribute("href", /\/panel$/);
+    const accountMenu = page.getByRole("button", { name: /mi recorrido|my journey/i });
+    await expect(accountMenu).toBeVisible();
+    await accountMenu.click();
+    await expect(page.getByRole("menuitem", { name: /mi último resultado/i })).toHaveAttribute("href", "/panel#resultado");
     await expect(page.getByRole("link", { name: /ingresar|sign in/i })).toHaveCount(0);
+  });
+
+  test("shows the latest saved result in the personal panel", async ({ page }) => {
+    await page.goto("/panel#resultado");
+    await expect(page.getByRole("heading", { name: /mi recorrido/i })).toBeVisible();
+    await expect(page.getByText(/tu último resultado/i)).toBeVisible();
   });
 });

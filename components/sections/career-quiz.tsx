@@ -244,7 +244,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     ¿Cuál es tu Ancla de Carrera?
                   </Heading>
 
-                  <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#efe1d2]/88">
+                  <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#f6efe7]">
                     Un diagnóstico inicial, cálido y claro para entender qué necesita tu carrera para sentirse en eje.
                   </Text>
                 </div>
@@ -275,7 +275,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                         </div>
                         <div className="rounded-2xl border border-[#e6c9be] bg-[#f7e5dc] p-4">
                           <Text variant="small" className="font-semibold text-[#cf724e]">
-                            Sesion segura
+                            Sesión segura
                           </Text>
                           <Text variant="small" className="mt-1 text-[#6b6170]">
                             Tus respuestas quedan guardadas en tu cuenta para retomarlas luego.
@@ -286,13 +286,13 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
 
                     <div className="space-y-4 rounded-[28px] border border-[#d8c5b3] bg-gradient-to-br from-[#f9f2ea] via-[#f6ede4] to-[#eeded0] p-6">
                       <Text variant="small" className={warmSectionEyebrowClass}>
-                        Que te vas a llevar
+                        Qué te vas a llevar
                       </Text>
                       <div className="space-y-4">
                         {[
                           "Un ranking completo de tus 8 anclas de carrera.",
-                          "Una lectura profunda de tus 3 anclas mas fuertes.",
-                          "Una devolucion personalizada sobre tu contexto actual.",
+                          "Una lectura profunda de tus 3 anclas más fuertes.",
+                          "Una devolución personalizada sobre tu contexto actual.",
                         ].map((item) => (
                           <div key={item} className="flex gap-3">
                             <div className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#f0d7c5] text-[#cf724e]">
@@ -310,7 +310,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                           Tiempo estimado
                         </Text>
                         <Text variant="small" className="mt-1 text-[#5d6372]">
-                          Entre 8 y 12 minutos, con una ultima seleccion de 3 afirmaciones clave.
+                          Entre 8 y 12 minutos, incluida una selección final de 3 afirmaciones importantes.
                         </Text>
                       </div>
                     </div>
@@ -352,7 +352,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                           Preguntas {questionBlockStart} a {questionBlockEnd}
                         </CardTitle>
                         <CardDescription className="text-base">
-                          Responde segun la escala de 1 a 6. Avanzamos de a 10 para que el proceso sea mas liviano.
+                          Respondé cada afirmación en una escala del 1 al 6. Las presentamos en grupos de 10 para que puedas avanzar con calma.
                         </CardDescription>
                       </div>
 
@@ -457,7 +457,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
 
                     {!currentQuestionPageComplete && (
                       <Text variant="small" className="text-center text-muted-foreground">
-                        Completa estas 10 respuestas para pasar al siguiente bloque.
+                        Respondé las 10 afirmaciones de este grupo para continuar.
                       </Text>
                     )}
                   </CardFooter>
@@ -479,25 +479,25 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
 
                 <div className="space-y-4">
                   <Heading level="h2" className="text-3xl text-[#2f3647] dark:text-[#f6efe7] md:text-4xl">
-                    Ya casi llegas a tu resultado
+                    Ya casi llegás a tu resultado
                   </Heading>
-                  <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#efe1d2]/88">
-                    Ahora vamos a refinar tu diagnóstico con una ultima seleccion personal.
+                  <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#f6efe7]">
+                    Falta una última elección para reconocer qué aspectos son realmente irrenunciables para vos.
                   </Text>
                 </div>
 
                 <Card className="mx-auto max-w-3xl border-[#d7c3ae] bg-[#f6efe7]/95 shadow-[0_28px_80px_-42px_rgba(17,24,39,0.45)]">
                   <CardContent className="space-y-5 p-8 text-left">
                     <Text>
-                      Vas a volver a ver las 40 afirmaciones, pero esta vez separadas de a 10. Solo tienes que elegir
-                      las <strong>3 que sientes como verdades absolutas</strong> sobre tu forma de trabajar.
+                      Vas a volver a recorrer las 40 afirmaciones. Esta vez, elegí las <strong>3 que mejor representen
+                      aquello que necesitás preservar</strong> en tu vida profesional, incluso cuando cambian el rol o el contexto.
                     </Text>
                     <Text>
-                      A esas 3 elecciones les sumamos un bono de precision para definir con mayor claridad tu ancla
-                      dominante.
+                      No hay respuestas correctas. Estas tres elecciones tendrán un peso adicional en el cálculo para
+                      ayudarnos a identificar con mayor claridad tu ancla principal.
                     </Text>
                       <Text variant="small" className="text-muted-foreground">
-                      Ya estas en una sesion segura. Tu seleccion se asociara a tu cuenta.
+                      No hace falta que recuerdes lo que marcaste antes: elegí lo que hoy sentís más propio.
                     </Text>
                   </CardContent>
                 </Card>
@@ -511,7 +511,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     setStep("bonus");
                   }}
                 >
-                  Elegir mis 3 verdades
+                  Elegir las 3 más importantes
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </motion.div>
@@ -529,13 +529,13 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                       <div className="space-y-2">
                         <Text variant="small" className={warmSectionEyebrowClass}>
-                          Refinando resultado
+                          Elección final
                         </Text>
                         <CardTitle className="text-2xl md:text-3xl">
-                          Verdades {bonusBlockStart} a {bonusBlockEnd}
+                          Afirmaciones {bonusBlockStart} a {bonusBlockEnd}
                         </CardTitle>
                         <CardDescription className="text-base">
-                          Marca solo 3 afirmaciones en total. Puedes recorrer todos los bloques antes de confirmar.
+                          Elegí solo 3 afirmaciones en total. Podés recorrer todos los grupos antes de confirmar.
                         </CardDescription>
                       </div>
 
@@ -563,7 +563,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                             selected
                               ? "border-[#e47c56]/55 bg-[#f0dfd0] shadow-sm"
                               : "border-[#dcc8b5] bg-gradient-to-br from-[#fffaf4] to-[#f2e4d7] hover:border-[#e47c56]/45"
-                          } ${disabled ? "cursor-not-allowed opacity-45" : ""}`}
+                          } ${disabled ? "cursor-not-allowed opacity-70" : ""}`}
                         >
                           <div
                             className={`mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border-2 ${
@@ -623,7 +623,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     </div>
 
                     <Text variant="small" className="text-center text-muted-foreground">
-                      Este resultado se guardara en Supabase dentro de tu cuenta.
+                      Tus respuestas se guardan de forma segura en tu cuenta para que puedas volver a consultarlas.
                     </Text>
                   </CardFooter>
                 </Card>
@@ -640,10 +640,10 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
               >
                 <div className="space-y-3 text-center">
                   <Heading level="h2" className="text-[#2f3647] dark:text-[#f6efe7]">Ya tenemos procesadas tus respuestas</Heading>
-                  <Text className="mx-auto max-w-2xl text-[#596173] dark:text-[#efe1d2]/86">
+                  <Text className="mx-auto max-w-2xl text-[#596173] dark:text-[#f6efe7]">
                     Para personalizar mejor tu lectura final, necesitamos algunos datos basicos de tu contexto actual.
                   </Text>
-                  <Text variant="small" className="text-[#687080] dark:text-[#e9d8c8]/80">
+                  <Text variant="small" className="text-[#687080] dark:text-[#eadfd4]">
                     Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta
                     {userEmail ? ` (${userEmail})` : ""}.
                   </Text>
@@ -662,18 +662,18 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
               >
                 <div className="space-y-4 text-center">
                   <div className="inline-flex items-center rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-1.5 text-sm font-bold text-[#cf724e]">
-                    Diagnostico listo
+                    Lectura completada
                   </div>
-                  <Heading level="h2" className="text-[#2f3647] dark:text-[#f6efe7]">Tu Mapa Estrategico de Carrera</Heading>
-                  <Text className="mx-auto max-w-2xl italic text-[#596173] dark:text-[#e7d7c8]/86">
-                    &quot;El ancla de carrera es una combinacion unica de competencias, talentos, motivaciones y valores que nunca se abandonaran.&quot; - Edgar Schein
+                  <Heading level="h2" className="text-[#2f3647] dark:text-[#fff7ef]">Tu mapa de anclas de carrera</Heading>
+                  <Text className="mx-auto max-w-2xl italic text-[#596173] dark:text-[#f6efe7]">
+                    &quot;El ancla de carrera reúne capacidades, motivaciones y valores que una persona procura preservar a lo largo de su recorrido profesional.&quot; — Síntesis del modelo de Edgar Schein
                   </Text>
                 </div>
 
                 <Card className="border-[#d7c3ae] bg-[#f6efe7]/95 shadow-[0_28px_80px_-42px_rgba(17,24,39,0.55)]">
                   <CardHeader>
                     <CardTitle>Ranking de tus anclas</CardTitle>
-                    <CardDescription>Asi quedo distribuido tu perfil con las respuestas y el bono final.</CardDescription>
+                    <CardDescription>Este orden refleja el peso relativo de cada ancla según tus respuestas y tus tres elecciones finales.</CardDescription>
                   </CardHeader>
                   <CardContent className="grid gap-4">
                     {calculateResults.map((result, index) => (
@@ -768,7 +768,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                             </Text>
                             <div className="mt-6">
                               <Button asChild variant="default" className={`px-8 ${warmPrimaryButtonClass}`}>
-                                <Link href="/contacto">Quiero orientación humana</Link>
+                                <Link href="/contacto">Conversar con un experto</Link>
                               </Button>
                             </div>
                           </div>
@@ -858,7 +858,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     <Heading level="h3" className="text-2xl text-[#2f3647] dark:text-[#f6efe7] md:text-3xl">
                       Tu proceso merece una mirada humana
                     </Heading>
-                    <Text className="text-lg leading-relaxed text-[#596173] dark:text-[#efe1d2]/88">
+                    <Text className="text-lg leading-relaxed text-[#596173] dark:text-[#f6efe7]">
                       Tu diagnóstico queda disponible para que vuelvas a consultarlo cuando quieras. Si sentís que
                       necesitás profundizar lo que apareció, podemos escucharte y ayudarte a encontrar el tipo de
                       acompañamiento profesional más adecuado para vos.
@@ -866,10 +866,10 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                   </div>
 
                   <Button asChild size="lg" variant="default" className={`h-14 px-12 text-lg ${warmPrimaryButtonClass}`}>
-                    <Link href="/contacto">Conversar con el equipo</Link>
+                    <Link href="/contacto">Conversar con un experto</Link>
                   </Button>
 
-                  <Text className="text-sm text-[#687080] dark:text-[#efe1d2]/75">
+                  <Text className="text-sm text-[#687080] dark:text-[#ddd5cc]">
                     Este resultado es orientativo y no reemplaza una evaluación profesional personalizada.
                   </Text>
                 </div>

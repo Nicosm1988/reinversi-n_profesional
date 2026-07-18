@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
+import { ChevronDown, Menu, X, ArrowRight, Compass, LayoutDashboard, LogOut, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { createClient } from "@/lib/supabase/client";
@@ -46,12 +46,14 @@ export function Header() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [authState, setAuthState] = useState<AuthState>(() =>
     createClient() ? { status: "loading" } : { status: "anonymous" },
   );
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const accountDropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -106,6 +108,9 @@ export function Header() {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setServicesOpen(false);
+      }
+      if (accountDropdownRef.current && !accountDropdownRef.current.contains(event.target as Node)) {
+        setAccountOpen(false);
       }
     }
 
@@ -202,9 +207,12 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
           {authState.status === "authenticated" ? (
-            <div className="flex items-center gap-2">
-              <Link
-                href="/panel"
+            <div ref={accountDropdownRef} className="relative">
+              <button
+                type="button"
+                aria-expanded={accountOpen}
+                aria-haspopup="menu"
+                onClick={() => setAccountOpen((current) => !current)}
                 title={authState.email ?? undefined}
                 className="flex items-center gap-2 rounded-full border border-[#d7c3ae] bg-[#f5e9dc] py-1.5 pl-1.5 pr-4 text-sm font-semibold text-[#2f3647] hover:bg-[#eedbc9] dark:border-white/15 dark:bg-white/10 dark:text-[#f6efe7] dark:hover:bg-white/15"
               >
@@ -217,14 +225,26 @@ export function Header() {
                   </span>
                 )}
                 {t("ctaAccount")}
-              </Link>
-              <button
-                type="button"
-                onClick={handleSignOut}
-                className="text-sm font-semibold text-[#6a7080] hover:text-[#e47c56] dark:text-[#ddd5cc] dark:hover:text-[#f0a27f]"
-              >
-                {t("ctaLogout")}
+                <ChevronDown className={`h-4 w-4 transition-transform ${accountOpen ? "rotate-180" : ""}`} />
               </button>
+              {accountOpen && (
+                <div role="menu" className="absolute right-0 top-full mt-3 w-64 overflow-hidden rounded-2xl border border-[#eadfd4] bg-[#fffaf4] p-2 shadow-[0_24px_60px_-28px_rgba(47,54,71,0.55)] dark:border-white/15 dark:bg-[#303747]">
+                  <p className="truncate px-3 pb-2 pt-1 text-xs text-[#6a7080] dark:text-[#c8c1ba]">{authState.email}</p>
+                  {[
+                    { href: "/panel#resumen", label: "Resumen", icon: LayoutDashboard },
+                    { href: "/panel#resultado", label: "Mi último resultado", icon: Compass },
+                    { href: "/panel#perfil", label: "Datos personales", icon: UserRound },
+                  ].map((item) => (
+                    <Link key={item.href} href={item.href} role="menuitem" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[#2f3647] hover:bg-[#f4e9de] dark:text-[#f6efe7] dark:hover:bg-white/10">
+                      <item.icon className="h-4 w-4 text-[#e47c56]" />{item.label}
+                    </Link>
+                  ))}
+                  <div className="my-2 border-t border-[#eadfd4] dark:border-white/15" />
+                  <button type="button" role="menuitem" onClick={handleSignOut} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-[#6a7080] hover:bg-[#f4e9de] hover:text-[#2f3647] dark:text-[#ddd5cc] dark:hover:bg-white/10 dark:hover:text-white">
+                    <LogOut className="h-4 w-4" />{t("ctaLogout")}
+                  </button>
+                </div>
+              )}
             </div>
           ) : authState.status === "anonymous" ? (
             <Link href="/login" className="text-sm font-semibold text-[#2f3647] hover:text-[#e47c56] dark:text-[#f6efe7] dark:hover:text-[#f0a27f]">
@@ -290,16 +310,15 @@ export function Header() {
                 </Link>
               </Button>
               {authState.status === "authenticated" ? (
-                <>
-                  <Button variant="outline" className="h-12 w-full rounded-full border-[#d3c0ad] bg-[#fbf5ee] text-[#2f3647] hover:bg-[#f0e3d5]" asChild>
-                    <Link href="/panel" onClick={() => setMobileMenuOpen(false)}>
-                      {t("ctaAccount")}
-                    </Link>
-                  </Button>
+                <div className="space-y-2 rounded-2xl border border-[#eadfd4] bg-[#f7efe6] p-2 dark:border-white/15 dark:bg-[#303747]">
+                  <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{t("ctaAccount")}</p>
+                  <Link href="/panel#resumen" onClick={() => setMobileMenuOpen(false)} className="block rounded-xl px-3 py-2.5 text-sm font-semibold dark:text-[#f6efe7] dark:hover:bg-white/10">Resumen</Link>
+                  <Link href="/panel#resultado" onClick={() => setMobileMenuOpen(false)} className="block rounded-xl px-3 py-2.5 text-sm font-semibold dark:text-[#f6efe7] dark:hover:bg-white/10">Mi último resultado</Link>
+                  <Link href="/panel#perfil" onClick={() => setMobileMenuOpen(false)} className="block rounded-xl px-3 py-2.5 text-sm font-semibold dark:text-[#f6efe7] dark:hover:bg-white/10">Datos personales</Link>
                   <Button variant="ghost" className="h-12 w-full rounded-full" onClick={handleSignOut}>
                     {t("ctaLogout")}
                   </Button>
-                </>
+                </div>
               ) : authState.status === "anonymous" ? (
                 <Button variant="outline" className="h-12 w-full rounded-full border-[#d3c0ad] bg-[#fbf5ee] text-[#2f3647] hover:bg-[#f0e3d5]" asChild>
                   <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
