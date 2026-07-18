@@ -4,6 +4,19 @@
 
 @layer base {
   :root {
+    --senda-bg: #fcf5ec;
+    --senda-ink: #2f3647;
+    --senda-dark: #31384a;
+    --senda-dark-hover: #414a60;
+    --senda-light: #f6efe7;
+    --senda-accent: #e47c56;
+    --senda-accent-soft: #f0b08d;
+    --senda-accent-dark: #8f4028;
+    --senda-border: #eadfd4;
+    --senda-card: #fffaf4;
+    --senda-section: #f4e9de;
+    --senda-section-warm: #efe1d2;
+    --senda-muted: #606777;
     --background: 34 48% 96%;
     --foreground: 223 16% 24%;
 
@@ -36,6 +49,19 @@
   }
 
   .dark {
+    --senda-bg: #242a38;
+    --senda-ink: #f6efe7;
+    --senda-dark: #1d2230;
+    --senda-dark-hover: #3b4358;
+    --senda-light: #f8eee4;
+    --senda-accent: #f0a27f;
+    --senda-accent-soft: #f4b99f;
+    --senda-accent-dark: #f0a27f;
+    --senda-border: #4a5266;
+    --senda-card: #303747;
+    --senda-section: #292f3e;
+    --senda-section-warm: #3a3134;
+    --senda-muted: #c7c0b8;
     --background: 223 18% 18%;
     --foreground: 0 0% 97%;
 
@@ -45,8 +71,8 @@
     --popover: 225 17% 12%;
     --popover-foreground: 0 0% 97%;
 
-    --primary: 34 48% 96%;
-    --primary-foreground: 223 18% 18%;
+    --primary: 223 16% 24%;
+    --primary-foreground: 34 48% 96%;
 
     --secondary: 18 73% 61%;
     --secondary-foreground: 0 0% 100%;

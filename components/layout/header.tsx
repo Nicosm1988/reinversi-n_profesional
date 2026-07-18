@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 export function Header() {
   const t = useTranslations("Header");
@@ -62,7 +63,7 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b bg-[#fffaf4]/95 backdrop-blur-xl transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b bg-[#fffaf4]/95 backdrop-blur-xl transition-all duration-300 dark:bg-[#242a38]/95 ${
         scrolled ? "border-[#e7d9cc] shadow-[0_12px_35px_-30px_rgba(47,54,71,.7)]" : "border-[#e7d9cc]/60"
       }`}
     >
@@ -71,16 +72,16 @@ export function Header() {
           <div className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[#2f3647] bg-[#2f3647] text-base font-black text-[#f6efe7] transition-transform group-hover:scale-[1.03] group-active:scale-[0.98]">
             S
           </div>
-          <span className="hidden font-heading text-lg font-semibold tracking-tight text-primary sm:block">{t("logo")}</span>
+          <span className="hidden font-heading text-lg font-semibold tracking-tight text-primary dark:text-[#f6efe7] sm:block">{t("logo")}</span>
         </Link>
 
         <div className="hidden lg:flex items-center gap-2">
-          <nav className="flex items-center gap-1 rounded-full border border-[#eadfd4] bg-[#fffaf4] px-2 py-1.5 shadow-[0_18px_36px_-30px_rgba(47,54,71,0.45)]">
+          <nav className="flex items-center gap-1 rounded-full border border-[#eadfd4] bg-[#fffaf4] px-2 py-1.5 shadow-[0_18px_36px_-30px_rgba(47,54,71,0.45)] dark:border-white/15 dark:bg-[#303747]">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-[#6a7080] hover:bg-[#f2e6d9] hover:text-[#2f3647]"
+                className="rounded-full px-4 py-2 text-sm font-semibold text-[#6a7080] hover:bg-[#f2e6d9] hover:text-[#2f3647] dark:text-[#ddd5cc] dark:hover:bg-white/10 dark:hover:text-white"
               >
                 {link.name}
               </Link>
@@ -88,7 +89,7 @@ export function Header() {
 
             <div ref={dropdownRef} className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
               <button
-                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold text-[#6a7080] hover:bg-[#f2e6d9] hover:text-[#2f3647]"
+                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold text-[#6a7080] hover:bg-[#f2e6d9] hover:text-[#2f3647] dark:text-[#ddd5cc] dark:hover:bg-white/10 dark:hover:text-white"
                 onClick={() => setServicesOpen((v) => !v)}
               >
                 {t("navServices")}
@@ -135,19 +136,23 @@ export function Header() {
           </nav>
         </div>
 
-        <div className="hidden lg:flex items-center">
-          <Link href="/login" className="text-sm font-semibold text-[#2f3647] hover:text-[#e47c56]">
+        <div className="hidden items-center gap-3 lg:flex">
+          <ThemeToggle />
+          <Link href="/login" className="text-sm font-semibold text-[#2f3647] hover:text-[#e47c56] dark:text-[#f6efe7] dark:hover:text-[#f0a27f]">
             {t("ctaLogin")}
           </Link>
         </div>
 
-        <button
-          className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#eadfd4] bg-[#fffaf4] text-primary"
-          onClick={() => setMobileMenuOpen((v) => !v)}
-          aria-label={t("mobileMenu")}
-        >
-          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#eadfd4] bg-[#fffaf4] text-primary dark:border-white/15 dark:bg-white/10"
+            onClick={() => setMobileMenuOpen((v) => !v)}
+            aria-label={t("mobileMenu")}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
         {mobileMenuOpen && (

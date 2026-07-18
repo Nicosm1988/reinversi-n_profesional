@@ -233,3 +233,61 @@ export function DoorsIllustration({ className }: IllustrationProps) {
     </svg>
   );
 }
+
+export function BridgeIllustration({ className }: IllustrationProps) {
+  return (
+    <svg viewBox="0 0 640 520" className={cn("h-full w-full", className)} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="640" height="520" rx="44" fill="#FCF5EC" />
+      <circle cx="474" cy="130" r="62" fill="#FFD7A9" />
+      <path d="M0 332C106 266 196 276 278 324C366 376 480 370 640 280V520H0V332Z" fill="#DCA37E" />
+      <path d="M0 374C120 314 218 326 300 370C392 418 500 402 640 330V520H0V374Z" fill="#2F4C78" />
+      <path d="M164 354C218 286 292 252 374 254C438 256 488 278 528 318" stroke="#F8F0E8" strokeWidth="34" strokeLinecap="round" />
+      <path d="M166 354C220 288 294 258 374 260C438 262 484 282 524 318" stroke="#9CAF8C" strokeWidth="10" strokeLinecap="round" />
+      <circle cx="310" cy="278" r="25" fill="#F2C6B0" />
+      <path d="M280 350C284 306 304 286 336 286C370 286 390 312 392 356L280 350Z" fill="#5E3654" />
+      <rect x="300" y="342" width="22" height="58" rx="11" fill="#2F3647" />
+      <rect x="338" y="342" width="22" height="58" rx="11" fill="#2F3647" />
+      <circle cx="104" cy="136" r="12" fill="#C98B8D" />
+      <circle cx="146" cy="104" r="7" fill="#E2C16B" />
+      <circle cx="548" cy="224" r="9" fill="#B7C8A7" />
+    </svg>
+  );
+}
+
+export function ClearingIllustration({ className }: IllustrationProps) {
+  return (
+    <svg viewBox="0 0 640 520" className={cn("h-full w-full", className)} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="640" height="520" rx="44" fill="#FBF6ED" />
+      <ellipse cx="320" cy="420" rx="220" ry="42" fill="#E9DDD5" />
+      <path d="M60 382C92 292 150 236 222 212C184 278 176 346 182 416L60 382Z" fill="#94A98C" />
+      <path d="M580 382C548 292 490 236 418 212C456 278 464 346 458 416L580 382Z" fill="#A8B695" />
+      <circle cx="320" cy="228" r="70" fill="#FFD7A9" />
+      <path d="M264 406C272 340 292 296 320 270C350 298 372 340 380 406H264Z" fill="#E47C56" />
+      <path d="M292 406C298 354 308 320 320 298C334 322 344 356 348 406H292Z" fill="#F8C28F" />
+      <circle cx="178" cy="352" r="24" fill="#F2C6B0" />
+      <path d="M136 420C142 380 158 360 188 360C216 360 234 380 240 420H136Z" fill="#2F4C78" />
+      <circle cx="462" cy="352" r="24" fill="#E39B82" />
+      <path d="M402 420C412 380 430 360 462 360C494 360 514 382 522 420H402Z" fill="#6E4864" />
+      <circle cx="108" cy="126" r="8" fill="#C98B8D" />
+      <circle cx="530" cy="136" r="10" fill="#E2C16B" />
+    </svg>
+  );
+}
+
+export function GrowthIllustration({ className }: IllustrationProps) {
+  return (
+    <svg viewBox="0 0 640 520" className={cn("h-full w-full", className)} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="640" height="520" rx="44" fill="#FAF0EB" />
+      <circle cx="320" cy="170" r="88" fill="#FFF1DE" />
+      <path d="M0 400C122 344 236 350 322 390C420 436 520 420 640 352V520H0V400Z" fill="#DCA37E" />
+      <path d="M320 392C316 310 324 238 350 176" stroke="#5F7B65" strokeWidth="14" strokeLinecap="round" />
+      <path d="M344 240C292 232 256 202 246 156C298 160 338 184 354 224" fill="#9CAF8C" />
+      <path d="M340 290C394 278 434 244 450 198C396 198 354 224 334 270" fill="#B7C8A7" />
+      <path d="M318 334C272 324 238 296 224 258C272 258 306 278 328 314" fill="#A2B38A" />
+      <circle cx="132" cy="142" r="12" fill="#C98B8D" />
+      <circle cx="510" cy="120" r="9" fill="#7D506C" />
+      <circle cx="538" cy="174" r="6" fill="#E2C16B" />
+      <path d="M270 420C282 380 302 360 332 360C362 360 384 382 392 420H270Z" fill="#2F3647" />
+    </svg>
+  );
+}

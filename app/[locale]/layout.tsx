@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Outfit } from "next/font/google";
+import { Fraunces, Nunito_Sans } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
@@ -10,17 +10,18 @@ import { CookieProvider } from "@/lib/cookie-context";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
-const dmSans = DM_Sans({
+const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-nunito-sans",
   weight: ["400", "500", "600", "700"],
   display: "swap"
 });
 
-const outfit = Outfit({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-fraunces",
   weight: ["500", "600", "700"],
   display: "swap"
 });
@@ -55,16 +56,17 @@ export default async function RootLayout(
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="scroll-smooth">
+    <html lang={locale} className="scroll-smooth" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased flex flex-col",
-          dmSans.variable,
-          outfit.variable
+          nunitoSans.variable,
+          fraunces.variable
         )}
       >
-        <NextIntlClientProvider messages={messages}>
-          <CookieProvider>
+        <ThemeProvider>
+          <NextIntlClientProvider messages={messages}>
+            <CookieProvider>
             <Header />
             <main className="flex-1 flex flex-col">
               {children}
@@ -73,8 +75,9 @@ export default async function RootLayout(
             <TherapyFloat />
             <CookieBanner />
             <SpeedInsights />
-          </CookieProvider>
-        </NextIntlClientProvider>
+            </CookieProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

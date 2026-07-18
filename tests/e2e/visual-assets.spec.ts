@@ -31,3 +31,17 @@ test("Senda remains readable on a narrow mobile viewport", async ({ page }) => {
   const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   expect(hasHorizontalOverflow).toBe(false);
 });
+
+test("theme control switches between light and dark modes", async ({ page }) => {
+  await page.goto("/");
+
+  const toggle = page.getByRole("button", { name: /Activar modo (oscuro|claro)/ }).first();
+  await expect(toggle).toBeVisible();
+
+  const initialTheme = await page.locator("html").getAttribute("class");
+  await toggle.click();
+
+  await expect
+    .poll(async () => page.locator("html").getAttribute("class"))
+    .not.toBe(initialTheme);
+});

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Senda** — A human-centered professional guidance platform built as a living journey through work, identity, learning, purpose and technology. The master architecture document is `master_architecture_prompt.md` — it is the authoritative source for product and technical decisions.
+**Senda** — A human-centered professional guidance platform built as a living journey through work, identity, learning, purpose and technology. The master architecture document is `docs/product/master-architecture.md` — it is the authoritative source for product and technical decisions.
 
 **Experience path:** Threshold → locate the current moment → explore paths → use an orientative tool → optionally contact a human professional. Avoid aggressive upselling or presenting paid support as punishment.
 
