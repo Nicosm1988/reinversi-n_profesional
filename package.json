@@ -15,6 +15,7 @@
     "verify:env": "node scripts/verify-env.mjs",
     "verify:env:strict": "node scripts/verify-env.mjs --strict",
     "verify:deploy": "node scripts/verify-deploy.mjs",
+    "test:load": "node scripts/load-test.mjs",
     "release:check": "npm run lint && npm run typecheck && npm run test:unit && npm run test:e2e && npm run build"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "@supabase/supabase-js": "^2.97.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.36.3",
+    "@vercel/speed-insights": "^2.0.0",
     "ai": "^6.0.99",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

@@ -164,7 +164,9 @@ export function Footer() {
               </label>
 
               {statusMessage && <p className="text-xs text-white">{statusMessage}</p>}
-              <TurnstileWidget onTokenChange={setCaptchaToken} action="lead_newsletter" className="min-h-[65px]" />
+              {acceptedTerms && (
+                <TurnstileWidget onTokenChange={setCaptchaToken} action="lead_newsletter" className="min-h-[65px]" />
+              )}
             </form>
           </div>
         </div>

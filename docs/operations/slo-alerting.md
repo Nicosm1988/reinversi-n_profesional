@@ -22,6 +22,9 @@
 
 ## Recommended monitors
 
+- GitHub Actions ejecuta `.github/workflows/uptime-monitor.yml` cada 30 minutos. Un fallo genera una ejecución fallida y las notificaciones configuradas en GitHub.
+- Vercel Speed Insights registra Core Web Vitals reales desde el layout principal.
+
 - Uptime monitor for:
   - `/`
   - `/api/health`
@@ -33,3 +36,17 @@
   - `*.db_error`
   - `*.captcha_failed`
   - `*.rate_limited`
+
+## Authenticated E2E
+
+El test autenticado se habilita con `E2E_AUTH_STORAGE_STATE`, apuntando a un archivo de estado de Playwright generado exclusivamente con una cuenta técnica. No usar una cuenta personal ni guardar el archivo en Git.
+
+## Controlled load test
+
+Ejecutar sólo contra Preview:
+
+```bash
+npm run test:load -- https://preview.example.vercel.app --path=/ --duration=15 --concurrency=15
+```
+
+El script rechaza el dominio canónico de producción salvo autorización explícita.

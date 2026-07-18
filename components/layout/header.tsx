@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -69,13 +68,9 @@ export function Header() {
     >
       <div className="container mx-auto flex h-[78px] max-w-6xl items-center justify-between px-5 md:px-8">
         <Link href="/" className="group z-10 flex items-center gap-3">
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[#2f3647] bg-[#2f3647] text-base font-black text-[#f6efe7]"
-          >
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[#2f3647] bg-[#2f3647] text-base font-black text-[#f6efe7] transition-transform group-hover:scale-[1.03] group-active:scale-[0.98]">
             R
-          </motion.div>
+          </div>
           <span className="hidden font-heading text-lg font-semibold tracking-tight text-primary sm:block">{t("logo")}</span>
         </Link>
 
@@ -97,20 +92,13 @@ export function Header() {
                 onClick={() => setServicesOpen((v) => !v)}
               >
                 {t("navServices")}
-                <motion.span animate={{ rotate: servicesOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                <span className={`transition-transform ${servicesOpen ? "rotate-180" : ""}`}>
                   <ChevronDown className="h-4 w-4" />
-                </motion.span>
+                </span>
               </button>
 
-              <AnimatePresence>
                 {servicesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute left-1/2 top-full z-20 mt-3 w-[340px] -translate-x-1/2 overflow-hidden rounded-2xl border border-[#eadfd4] bg-[#fffaf4] shadow-[0_24px_60px_-34px_rgba(47,54,71,0.45)]"
-                  >
+                  <div className="absolute left-1/2 top-full z-20 mt-3 w-[340px] -translate-x-1/2 overflow-hidden rounded-2xl border border-[#eadfd4] bg-[#fffaf4] shadow-[0_24px_60px_-34px_rgba(47,54,71,0.45)]">
                     <div className="p-2">
                       {serviceLinks.map((link) => (
                         <Link
@@ -134,9 +122,8 @@ export function Header() {
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
-              </AnimatePresence>
             </div>
 
             <Link
@@ -163,15 +150,8 @@ export function Header() {
         </button>
       </div>
 
-      <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden border-t border-[#eadfd4] bg-[#fffaf4]"
-          >
+          <div className="lg:hidden border-t border-[#eadfd4] bg-[#fffaf4]">
             <div className="container mx-auto max-w-6xl space-y-3 px-5 py-6 md:px-8">
               {navLinks.map((link) => (
                 <Link
@@ -218,9 +198,8 @@ export function Header() {
                 </Link>
               </Button>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </header>
   );
 }

@@ -9,6 +9,7 @@ import { TherapyFloat } from "@/components/layout/therapy-float";
 import { CookieProvider } from "@/lib/cookie-context";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -70,6 +71,7 @@ export default async function RootLayout(
             <Footer />
             <TherapyFloat />
             <CookieBanner />
+            <SpeedInsights />
           </CookieProvider>
         </NextIntlClientProvider>
       </body>
