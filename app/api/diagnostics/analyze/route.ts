@@ -22,10 +22,15 @@ const analyzeRequestSchema = z.object({
     name: z.string().trim().min(2).max(120),
   }),
   userData: z.object({
+    name: z.string().trim().min(2).max(120),
     age: z.coerce.number().int().min(18).max(90),
     occupation: z.string().trim().min(2).max(120),
     city: z.string().trim().min(2).max(120),
     country: z.string().trim().min(2).max(120),
+  }),
+  rawAnswers: z.object({
+    answers: z.record(z.string(), z.number().int().min(1).max(6)),
+    bonus: z.array(z.number().int().positive()).max(3),
   }),
   captchaToken: z.string().trim().optional(),
 });
@@ -118,7 +123,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { anchor, userData } = parsed.data;
+    const { anchor, userData, rawAnswers } = parsed.data;
     const turnstile = await verifyTurnstileToken(parsed.data.captchaToken, ip, {
       expectedAction: "diagnostic_prequiz",
       expectedHostname: requestHostname,
@@ -136,6 +141,45 @@ export async function POST(req: Request) {
       );
     }
 
+    const { data: diagnosticId, error: claimError } = await auth.supabase.rpc(
+      "claim_free_career_anchor_diagnostic",
+      {
+        p_user_data: userData,
+        p_raw_answers: rawAnswers,
+        p_dominant_result: anchor,
+      },
+    );
+
+    if (claimError) {
+      logEvent("error", "diagnostics.analyze.claim_failed", {
+        requestId,
+        userId: auth.user.id,
+        code: claimError.code,
+        message: claimError.message,
+      });
+      return NextResponse.json(
+        { error: "No pudimos iniciar el diagnóstico. Por favor, intentá nuevamente en unos minutos." },
+        { status: 500, headers: rateHeaders },
+      );
+    }
+
+    if (!diagnosticId) {
+      logEvent("info", "diagnostics.analyze.already_completed", {
+        requestId,
+        userId: auth.user.id,
+      });
+      return NextResponse.json(
+        {
+          code: "DIAGNOSTIC_ALREADY_COMPLETED",
+          error:
+            "Tu diagnóstico gratuito ya está guardado. Podés volver a consultarlo y, si querés profundizar, conversar con nuestro equipo o con un profesional.",
+        },
+        { status: 409, headers: rateHeaders },
+      );
+    }
+
+    let diagnosticResult;
+
     if (!process.env.OPENAI_API_KEY) {
       logEvent("warn", "diagnostics.analyze.fallback", {
         requestId,
@@ -144,10 +188,9 @@ export async function POST(req: Request) {
         anchor: anchor.name,
         reason: "openai_api_key_missing",
       });
-      return NextResponse.json(buildFallbackDiagnostic(anchor, userData), { headers: rateHeaders });
-    }
-
-    const prompt = `
+      diagnosticResult = buildFallbackDiagnostic(anchor, userData);
+    } else {
+      const prompt = `
 Actua como un consultor de carrera premium especializado en el modelo de Edgar Schein.
 
 Datos del perfil:
@@ -168,26 +211,55 @@ Tono:
 - No menciones que eres una IA
 `;
 
-    try {
-      const result = await generateObject({
-        model: openai("gpt-4o"),
-        schema: diagnosticResultSchema,
-        prompt,
-        temperature: 0.5,
-      });
+      try {
+        const result = await generateObject({
+          model: openai("gpt-4o"),
+          schema: diagnosticResultSchema,
+          prompt,
+          temperature: 0.5,
+        });
 
-      logEvent("info", "diagnostics.analyze.success", { requestId, userId: auth.user.id, ip, anchor: anchor.name });
-      return NextResponse.json(result.object, { headers: rateHeaders });
-    } catch (error) {
-      logEvent("warn", "diagnostics.analyze.fallback", {
+        diagnosticResult = result.object;
+      } catch (error) {
+        logEvent("warn", "diagnostics.analyze.fallback", {
+          requestId,
+          userId: auth.user.id,
+          ip,
+          anchor: anchor.name,
+          reason: error instanceof Error ? error.message : "openai_unknown_error",
+        });
+        diagnosticResult = buildFallbackDiagnostic(anchor, userData);
+      }
+    }
+
+    const { data: completed, error: completionError } = await auth.supabase.rpc(
+      "complete_free_career_anchor_diagnostic",
+      {
+        p_diagnostic_id: diagnosticId,
+        p_ai_feedback: diagnosticResult,
+      },
+    );
+
+    if (completionError || !completed) {
+      logEvent("error", "diagnostics.analyze.completion_failed", {
         requestId,
         userId: auth.user.id,
-        ip,
-        anchor: anchor.name,
-        reason: error instanceof Error ? error.message : "openai_unknown_error",
+        code: completionError?.code,
+        message: completionError?.message,
       });
-      return NextResponse.json(buildFallbackDiagnostic(anchor, userData), { headers: rateHeaders });
+      return NextResponse.json(
+        { error: "Generamos la devolución, pero no pudimos guardarla. Por favor, intentá nuevamente más tarde." },
+        { status: 500, headers: rateHeaders },
+      );
     }
+
+    logEvent("info", "diagnostics.analyze.success", {
+      requestId,
+      userId: auth.user.id,
+      ip,
+      anchor: anchor.name,
+    });
+    return NextResponse.json(diagnosticResult, { headers: rateHeaders });
   } catch (error) {
     logEvent("error", "diagnostics.analyze.error", {
       requestId,

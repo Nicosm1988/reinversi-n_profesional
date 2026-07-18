@@ -35,6 +35,15 @@ type AiDiagnosticResult = {
   strategicQuestion: string;
 };
 
+export type ExistingCareerDiagnostic = {
+  userData: Omit<PreQuizData, "captchaToken">;
+  rawAnswers: {
+    answers: Record<string, number>;
+    bonus: number[];
+  };
+  aiFeedback: AiDiagnosticResult;
+};
+
 type QuizQuestion = (typeof quizData.questions)[number];
 type QuizResult = (typeof quizData.anchors)[number] & {
   score: number;
@@ -64,16 +73,24 @@ const warmSectionEyebrowClass = "font-semibold uppercase tracking-[0.18em] text-
 
 type CareerQuizProps = {
   userEmail?: string | null;
+  existingDiagnostic?: ExistingCareerDiagnostic | null;
 };
 
-export function CareerQuiz({ userEmail }: CareerQuizProps) {
-  const [step, setStep] = useState<Step>("intro");
-  const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [bonusQuestions, setBonusQuestions] = useState<number[]>([]);
-  const [userData, setUserData] = useState<PreQuizData | null>(null);
-  const [aiResult, setAiResult] = useState<AiDiagnosticResult | null>(null);
+export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizProps) {
+  const storedAnswers = existingDiagnostic
+    ? Object.fromEntries(
+        Object.entries(existingDiagnostic.rawAnswers.answers).map(([questionId, value]) => [Number(questionId), value]),
+      )
+    : {};
+  const [step, setStep] = useState<Step>(existingDiagnostic ? "results" : "intro");
+  const [answers, setAnswers] = useState<Record<number, number>>(storedAnswers);
+  const [bonusQuestions, setBonusQuestions] = useState<number[]>(existingDiagnostic?.rawAnswers.bonus ?? []);
+  const [userData, setUserData] = useState<PreQuizData | null>(existingDiagnostic?.userData ?? null);
+  const [aiResult, setAiResult] = useState<AiDiagnosticResult | null>(existingDiagnostic?.aiFeedback ?? null);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
-  const [saveStatus, setSaveStatus] = useState<"idle" | "saved" | "error">("idle");
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saved">(
+    existingDiagnostic ? "saved" : "idle",
+  );
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [questionPageIndex, setQuestionPageIndex] = useState(0);
   const [bonusPageIndex, setBonusPageIndex] = useState(0);
@@ -134,19 +151,6 @@ export function CareerQuiz({ userEmail }: CareerQuizProps) {
     });
   };
 
-  const resetQuiz = () => {
-    setStep("intro");
-    setAnswers({});
-    setBonusQuestions([]);
-    setUserData(null);
-    setAiResult(null);
-    setAnalysisError(null);
-    setSaveStatus("idle");
-    setIsAnalyzing(false);
-    setQuestionPageIndex(0);
-    setBonusPageIndex(0);
-  };
-
   const submitAndAnalyze = async (data: PreQuizData) => {
     const { captchaToken, ...safeUserData } = data;
     const dominantAnchor = calculateResults?.[0];
@@ -171,6 +175,10 @@ export function CareerQuiz({ userEmail }: CareerQuizProps) {
         body: JSON.stringify({
           anchor: dominantAnchor,
           userData: safeUserData,
+          rawAnswers: {
+            answers,
+            bonus: bonusQuestions,
+          },
           captchaToken,
         }),
       });
@@ -184,36 +192,16 @@ export function CareerQuiz({ userEmail }: CareerQuizProps) {
           return;
         }
 
+        if (analyzeResponse.status === 409 && aiData?.code === "DIAGNOSTIC_ALREADY_COMPLETED") {
+          window.location.reload();
+          return;
+        }
+
         throw new Error(aiData?.error ?? "No se pudo generar el diagnostico");
       }
 
       setAiResult(aiData);
-
-      const saveResponse = await fetch("/api/diagnostics/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          diagnosticType: "career_anchor",
-          userData: safeUserData,
-          rawAnswers: { ...answers, bonus: bonusQuestions },
-          dominantResult: dominantAnchor,
-          aiFeedback: aiData,
-        }),
-      });
-
-      if (!saveResponse.ok) {
-        if (saveResponse.status === 401) {
-          const currentPath = window.location.pathname;
-          const loginPath = currentPath.startsWith("/en") ? "/en/login" : "/login";
-          window.location.assign(`${loginPath}?next=${encodeURIComponent(currentPath)}&reason=auth-required`);
-          return;
-        }
-
-        setSaveStatus("error");
-        console.error("Diagnostic result was generated but could not be persisted");
-      } else {
-        setSaveStatus("saved");
-      }
+      setSaveStatus("saved");
     } catch (error) {
       console.error(error);
       setAnalysisError(
@@ -775,13 +763,13 @@ export function CareerQuiz({ userEmail }: CareerQuizProps) {
                           <div className="rounded-2xl border border-[#e0c1ab] bg-[#f3e0d3] p-6">
                             <Text className="leading-relaxed">
                               Dado que tu ancla dominante es <strong>{result.article} {result.name}</strong>, cualquier
-                              movimiento profesional que hagas deberia potenciar ese aspecto central de tu perfil. Si
-                              quieres bajar este resultado a decisiones concretas, podemos trabajarlo juntos en una
-                              sesion estrategica.
+                              movimiento profesional que hagas debería cuidar ese aspecto central de tu perfil. Si este
+                              resultado te despierta preguntas, no tenés que resolverlas a solas: podés escribirnos y
+                              te ayudaremos a encontrar un profesional adecuado para acompañarte.
                             </Text>
                             <div className="mt-6">
                               <Button asChild variant="default" className={`px-8 ${warmPrimaryButtonClass}`}>
-                                <Link href="/contacto">Agendar sesion estrategica</Link>
+                                <Link href="/contacto">Quiero orientación humana</Link>
                               </Button>
                             </div>
                           </div>
@@ -855,16 +843,6 @@ export function CareerQuiz({ userEmail }: CareerQuizProps) {
                         </div>
                       </CardContent>
                     </Card>
-                    {saveStatus === "error" && (
-                      <Card className="border-[#e2c5ac] bg-[#faede3] shadow-sm">
-                        <CardContent className="py-5 text-center">
-                          <Text className="text-[#9a5f45]">
-                            El analisis se genero, pero no pudimos guardarlo en Supabase. Revisa la configuracion de
-                            produccion antes de usarlo con usuarios reales.
-                          </Text>
-                        </CardContent>
-                      </Card>
-                    )}
                   </div>
                 )}
 
@@ -879,23 +857,22 @@ export function CareerQuiz({ userEmail }: CareerQuizProps) {
                 <div className="space-y-8 py-6 text-center">
                   <div className="mx-auto max-w-2xl space-y-4">
                     <Heading level="h3" className="text-2xl text-[#f6efe7] md:text-3xl">
-                      Cada recorrido es particular
+                      Tu proceso merece una mirada humana
                     </Heading>
                     <Text className="text-lg leading-relaxed text-[#efe1d2]/88">
-                      Si quieres convertir este diagnostico en un plan concreto de reinvencion, podemos trabajarlo en
-                      una sesion estrategica uno a uno.
+                      Tu diagnóstico queda disponible para que vuelvas a consultarlo cuando quieras. Si sentís que
+                      necesitás profundizar lo que apareció, podemos escucharte y ayudarte a encontrar el tipo de
+                      acompañamiento profesional más adecuado para vos.
                     </Text>
                   </div>
 
                   <Button asChild size="lg" variant="default" className={`h-14 px-12 text-lg ${warmPrimaryButtonClass}`}>
-                    <Link href="/contacto">Agenda tu espacio</Link>
+                    <Link href="/contacto">Conversar con el equipo</Link>
                   </Button>
 
-                  <div>
-                    <Button variant="outline" className={warmSecondaryButtonClass} onClick={resetQuiz}>
-                      Reiniciar test
-                    </Button>
-                  </div>
+                  <Text className="text-sm text-[#efe1d2]/75">
+                    Este resultado es orientativo y no reemplaza una evaluación profesional personalizada.
+                  </Text>
                 </div>
               </motion.div>
             )}

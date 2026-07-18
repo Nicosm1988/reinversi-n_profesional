@@ -107,6 +107,21 @@ export async function POST(req: Request) {
       .single();
 
     if (error) {
+      if (error.code === "23505") {
+        logEvent("info", "diagnostics.save.already_completed", {
+          requestId,
+          userId: auth.user.id,
+        });
+        return NextResponse.json(
+          {
+            code: "DIAGNOSTIC_ALREADY_COMPLETED",
+            error:
+              "Tu diagnóstico gratuito ya está guardado. Podés volver a consultarlo cuando quieras.",
+          },
+          { status: 409, headers: rateHeaders },
+        );
+      }
+
       logEvent("error", "diagnostics.save.db_error", {
         requestId,
         userId: auth.user.id,
