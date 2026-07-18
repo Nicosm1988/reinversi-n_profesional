@@ -27,12 +27,12 @@ export default function TerminosPage() {
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">3. Diagnosticos y evaluaciones</h2>
               <p className="leading-relaxed text-foreground/80">
-                Los diagnosticos son herramientas de orientacion y deben complementarse con acompanamiento profesional. No son diagnosticos clinicos.
+                Los diagnósticos son herramientas de orientación y pueden complementarse con acompañamiento profesional. No son diagnósticos clínicos.
               </p>
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">4. Pagos y precios</h2>
               <p className="leading-relaxed text-foreground/80">
-                Los precios se expresan en USD y pueden variar segun plan. El diagnostico inicial de ancla de carrera es gratuito.
+                Los precios se expresan en USD y pueden variar según el plan. El diagnóstico inicial de ancla de carrera es gratuito y puede realizarse una sola vez por cuenta.
               </p>
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">5. Cancelaciones y reembolsos</h2>

@@ -7,6 +7,7 @@ import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn, StaggerContainer } from "@/components/motion";
 import { ArrowRight, Compass, Search, FileCheck, DoorOpen, Sparkles, Users, Brain } from "lucide-react";
 import Link from "next/link";
+import { GrowthIllustration } from "@/components/illustrations";
 
 const benefits = [
     {
@@ -104,6 +105,9 @@ export default function OrientacionVocacionalPage() {
                                 Conocer el proceso <ArrowRight className="ml-2 h-4 w-4" />
                             </a>
                         </Button>
+                        <div className="mx-auto mt-10 max-w-md overflow-hidden rounded-[2rem] border border-border bg-card p-3 shadow-soft">
+                            <GrowthIllustration className="rounded-[1.5rem]" />
+                        </div>
                     </FadeIn>
                 </Container>
             </section>

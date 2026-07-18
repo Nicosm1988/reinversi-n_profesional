@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/site-url";
 
 const routes = [
   "",
@@ -13,7 +14,7 @@ const routes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://reinvension-profesional.vercel.app";
+  const baseUrl = getSiteUrl();
 
   return routes.map((route) => ({
     url: `${baseUrl}${route}`,

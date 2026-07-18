@@ -73,7 +73,7 @@ export default function DiagnosticoPage() {
 
             {/* ─── HEADER ─── */}
             <section className="pt-32 pb-16 md:pt-44 md:pb-24 relative">
-                <div className="absolute inset-0 z-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none"></div>
+                <div className="wati-soft-grid absolute inset-0 z-0 opacity-40 pointer-events-none"></div>
                 <Container className="relative z-10 text-center">
                     <StaggerContainer>
                         <SlideUp>
@@ -92,14 +92,14 @@ export default function DiagnosticoPage() {
                         <SlideUp delay={0.2}>
                             <Text variant="lead" className="max-w-2xl mx-auto mb-6">
                                 Tenés una herramienta gratuita para empezar hoy.<br />
-                                Elegí tu diagnóstico y empezá con claridad.
+                                El Test de Anclas de Carrera puede realizarse una sola vez por cuenta.
                             </Text>
                         </SlideUp>
 
                         <SlideUp delay={0.3}>
                             <Text variant="small" className="max-w-xl mx-auto text-muted-foreground">
-                                Elegí 1 herramienta y hacela gratis.
-                                Si querés profundizar, podés sumar más herramientas (de pago) o agendar una sesión 1:1 con especialistas.
+                                El resultado es orientativo y queda guardado para que puedas volver a consultarlo.
+                                Si querés profundizar, podés conversar con nuestro equipo o con un profesional recomendado.
                             </Text>
                         </SlideUp>
                     </StaggerContainer>

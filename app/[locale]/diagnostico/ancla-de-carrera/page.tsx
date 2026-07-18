@@ -26,7 +26,7 @@ const storedDiagnosticSchema = z.object({
 
 export const metadata = {
     title: "Test de Anclas de Carrera | Senda",
-    description: "Descubrí tu ancla de carrera con el modelo de Edgar Schein. Un diagnóstico gratuito para orientar tu reinvención profesional con claridad estratégica.",
+    description: "Descubrí tu ancla de carrera con el modelo de Edgar Schein. Una lectura gratuita para comprender tu recorrido y orientar tus próximos pasos.",
 };
 
 export default async function AnclaDeCarreraPage(

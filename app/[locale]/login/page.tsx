@@ -5,9 +5,9 @@ import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { sanitizeNextPath } from "@/lib/security/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Container } from "@/components/layout/container";
-import { Text } from "@/components/ui/typography";
+import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn } from "@/components/motion";
 
 export default function LoginPage() {
@@ -76,7 +76,7 @@ export default function LoginPage() {
           <FadeIn>
             <Card className="border-primary/10 bg-background/95 backdrop-blur-xl">
               <CardHeader className="text-center pb-8 pt-8 space-y-4">
-                <CardTitle className="text-2xl font-bold font-heading">{t("title")}</CardTitle>
+                <Heading level="h1" className="text-2xl font-bold font-heading">{t("title")}</Heading>
                 <CardDescription className="text-base">{t("description")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4 pb-8">

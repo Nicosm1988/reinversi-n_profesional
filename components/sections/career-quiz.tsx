@@ -196,7 +196,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
           return;
         }
 
-        throw new Error(aiData?.error ?? "No se pudo generar el diagnostico");
+        throw new Error(aiData?.error ?? "No se pudo generar el diagnóstico");
       }
 
       setAiResult(aiData);
@@ -204,7 +204,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
     } catch (error) {
       console.error(error);
       setAnalysisError(
-        "No pudimos generar el analisis personalizado por IA en este momento, pero tu ranking completo ya esta listo.",
+        "No pudimos generar el análisis personalizado por IA en este momento, pero tu ranking completo ya está listo.",
       );
     } finally {
       setIsAnalyzing(false);
@@ -241,11 +241,11 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                   </div>
 
                   <Heading level="h2" className="text-4xl text-[#f6efe7] md:text-5xl">
-                    Cual es tu Ancla de Carrera
+                    ¿Cuál es tu Ancla de Carrera?
                   </Heading>
 
                   <Text variant="lead" className="mx-auto max-w-3xl text-[#efe1d2]/88">
-                    Un diagnostico inicial, calido y claro para entender que necesita tu carrera para sentirse en eje.
+                    Un diagnóstico inicial, cálido y claro para entender qué necesita tu carrera para sentirse en eje.
                   </Text>
                 </div>
 
@@ -253,15 +253,15 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                   <CardContent className="grid gap-8 p-8 md:grid-cols-[1.1fr_0.9fr] md:p-10">
                     <div className="space-y-5 text-left">
                       <Text variant="lead" className="font-semibold text-[#2f3647]">
-                        El GPS interno que orienta tu reinvencion.
+                        Una brújula interna para comprender mejor tu recorrido.
                       </Text>
                       <Text>
-                        Edgar Schein desarrollo este concepto para identificar esa combinacion de capacidades,
-                        motivaciones y valores a la que no renunciarias facilmente en tu vida profesional.
+                        Edgar Schein desarrolló este concepto para identificar esa combinación de capacidades,
+                        motivaciones y valores a la que no renunciarías fácilmente en tu vida profesional.
                       </Text>
                       <Text>
-                        Cuando conoces tu ancla, tomar decisiones deja de sentirse difuso: ves con mas claridad que
-                        entornos, roles y desafios te expanden de verdad y cuales te desgastan.
+                        Cuando conocés tu ancla, tomar decisiones deja de sentirse difuso: ves con más claridad qué
+                        entornos, roles y desafíos te expanden de verdad y cuáles te desgastan.
                       </Text>
 
                       <div className="grid gap-3 sm:grid-cols-2">
@@ -482,7 +482,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     Ya casi llegas a tu resultado
                   </Heading>
                   <Text variant="lead" className="mx-auto max-w-3xl text-[#efe1d2]/88">
-                    Ahora vamos a refinar tu diagnostico con una ultima seleccion personal.
+                    Ahora vamos a refinar tu diagnóstico con una ultima seleccion personal.
                   </Text>
                 </div>
 
@@ -607,7 +607,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                           disabled={bonusQuestions.length !== 3}
                           onClick={() => setStep("pre-quiz")}
                         >
-                          Recibir mi diagnostico
+                          Recibir mi diagnóstico
                           <ChevronRight className="ml-2 h-4 w-4" />
                         </Button>
                       ) : (
@@ -644,7 +644,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     Para personalizar mejor tu lectura final, necesitamos algunos datos basicos de tu contexto actual.
                   </Text>
                   <Text variant="small" className="text-[#e9d8c8]/80">
-                    Tus datos se usan para personalizar y guardar el diagnostico en tu cuenta
+                    Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta
                     {userEmail ? ` (${userEmail})` : ""}.
                   </Text>
                 </div>
@@ -784,7 +784,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                       <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-[#e8c8b6] border-t-[#e47c56]" />
                       <Heading level="h4" className="text-[#2f3647]">Estamos preparando tu lectura personalizada</Heading>
                       <Text className="text-[#5f6573]">
-                        Cruzando tus respuestas con tu contexto actual para devolverte un diagnostico mas afinado.
+                        Cruzando tus respuestas con tu contexto actual para devolverte un diagnóstico más afinado.
                       </Text>
                     </CardContent>
                   </Card>
@@ -793,7 +793,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 {aiResult && !isAnalyzing && (
                   <div className="space-y-8">
                     <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                      <Heading level="h3" className="text-[#f6efe7]">Tu analisis personalizado</Heading>
+                      <Heading level="h3" className="text-[#f6efe7]">Tu análisis personalizado</Heading>
                       {saveStatus === "saved" && (
                         <div className="rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-2 text-sm font-semibold text-[#2f3647]">
                           Guardado en tu cuenta
@@ -813,7 +813,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                         <div className="grid gap-6 md:grid-cols-2">
                           <div className="rounded-2xl border border-[#ebc5b5] bg-[#faece3] p-6">
                             <Heading level="h4" className="mb-4 text-lg text-[#c56543]">
-                              Puntos probables de friccion
+                              Puntos probables de fricción
                             </Heading>
                             <ul className="space-y-3">
                               {aiResult.frictionAreas.map((friction) => (

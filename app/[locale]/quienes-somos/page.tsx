@@ -7,27 +7,28 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, Brain, Compass, Users, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { BridgeIllustration } from "@/components/illustrations";
 
 const values = [
   {
     icon: Heart,
     title: "Calidez humana",
-    desc: "Cada persona llega con una historia unica. Escuchamos sin juicios y construimos desde ese punto de partida.",
+    desc: "Cada persona llega con una historia única. Escuchamos sin juicios y construimos desde ese punto de partida.",
   },
   {
     icon: Brain,
     title: "Rigor profesional",
-    desc: "Trabajamos con herramientas psicometricas validadas y metodo estructurado, usando IA como apoyo.",
+    desc: "Trabajamos con herramientas psicométricas validadas y método estructurado, usando IA como apoyo.",
   },
   {
     icon: Compass,
     title: "Claridad ante todo",
-    desc: "No vendemos promesas vacias. Te ayudamos a leer tu situacion para decidir con criterio estrategico.",
+    desc: "No vendemos promesas vacias. Te ayudamos a leer tu situación para decidir con criterio estrategico.",
   },
   {
     icon: Users,
-    title: "Acompanamiento real",
-    desc: "Cada proceso es personal y a tu ritmo, con especialistas que te acompanan de principio a fin.",
+    title: "Acompañamiento real",
+    desc: "Cada proceso es personal y a tu ritmo, con especialistas que te acompañan de principio a fin.",
   },
 ];
 
@@ -36,13 +37,16 @@ export default function QuienesSomosPage() {
     <div className="wati-page-shell flex flex-col">
       <section className="wati-page-hero py-20 lg:py-32">
         <Container>
-          <FadeIn className="relative z-10 mx-auto max-w-2xl text-center">
+          <FadeIn className="relative z-10 mx-auto max-w-3xl text-center">
             <Heading level="h1" className="mb-6 text-primary text-4xl sm:text-5xl lg:text-6xl">
-              Quienes somos
+              Quiénes somos
             </Heading>
             <Text variant="lead" className="mx-auto max-w-xl">
-              Un equipo multidisciplinario que cree en las personas y en su capacidad de reinventarse en cualquier momento de carrera.
+              Un equipo multidisciplinario que acompaña a las personas a orientarse, reconocer su historia y construir su próximo paso profesional.
             </Text>
+            <div className="mx-auto mt-10 max-w-md overflow-hidden rounded-[2rem] border border-border bg-card p-3 shadow-soft">
+              <BridgeIllustration className="rounded-[1.5rem]" />
+            </div>
           </FadeIn>
         </Container>
       </section>
@@ -51,10 +55,10 @@ export default function QuienesSomosPage() {
         <Container size="sm">
           <FadeIn className="text-center">
             <Heading level="h2" className="mb-6">
-              Nuestra mision
+              Nuestra misión
             </Heading>
             <Text variant="body-lg" className="mx-auto max-w-2xl">
-              Senda nacio para ofrecer un espacio donde pensar el futuro profesional con calma, estrategia y acompanamiento experto en un mercado laboral transformado por IA.
+              Senda nacio para ofrecer un espacio donde pensar el futuro profesional con calma, estrategia y acompañamiento experto en un mercado laboral transformado por IA.
             </Text>
           </FadeIn>
         </Container>
@@ -64,10 +68,10 @@ export default function QuienesSomosPage() {
         <Container size="sm">
           <FadeIn className="mb-12 text-center">
             <Heading level="h2" className="mb-4">
-              Que hacemos
+              Qué hacemos
             </Heading>
             <Text variant="lead" className="mx-auto max-w-xl">
-              Combinamos tres pilares para acompanar tu transicion profesional.
+              Combinamos tres pilares para acompañar tu transición profesional.
             </Text>
           </FadeIn>
 
@@ -80,14 +84,14 @@ export default function QuienesSomosPage() {
             </FadeIn>
             <FadeIn>
               <Card className="h-full border-primary/10 p-8 text-center">
-                <h3 className="mb-3 text-lg font-heading font-semibold text-primary">Acompanamiento humano</h3>
-                <Text className="text-sm">Psicologia, RRHH y estrategia de carrera en una misma mesa para decidir con mas perspectiva.</Text>
+                <h3 className="mb-3 text-lg font-heading font-semibold text-primary">Acompañamiento humano</h3>
+                <Text className="text-sm">Psicología, RRHH y estrategia de carrera en una misma mesa para decidir con más perspectiva.</Text>
               </Card>
             </FadeIn>
             <FadeIn>
               <Card className="h-full border-primary/10 p-8 text-center">
                 <h3 className="mb-3 text-lg font-heading font-semibold text-primary">Inteligencia artificial</h3>
-                <Text className="text-sm">Usamos IA para analizar tendencias y personalizar recomendaciones, siempre con supervision profesional.</Text>
+                <Text className="text-sm">Usamos IA para analizar tendencias y personalizar recomendaciones, siempre con supervisión profesional.</Text>
               </Card>
             </FadeIn>
           </StaggerContainer>
@@ -129,11 +133,11 @@ export default function QuienesSomosPage() {
                 Listo para encontrar tu rumbo?
               </Heading>
               <Text className="mb-10 text-lg text-primary-foreground/80">
-                El primer paso es conocerte. Hace tu diagnostico gratuito y empieza a construir tu siguiente capitulo profesional.
+                El primer paso es conocerte. Hacé tu diagnóstico gratuito y empezá a construir tu siguiente capitulo profesional.
               </Text>
               <Button variant="secondary" size="lg" className="h-14 rounded-full px-10 text-base" asChild>
-                <Link href="/diagnostico/ancla-de-carrera">
-                  Comenzar mi diagnostico <ArrowRight className="ml-2 h-4 w-4" />
+                <Link href="/diagnóstico/ancla-de-carrera">
+                  Comenzar mi diagnóstico <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>

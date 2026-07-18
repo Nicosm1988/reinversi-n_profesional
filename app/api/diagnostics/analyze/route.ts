@@ -38,7 +38,7 @@ function buildFallbackDiagnostic(anchor: CareerAnchor, userData: CareerAnchorAna
         : "Estas en una etapa donde el criterio, la autonomia y el impacto pesan mas que el simple cambio.";
 
   return diagnosticResultSchema.parse({
-    title: `${anchor.name}: eje probable de tu reinvencion`,
+    title: `${anchor.name}: una brújula para tu recorrido`,
     summary:
       `${userData.occupation} en ${location}: tu ancla dominante sugiere que no necesitas cualquier cambio, sino uno que respete la forma en que mejor rindes, decides y sostienes tu energia profesional. ${careerStage}` +
       ` Si tu contexto actual te aleja de ${anchor.name.toLowerCase()}, es esperable que aparezcan desgaste, ambivalencia o sensacion de estar fuera de eje.`,

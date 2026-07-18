@@ -15,11 +15,13 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Verify public routes and health
+        env:
+          SITE_URL: ${{ vars.PRODUCTION_SITE_URL || 'https://reinvension-profesional.vercel.app' }}
         shell: bash
         run: |
           set -euo pipefail
-          for path in / /contacto /api/health; do
+          for path in / /contacto /diagnostico /api/health /robots.txt /sitemap.xml; do
             curl --fail --silent --show-error --location \
               --retry 3 --retry-delay 5 --max-time 20 \
-              "https://reinvension-profesional.vercel.app${path}" >/dev/null
+              "${SITE_URL}${path}" >/dev/null
           done
