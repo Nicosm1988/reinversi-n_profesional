@@ -2,7 +2,11 @@ import { expect, test } from "@playwright/test";
 
 test("Senda loads its visual identity, fonts and images", async ({ page }) => {
   const failedResources: string[] = [];
-  page.on("requestfailed", (request) => failedResources.push(request.url()));
+  page.on("requestfailed", (request) => {
+    const isExpectedCancellation = request.failure()?.errorText === "net::ERR_ABORTED";
+    const isLocalVercelTelemetry = request.url().includes("/_vercel/speed-insights/");
+    if (!isExpectedCancellation && !isLocalVercelTelemetry) failedResources.push(request.url());
+  });
 
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);

@@ -2,6 +2,7 @@ import { CareerQuiz, type ExistingCareerDiagnostic } from "@/components/sections
 import { getAuthenticatedUser } from "@/lib/supabase/auth";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { canRepeatCareerAnchorTest } from "@/lib/diagnostics/access";
 
 const storedDiagnosticSchema = z.object({
   user_data: z.object({
@@ -43,12 +44,15 @@ export default async function AnclaDeCarreraPage(
     redirect(`${loginPath}?next=${encodeURIComponent(nextPath)}&reason=${auth.reason}`);
   }
 
-  const { data } = await auth.supabase
-    .from("user_diagnostics")
-    .select("user_data, raw_answers, ai_feedback")
-    .eq("diagnostic_type", "career_anchor")
-    .eq("status", "completed")
-    .maybeSingle();
+  const canRepeat = canRepeatCareerAnchorTest(auth.user.email);
+  const { data } = canRepeat
+    ? { data: null }
+    : await auth.supabase
+        .from("user_diagnostics")
+        .select("user_data, raw_answers, ai_feedback")
+        .eq("diagnostic_type", "career_anchor")
+        .eq("status", "completed")
+        .maybeSingle();
 
   const parsed = storedDiagnosticSchema.safeParse(data);
   const existingDiagnostic: ExistingCareerDiagnostic | null = parsed.success
