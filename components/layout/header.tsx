@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ChevronDown, Menu, X, ArrowRight, Compass, LayoutDashboard, LogOut, UserRound } from "lucide-react";
+import { ChevronDown, Menu, X, Compass, LayoutDashboard, LogOut, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { createClient } from "@/lib/supabase/client";
@@ -38,23 +38,14 @@ export function Header() {
     { name: t("navPaths"), href: "/#cruce-de-caminos" },
   ];
 
-  const serviceLinks = [
-    { name: t("serviceVocational"), href: "/orientacion-vocacional", desc: t("serviceVocationalDesc") },
-    { name: t("serviceEnglish"), href: "/servicios/ingles-profesional", desc: t("serviceEnglishDesc") },
-    { name: t("serviceTherapy"), href: "/terapia", desc: t("serviceTherapyDesc") },
-  ];
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [authState, setAuthState] = useState<AuthState>(() =>
     createClient() ? { status: "loading" } : { status: "anonymous" },
   );
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     function onScroll() {
@@ -106,9 +97,6 @@ export function Header() {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setServicesOpen(false);
-      }
       if (accountDropdownRef.current && !accountDropdownRef.current.contains(event.target as Node)) {
         setAccountOpen(false);
       }
@@ -117,17 +105,6 @@ export function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  function handleMouseEnter() {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setServicesOpen(true);
-  }
-
-  function handleMouseLeave() {
-    timeoutRef.current = setTimeout(() => setServicesOpen(false), 150);
-  }
 
   return (
     <header
@@ -154,46 +131,6 @@ export function Header() {
                 {link.name}
               </Link>
             ))}
-
-            <div ref={dropdownRef} className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-              <button
-                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold text-[#6a7080] hover:bg-[#f2e6d9] hover:text-[#2f3647] dark:text-[#ddd5cc] dark:hover:bg-white/10 dark:hover:text-white"
-                onClick={() => setServicesOpen((v) => !v)}
-              >
-                {t("navServices")}
-                <span className={`transition-transform ${servicesOpen ? "rotate-180" : ""}`}>
-                  <ChevronDown className="h-4 w-4" />
-                </span>
-              </button>
-
-                {servicesOpen && (
-                  <div className="absolute left-1/2 top-full z-20 mt-3 w-[340px] -translate-x-1/2 overflow-hidden rounded-2xl border border-[#eadfd4] bg-[#fffaf4] shadow-[0_24px_60px_-34px_rgba(47,54,71,0.45)] dark:border-white/15 dark:bg-[#303747]">
-                    <div className="p-2">
-                      {serviceLinks.map((link) => (
-                        <Link
-                          key={link.name}
-                          href={link.href}
-                          className="block rounded-xl px-4 py-3 hover:bg-[#f4e9de] dark:hover:bg-white/10"
-                          onClick={() => setServicesOpen(false)}
-                        >
-                          <p className="text-sm font-semibold text-primary dark:text-[#f6efe7]">{link.name}</p>
-                          <p className="mt-1 text-xs text-muted-foreground dark:text-[#c8c1ba]">{link.desc}</p>
-                        </Link>
-                      ))}
-                    </div>
-                    <div className="border-t border-[#eadfd4] bg-[#f7efe6] p-2 dark:border-white/15 dark:bg-[#292f3e]">
-                      <Link
-                        href="/contacto"
-                        className="inline-flex w-full items-center justify-between rounded-xl px-4 py-2 text-sm font-semibold text-primary hover:bg-[#fffaf4] dark:text-[#f6efe7] dark:hover:bg-white/10"
-                        onClick={() => setServicesOpen(false)}
-                      >
-                        {t("dropdownContact")}
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </div>
-                )}
-            </div>
 
             <Link
               href="/diagnostico/ancla-de-carrera"
@@ -280,25 +217,6 @@ export function Header() {
                   {link.name}
                 </Link>
               ))}
-
-              <div className="rounded-2xl border border-[#eadfd4] bg-[#f7efe6] p-2 dark:border-white/15 dark:bg-[#303747]">
-                <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  {t("navServices")}
-                </p>
-                <div className="space-y-1">
-                  {serviceLinks.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className="block rounded-xl px-3 py-3 hover:bg-[#fffaf4] dark:hover:bg-white/10"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <p className="text-sm font-semibold text-primary dark:text-[#f6efe7]">{link.name}</p>
-                      <p className="mt-1 text-xs text-muted-foreground dark:text-[#c8c1ba]">{link.desc}</p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
 
               <Button
                 variant="default"
