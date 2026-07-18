@@ -16,7 +16,15 @@ for (const route of routes) {
   test(`${route} is readable in light and dark modes`, async ({ page }) => {
     const failedSameOriginResources: string[] = [];
     page.on("requestfailed", (request) => {
-      if (request.url().startsWith("http://127.0.0.1:3000")) failedSameOriginResources.push(request.url());
+      const isExpectedCancellation = request.failure()?.errorText === "net::ERR_ABORTED";
+      const isLocalVercelTelemetry = request.url().includes("/_vercel/speed-insights/");
+      if (
+        request.url().startsWith("http://127.0.0.1:3000")
+        && !isExpectedCancellation
+        && !isLocalVercelTelemetry
+      ) {
+        failedSameOriginResources.push(request.url());
+      }
     });
 
     await page.addInitScript(() => window.localStorage.setItem("senda-theme", "light"));

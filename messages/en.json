@@ -16,6 +16,9 @@
     "dropdownContact": "Contact us",
     "ctaDiagnostic": "Start Diagnostic",
     "ctaLogin": "Sign In",
+    "ctaAccount": "My journey",
+    "ctaLogout": "Sign out",
+    "authLoading": "Checking session",
     "mobileMenu": "Menu"
   },
   "Footer": {

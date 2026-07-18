@@ -217,7 +217,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
   const bonusBlockEnd = Math.min(bonusBlockStart + QUESTIONS_PER_PAGE - 1, quizData.questions.length);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#31384a]">
+    <div className="career-quiz relative min-h-screen overflow-hidden bg-[#31384a]">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(253,241,229,0.18),transparent_34%),linear-gradient(180deg,#31384a_0%,#374055_34%,#2a3243_100%)]" />
       <div className="pointer-events-none absolute left-[-8%] top-16 h-80 w-80 rounded-full bg-[#f2c8a7]/16 blur-3xl" />
       <div className="pointer-events-none absolute right-[-8%] top-24 h-[28rem] w-[28rem] rounded-full bg-[#df8d67]/14 blur-3xl" />

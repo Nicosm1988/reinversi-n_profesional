@@ -186,7 +186,20 @@
       radial-gradient(circle at 92% 10%, rgba(228, 124, 86, 0.12), transparent 34%);
   }
 
-  .dark .wati-feature-card {
+.dark .wati-feature-card {
     background: hsl(var(--card));
   }
+}
+
+/* The diagnostic uses warm paper surfaces over a dark path. Keep their semantic
+   text tokens dark in both themes so text-foreground never becomes white on paper. */
+.career-quiz {
+  --background: 36 100% 98%;
+  --foreground: 225 20% 23%;
+  --card: 34 48% 94%;
+  --muted-foreground: 225 12% 39%;
+  --muted: 31 32% 86%;
+  --border: 30 27% 76%;
+  --card-foreground: 225 20% 23%;
+  --popover-foreground: 225 20% 23%;
 }

@@ -6,6 +6,13 @@ import { useTranslations } from "next-intl";
 import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { createClient } from "@/lib/supabase/client";
+import type { AuthChangeEvent, Session, UserResponse } from "@supabase/supabase-js";
+
+type AuthState =
+  | { status: "loading" }
+  | { status: "anonymous" }
+  | { status: "authenticated"; email: string | null };
 
 export function Header() {
   const t = useTranslations("Header");
@@ -24,6 +31,9 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [authState, setAuthState] = useState<AuthState>(() =>
+    createClient() ? { status: "loading" } : { status: "anonymous" },
+  );
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -38,6 +48,43 @@ export function Header() {
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const supabase = createClient();
+    if (!supabase) return;
+
+    let active = true;
+    void supabase.auth.getUser().then(({ data }: UserResponse) => {
+      if (!active) return;
+      setAuthState(
+        data.user
+          ? { status: "authenticated", email: data.user.email ?? null }
+          : { status: "anonymous" },
+      );
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
+      if (!active) return;
+      setAuthState(
+        session?.user
+          ? { status: "authenticated", email: session.user.email ?? null }
+          : { status: "anonymous" },
+      );
+    });
+
+    return () => {
+      active = false;
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
+  async function handleSignOut() {
+    const supabase = createClient();
+    if (!supabase) return;
+    await supabase.auth.signOut();
+    setAuthState({ status: "anonymous" });
+    window.location.assign("/");
+  }
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -99,24 +146,24 @@ export function Header() {
               </button>
 
                 {servicesOpen && (
-                  <div className="absolute left-1/2 top-full z-20 mt-3 w-[340px] -translate-x-1/2 overflow-hidden rounded-2xl border border-[#eadfd4] bg-[#fffaf4] shadow-[0_24px_60px_-34px_rgba(47,54,71,0.45)]">
+                  <div className="absolute left-1/2 top-full z-20 mt-3 w-[340px] -translate-x-1/2 overflow-hidden rounded-2xl border border-[#eadfd4] bg-[#fffaf4] shadow-[0_24px_60px_-34px_rgba(47,54,71,0.45)] dark:border-white/15 dark:bg-[#303747]">
                     <div className="p-2">
                       {serviceLinks.map((link) => (
                         <Link
                           key={link.name}
                           href={link.href}
-                          className="block rounded-xl px-4 py-3 hover:bg-[#f4e9de]"
+                          className="block rounded-xl px-4 py-3 hover:bg-[#f4e9de] dark:hover:bg-white/10"
                           onClick={() => setServicesOpen(false)}
                         >
-                          <p className="text-sm font-semibold text-primary">{link.name}</p>
-                          <p className="mt-1 text-xs text-muted-foreground">{link.desc}</p>
+                          <p className="text-sm font-semibold text-primary dark:text-[#f6efe7]">{link.name}</p>
+                          <p className="mt-1 text-xs text-muted-foreground dark:text-[#c8c1ba]">{link.desc}</p>
                         </Link>
                       ))}
                     </div>
-                    <div className="border-t border-[#eadfd4] bg-[#f7efe6] p-2">
+                    <div className="border-t border-[#eadfd4] bg-[#f7efe6] p-2 dark:border-white/15 dark:bg-[#292f3e]">
                       <Link
                         href="/contacto"
-                        className="inline-flex w-full items-center justify-between rounded-xl px-4 py-2 text-sm font-semibold text-primary hover:bg-[#fffaf4]"
+                        className="inline-flex w-full items-center justify-between rounded-xl px-4 py-2 text-sm font-semibold text-primary hover:bg-[#fffaf4] dark:text-[#f6efe7] dark:hover:bg-white/10"
                         onClick={() => setServicesOpen(false)}
                       >
                         {t("dropdownContact")}
@@ -138,9 +185,30 @@ export function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
-          <Link href="/login" className="text-sm font-semibold text-[#2f3647] hover:text-[#e47c56] dark:text-[#f6efe7] dark:hover:text-[#f0a27f]">
-            {t("ctaLogin")}
-          </Link>
+          {authState.status === "authenticated" ? (
+            <div className="flex items-center gap-2">
+              <Link
+                href="/diagnostico/ancla-de-carrera"
+                title={authState.email ?? undefined}
+                className="rounded-full border border-[#d7c3ae] bg-[#f5e9dc] px-4 py-2 text-sm font-semibold text-[#2f3647] hover:bg-[#eedbc9] dark:border-white/15 dark:bg-white/10 dark:text-[#f6efe7] dark:hover:bg-white/15"
+              >
+                {t("ctaAccount")}
+              </Link>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="text-sm font-semibold text-[#6a7080] hover:text-[#e47c56] dark:text-[#ddd5cc] dark:hover:text-[#f0a27f]"
+              >
+                {t("ctaLogout")}
+              </button>
+            </div>
+          ) : authState.status === "anonymous" ? (
+            <Link href="/login" className="text-sm font-semibold text-[#2f3647] hover:text-[#e47c56] dark:text-[#f6efe7] dark:hover:text-[#f0a27f]">
+              {t("ctaLogin")}
+            </Link>
+          ) : (
+            <span className="h-4 w-16 animate-pulse rounded-full bg-[#ded2c6] dark:bg-white/15" aria-label={t("authLoading")} />
+          )}
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -156,20 +224,20 @@ export function Header() {
       </div>
 
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-[#eadfd4] bg-[#fffaf4]">
+          <div className="border-t border-[#eadfd4] bg-[#fffaf4] dark:border-white/15 dark:bg-[#242a38] lg:hidden">
             <div className="container mx-auto max-w-6xl space-y-3 px-5 py-6 md:px-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="block rounded-xl border border-[#eadfd4] px-4 py-3 text-sm font-semibold text-primary hover:bg-[#f4e9de]"
+                  className="block rounded-xl border border-[#eadfd4] px-4 py-3 text-sm font-semibold text-primary hover:bg-[#f4e9de] dark:border-white/15 dark:text-[#f6efe7] dark:hover:bg-white/10"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
 
-              <div className="rounded-2xl border border-[#eadfd4] bg-[#f7efe6] p-2">
+              <div className="rounded-2xl border border-[#eadfd4] bg-[#f7efe6] p-2 dark:border-white/15 dark:bg-[#303747]">
                 <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                   {t("navServices")}
                 </p>
@@ -178,11 +246,11 @@ export function Header() {
                     <Link
                       key={link.name}
                       href={link.href}
-                      className="block rounded-xl px-3 py-3 hover:bg-[#fffaf4]"
+                      className="block rounded-xl px-3 py-3 hover:bg-[#fffaf4] dark:hover:bg-white/10"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <p className="text-sm font-semibold text-primary">{link.name}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">{link.desc}</p>
+                      <p className="text-sm font-semibold text-primary dark:text-[#f6efe7]">{link.name}</p>
+                      <p className="mt-1 text-xs text-muted-foreground dark:text-[#c8c1ba]">{link.desc}</p>
                     </Link>
                   ))}
                 </div>
@@ -197,11 +265,24 @@ export function Header() {
                   {t("ctaDiagnostic")}
                 </Link>
               </Button>
-              <Button variant="outline" className="h-12 w-full rounded-full border-[#d3c0ad] bg-[#fbf5ee] text-[#2f3647] hover:bg-[#f0e3d5]" asChild>
-                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                  {t("ctaLogin")}
-                </Link>
-              </Button>
+              {authState.status === "authenticated" ? (
+                <>
+                  <Button variant="outline" className="h-12 w-full rounded-full border-[#d3c0ad] bg-[#fbf5ee] text-[#2f3647] hover:bg-[#f0e3d5]" asChild>
+                    <Link href="/diagnostico/ancla-de-carrera" onClick={() => setMobileMenuOpen(false)}>
+                      {t("ctaAccount")}
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" className="h-12 w-full rounded-full" onClick={handleSignOut}>
+                    {t("ctaLogout")}
+                  </Button>
+                </>
+              ) : authState.status === "anonymous" ? (
+                <Button variant="outline" className="h-12 w-full rounded-full border-[#d3c0ad] bg-[#fbf5ee] text-[#2f3647] hover:bg-[#f0e3d5]" asChild>
+                  <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                    {t("ctaLogin")}
+                  </Link>
+                </Button>
+              ) : null}
             </div>
           </div>
         )}
