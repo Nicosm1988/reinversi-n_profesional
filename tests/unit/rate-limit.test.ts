@@ -1,5 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { limitRequest } from "@/lib/rate-limit";
+import { limitRequest, normalizeEnvironmentSecret } from "@/lib/rate-limit";
+
+describe("normalizeEnvironmentSecret", () => {
+  it("removes accidental matching quotes and whitespace", () => {
+    expect(normalizeEnvironmentSecret('  "https://redis.example"  ')).toBe("https://redis.example");
+    expect(normalizeEnvironmentSecret(" 'token-value' ")).toBe("token-value");
+  });
+
+  it("preserves unquoted values", () => {
+    expect(normalizeEnvironmentSecret("https://redis.example")).toBe("https://redis.example");
+  });
+});
 
 describe("limitRequest (memory fallback)", () => {
   it("blocks requests after the configured limit", async () => {

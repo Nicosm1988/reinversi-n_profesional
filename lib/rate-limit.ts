@@ -23,6 +23,17 @@ const memoryBuckets = new Map<string, MemoryBucket>();
 const upstashLimiters = new Map<string, Ratelimit>();
 let memoryLimiterCalls = 0;
 
+export function normalizeEnvironmentSecret(value: string | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed) return undefined;
+
+  const hasMatchingQuotes =
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"));
+
+  return hasMatchingQuotes ? trimmed.slice(1, -1).trim() : trimmed;
+}
+
 function cleanupExpiredMemoryBuckets(now: number) {
   memoryLimiterCalls += 1;
 
@@ -39,8 +50,8 @@ function cleanupExpiredMemoryBuckets(now: number) {
 }
 
 function readRedisConfig() {
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  const url = normalizeEnvironmentSecret(process.env.UPSTASH_REDIS_REST_URL);
+  const token = normalizeEnvironmentSecret(process.env.UPSTASH_REDIS_REST_TOKEN);
 
   if (!url || !token) return null;
 
