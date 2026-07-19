@@ -145,7 +145,7 @@ export function SendaJourney() {
             <h2 className="mt-6 max-w-3xl font-heading text-4xl font-semibold tracking-[-.035em] md:text-6xl">Algunas partes del camino se transitan mejor en compañía.</h2>
           </div>
           <div>
-            <p className="text-lg leading-8 text-[#6a7080]">Si querés profundizar, podés conversar con nuestro equipo o con un profesional recomendado. Sin respuestas automáticas que pretendan reemplazar una escucha humana.</p>
+            <p className="text-lg leading-8 text-[#6a7080]">Si querés profundizar, podés pedir orientación a nuestro equipo. Sin respuestas automáticas que pretendan reemplazar una escucha humana.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/contacto" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#2f3647] px-7 font-semibold text-white hover:bg-[var(--senda-dark-hover)]">Contactar al equipo</Link>
               <Link href="/diagnostico" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#2f3647]/25 px-7 font-semibold text-[var(--senda-ink)] hover:bg-white/20"><BookOpen className="h-4 w-4" /> Ver recursos</Link>

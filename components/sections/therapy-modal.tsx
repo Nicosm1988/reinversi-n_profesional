@@ -96,7 +96,7 @@ export function TherapyModal({ open, onOpenChange }: TherapyModalProps) {
                   Introduce tu nombre y email para continuar
                 </DialogTitle>
                 <DialogDescription className="text-muted-foreground text-base mt-2">
-                  Te conectaremos con un profesional especializado en procesos de cambio personal.
+                  Te ayudaremos a encontrar el acompañamiento más adecuado para tu proceso de cambio.
                 </DialogDescription>
               </DialogHeader>
 
@@ -168,7 +168,7 @@ export function TherapyModal({ open, onOpenChange }: TherapyModalProps) {
                 <DialogHeader>
                   <DialogTitle className="text-primary text-2xl font-heading mb-3">Gracias</DialogTitle>
                   <DialogDescription className="text-muted-foreground text-base">
-                    Recibimos tu consulta. Un profesional se pondra en contacto contigo a la brevedad.
+                    Recibimos tu consulta. Nuestro equipo se pondrá en contacto con vos a la brevedad.
                   </DialogDescription>
                 </DialogHeader>
                 <Button

@@ -5,7 +5,7 @@ import { FadeIn } from "@/components/motion";
 
 export function FAQSection() {
     const faqs = [
-        { q: "¿Es terapia psicológica?", a: "Nuestro equipo incluye profesionales de psicología, pero este servicio está orientado a orientación vocacional-profesional: ayudarte a encontrar tu próximo paso de carrera con claridad estratégica. No reemplaza procesos de psicoterapia clínica. Si necesitas ese espacio, también podemos conectarte con un terapeuta." },
+        { q: "¿Es terapia psicológica?", a: "Nuestro equipo integra distintas especialidades, entre ellas psicología, pero este servicio está orientado a la orientación vocacional-profesional: ayudarte a encontrar tu próximo paso de carrera con claridad. No reemplaza un proceso de psicoterapia clínica. Si necesitás ese espacio, podemos ayudarte a encontrar acompañamiento terapéutico." },
         { q: "¿Para quién es este servicio?", a: "Para cualquier persona que esté en un momento de transición o incertidumbre profesional. Ya sea porque perdiste tu empleo, porque la IA transformó tu industria, porque quieres pivotar o simplemente porque sientes que llegó el momento de un cambio." },
         { q: "¿Cuánto dura el proceso?", a: "El diagnóstico es inmediato y gratuito. El programa de acompañamiento completo dura típicamente entre 4 y 8 semanas, dependiendo de tu ritmo y tus objetivos." },
         { q: "¿Qué pasa si no sé qué quiero hacer?", a: "Ese es exactamente el mejor momento para empezar. Nuestro diagnóstico está diseñado para ayudarte a descubrir patrones de interés, fortalezas y valores que tal vez no estás viendo. No necesitas llegar con respuestas, sino con la disposición de explorar." },

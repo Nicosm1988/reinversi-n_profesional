@@ -19,8 +19,8 @@ const steps = [
   },
   {
     number: "02",
-    title: "Encontramos al terapeuta indicado para ti",
-    desc: "Seleccionamos al profesional que mejor se ajusta a tus necesidades.",
+    title: "Encontramos el acompañamiento indicado para vos",
+    desc: "Buscamos dentro del equipo la opción que mejor se ajuste a tus necesidades.",
   },
   {
     number: "03",
@@ -32,8 +32,8 @@ const steps = [
 const benefits = [
   {
     icon: Heart,
-    title: "Te ayudamos a encontrar a tu terapeuta ideal",
-    desc: "Seleccionamos cuidadosamente al profesional más adecuado para ti.",
+    title: "Te ayudamos a encontrar un espacio adecuado",
+    desc: "Buscamos cuidadosamente la opción de acompañamiento que mejor se ajuste a vos.",
   },
   {
     icon: Users,
@@ -68,7 +68,7 @@ export default function TherapyPage() {
               Un espacio seguro para empezar terapia online
             </Heading>
             <Text variant="lead" className="mb-10 max-w-xl mx-auto">
-              Sesiones individuales con psicólogos clínicos para acompañarte en cambios de vida,
+              Sesiones individuales de psicología clínica para acompañarte en cambios de vida,
               vínculos, ansiedad y otros desafíos.
             </Text>
             <Button
@@ -207,7 +207,7 @@ export default function TherapyPage() {
               <FadeIn>
                 <Card className="wati-dark-cta border-none p-6 md:p-8">
                   <h3 className="text-xl font-heading font-semibold mb-2">1 sesión</h3>
-                  <p className="text-sm text-primary-foreground/70 mb-6">Paga antes de tomar cada sesión con tu terapeuta.</p>
+                  <p className="text-sm text-primary-foreground/70 mb-6">Pagá antes de cada sesión.</p>
 
                   <div className="flex items-baseline gap-1 mb-6">
                     <span className="text-3xl font-heading font-bold">USD 49</span>

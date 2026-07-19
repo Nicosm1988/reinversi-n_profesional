@@ -168,7 +168,7 @@ export async function POST(req: Request) {
         {
           code: "DIAGNOSTIC_ALREADY_COMPLETED",
           error:
-            "Tu diagnóstico gratuito ya está guardado. Podés volver a consultarlo y, si querés profundizar, conversar con nuestro equipo o con un profesional.",
+            "Tu diagnóstico gratuito ya está guardado. Podés volver a consultarlo y, si querés profundizar, pedir orientación a nuestro equipo.",
         },
         { status: 409, headers: rateHeaders },
       );

@@ -764,11 +764,11 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                               Dado que tu ancla dominante es <strong>{result.article} {result.name}</strong>, cualquier
                               movimiento profesional que hagas debería cuidar ese aspecto central de tu perfil. Si este
                               resultado te despierta preguntas, no tenés que resolverlas a solas: podés escribirnos y
-                              te ayudaremos a encontrar un profesional adecuado para acompañarte.
+                              podemos ayudarte a encontrar el acompañamiento más adecuado para vos.
                             </Text>
                             <div className="mt-6">
                               <Button asChild variant="default" className={`px-8 ${warmPrimaryButtonClass}`}>
-                                <Link href="/contacto">Conversar con un experto</Link>
+                                <Link href="/contacto">Recibir orientación profesional</Link>
                               </Button>
                             </div>
                           </div>
@@ -866,7 +866,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                   </div>
 
                   <Button asChild size="lg" variant="default" className={`h-14 px-12 text-lg ${warmPrimaryButtonClass}`}>
-                    <Link href="/contacto">Conversar con un experto</Link>
+                    <Link href="/contacto">Recibir orientación profesional</Link>
                   </Button>
 
                   <Text className="text-sm text-[#687080] dark:text-[#ddd5cc]">

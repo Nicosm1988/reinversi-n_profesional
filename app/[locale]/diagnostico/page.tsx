@@ -99,7 +99,7 @@ export default function DiagnosticoPage() {
                         <SlideUp delay={0.3}>
                             <Text variant="small" className="max-w-xl mx-auto text-muted-foreground">
                                 El resultado es orientativo y queda guardado para que puedas volver a consultarlo.
-                                Si querés profundizar, podés conversar con nuestro equipo o con un profesional recomendado.
+                                Si querés profundizar, podés pedir orientación a nuestro equipo.
                             </Text>
                         </SlideUp>
                     </StaggerContainer>

@@ -32,7 +32,7 @@ export default function PrivacidadPage() {
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">4. Confidencialidad de diagnósticos</h2>
               <p className="leading-relaxed text-foreground/80">
-                El test gratuito produce una devolución orientativa y no constituye un diagnóstico clínico. Para generar y guardar esa devolución, las respuestas y datos profesionales necesarios pueden ser procesados por nuestros proveedores técnicos de infraestructura, base de datos, seguridad e inteligencia artificial bajo nuestras instrucciones. No enviamos al modelo nombre, correo, teléfono ni dirección. El acceso humano se limita al equipo o profesional que lo necesite para prestar un servicio solicitado o atender una consulta.
+                El test gratuito produce una devolución orientativa y no constituye un diagnóstico clínico. Para generar y guardar esa devolución, las respuestas y datos profesionales necesarios pueden ser procesados por nuestros proveedores técnicos de infraestructura, base de datos, seguridad e inteligencia artificial bajo nuestras instrucciones. No enviamos al modelo nombre, correo, teléfono ni dirección. El acceso humano se limita a quienes integran el equipo y necesitan esa información para prestar un servicio solicitado o atender una consulta.
               </p>
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">5. Cookies</h2>
