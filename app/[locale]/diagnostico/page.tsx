@@ -85,7 +85,7 @@ export default function DiagnosticoPage() {
 
                         <SlideUp delay={0.1}>
                             <Heading level="h1" className="mb-6 max-w-3xl mx-auto">
-                                Descubrí qué tipo de cambio profesional estás listo para hacer.
+                                Descubrí qué tipo de cambio querés hacer.
                             </Heading>
                         </SlideUp>
 
@@ -175,7 +175,7 @@ export default function DiagnosticoPage() {
                             Cada recorrido es particular.
                         </Heading>
                         <Text className="text-lg leading-relaxed text-foreground/80">
-                            Por eso, darte el espacio para explorar el cambio que querés hacer, acompañado por profesionales especializados, puede ayudarte a transformar la incertidumbre en un plan coherente con vos.
+                            Por eso, darte espacio para explorar el cambio con orientación especializada puede ayudarte a transformar la incertidumbre en un plan coherente con vos.
                         </Text>
                     </FadeIn>
                 </Container>
@@ -188,7 +188,7 @@ export default function DiagnosticoPage() {
                         <FadeIn className="text-center mb-12 md:mb-16">
                             <div className="inline-flex items-center rounded-full border border-secondary/20 bg-secondary/5 px-4 py-1.5 text-sm font-medium text-secondary mb-6">
                                 <Users className="mr-2 h-4 w-4" />
-                                Acompañamiento profesional
+                                Orientación individual
                             </div>
                             <Heading level="h2" className="mb-6">
                                 Sesiones 1:1 con especialistas
@@ -202,7 +202,7 @@ export default function DiagnosticoPage() {
                             {[
                                 {
                                     title: "Psicólogos laborales",
-                                    desc: "Especialistas en transición profesional",
+                                    desc: "Orientación para ordenar el próximo paso",
                                 },
                                 {
                                     title: "Coach de carrera",
@@ -210,7 +210,7 @@ export default function DiagnosticoPage() {
                                 },
                                 {
                                     title: "Rediseño profesional",
-                                    desc: "Expertos en reposicionamiento en redes",
+                                    desc: "Reposicionamiento y presencia en redes",
                                 },
                             ].map((specialist, i) => (
                                 <FadeIn key={i}>

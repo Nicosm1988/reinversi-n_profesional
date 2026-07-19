@@ -13,7 +13,7 @@ const benefits = [
     {
         icon: Compass,
         title: "Descubre tu dirección",
-        desc: "A través de actividades de exploración profunda, identificamos qué te motiva, qué te apasiona y hacia dónde quieres ir. No importa tu edad ni tu punto de partida.",
+        desc: "A través de actividades de exploración profunda, identificamos qué te motiva, qué te apasiona y hacia dónde querés ir. No importa tu edad ni tu punto de partida.",
     },
     {
         icon: Brain,
@@ -23,7 +23,7 @@ const benefits = [
     {
         icon: Sparkles,
         title: "Diseña tu próximo capítulo",
-        desc: "Con claridad sobre quién eres y qué quieres, construimos juntos un plan de acción realista: desde qué estudiar hasta cómo posicionarte en el mercado laboral.",
+        desc: "Con claridad sobre quién sos y qué querés, construimos un plan de acción realista: desde qué estudiar hasta cómo posicionarte en el mercado laboral.",
     },
 ];
 
@@ -35,13 +35,13 @@ const sessions = [
     },
     {
         number: "02",
-        title: "Quién eres hoy",
+        title: "Quién sos hoy",
         desc: "Trabajamos tu personalidad, tus recursos, tus estilos de aprendizaje y tus estrategias de afrontamiento. El autoconocimiento es el pilar de todo el proceso.",
     },
     {
         number: "03",
         title: "Tus intereses y motivaciones",
-        desc: "Profundizamos en lo que te mueve: qué actividades disfrutas, en qué entornos te sientes cómodo y qué tipo de desafíos te energizan.",
+        desc: "Profundizamos en lo que te mueve: qué actividades disfrutás, qué entornos te resultan cómodos y qué tipo de desafíos te dan energía.",
     },
     {
         number: "04",
@@ -92,7 +92,7 @@ export default function OrientacionVocacionalPage() {
                             <span className="italic text-secondary">Encontrá tu camino</span>
                         </Heading>
                         <Text variant="lead" className="mb-10 max-w-xl mx-auto">
-                            No importa si tienes 18 o 50 años. Si estás en un momento de transición, incertidumbre
+                            No importa si tenés 18 o 50 años. Si estás en un momento de transición, incertidumbre
                             o simplemente sentís que llegó la hora de un cambio, este proceso es para ti.
                         </Text>
                         <Button
@@ -117,7 +117,7 @@ export default function OrientacionVocacionalPage() {
                 <Container size="sm">
                     <FadeIn className="text-center">
                         <Heading level="h2" className="mb-6">
-                            No saber qué quieres hacer es más común de lo que crees.
+                            No saber qué querés hacer es más común de lo que parece.
                         </Heading>
                         <Text variant="body-lg" className="max-w-2xl mx-auto">
                             La orientación vocacional y ocupacional es un proceso de aprendizaje
@@ -225,7 +225,7 @@ export default function OrientacionVocacionalPage() {
                                 Tu informe final
                             </Heading>
                             <Text variant="body-lg" className="mb-6">
-                                Al cierre del proceso, recibes un informe completo que integra todo lo
+                                Al cierre del proceso, recibís un informe completo que integra todo lo
                                 trabajado. Es tu brújula para tomar decisiones con confianza.
                             </Text>
                             <Text className="text-sm text-muted-foreground">
@@ -266,9 +266,9 @@ export default function OrientacionVocacionalPage() {
                                 <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center mb-4 group-hover:bg-secondary/20 transition-colors">
                                     <Users className="h-6 w-6 text-secondary" />
                                 </div>
-                                <h3 className="font-heading font-medium text-foreground mb-2">Jóvenes (18-25)</h3>
+                                <h3 className="font-heading font-medium text-foreground mb-2">Personas de 18 a 25 años</h3>
                                 <Text className="text-sm">
-                                    Terminaste el colegio y no sabes qué estudiar. O empezaste una carrera y sentís
+                                    Terminaste el colegio y no sabés qué estudiar. O empezaste una carrera y sentís
                                     que no es lo tuyo. Este es tu espacio para pensar sin presión.
                                 </Text>
                             </Card>
@@ -278,10 +278,10 @@ export default function OrientacionVocacionalPage() {
                                 <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center mb-4 group-hover:bg-secondary/20 transition-colors">
                                     <Search className="h-6 w-6 text-secondary" />
                                 </div>
-                                <h3 className="font-heading font-medium text-foreground mb-2">Profesionales (25-35)</h3>
+                                <h3 className="font-heading font-medium text-foreground mb-2">Personas de 25 a 35 años</h3>
                                 <Text className="text-sm">
-                                    Llevas años trabajando pero algo no encaja. Tal vez la IA transformó tu industria,
-                                    o simplemente quieres un cambio. Es hora de repensar tu rumbo.
+                                    Llevás años trabajando, pero algo no encaja. Tal vez la IA transformó tu industria
+                                    o simplemente querés un cambio. Es hora de repensar tu rumbo.
                                 </Text>
                             </Card>
                         </FadeIn>
@@ -292,7 +292,7 @@ export default function OrientacionVocacionalPage() {
                                 </div>
                                 <h3 className="font-heading font-medium text-foreground mb-2">Líderes y seniors (35-50)</h3>
                                 <Text className="text-sm">
-                                    Tienes experiencia de sobra pero sentís que necesitas un giro. Ya sea
+                                    Tenés experiencia de sobra, pero sentís que necesitás un giro. Puede ser
                                     pivotar a otro sector, emprender o apuntar a un rol C-Level.
                                 </Text>
                             </Card>
@@ -304,7 +304,7 @@ export default function OrientacionVocacionalPage() {
                                 </div>
                                 <h3 className="font-heading font-medium text-foreground mb-2">En transición</h3>
                                 <Text className="text-sm">
-                                    Perdiste tu empleo, fuiste desplazado por la automatización o estás
+                                    Perdiste tu empleo, la automatización cambió tu rol o estás
                                     en un momento de cambio. No importa la edad: este proceso te da claridad.
                                 </Text>
                             </Card>
@@ -324,7 +324,7 @@ export default function OrientacionVocacionalPage() {
                             </Heading>
                             <Text className="text-primary-foreground/80 text-lg mb-10">
                                 Empieza tu proceso de orientación vocacional con acompañamiento
-                                profesional y herramientas validadas. 100% online.
+                                especializada y herramientas validadas. 100% en línea.
                             </Text>
                             <Button variant="secondary" size="lg" className="rounded-full px-10 h-14 text-base" asChild>
                                 <Link href="/contacto">

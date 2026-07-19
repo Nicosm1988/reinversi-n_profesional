@@ -17,8 +17,6 @@ export default function ContactoPage() {
   const contactReasons = [
     t("reasonDiagnostic"),
     t("reasonVocational"),
-    t("reasonTherapy"),
-    t("reasonEnglish"),
     t("reasonGeneral"),
     t("reasonOther"),
   ];
@@ -206,7 +204,7 @@ export default function ContactoPage() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-foreground">{t("sidebarEmailLabel")}</p>
-                        <a href="mailto:contacto@reinvencion.pro" className="text-sm text-muted-foreground hover:text-secondary transition-colors">contacto@reinvencion.pro</a>
+                        <a href="mailto:contacto@senda.com" className="text-sm text-muted-foreground hover:text-secondary transition-colors">contacto@senda.com</a>
                       </div>
                     </div>
 

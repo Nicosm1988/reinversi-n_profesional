@@ -58,7 +58,7 @@ export default function QuienesSomosPage() {
               Nuestra misión
             </Heading>
             <Text variant="body-lg" className="mx-auto max-w-2xl">
-              Senda nacio para ofrecer un espacio donde pensar el futuro profesional con calma, estrategia y acompañamiento experto en un mercado laboral transformado por IA.
+              Senda nació para ofrecer un espacio donde pensar el futuro laboral con calma, estrategia y orientación especializada en un mercado transformado por la IA.
             </Text>
           </FadeIn>
         </Container>
@@ -85,7 +85,7 @@ export default function QuienesSomosPage() {
             <FadeIn>
               <Card className="h-full border-primary/10 p-8 text-center">
                 <h3 className="mb-3 text-lg font-heading font-semibold text-primary">Acompañamiento humano</h3>
-                <Text className="text-sm">Psicología, RRHH y estrategia de carrera en una misma mesa para decidir con más perspectiva.</Text>
+                <Text className="text-sm">Talento, mercado laboral y estrategia de carrera en una misma mesa para decidir con más perspectiva.</Text>
               </Card>
             </FadeIn>
             <FadeIn>
@@ -130,7 +130,7 @@ export default function QuienesSomosPage() {
             <div className="absolute -mr-20 -mt-20 right-0 top-0 h-80 w-80 rounded-full bg-secondary/15 blur-3xl pointer-events-none" />
             <div className="relative z-10 mx-auto max-w-xl">
               <Heading level="h2" className="mb-6 text-primary-foreground">
-                Listo para encontrar tu rumbo?
+                ¿Querés empezar a encontrar tu rumbo?
               </Heading>
               <Text className="mb-10 text-lg text-primary-foreground/80">
                 El primer paso es conocerte. Hacé tu diagnóstico gratuito y empezá a construir tu siguiente capitulo profesional.

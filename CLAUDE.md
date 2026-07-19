@@ -38,7 +38,7 @@ For frontend work involving modern browser APIs, form UX, accessibility, animati
 
 All pages live under `app/[locale]/` — every route supports both `/es/...` and `/en/...`. Adding a new page means creating it inside `app/[locale]/`.
 
-Key routes: home (`/`), `/diagnostico/ancla-de-carrera`, `/orientacion-vocacional`, `/terapia`, `/servicios/ingles-profesional`, `/contacto`, `/login`, `/quienes-somos`.
+Key routes: home (`/`), `/diagnostico/ancla-de-carrera`, `/orientacion-vocacional`, `/contacto`, `/login`, `/quienes-somos`.
 
 API routes under `app/api/`:
 - `POST /api/diagnostics/analyze` — Sends career anchor test answers to OpenAI (gpt-4o) via Vercel AI SDK and returns a structured report

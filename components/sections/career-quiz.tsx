@@ -204,7 +204,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
     } catch (error) {
       console.error(error);
       setAnalysisError(
-        "No pudimos generar el análisis personalizado por IA en este momento, pero tu ranking completo ya está listo.",
+        "No pudimos generar la lectura personalizada en este momento, pero ya podés consultar el ranking completo.",
       );
     } finally {
       setIsAnalyzing(false);
@@ -804,7 +804,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                       <CardHeader className="bg-[#f0dfd1]">
                         <CardTitle className="text-2xl text-[#2f3647]">{aiResult.title}</CardTitle>
                         <CardDescription className="text-base text-foreground/80">
-                          Basado en tu perfil actual como {userData?.occupation || "profesional"}.
+                          Basado en tu actividad actual: {userData?.occupation || "sin especificar"}.
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-8 pt-8">
@@ -861,7 +861,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     <Text className="text-lg leading-relaxed text-[#596173] dark:text-[#f6efe7]">
                       Tu diagnóstico queda disponible para que vuelvas a consultarlo cuando quieras. Si sentís que
                       necesitás profundizar lo que apareció, podemos escucharte y ayudarte a encontrar el tipo de
-                      acompañamiento profesional más adecuado para vos.
+                      espacio de orientación más adecuado para vos.
                     </Text>
                   </div>
 
@@ -870,7 +870,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                   </Button>
 
                   <Text className="text-sm text-[#687080] dark:text-[#ddd5cc]">
-                    Este resultado es orientativo y no reemplaza una evaluación profesional personalizada.
+                    Este resultado es orientativo y puede complementarse con una conversación individual con el equipo.
                   </Text>
                 </div>
               </motion.div>

@@ -24,4 +24,4 @@ La aplicación, la interfaz y los metadatos editoriales usan la marca **Senda**.
 ## Decisiones pendientes del propietario
 
 - Dominio definitivo y registrador.
-- Dirección de correo bajo la marca Senda que reemplazará `contacto@reinvencion.pro`.
+- Dirección pública de contacto: `contacto@senda.com`.

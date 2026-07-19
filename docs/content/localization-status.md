@@ -11,7 +11,7 @@ La ruta `/en` permanece con `noindex` hasta completar una traducción editorial 
 No debe habilitarse la indexación en inglés ni presentarse esa versión como terminada hasta cumplir estos criterios:
 
 1. Traducir la experiencia completa de inicio sin perder la metáfora de la senda.
-2. Traducir diagnóstico, privacidad, términos, orientación vocacional, terapia, inglés profesional y quiénes somos.
+2. Traducir diagnóstico, privacidad, términos, orientación vocacional y quiénes somos.
 3. Revisar el tono con una persona bilingüe: cálido, humano y no agresivamente comercial.
 4. Ejecutar pruebas visuales, enlaces, metadatos y accesibilidad en todas las rutas `/en`.
 5. Recién entonces cambiar `robots` para permitir indexación.

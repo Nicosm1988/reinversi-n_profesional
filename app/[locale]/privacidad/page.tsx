@@ -32,7 +32,7 @@ export default function PrivacidadPage() {
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">4. Confidencialidad de diagnósticos</h2>
               <p className="leading-relaxed text-foreground/80">
-                El test gratuito produce una devolución orientativa y no constituye un diagnóstico clínico. Para generar y guardar esa devolución, las respuestas y datos profesionales necesarios pueden ser procesados por nuestros proveedores técnicos de infraestructura, base de datos, seguridad e inteligencia artificial bajo nuestras instrucciones. No enviamos al modelo nombre, correo, teléfono ni dirección. El acceso humano se limita a quienes integran el equipo y necesitan esa información para prestar un servicio solicitado o atender una consulta.
+                El test gratuito produce una devolución orientativa. Para generarla y guardarla, las respuestas y los datos laborales necesarios pueden ser procesados por proveedores de infraestructura, base de datos, seguridad e inteligencia artificial bajo nuestras instrucciones. No enviamos al modelo nombre, correo, teléfono ni dirección. El acceso se limita al equipo que necesita esa información para prestar un servicio solicitado o atender una consulta.
               </p>
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">5. Cookies</h2>
@@ -47,9 +47,9 @@ export default function PrivacidadPage() {
 
               <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">7. Contacto</h2>
               <p className="leading-relaxed text-foreground/80">
-                Para consultas sobre esta politica puedes escribirnos a{" "}
-                <a href="mailto:contacto@reinvencion.pro" className="text-secondary hover:underline">
-                  contacto@reinvencion.pro
+                Para consultas sobre esta política podés escribirnos a{" "}
+                <a href="mailto:contacto@senda.com" className="text-secondary hover:underline">
+                  contacto@senda.com
                 </a>
                 .
               </p>

@@ -32,7 +32,7 @@ export function ProblemSection() {
           <div className="space-y-8">
             <FadeIn>
               <Text variant="caption" className="text-[#9b472d]">
-                El problema no eres tu
+                El problema no sos vos
               </Text>
               <Heading level="h2" className="mt-3 text-[#2f3647]">
                 Cuando todo cambia al mismo tiempo, pensar con claridad se vuelve dificil.

@@ -74,7 +74,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="mailto:contacto@reinvencion.pro" className="hover:text-secondary">
+                <a href="mailto:contacto@senda.com" className="hover:text-secondary">
                   {t("linkContactEmail")}
                 </a>
               </li>
@@ -97,16 +97,6 @@ export function Footer() {
               <li>
                 <Link href="/orientacion-vocacional" className="hover:text-secondary">
                   {t("linkVocational")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/servicios/ingles-profesional" className="hover:text-secondary">
-                  {t("linkEnglish")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/terapia" className="hover:text-secondary">
-                  {t("linkTherapy")}
                 </Link>
               </li>
               <li>

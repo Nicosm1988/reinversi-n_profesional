@@ -6,8 +6,6 @@ const routes = [
   "/contacto",
   "/diagnostico",
   "/orientacion-vocacional",
-  "/terapia",
-  "/servicios/ingles-profesional",
   "/privacidad",
   "/terminos",
   "/quienes-somos",
