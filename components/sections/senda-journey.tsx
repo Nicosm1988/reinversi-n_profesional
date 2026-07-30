@@ -26,11 +26,11 @@ const moments = [
 ];
 
 const paths = [
-  { icon: BriefcaseBusiness, title: "Trabajo", text: "Roles, transiciones y decisiones de carrera.", tone: "bg-[#e8a17f]" },
-  { icon: Brain, title: "Identidad", text: "Quién sos cuando tu título profesional ya no alcanza.", tone: "bg-[#a8bd9e]" },
-  { icon: GraduationCap, title: "Aprendizaje", text: "Qué aprender, para qué y sin perderte en la urgencia.", tone: "bg-[#e6c675]" },
-  { icon: Compass, title: "Propósito", text: "Valores y motivaciones para elegir con coherencia.", tone: "bg-[#9eb8c2]" },
-  { icon: Sparkles, title: "Tecnología", text: "Cómo convivir con la IA y convertir el cambio en criterio.", tone: "bg-[#c7a8c9]" },
+  { icon: BriefcaseBusiness, title: "Trabajo", text: "Cuando tu carrera deja de ser un mapa.", tone: "bg-[#e8a17f]" },
+  { icon: Brain, title: "Identidad", text: "Quién sos cuando tu título o rol profesional ya no te representan.", tone: "bg-[#a8bd9e]" },
+  { icon: GraduationCap, title: "Aprendizaje", text: "Qué vale la pena aprender en un mundo que cambia.", tone: "bg-[#e6c675]" },
+  { icon: Compass, title: "Propósito", text: "Encontrar una dirección que tenga sentido.", tone: "bg-[#9eb8c2]" },
+  { icon: Sparkles, title: "Tecnología", text: "Cómo convivir en la nueva era tecnológica.", tone: "bg-[#c7a8c9]" },
 ];
 
 export function SendaJourney() {
