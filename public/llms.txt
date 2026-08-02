@@ -1,14 +1,16 @@
 # Senda
 
-> Plataforma de orientación profesional con herramientas de autoconocimiento y acompañamiento humano.
+> Senda acompaña procesos de orientación vocacional, reinvención profesional y transición laboral mediante recorridos personalizados.
 
 ## Sitio principal
 
 - [Inicio](https://reinvension-profesional.vercel.app/)
-- [Diagnósticos](https://reinvension-profesional.vercel.app/diagnostico)
-- [Orientación vocacional](https://reinvension-profesional.vercel.app/orientacion-vocacional)
+- [Diagnóstico inicial](https://reinvension-profesional.vercel.app/diagnostico)
+- [Orientación vocacional](https://reinvension-profesional.vercel.app/procesos/orientacion-vocacional)
+- [Reinvención profesional](https://reinvension-profesional.vercel.app/procesos/reinvencion-profesional)
+- [Transición laboral](https://reinvension-profesional.vercel.app/procesos/transicion-laboral)
 - [Contacto](https://reinvension-profesional.vercel.app/contacto)
 
 ## Información importante
 
-El test gratuito de Anclas de Carrera ofrece una devolución orientativa. No constituye un diagnóstico clínico ni sustituye el acompañamiento de un profesional humano.
+El diagnóstico inicial y el test gratuito de Anclas de Carrera ofrecen orientaciones de partida. No constituyen diagnósticos clínicos ni sustituyen el acompañamiento de un profesional humano.

@@ -7,8 +7,9 @@ const Card = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <div
         ref={ref}
+        data-cursor-glow=""
         className={cn(
-            "rounded-2xl border border-border bg-card text-card-foreground transition-all shadow-soft",
+            "relative isolate rounded-2xl border border-border bg-card text-card-foreground shadow-soft transition-[border-color,box-shadow,transform,background-color] duration-200",
             className
         )}
         {...props}

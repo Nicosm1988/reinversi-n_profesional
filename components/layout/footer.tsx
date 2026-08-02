@@ -1,202 +1,53 @@
-﻿"use client";
-
-import Link from "next/link";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Youtube, Instagram, Linkedin, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { TurnstileWidget } from "@/components/security/turnstile-widget";
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "@/navigation";
 
 export function Footer() {
   const t = useTranslations("Footer");
 
-  const [email, setEmail] = useState("");
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [statusMessage, setStatusMessage] = useState<string | null>(null);
-  const [captchaToken, setCaptchaToken] = useState<string | undefined>();
-  const captchaEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
-
-  async function handleNewsletterSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (isSubmitting || !acceptedTerms || !email.trim()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-    setStatusMessage(null);
-
-    try {
-      const locale = window.location.pathname.startsWith("/en") ? "en" : "es";
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "newsletter",
-          email,
-          sourcePage: window.location.pathname,
-          locale,
-          consentAccepted: true,
-          captchaToken,
-          metadata: { channel: "footer-newsletter" },
-        }),
-      });
-
-      if (!response.ok) {
-        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(payload?.error ?? "No se pudo procesar la suscripcion");
-      }
-
-      setEmail("");
-      setAcceptedTerms(false);
-      setCaptchaToken(undefined);
-      setStatusMessage("Suscripcion registrada. Te contactaremos pronto.");
-    } catch (error) {
-      setStatusMessage(error instanceof Error ? error.message : "Error inesperado al suscribirte.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
-
   return (
-    <footer className="relative mt-20 overflow-hidden border-t border-primary/20 bg-primary text-primary-foreground">
-      <div className="absolute -right-32 -top-20 h-72 w-72 rounded-full bg-secondary/15 blur-3xl" />
-      <div className="absolute -left-32 bottom-0 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
+    <footer className="border-t border-white/10 bg-[var(--senda-ink)] px-5 pb-8 pt-16 text-[#f4efe4] sm:px-8 md:pt-24 lg:px-12 xl:px-20">
+      <div className="mx-auto max-w-[1280px]">
+        <div className="grid gap-14 border-b border-white/12 pb-16 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:pb-20">
+          <div className="max-w-xl">
+            <Link href="/" className="inline-flex items-center gap-3" aria-label={t("homeLabel")}>
+              <span className="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/35">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--senda-terracotta)]" />
+                <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full border border-white/35 bg-[var(--senda-ink)]" />
+              </span>
+              <span className="font-heading text-3xl">Senda</span>
+            </Link>
+            <p className="mt-8 max-w-lg font-heading text-3xl leading-[1.15] text-[#f4efe4]/82 sm:text-4xl">{t("statement")}</p>
+            <a href="mailto:contacto@senda.com" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#f4efe4]/65 hover:text-white">
+              contacto@senda.com <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
 
-      <div className="container relative mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-20">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1fr_1.3fr]">
-          <div>
-            <h2 className="font-heading text-lg font-semibold text-white">{t("colHome")}</h2>
-            <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
-              <li>
-                <Link href="/quienes-somos" className="hover:text-secondary">
-                  {t("linkAbout")}
-                </Link>
-              </li>
-              <li>
-                <a href="mailto:contacto@senda.com" className="hover:text-secondary">
-                  {t("linkContactEmail")}
-                </a>
-              </li>
-              <li>
-                <Link href="/privacidad" className="hover:text-secondary">
-                  {t("linkPrivacy")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/terminos" className="hover:text-secondary">
-                  {t("linkTerms")}
-                </Link>
-              </li>
+          <nav aria-label={t("processNavigation")}>
+            <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-[#f4efe4]/45">{t("colProcesses")}</h2>
+            <ul className="mt-7 space-y-4 text-sm font-semibold text-[#f4efe4]/72">
+              <li><Link href="/procesos/orientacion-vocacional" className="hover:text-white">{t("linkOrientation")}</Link></li>
+              <li><Link href="/procesos/reinvencion-profesional" className="hover:text-white">{t("linkReinvention")}</Link></li>
+              <li><Link href="/procesos/transicion-laboral" className="hover:text-white">{t("linkTransition")}</Link></li>
+              <li><Link href="/diagnostico" className="text-[var(--senda-terracotta)] hover:text-[#e4a285]">{t("linkInitialDiagnostic")}</Link></li>
             </ul>
-          </div>
+          </nav>
 
-          <div>
-            <h2 className="font-heading text-lg font-semibold text-white">{t("colServices")}</h2>
-            <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
-              <li>
-                <Link href="/orientacion-vocacional" className="hover:text-secondary">
-                  {t("linkVocational")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/diagnostico/ancla-de-carrera" className="hover:text-secondary">
-                  {t("linkDiagnosticFree")}
-                </Link>
-              </li>
+          <nav aria-label={t("siteNavigation")}>
+            <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-[#f4efe4]/45">{t("colExplore")}</h2>
+            <ul className="mt-7 space-y-4 text-sm font-semibold text-[#f4efe4]/72">
+              <li><Link href="/#como-funciona" className="hover:text-white">{t("linkHow")}</Link></li>
+              <li><Link href="/#preguntas" className="hover:text-white">{t("linkFaq")}</Link></li>
+              <li><Link href="/diagnostico/ancla-de-carrera" className="hover:text-white">{t("linkCareerAnchor")}</Link></li>
+              <li><Link href="/privacidad" className="hover:text-white">{t("linkPrivacy")}</Link></li>
+              <li><Link href="/terminos" className="hover:text-white">{t("linkTerms")}</Link></li>
             </ul>
-          </div>
-
-          <div>
-            <h2 className="font-heading text-lg font-semibold text-white">{t("colNewsletter")}</h2>
-            <p className="mt-4 whitespace-pre-line text-sm text-primary-foreground/75">{t("newsletterDesc")}</p>
-
-            <form className="mt-5 space-y-3" onSubmit={handleNewsletterSubmit}>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={t("newsletterPlaceholder")}
-                  className="h-12 w-full rounded-xl border border-white/15 bg-white/95 px-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary"
-                />
-                <Button
-                  type="submit"
-                  disabled={isSubmitting || !acceptedTerms || (captchaEnabled && !captchaToken)}
-                  variant="secondary"
-                  className="h-12 min-w-[170px] rounded-xl"
-                >
-                  {isSubmitting ? "Enviando..." : t("newsletterSubmit")}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-
-              <label className="flex items-start gap-2 text-[11px] leading-relaxed text-primary-foreground/70">
-                <input
-                  type="checkbox"
-                  className="mt-0.5"
-                  checked={acceptedTerms}
-                  onChange={(e) => setAcceptedTerms(e.target.checked)}
-                  required
-                />
-                <span>
-                  Al suscribirte acepto recibir correos electronicos de Senda, los{" "}
-                  <Link href="/terminos" className="underline hover:text-secondary">
-                    {t("linkTerms")}
-                  </Link>{" "}
-                  y la{" "}
-                  <Link href="/privacidad" className="underline hover:text-secondary">
-                    {t("linkPrivacy")}
-                  </Link>
-                  .
-                </span>
-              </label>
-
-              {statusMessage && <p className="text-xs text-white">{statusMessage}</p>}
-              {acceptedTerms && (
-                <TurnstileWidget onTokenChange={setCaptchaToken} action="lead_newsletter" className="min-h-[65px]" />
-              )}
-            </form>
-          </div>
+          </nav>
         </div>
 
-        <div className="mt-14 flex flex-col gap-6 border-t border-white/10 pt-8 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3">
-            <a
-              href="https://www.youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-secondary hover:text-primary"
-              aria-label="Youtube"
-            >
-              <Youtube className="h-4 w-4" />
-            </a>
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-secondary hover:text-primary"
-              aria-label="Instagram"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-secondary hover:text-primary"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="h-4 w-4" />
-            </a>
-          </div>
-
-          <p className="text-xs text-primary-foreground/65">{t("copyright", { year: new Date().getFullYear() })}</p>
-        </div>
-
-        <div className="mt-6 rounded-xl border border-white/10 bg-white/5 p-4 text-center text-[11px] leading-relaxed text-primary-foreground/65">
-          <strong>{t("disclaimerTitle")}</strong> {t("disclaimerText")}
+        <div className="grid gap-7 py-8 text-xs leading-6 text-[#f4efe4]/48 md:grid-cols-[1fr_2fr] md:items-start">
+          <p>{t("copyright", { year: new Date().getFullYear() })}</p>
+          <p className="md:text-right"><strong className="font-semibold text-[#f4efe4]/62">{t("disclaimerTitle")}</strong> {t("disclaimerText")}</p>
         </div>
       </div>
     </footer>

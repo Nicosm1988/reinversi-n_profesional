@@ -1,5 +1,5 @@
-import { SendaJourney } from "@/components/sections/senda-journey";
+import { SendaHome } from "@/components/sections/senda-home";
 
 export default function Home() {
-  return <SendaJourney />;
+  return <SendaHome />;
 }

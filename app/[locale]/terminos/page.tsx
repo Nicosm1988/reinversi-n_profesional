@@ -1,63 +1,55 @@
-﻿import { Section, Container } from "@/components/layout/container";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 
-export default function TerminosPage() {
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+const sections = [1, 2, 3, 4, 5, 6, 7, 8] as const;
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Terms" });
+  return { title: `${t("title")} | Senda` };
+}
+
+export default async function TerminosPage({ params }: PageProps) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Terms" });
+
   return (
     <div className="wati-page-shell flex flex-col pt-20">
       <Section spacing="lg">
         <Container size="sm">
           <article className="wati-feature-card p-8 md:p-10">
             <Heading level="h1" className="mb-8">
-              Terminos y Condiciones
+              {t("title")}
             </Heading>
             <div className="prose prose-lg max-w-none space-y-6 text-foreground/80">
               <Text variant="body-lg" className="mb-10 italic text-muted-foreground">
-                Ultima actualizacion: Marzo 2026
+                {t("lastUpdated")}
               </Text>
 
-              <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">1. Descripcion del servicio</h2>
-              <p className="leading-relaxed text-foreground/80">
-                Senda ofrece orientación vocacional y herramientas para tomar decisiones de carrera. Sus contenidos son orientativos y no reemplazan una evaluación individual especializada.
-              </p>
-
-              <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">2. Registro y cuenta</h2>
-              <p className="leading-relaxed text-foreground/80">
-                Para algunos servicios necesitás crear una cuenta con información veraz y mantener seguras tus credenciales.
-              </p>
-
-              <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">3. Diagnosticos y evaluaciones</h2>
-              <p className="leading-relaxed text-foreground/80">
-                Los diagnósticos son herramientas de orientación y pueden complementarse con una conversación individual con el equipo. Sus resultados no son definiciones cerradas ni determinan decisiones de carrera.
-              </p>
-
-              <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">4. Pagos y precios</h2>
-              <p className="leading-relaxed text-foreground/80">
-                Los precios se expresan en USD y pueden variar según el plan. El diagnóstico inicial de ancla de carrera es gratuito y puede realizarse una sola vez por cuenta.
-              </p>
-
-              <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">5. Cancelaciones y reembolsos</h2>
-              <p className="leading-relaxed text-foreground/80">
-                Las sesiones pueden reprogramarse con 24 horas de anticipacion. Las cancelaciones fuera de ese plazo no son reembolsables.
-              </p>
-
-              <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">6. Propiedad intelectual</h2>
-              <p className="leading-relaxed text-foreground/80">
-                El contenido, metodologia y materiales de la plataforma son propiedad de Senda y no pueden reproducirse sin autorizacion.
-              </p>
-
-              <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">7. Limitacion de responsabilidad</h2>
-              <p className="leading-relaxed text-foreground/80">
-                No garantizamos resultados especificos. Nuestro rol es proveer herramientas y acompanamiento para tus decisiones de carrera.
-              </p>
-
-              <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">8. Contacto</h2>
-              <p className="leading-relaxed text-foreground/80">
-                Para consultas sobre estos terminos escribinos a{" "}
-                <a href="mailto:contacto@senda.com" className="text-secondary hover:underline">
-                  contacto@senda.com
-                </a>
-                .
-              </p>
+              {sections.map((section) => (
+                <section key={section}>
+                  <h2 className="mb-4 mt-10 text-xl font-heading font-semibold text-foreground">
+                    {t(`section${section}Title`)}
+                  </h2>
+                  <p className="leading-relaxed text-foreground/80">
+                    {section === 8
+                      ? t.rich("section8Text", {
+                          email: (chunks) => (
+                            <a href="mailto:contacto@senda.com" className="font-medium text-foreground underline decoration-2 decoration-secondary underline-offset-4">
+                              {chunks}
+                            </a>
+                          ),
+                        })
+                      : t(`section${section}Text`)}
+                  </p>
+                </section>
+              ))}
             </div>
           </article>
         </Container>

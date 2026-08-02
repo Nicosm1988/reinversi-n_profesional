@@ -12,7 +12,7 @@ test("Senda loads its visual identity, fonts and images", async ({ page }) => {
   await page.evaluate(() => document.fonts.ready);
 
   await expect(page).toHaveTitle(/Senda/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("próximo paso");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(/Encontrá una dirección|Find a direction/);
   await expect(page.locator('link[rel="icon"][href*="senda-mark.svg"]')).toHaveCount(1);
 
   const unloadedImages = await page.locator("img").evaluateAll((images) =>
@@ -30,7 +30,7 @@ test("Senda remains readable on a narrow mobile viewport", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Entrar a la senda/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Realizá el diagnóstico|Take the diagnostic/i }).first()).toBeVisible();
 
   const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   expect(hasHorizontalOverflow).toBe(false);

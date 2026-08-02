@@ -132,6 +132,10 @@ async function main() {
 
     const checks = [];
     checks.push(await checkEndpoint(baseUrl, "/", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/diagnostico", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/procesos/orientacion-vocacional", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/procesos/reinvencion-profesional", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/procesos/transicion-laboral", [200]));
     checks.push(await checkAuthRedirect(baseUrl, "/diagnostico/ancla-de-carrera"));
     checks.push(await checkEndpoint(baseUrl, "/contacto", [200]));
     checks.push(await checkEndpoint(baseUrl, "/login", [200]));

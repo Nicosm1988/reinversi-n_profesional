@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Nunito_Sans } from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
@@ -10,18 +10,21 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { PointerIllumination } from "@/components/effects/pointer-illumination";
+import { getSiteUrl } from "@/lib/site-url";
 
-const nunitoSans = Nunito_Sans({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-nunito-sans",
+  variable: "--font-manrope",
   weight: ["400", "500", "600", "700"],
   display: "swap"
 });
 
-const fraunces = Fraunces({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  weight: ["500", "600", "700"],
+  variable: "--font-instrument-serif",
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap"
 });
 
@@ -35,8 +38,19 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       : "Senda | Orientación para tu camino profesional",
     description: isEnglish
       ? "Explore work, identity and purpose with thoughtful tools and human support."
-      : "Un mapa vivo para explorar trabajo, identidad y propósito con herramientas y acompañamiento humano.",
-    robots: isEnglish ? { index: false, follow: true } : { index: true, follow: true },
+      : "Procesos personalizados para comprender el cambio, encontrar una dirección y construir próximos pasos posibles.",
+    metadataBase: new URL(getSiteUrl()),
+    openGraph: {
+      type: "website",
+      locale: isEnglish ? "en_US" : "es_AR",
+      siteName: "Senda",
+      title: isEnglish ? "Senda | A clearer path through professional change" : "Senda | Una dirección para el cambio",
+      description: isEnglish
+        ? "Personalized journeys for vocational guidance, professional reinvention, and career transition."
+        : "Recorridos personalizados de orientación vocacional, reinvención profesional y transición laboral.",
+      images: [{ url: "/brand/senda-hero.png", width: 1536, height: 1024, alt: "Senda" }],
+    },
+    robots: { index: true, follow: true },
     icons: { icon: "/senda-mark.svg" },
   };
 }
@@ -59,20 +73,24 @@ export default async function RootLayout(
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased flex flex-col",
-          nunitoSans.variable,
-          fraunces.variable
+          manrope.variable,
+          instrumentSerif.variable
         )}
       >
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <CookieProvider>
+            <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 rounded-full bg-[var(--senda-ink)] px-5 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0">
+              {locale === "en" ? "Skip to content" : "Saltar al contenido"}
+            </a>
+            <PointerIllumination />
             <Header />
-            <main className="flex-1 flex flex-col">
+            <main id="main-content" className="flex flex-1 flex-col" tabIndex={-1}>
               {children}
             </main>
             <Footer />
             <CookieBanner />
-            <SpeedInsights />
+            {process.env.NODE_ENV === "production" && <SpeedInsights />}
             </CookieProvider>
           </NextIntlClientProvider>
         </ThemeProvider>

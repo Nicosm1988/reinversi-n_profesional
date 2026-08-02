@@ -4,20 +4,44 @@
   },
   "Header": {
     "logo": "Senda",
+    "homeLabel": "Ir al inicio de Senda",
+    "primaryNavigation": "Navegación principal",
+    "mobileNavigation": "Navegación móvil",
+    "navHome": "Inicio",
+    "navProcesses": "Procesos",
+    "navHow": "Cómo funciona",
+    "navFaq": "Preguntas frecuentes",
+    "closeMenu": "Cerrar menú",
     "navMethod": "Cómo orientarte",
     "navPaths": "Explorar sendas",
     "navServices": "Recursos",
     "serviceVocational": "Orientación Vocacional",
     "serviceVocationalDesc": "Encontrá tu camino profesional",
     "dropdownContact": "Contactanos",
-    "ctaDiagnostic": "Hacer Diagnóstico",
+    "ctaDiagnostic": "Realizá el diagnóstico",
     "ctaLogin": "Ingresar",
     "ctaAccount": "Mi recorrido",
     "ctaLogout": "Salir",
     "authLoading": "Comprobando sesión",
-    "mobileMenu": "Menú"
+    "mobileMenu": "Menú",
+    "accountOverview": "Resumen",
+    "accountLatestResult": "Mi último resultado",
+    "accountPersonalData": "Datos personales"
   },
   "Footer": {
+    "homeLabel": "Ir al inicio de Senda",
+    "statement": "Un lugar para comprender el cambio, encontrar una dirección y construir próximos pasos posibles.",
+    "processNavigation": "Procesos de Senda",
+    "siteNavigation": "Explorar Senda",
+    "colProcesses": "Procesos",
+    "colExplore": "Explorar",
+    "linkOrientation": "Orientación vocacional",
+    "linkReinvention": "Reinvención profesional",
+    "linkTransition": "Transición laboral",
+    "linkInitialDiagnostic": "Diagnóstico inicial",
+    "linkHow": "Cómo funciona",
+    "linkFaq": "Preguntas frecuentes",
+    "linkCareerAnchor": "Test de Anclas de Carrera",
     "colHome": "Inicio",
     "linkAbout": "Quiénes somos",
     "linkContactEmail": "Contacto: contacto@senda.com",
@@ -31,6 +55,11 @@
     "newsletterPlaceholder": "Email",
     "newsletterConsent": "Al suscribirte acepto recibir correos electrónicos de Senda, los <terms>Términos y Condiciones</terms> y la <privacy>Política de Privacidad</privacy>.",
     "newsletterSubmit": "Suscribirme",
+    "submitting": "Enviando...",
+    "success": "Suscripción registrada. Te contactaremos pronto.",
+    "errorSubmit": "No se pudo procesar la suscripción.",
+    "errorUnexpected": "Ocurrió un error inesperado al suscribirte.",
+    "captchaError": "No pudimos validar que sos una persona. Reintentá la verificación.",
     "copyright": "© {year} Senda — Todos los derechos reservados",
     "disclaimerTitle": "Sobre nuestras herramientas:",
     "disclaimerText": "Senda ofrece orientación vocacional y herramientas para ordenar decisiones de carrera. Los resultados son puntos de partida para reflexionar: no definen a una persona ni determinan qué decisión debe tomar."
@@ -38,7 +67,7 @@
   "CookieBanner": {
     "title": "Preferencia de Privacidad",
     "closeLabel": "Cerrar",
-    "description": "Cuando visitas sitios web, pueden almacenar o recuperar datos en tu navegador. Este almacenamiento es a menudo necesario para la funcionalidad básica del sitio web. El almacenamiento puede utilizarse para marketing, análisis y personalización del sitio, como almacenar tus preferencias. La privacidad es importante para nosotros, por lo que tienes la opción de desactivar ciertos tipos de almacenamiento que pueden no ser necesarios para el funcionamiento básico del sitio web. Bloquear categorías puede afectar tu experiencia en el sitio web.",
+    "description": "Cuando visitás un sitio, puede guardar información necesaria para funcionar y recordar tus preferencias. También puede usar tecnologías opcionales para análisis o personalización. Tu privacidad es importante: podés rechazar esas categorías sin desactivar las funciones esenciales.",
     "rejectCookies": "Rechazar cookies",
     "acceptCookies": "Permitir cookies",
     "managePreferences": "Gestionar preferencias de consentimiento →",
@@ -47,7 +76,7 @@
     "essentialTitle": "Esencial",
     "essentialDesc": "Estos elementos son necesarios para habilitar la funcionalidad básica del sitio web.",
     "marketingTitle": "Marketing",
-    "marketingDesc": "Estos elementos se utilizan para ofrecer publicidad que es más relevante para ti y tus intereses. También pueden utilizarse para limitar el número de veces que ves un anuncio y medir la efectividad de las campañas publicitarias. Las redes de publicidad generalmente los colocan con el permiso del operador del sitio web.",
+    "marketingDesc": "Estos elementos se usan para ofrecer publicidad relevante para vos, limitar la cantidad de veces que ves un anuncio y medir la efectividad de las campañas.",
     "personalizationTitle": "Personalización",
     "personalizationDesc": "Estos elementos permiten que el sitio web recuerde tus elecciones (como el nombre de cuenta, el idioma o la región) y proporcione funciones adaptadas a tus preferencias.",
     "analyticsTitle": "Analytics",
@@ -58,7 +87,7 @@
     "slide0TitlePrefix": "En un mundo que cambia,",
     "slide0TitleSuffix": "te ayudamos a encontrar",
     "slide0TitleHighlight": "tu rumbo",
-    "slide0Description": "La inteligencia artificial transformó el mercado laboral. Es normal sentir incertidumbre. Te acompañamos a descubrir tu próximo paso profesional con claridad, contención y una metodología probada.",
+    "slide0Description": "La inteligencia artificial transformó el mercado laboral. Es normal sentir incertidumbre. Te acompañamos a reconocer tu próximo paso profesional con claridad, contención y una metodología probada.",
     "slide0PrimaryAction": "Comenzar mi diagnóstico",
     "slide0SecondaryAction": "Conocer el Método",
     "slide1TitlePrefix": "Tu experiencia tiene valor.",
@@ -82,7 +111,7 @@
     "testimonial2Role": "Consultora Independiente"
   },
   "Problem": {
-    "title": "¿Te identificas?",
+    "title": "¿Te identificás?",
     "description": "No tenés que atravesar este momento sin apoyo. Muchas personas viven la misma incertidumbre. Contar con un espacio cuidado puede ayudarte a pensar el próximo paso con claridad.",
     "descriptionP2": "Darle espacio al cambio es la mejor forma de construir algo real. Cada proceso es único, te acompañamos a transitar el tuyo.",
     "situation0Title": "La IA cambió las reglas del juego",
@@ -103,7 +132,7 @@
     "step1Desc": "Conectamos tu perfil con las oportunidades reales del mercado actual. Juntos mapeamos roles, sectores y caminos de formación que se alineen con lo que descubrimos en la primera etapa.",
     "step2Label": "ETAPA 03",
     "step2Title": "Tu mapa de claridad",
-    "step2Desc": "Todo cobra sentido acá. Recibís un informe personalizado que integra tus fortalezas, intereses y áreas de crecimiento. Es la herramienta que necesitás para tomar decisiones con confianza y con datos reales sobre ti.",
+    "step2Desc": "Todo cobra sentido acá. Recibís un informe personalizado que integra tus fortalezas, intereses y áreas de crecimiento. Es la herramienta que necesitás para tomar decisiones con confianza y con información real sobre vos.",
     "step3Label": "ETAPA 04",
     "step3Title": "Preparar tu salida al mundo",
     "step3Desc": "Con el plan en mano, te equipamos con todo lo necesario para posicionarte: CV estratégico, preparación para entrevistas y las herramientas para dar tu próximo paso con seguridad."
@@ -132,7 +161,7 @@
   },
   "Services": {
     "title": "Tu siguiente paso puede empezar hoy.",
-    "description": "El primer diagnóstico es gratuito. Descubre tus anclas de carrera y recibe un informe personalizado para empezar a construir tu próximo capítulo con claridad.",
+    "description": "El primer diagnóstico es gratuito. Descubrí tus anclas de carrera y recibí un informe personalizado para empezar a construir tu próximo capítulo con claridad.",
     "button": "Comenzar mi diagnóstico"
   },
   "FAQ": {
@@ -164,14 +193,18 @@
     "labelCountry": "País",
     "placeholderCountry": "Ej. Argentina",
     "submitLoading": "Analizando...",
-    "submitDefault": "Ver mis resultados"
+    "submitDefault": "Ver mis resultados",
+    "captchaError": "No pudimos validar que sos una persona. Reintentá la verificación."
   },
   "Login": {
     "title": "Te damos la bienvenida",
     "description": "Inicia sesión con Google para hacer el diagnóstico y guardar tus resultados en tu cuenta.",
     "continueGoogle": "Continuar con Google",
     "continueLinkedin": "Continuar con LinkedIn",
-    "termsNotice": "Al continuar, aceptas nuestros términos de servicio y políticas de privacidad. Tus diagnósticos quedan asociados a tu cuenta."
+    "termsNotice": "Al continuar, aceptás nuestros términos de servicio y políticas de privacidad. Tus diagnósticos quedan asociados a tu cuenta.",
+    "unavailable": "El inicio de sesión no está disponible en este momento.",
+    "oauthError": "No pudimos iniciar sesión con Google. Probá nuevamente.",
+    "loading": "Iniciando sesión con Google…"
   },
   "Contact": {
     "heroTitle": "Hablemos de tu",
@@ -183,7 +216,7 @@
     "labelEmail": "Email",
     "placeholderEmail": "tu@email.com",
     "labelReason": "¿Sobre qué querés consultar?",
-    "placeholderReason": "Selecciona un motivo",
+    "placeholderReason": "Elegí un motivo",
     "reasonDiagnostic": "Quiero hacer mi diagnóstico de carrera",
     "reasonVocational": "Orientación vocacional",
     "reasonGeneral": "Consulta general",
@@ -191,17 +224,20 @@
     "labelMessage": "Tu mensaje",
     "placeholderMessage": "Contanos en qué momento estás y cómo podemos ayudarte...",
     "submitButton": "Enviar consulta",
+    "submitting": "Enviando...",
+    "consent": "Acepto los <terms>Términos y Condiciones</terms> y la <privacy>Política de Privacidad</privacy>.",
+    "errorSubmit": "No se pudo enviar tu consulta.",
+    "errorUnexpected": "Ocurrió un error inesperado al enviar la consulta.",
+    "captchaError": "No pudimos validar que sos una persona. Reintentá la verificación.",
     "successTitle": "¡Gracias por escribirnos!",
     "successDescription": "Recibimos tu consulta. Te vamos a responder en menos de 24 horas a tu correo electrónico.",
     "successAnother": "Enviar otra consulta",
     "sidebarTitle": "Otras formas de contactarnos",
     "sidebarEmailLabel": "Email",
     "sidebarWhatsappLabel": "WhatsApp",
-    "sidebarHoursLabel": "Horario de atención",
-    "sidebarHoursValue": "Lunes a viernes, 9:00 a 19:00 (AR)",
     "sidebarCtaTitle": "¿Preferís empezar ahora?",
-    "sidebarCtaDescription": "Si ya sabés que querés hacer tu diagnóstico de carrera, no necesitás esperar. Es gratuito e inmediato.",
-    "sidebarCtaButton": "Hacer diagnóstico gratis"
+    "sidebarCtaDescription": "Podés contarnos qué está cambiando y recibir orientación sobre el recorrido que mejor puede acompañarte.",
+    "sidebarCtaButton": "Realizá el diagnóstico inicial"
   },
   "About": {
     "heroTitle": "Quiénes somos",
@@ -226,22 +262,22 @@
     "valueSupportTitle": "Acompañamiento real",
     "valueSupportDesc": "No sos un número. Cada proceso es personal, a tu ritmo y con un equipo presente durante la transición.",
     "ctaTitle": "¿Querés empezar a encontrar tu rumbo?",
-    "ctaDescription": "El primer paso es conocerte. Hacé tu diagnóstico gratuito y empezá a construir tu próximo capítulo profesional.",
-    "ctaButton": "Comenzar mi diagnóstico"
+    "ctaDescription": "Podés empezar por poner en palabras lo que está cambiando. El diagnóstico inicial nos ayuda a orientarte sobre un recorrido posible.",
+    "ctaButton": "Realizá el diagnóstico inicial"
   },
   "VocationalGuidance": {
     "heroTitle": "Orientación Vocacional:",
     "heroTitleAccent": "Encontrá tu camino",
-    "heroDescription": "No importa si tenés 18 o 50 años. Si estás en un momento de transición, incertidumbre o simplemente sentís que llegó la hora de un cambio, este proceso es para ti.",
+    "heroDescription": "No importa si tenés 18 o 50 años. Si estás en un momento de transición, incertidumbre o simplemente sentís que llegó la hora de un cambio, este proceso es para vos.",
     "heroCta": "Conocer el proceso",
-    "introTitle": "No saber qué querés hacer es más común de lo que crees.",
+    "introTitle": "No saber qué querés hacer es más común de lo que creés.",
     "introText": "La orientación vocacional y ocupacional es un proceso de aprendizaje para personas de todas las edades. Se trata de autoconocerte, identificar tus objetivos de vida y encontrar las opciones profesionales que realmente te representan — especialmente en un mercado transformado por la inteligencia artificial.",
     "benefitsTitle": "¿Qué vas a lograr?",
-    "benefitDirectionTitle": "Descubre tu dirección",
+    "benefitDirectionTitle": "Descubrí tu dirección",
     "benefitDirectionDesc": "A través de actividades de exploración profunda, identificamos qué te motiva, qué te apasiona y hacia dónde querés ir. No importa tu edad ni tu punto de partida.",
-    "benefitStrengthsTitle": "Conoce tus fortalezas reales",
+    "benefitStrengthsTitle": "Conocé tus fortalezas reales",
     "benefitStrengthsDesc": "Con herramientas de orientación y conversaciones en profundidad, mapeamos tus habilidades, valores e intereses para que tomes decisiones con información concreta.",
-    "benefitDesignTitle": "Diseña tu próximo capítulo",
+    "benefitDesignTitle": "Diseñá tu próximo capítulo",
     "benefitDesignDesc": "Con claridad sobre quién sos y qué querés, construimos juntos un plan de acción realista: desde qué estudiar hasta cómo posicionarte en el mercado laboral.",
     "midCtaTitle": "Encontrar tu rumbo empieza con una decisión.",
     "midCtaText": "Este proceso te ayuda a pensar, reflexionar y encontrar respuestas. Te guiamos hacia el encuentro con tu verdadera vocación, para que puedas dedicarte a algo que te motive y disfrutes.",
@@ -252,10 +288,10 @@
     "sessionLabel": "SESIÓN",
     "session01Title": "Tu historia y tu momento",
     "session01Desc": "Comenzamos explorando tu trayectoria, tu situación actual y qué te trajo hasta acá. Escuchamos sin juicios para entender a fondo tu contexto.",
-    "session02Title": "Quién eres hoy",
+    "session02Title": "Quién sos hoy",
     "session02Desc": "Trabajamos tu personalidad, tus recursos, tus estilos de aprendizaje y tus estrategias de afrontamiento. El autoconocimiento es el pilar de todo el proceso.",
     "session03Title": "Tus intereses y motivaciones",
-    "session03Desc": "Profundizamos en lo que te mueve: qué actividades disfrutas, qué entornos te resultan cómodos y qué tipo de desafíos te energizan.",
+    "session03Desc": "Profundizamos en lo que te mueve: qué actividades disfrutás, qué entornos te resultan cómodos y qué tipo de desafíos te energizan.",
     "session04Title": "Exploración vocacional",
     "session04Desc": "Cruzamos todo lo aprendido con campos profesionales y áreas de desarrollo. Empezamos a dar forma a las opciones que resuenan con tu perfil.",
     "session05Title": "Tu vocación toma forma",
@@ -291,21 +327,21 @@
   },
   "Privacy": {
     "title": "Política de Privacidad",
-    "lastUpdated": "Última actualización: Marzo 2026",
+    "lastUpdated": "Última actualización: 18 de julio de 2026",
     "section1Title": "1. Información que recopilamos",
-    "section1Text": "En Senda recopilamos información que nos proporcionas directamente al utilizar nuestros servicios, incluyendo: nombre completo, dirección de correo electrónico, información de perfil profesional, resultados de diagnósticos vocacionales y datos de pago cuando aplique.",
+    "section1Text": "En Senda recopilamos la información que proporcionás al utilizar nuestros servicios: nombre, correo electrónico, información profesional, respuestas y resultados de diagnósticos, consultas enviadas y datos técnicos esenciales para seguridad y funcionamiento.",
     "section2Title": "2. Uso de la información",
-    "section2Text": "Utilizamos tu información para: brindar los servicios de orientación vocacional y profesional solicitados, personalizar tu experiencia en la plataforma, enviar comunicaciones relevantes sobre tu proceso, mejorar nuestros servicios y cumplir con obligaciones legales.",
+    "section2Text": "Utilizamos esta información para brindar los servicios solicitados, guardar tu resultado, responder consultas, proteger la plataforma, mejorar su funcionamiento y cumplir obligaciones legales. Las comunicaciones informativas requieren tu consentimiento y podés dejar de recibirlas.",
     "section3Title": "3. Protección de datos",
-    "section3Text": "Implementamos medidas de seguridad técnicas y organizativas para proteger tu información personal contra acceso no autorizado, alteración, divulgación o destrucción. Utilizamos cifrado SSL/TLS para todas las transmisiones de datos y almacenamos la información en servidores seguros.",
+    "section3Text": "Aplicamos controles de autenticación, permisos de base de datos, validación del lado del servidor, protección contra automatizaciones abusivas y comunicaciones cifradas. Ningún sistema ofrece seguridad absoluta, pero reducimos el acceso y la recopilación a lo necesario para operar el servicio.",
     "section4Title": "4. Confidencialidad de diagnósticos",
-    "section4Text": "Los resultados de tus diagnósticos vocacionales y la información compartida durante las sesiones de orientación son confidenciales. El acceso se limita al equipo necesario para prestar el servicio y no se comparte con terceros sin tu consentimiento expreso.",
+    "section4Text": "El test gratuito produce una devolución orientativa. Para generarla y guardarla, las respuestas y los datos laborales necesarios pueden ser procesados por proveedores de infraestructura, base de datos, seguridad e inteligencia artificial bajo nuestras instrucciones. No enviamos al modelo nombre, correo, teléfono ni dirección. El acceso se limita al equipo que necesita esa información para prestar un servicio solicitado o atender una consulta.",
     "section5Title": "5. Cookies",
-    "section5Text": "Utilizamos cookies esenciales para el funcionamiento de la plataforma y cookies analíticas para mejorar la experiencia de usuario. Podés gestionar tus preferencias de cookies en cualquier momento a través del panel de configuración de cookies de nuestro sitio.",
+    "section5Text": "Usamos cookies esenciales para autenticación, seguridad y preferencias. Las tecnologías no esenciales, si se incorporan, deberán respetar la elección mostrada en el sitio.",
     "section6Title": "6. Tus derechos",
-    "section6Text": "Tenés derecho a acceder, rectificar, eliminar y portar tus datos personales. También podés oponerte al procesamiento o solicitar la limitación de su uso. Para ejercer estos derechos, escribinos a contacto@senda.com.",
+    "section6Text": "Podés solicitar acceso, rectificación o eliminación de tus datos, retirar consentimientos y consultar sobre su tratamiento. Conservamos la información mientras sea necesaria para prestar el servicio y cumplir obligaciones aplicables.",
     "section7Title": "7. Contacto",
-    "section7Text": "Si tenés preguntas sobre esta política de privacidad o el tratamiento de tus datos, podés escribirnos a {email}."
+    "section7Text": "Para consultas sobre esta política podés escribirnos a <email>contacto@senda.com</email>."
   },
   "Terms": {
     "title": "Términos y Condiciones",
@@ -316,8 +352,8 @@
     "section2Text": "Para acceder a ciertos servicios es necesario crear una cuenta proporcionando información veraz y actualizada. Debés mantener la confidencialidad de tus credenciales y cuidar el acceso a tu cuenta.",
     "section3Title": "3. Diagnósticos y evaluaciones",
     "section3Text": "Los diagnósticos vocacionales son herramientas de orientación. Sus resultados invitan a reflexionar y pueden complementarse con una conversación individual; no son definiciones cerradas ni determinan decisiones de carrera.",
-    "section4Title": "4. Pagos y precios",
-    "section4Text": "Los precios de los servicios se expresan en dólares estadounidenses (USD) y pueden variar según el plan seleccionado. El diagnóstico inicial de ancla de carrera es gratuito. Los pagos se procesan a través de plataformas seguras (MercadoPago y/o Stripe) según tu ubicación.",
+    "section4Title": "4. Contratación y pagos",
+    "section4Text": "Antes de comenzar un recorrido, Senda informa de manera privada y clara sus condiciones de contratación y los medios de pago disponibles. Ningún proceso se confirma sin la aceptación expresa de esas condiciones.",
     "section5Title": "5. Cancelaciones y reembolsos",
     "section5Text": "Las sesiones pueden cancelarse o reprogramarse con al menos 24 horas de anticipación sin costo. Las cancelaciones con menos de 24 horas de anticipación no son reembolsables. Los packs de sesiones no son reembolsables una vez iniciado el proceso.",
     "section6Title": "6. Propiedad intelectual",
@@ -325,7 +361,7 @@
     "section7Title": "7. Limitación de responsabilidad",
     "section7Text": "Senda no garantiza resultados específicos derivados del uso de sus servicios. Nuestro rol es brindar herramientas, información y orientación para cada transición. Las decisiones de carrera corresponden a cada persona.",
     "section8Title": "8. Contacto",
-    "section8Text": "Para consultas sobre estos términos, escribinos a {email}."
+    "section8Text": "Para consultas sobre estos términos, escribinos a <email>contacto@senda.com</email>."
   },
   "Diagnostics": {
     "badge": "Herramientas de diagnóstico profesional",
@@ -376,6 +412,125 @@
     "sessionsClosing": "Un espacio confidencial, estratégico y personalizado para analizar tu situación y definir próximos pasos concretos.",
     "sessionsCta": "Agendar mi sesión 1:1"
   },
+  "Panel": {
+    "metadataTitle": "Mi recorrido | Senda",
+    "eyebrow": "Tu espacio personal",
+    "title": "Mi recorrido",
+    "description": "Administrá tus datos y volvé a las herramientas que ya forman parte de tu camino.",
+    "latestResult": "Tu último resultado",
+    "primaryAnchor": "Ancla principal",
+    "updatedAt": "Actualizado el {date}.",
+    "emptyTitle": "Todavía no hay un resultado guardado",
+    "emptyDescription": "Cuando completes el test de Anclas de Carrera, vas a encontrar acá tu última lectura.",
+    "repeatTest": "Repetir test",
+    "viewFullResult": "Ver resultado completo",
+    "startTest": "Comenzar test"
+  },
+  "Profile": {
+    "formLabel": "Datos personales",
+    "avatarAlt": "Foto de perfil",
+    "changePhoto": "Cambiar foto",
+    "imageTitle": "Tu imagen",
+    "imageDescription": "JPG, PNG o WebP de hasta 5 MB. Si no cargás una foto, mostraremos tus iniciales.",
+    "displayName": "Nombre para mostrar",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "accessEmail": "Correo de acceso",
+    "accessEmailHelp": "Este correo proviene de tu cuenta de Google y no se modifica desde Senda.",
+    "countryCode": "País (código)",
+    "countryCodePlaceholder": "AR",
+    "timezone": "Zona horaria",
+    "timezonePlaceholder": "America/Argentina/Buenos_Aires",
+    "saving": "Guardando…",
+    "save": "Guardar cambios",
+    "success": "Tus datos quedaron guardados.",
+    "errors": {
+      "invalidImageType": "Elegí una imagen JPG, PNG o WebP.",
+      "imageTooLarge": "La imagen debe pesar menos de 5 MB.",
+      "unavailable": "No pudimos acceder a tu perfil en este momento.",
+      "save": "No pudimos guardar los cambios. Probá nuevamente."
+    }
+  },
+  "LanguageSwitcher": {
+    "label": "Cambiar idioma",
+    "spanish": "Español",
+    "english": "Inglés"
+  },
+  "ThemeToggle": {
+    "light": "Activar modo claro",
+    "dark": "Activar modo oscuro"
+  },
+  "Journey": {
+    "hero": {
+      "eyebrow": "Un espacio para orientarte sin apurarte",
+      "title": "No necesitás tener todo claro para",
+      "titleAccent": "dar el próximo paso.",
+      "description": "Senda es un mapa vivo para explorar tu trabajo, tu identidad y lo que querés construir. Empezá por el punto en el que estás hoy.",
+      "primaryCta": "Entrar a la senda",
+      "secondaryCta": "Hacer el diagnóstico gratuito"
+    },
+    "moments": {
+      "eyebrow": "Primer hito · ubicarse",
+      "title": "¿En qué punto de tu camino estás?",
+      "description": "No hay una respuesta correcta. Reconocer el momento actual es una forma concreta de empezar a orientarte.",
+      "items": {
+        "pause": {
+          "title": "Necesito una pausa",
+          "description": "Seguir igual ya no alcanza, pero todavía no sabés qué querés cambiar."
+        },
+        "change": {
+          "title": "Estoy atravesando un cambio",
+          "description": "Tu rol, tu contexto o tus prioridades se movieron y necesitás volver a ubicarte."
+        },
+        "direction": {
+          "title": "Busco una dirección",
+          "description": "Tenés opciones frente a vos y querés elegir con más claridad y menos ruido."
+        }
+      }
+    },
+    "paths": {
+      "eyebrow": "Cruce de caminos",
+      "title": "Una vida profesional tiene más de una senda.",
+      "description": "Podés explorar una, volver atrás o conectar varias. El recorrido se construye con preguntas, no con fórmulas.",
+      "items": {
+        "work": {
+          "title": "Trabajo",
+          "description": "Cuando tu carrera deja de ser un mapa."
+        },
+        "identity": {
+          "title": "Identidad",
+          "description": "Quién sos cuando tu título o rol profesional ya no te representan."
+        },
+        "learning": {
+          "title": "Aprendizaje",
+          "description": "Qué vale la pena aprender en un mundo que cambia."
+        },
+        "purpose": {
+          "title": "Propósito",
+          "description": "Encontrar una dirección que tenga sentido."
+        },
+        "technology": {
+          "title": "Tecnología",
+          "description": "Cómo convivir en la nueva era tecnológica."
+        }
+      }
+    },
+    "tool": {
+      "eyebrow": "Una herramienta para empezar",
+      "title": "Descubrí qué sostiene tus decisiones.",
+      "description": "El test de Anclas de Carrera te ayuda a reconocer capacidades, motivaciones y valores que no querés abandonar. Es gratuito, orientativo y podés hacerlo una vez.",
+      "duration": "10–12 minutos",
+      "result": "Resultado inmediato",
+      "disclaimer": "Sin diagnóstico clínico",
+      "cta": "Empezar el test"
+    },
+    "support": {
+      "title": "Algunas partes del camino se transitan mejor en compañía.",
+      "description": "Si querés profundizar, podés pedir orientación a nuestro equipo. Sin respuestas automáticas que pretendan reemplazar una escucha humana.",
+      "contactCta": "Contactar al equipo",
+      "resourcesCta": "Ver recursos"
+    }
+  },
   "CareerQuiz": {
     "metadataTitle": "Test de Anclas de Carrera | Senda",
     "metadataDescription": "Descubrí tu ancla de carrera con el modelo de Edgar Schein. Una lectura gratuita para comprender tu recorrido y orientar tus próximos pasos.",
@@ -389,7 +544,7 @@
     "introCta": "Comenzar Test",
     "questionsProgress": "Respondidas: {answered} de {total}",
     "questionsTitle": "Cuestionario de Identificación",
-    "questionsScaleDesc": "Responde cada pregunta según la escala: 1 (Nunca) hasta 6 (Siempre)",
+    "questionsScaleDesc": "Respondé cada pregunta según la escala: 1 (Nunca) hasta 6 (Siempre)",
     "scaleNever": "Nunca",
     "scaleAlways": "Siempre",
     "questionsBack": "Volver",
@@ -397,7 +552,7 @@
     "questionsRemaining": "Faltan {count} respuestas",
     "transitionTitle": "Último paso, ¡ya casi llegás al resultado!",
     "transitionSubtitle": "Falta una última elección para reconocer qué aspectos son realmente irrenunciables para vos.",
-    "transitionInstruction": "Volvé a recorrer las afirmaciones y elegí las 3 que mejor representen aquello que necesitás preservar en tu vida profesional, incluso cuando cambian el rol o el contexto.",
+    "transitionInstruction": "Vas a volver a recorrer las 40 afirmaciones. Esta vez, elegí las <strong>3 que mejor representen aquello que necesitás preservar</strong> en tu vida profesional, incluso cuando cambien el rol o el contexto.",
     "transitionNote": "Tus tres elecciones finales tendrán un peso adicional en el cálculo para ayudarnos a identificar con mayor claridad tu ancla principal.",
     "transitionCta": "Elegir las 3 más importantes",
     "bonusTitle": "Elección final",
@@ -418,7 +573,7 @@
     "resultsDominant": "Tu ancla dominante",
     "resultsSecondary": "Tu ancla secundaria",
     "resultsThird": "Tu tercera ancla",
-    "resultsDominantText": "Tu ancla dominante es {article} {name}. Este resultado puede ayudarte a reconocer qué aspectos de tu vida profesional necesitás cuidar al evaluar un cambio. Tomalo como un punto de partida para reflexionar, no como una definición cerrada. Si querés profundizarlo, podés pedir orientación a nuestro equipo.",
+    "resultsDominantText": "Dado que tu ancla dominante es <strong>{article} {name}</strong>, cualquier movimiento profesional debería cuidar ese aspecto central de tu perfil. Tomalo como un punto de partida para reflexionar, no como una definición cerrada. Si querés profundizarlo, podés pedir orientación a nuestro equipo.",
     "resultsCtaSession": "Recibir orientación profesional",
     "resultsAiLoadingTitle": "Estamos preparando tu lectura personalizada...",
     "resultsAiLoadingText": "Cruzando tus 40 respuestas con tu perfil como {occupation}.",
@@ -434,6 +589,203 @@
     "authModalDescription": "Ingresá para guardar tu progreso y volver a consultar el resultado de tu Ancla de Carrera cuando lo necesites.",
     "authGoogle": "Ingresar con Google",
     "authLinkedin": "Ingresar con LinkedIn",
-    "authNote": "El registro es seguro y nos permite almacenar tus resultados para sesiones posteriores."
+    "authNote": "El registro es seguro y nos permite almacenar tus resultados para sesiones posteriores.",
+    "calculateError": "No pudimos calcular tu ancla principal. Reiniciá el test e intentá nuevamente.",
+    "analyzeRequestError": "No se pudo generar el diagnóstico.",
+    "analysisUnavailable": "No pudimos generar la lectura personalizada en este momento, pero ya podés consultar el ranking completo.",
+    "introLead": "Un diagnóstico inicial, cálido y claro para entender qué necesita tu carrera para sentirse en eje.",
+    "introBlocksTitle": "4 bloques de 10",
+    "introBlocksText": "Avanzás por partes, sin una pantalla eterna.",
+    "introSessionTitle": "Sesión segura",
+    "introSessionText": "Tus respuestas quedan guardadas en tu cuenta para que puedas volver a consultarlas.",
+    "introTakeawaysTitle": "Qué te vas a llevar",
+    "introTakeawayRanking": "Un ranking completo de tus 8 anclas de carrera.",
+    "introTakeawayTopThree": "Una lectura profunda de tus 3 anclas más fuertes.",
+    "introTakeawayPersonalized": "Una devolución personalizada sobre tu contexto actual.",
+    "introEstimatedTitle": "Tiempo estimado",
+    "introEstimatedText": "Entre 8 y 12 minutos, incluida una selección final de 3 afirmaciones importantes.",
+    "questionsBlock": "Bloque {current} de {total}",
+    "questionsRange": "Preguntas {start} a {end}",
+    "questionsGeneralProgress": "Progreso general",
+    "questionsBackToStart": "Volver al inicio",
+    "questionsBackBlock": "Volver un bloque",
+    "questionsNextBlock": "Siguiente bloque",
+    "questionsIncomplete": "Respondé las 10 afirmaciones de este grupo para continuar.",
+    "transitionReminder": "No hace falta que recuerdes lo que marcaste antes: elegí lo que hoy sentís más propio.",
+    "bonusRange": "Afirmaciones {start} a {end}",
+    "bonusSelectedLabel": "Seleccionadas",
+    "bonusPreviousBlock": "Bloque anterior",
+    "bonusNextBlock": "Siguiente bloque",
+    "responsesSaved": "Tus respuestas se guardan de forma segura en tu cuenta para que puedas volver a consultarlas.",
+    "prequizPrivacy": "Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta.",
+    "prequizPrivacyWithEmail": "Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta ({email}).",
+    "resultsRankingDescription": "Este orden refleja el peso relativo de cada ancla según tus respuestas y tus tres elecciones finales.",
+    "resultsScore": "{score} puntos",
+    "resultsSaved": "Guardado en tu cuenta",
+    "occupationUnknown": "sin especificar",
+    "resultsDisclaimer": "Este resultado es orientativo y puede complementarse con una conversación individual con el equipo."
+  },
+  "Home": {
+    "hero": {
+      "eyebrow": "Senda · Orientación y movimiento",
+      "title": "Encontrá una dirección para el cambio que estás atravesando.",
+      "rhythm": "A veces necesitás elegir.\nA veces necesitás volver a encontrarte.\nA veces necesitás moverte.",
+      "description": "Senda acompaña procesos de orientación vocacional, reinvención profesional y transición laboral para construir próximos pasos posibles.",
+      "primaryCta": "Realizá el diagnóstico",
+      "secondaryCta": "Conocé los procesos",
+      "caption": "Un recorrido para tu momento"
+      ,"imageAlt": "Relieve abstracto de papel y piedra atravesado por una senda hacia la luz"
+    },
+    "processes": {
+      "eyebrow": "El cambio tiene distintas formas",
+      "title": "No todos los cambios se atraviesan igual.",
+      "intro": "En el fondo, todos son procesos de cambio. Pero la pregunta que trae cada persona, el momento que está atravesando y el tipo de recorrido que necesita pueden ser muy distintos.",
+      "cta": "Conocer el proceso"
+    },
+    "bridge": {
+      "eyebrow": "Un primer umbral",
+      "title": "No necesitás llegar con todo resuelto.",
+      "description": "A veces no es fácil saber si lo que está pasando es una duda vocacional, una crisis de sentido o una transición laboral. El diagnóstico inicial de Senda te ayuda a nombrar el momento que estás atravesando y a reconocer qué recorrido puede acompañarte mejor.",
+      "cta": "Empezar diagnóstico"
+    },
+    "method": {
+      "eyebrow": "Cómo funciona",
+      "title": "Una dirección se construye por etapas.",
+      "steps": {
+        "name": { "title": "Nombrar el momento", "description": "Realizás un diagnóstico inicial para contar qué está cambiando y qué necesitás hoy." },
+        "find": { "title": "Encontrar el recorrido", "description": "Se identifica cuál de los tres procesos puede acompañarte mejor según tu situación." },
+        "experience": { "title": "Atravesar el proceso", "description": "Vivís un recorrido diseñado para tu momento, con etapas de exploración, claridad, estrategia y movimiento." },
+        "return": { "title": "Volver al mundo con una dirección", "description": "Cerrás con una síntesis, herramientas concretas y próximos pasos posibles." }
+      }
+    },
+    "territories": {
+      "eyebrow": "Los territorios de Senda",
+      "title": "Cinco preguntas atraviesan cada recorrido.",
+      "intro": "No son servicios separados. Son dimensiones que se conectan de manera distinta en cada proceso.",
+      "items": {
+        "work": { "title": "Trabajo", "description": "Qué lugar ocupa el trabajo en tu vida y qué querés construir." },
+        "identity": { "title": "Identidad", "description": "Quién sos cuando tu título o rol profesional ya no te representan." },
+        "learning": { "title": "Aprendizaje", "description": "Qué necesitás aprender, desaprender o explorar." },
+        "purpose": { "title": "Propósito", "description": "Qué dirección tiene sentido para vos en esta etapa." },
+        "technology": { "title": "Tecnología", "description": "Cómo convivir en la nueva era tecnológica." }
+      }
+    },
+    "manifesto": {
+      "first": "No creemos que una persona sea su currículum. Tampoco creemos que una elección determine toda una vida. Creemos en trayectorias que pueden revisarse, historias que pueden leerse de otro modo y caminos que pueden volver a construirse.",
+      "second": "La tecnología puede ampliar posibilidades. Pero la dirección sigue siendo una pregunta humana."
+    },
+    "faq": {
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Antes de empezar.",
+      "intro": "Algunas respuestas para entender mejor cómo se vive un recorrido en Senda.",
+      "items": {
+        "which": { "question": "¿Cómo sé cuál de los tres procesos necesito?", "answer": "No hace falta que lo sepas de antemano. El diagnóstico inicial permite comprender tu momento, ordenar la pregunta y reconocer qué recorrido puede acompañarte mejor." },
+        "switch": { "question": "¿Qué pasa si empiezo un proceso y descubro que necesito otro?", "answer": "Los recorridos no son compartimentos rígidos. Si durante el proceso aparece otra necesidad, se revisa la dirección y se acuerda la continuidad más adecuada para tu momento." },
+        "format": { "question": "¿Los encuentros son virtuales o presenciales?", "answer": "Los encuentros se realizan de manera virtual, para que puedas sostener el proceso desde donde estés. Si existiera una alternativa presencial para tu caso, se conversa antes de comenzar." },
+        "duration": { "question": "¿Cuánto dura cada proceso?", "answer": "Orientación vocacional comprende 6 encuentros individuales. Reinvención profesional y transición laboral comprenden 8 encuentros cada uno." },
+        "single": { "question": "¿Puedo hacer una única sesión?", "answer": "Senda trabaja con recorridos completos porque los procesos de cambio necesitan tiempo, continuidad e integración. El diagnóstico inicial permite reconocer si este es el momento y el proceso adecuado para vos." },
+        "diagnostic": { "question": "¿Cómo funciona el diagnóstico inicial?", "answer": "Es un formulario breve y no clínico sobre tu situación, lo que necesitás, tu etapa y la urgencia del cambio. El equipo recibe esa información para orientarte sobre el recorrido que mejor puede acompañarte." },
+        "receive": { "question": "¿Qué recibo al finalizar?", "answer": "Cada proceso cierra con una síntesis personalizada, herramientas concretas y una hoja de ruta. Los entregables específicos dependen del recorrido que hayas atravesado." }
+      }
+    },
+    "final": {
+      "eyebrow": "El primer paso",
+      "title": "Tu camino no tiene que estar completamente claro para poder empezar.",
+      "description": "Podés comenzar por poner en palabras lo que está cambiando. Lo demás se construye paso a paso.",
+      "cta": "Realizá el diagnóstico inicial"
+    }
+  },
+  "Processes": {
+    "back": "Volver a los procesos",
+    "eyebrow": "Proceso {number}",
+    "introduction": "El punto de partida",
+    "journey": { "eyebrow": "El recorrido", "title": "Paso a paso.", "note": "Cada etapa se adapta al momento concreto de la persona; la secuencia funciona como orientación, no como una fórmula rígida." },
+    "takeaways": { "eyebrow": "Al finalizar", "title": "Lo que te llevás." },
+    "cta": { "eyebrow": "Encontrar tu recorrido", "title": "Podés empezar sin tener la respuesta.", "description": "El diagnóstico inicial nos ayuda a comprender tu momento y a orientarte con claridad, cuidado y sin presión.", "button": "Realizá el diagnóstico" },
+    "items": {
+      "orientation": {
+        "title": "Orientación vocacional",
+        "lead": "Cuando necesitás elegir o volver a elegir un camino.",
+        "cardDescription": "Explorá intereses, experiencias, posibilidades y direcciones para construir una decisión propia, situada y con sentido.",
+        "duration": "{count} encuentros individuales",
+        "metaDescription": "Un recorrido de orientación vocacional para explorar intereses, posibilidades y próximos pasos con sentido.",
+        "intro": "Un proceso para quienes necesitan comprender mejor qué les interesa, qué desean construir y qué caminos de estudio o trabajo pueden tener sentido en esta etapa.",
+        "clarification": "No ofrece una respuesta cerrada sobre ‘la carrera correcta’. Acompaña una exploración profunda para tomar decisiones más propias, informadas y posibles.",
+        "stages": {
+          "name": { "title": "Nombrar la pregunta", "description": "El proceso comienza poniendo en palabras el momento actual: dudas, expectativas, historia educativa, experiencias previas, presiones externas y preguntas que todavía no tienen respuesta." },
+          "interests": { "title": "Reconocer intereses y experiencias significativas", "description": "Se exploran intereses, motivaciones, actividades que generan energía, experiencias relevantes y formas personales de aprender, trabajar y vincularse con el conocimiento." },
+          "desires": { "title": "Comprender deseos, valores y condicionantes", "description": "Se trabaja sobre deseos, habilidades, valores, miedos, mandatos familiares o sociales y condiciones concretas que influyen en una elección." },
+          "possibilities": { "title": "Explorar posibilidades", "description": "Se investigan carreras, ocupaciones, áreas profesionales, formas de trabajo y estilos de vida posibles, conectando alternativas reales con el recorrido personal." },
+          "validate": { "title": "Construir hipótesis y validar caminos", "description": "En lugar de elegir de manera abstracta, se construyen hipótesis de camino y pequeñas experiencias de validación: investigar, conversar con personas, conocer entornos, probar actividades o profundizar alternativas." },
+          "integrate": { "title": "Integrar y decidir próximos pasos", "description": "El proceso cierra con una devolución integrada, alternativas priorizadas y un plan de exploración o decisión para los próximos 90 días." }
+        },
+        "takeaways": { "map": "Un mapa vocacional personalizado.", "hypotheses": "Hipótesis de camino.", "alternatives": "Alternativas priorizadas.", "questions": "Preguntas relevantes para seguir explorando.", "plan": "Un plan de acción de 90 días." }
+      },
+      "reinvention": {
+        "title": "Reinvención profesional",
+        "lead": "Cuando tu título, trayectoria o rol profesional ya no te representan.",
+        "cardDescription": "Reconocé qué está terminando, qué sigue siendo valioso y qué nueva dirección podés construir.",
+        "duration": "{count} encuentros individuales",
+        "metaDescription": "Un recorrido para comprender tu trayectoria, rediseñar tu identidad profesional y construir una nueva dirección.",
+        "intro": "Un proceso para quienes sienten que su trabajo, trayectoria, título o rol actual ya no expresa quiénes son ni hacia dónde quieren ir.",
+        "clarification": "No se trata de borrar la historia y empezar de cero. Se trata de comprender lo construido, recuperar lo que sigue teniendo valor y diseñar una nueva etapa con dirección.",
+        "stages": {
+          "moment": { "title": "Leer el momento de cambio", "description": "Se comienza por comprender la situación actual: qué se agotó, qué se perdió, qué deseo de cambio apareció, qué condiciones existen y qué preguntas necesita responder la persona." },
+          "identity": { "title": "Revisar la identidad profesional", "description": "Se explora qué lugar tuvo el trabajo en la historia de vida, qué aspectos de la identidad profesional permanecen vigentes y cuáles ya no representan a la persona." },
+          "patterns": { "title": "Reconocer patrones, recursos y límites", "description": "Se identifican fortalezas, motivaciones, patrones de elección, malestares, miedos, recursos disponibles y factores personales que deben ser cuidados durante el cambio." },
+          "criteria": { "title": "Construir criterios para elegir una nueva dirección", "description": "Se integran deseos, posibilidades y límites reales para construir criterios que permitan evaluar nuevos escenarios sin repetir caminos que ya no tienen sentido." },
+          "direction": { "title": "Transformar claridad en dirección", "description": "La exploración se convierte en una hipótesis concreta: redefinir el rol actual, cambiar de industria, asumir una nueva función, emprender o combinar distintos caminos." },
+          "futures": { "title": "Diseñar futuros posibles", "description": "Se trabajan escenarios, alternativas, prioridades y decisiones. La persona pasa de pensar ‘qué debería hacer’ a identificar qué futuros puede empezar a construir." },
+          "movement": { "title": "Crear un plan de movimiento", "description": "Se definen acciones, conversaciones, experimentos, redes, hábitos y compromisos para llevar el cambio a la práctica." },
+          "integrate": { "title": "Integrar el recorrido", "description": "El proceso cierra con una nueva narrativa profesional, una dirección priorizada y una hoja de ruta para los próximos 30, 60 y 90 días." }
+        },
+        "takeaways": { "trajectory": "Mapa de trayectoria profesional.", "strengths": "Lectura de fortalezas, patrones y motivadores.", "hypothesis": "Hipótesis de reinvención.", "narrative": "Nueva narrativa profesional.", "roadmap": "Hoja de ruta de 30, 60 y 90 días." }
+      },
+      "transition": {
+        "title": "Transición laboral",
+        "lead": "Cuando el cambio ya está ocurriendo y necesitás convertirlo en movimiento.",
+        "cardDescription": "Ordená tu estrategia, activá tu búsqueda o reposicionamiento y hacé visible la dirección que elegiste.",
+        "duration": "{count} encuentros individuales",
+        "metaDescription": "Un recorrido para ordenar una transición laboral, definir tu objetivo y convertirlo en una estrategia visible.",
+        "intro": "Un proceso para quienes ya están atravesando un cambio laboral concreto: una desvinculación, una búsqueda, un ascenso, un cambio de empresa, un regreso al mercado, una reconversión o la necesidad de reposicionarse.",
+        "clarification": "Acá el foco está en pasar de la incertidumbre a una estrategia clara y visible.",
+        "stages": {
+          "understand": { "title": "Comprender la transición", "description": "Se comienza por ordenar el momento actual: situación laboral, urgencia, experiencia, necesidades, contexto, objetivo y tipo de cambio que la persona necesita atravesar." },
+          "objective": { "title": "Definir el objetivo", "description": "Se construye una dirección clara: qué tipo de rol, organización, proyecto o escenario laboral se quiere buscar; qué se quiere dejar atrás y qué se quiere priorizar." },
+          "movement": { "title": "Organizar el movimiento", "description": "Se crea una estrategia de acción: prioridades, metas semanales, red de contactos, conversaciones necesarias, búsqueda activa o preparación de un cambio." },
+          "execution": { "title": "Sostener la ejecución", "description": "Se revisan avances, obstáculos y decisiones. Se trabaja sobre la disciplina, el foco y la capacidad de ajustar la estrategia sin perder dirección." },
+          "positioning": { "title": "Construir un posicionamiento", "description": "Se traduce la experiencia profesional en una propuesta de valor clara: qué aporta la persona, cómo cuenta su recorrido y qué la diferencia en el mercado." },
+          "presence": { "title": "Ordenar la presencia profesional", "description": "Se rediseñan los activos necesarios para mostrar esa dirección: perfil profesional, currículum, LinkedIn y materiales de presentación." },
+          "exposure": { "title": "Prepararse para la exposición", "description": "Se trabaja la visibilidad: conversaciones, networking, entrevistas, pitch profesional y presencia coherente con el objetivo." },
+          "continue": { "title": "Integrar y continuar", "description": "El proceso cierra con una estrategia de continuidad, prioridades claras y un plan de acción para los próximos 90 días." }
+        },
+        "takeaways": { "strategy": "Estrategia de transición laboral.", "objective": "Objetivo profesional definido.", "plan": "Plan de acción de 90 días.", "assets": "Currículum y LinkedIn reposicionados.", "pitch": "Pitch profesional.", "networking": "Guía de networking y visibilidad." }
+      }
+    }
+  },
+  "InitialDiagnostic": {
+    "meta": { "title": "Diagnóstico inicial", "description": "Un primer paso breve para comprender el cambio que estás atravesando y reconocer qué recorrido puede acompañarte." },
+    "eyebrow": "Diagnóstico inicial",
+    "title": "Pongamos en palabras lo que está cambiando.",
+    "description": "No hace falta que sepas cuál es tu proceso. Estas preguntas nos ayudan a comprender tu momento y a orientarte con más claridad.",
+    "disclaimer": "Es una herramienta orientativa y no clínica. No reemplaza una evaluación ni un diagnóstico profesional.",
+    "progress": "Paso {current} de {total}",
+    "questions": { "situation": "¿Qué situación describe mejor tu momento actual?", "need": "¿Qué necesitás hoy?", "stage": "¿En qué etapa estás?", "urgency": "¿Qué nivel de urgencia tiene este cambio?", "contact": "¿Cómo podemos contactarte?" },
+    "options": {
+      "situation": { "choosing": "Estoy eligiendo qué estudiar o hacia dónde orientarme.", "reinvention": "Mi trabajo o trayectoria ya no me representa.", "transition": "Estoy atravesando un cambio laboral concreto.", "clarity": "No sé exactamente qué me pasa, pero necesito claridad." },
+      "need": { "selfKnowledge": "Conocerme mejor.", "choose": "Elegir entre alternativas.", "redefine": "Redefinir mi dirección.", "organize": "Ordenar una transición.", "reposition": "Reposicionarme profesionalmente.", "move": "Volver a moverme." },
+      "stage": { "secondary": "Secundario.", "education": "Universidad o formación.", "early": "Primeros años laborales.", "experienced": "Profesional con experiencia.", "leadership": "Liderazgo o dirección.", "life": "Cambio de etapa vital." },
+      "urgency": { "exploring": "Estoy explorando.", "soon": "Quiero empezar a moverme pronto.", "decision": "Necesito tomar una decisión en el corto plazo.", "urgent": "Estoy atravesando una situación urgente." }
+    },
+    "contactNote": "Usaremos estos datos únicamente para responder a este diagnóstico y orientar la continuidad.",
+    "fields": { "name": "Nombre", "email": "Email", "phone": "Teléfono (opcional)" },
+    "consent": "Leí y acepto la <privacy>política de privacidad</privacy>.",
+    "privacyNote": "Tus respuestas se guardan de forma segura y no se usan para enviarte comunicaciones no solicitadas.",
+    "back": "Volver",
+    "next": "Continuar",
+    "submit": "Enviar diagnóstico",
+    "sending": "Enviando…",
+    "errors": { "selection": "Elegí una opción para continuar.", "name": "Ingresá tu nombre.", "email": "Ingresá un email válido.", "consent": "Necesitamos tu consentimiento para guardar la información.", "captcha": "No pudimos verificar el envío. Intentá nuevamente.", "submit": "No pudimos guardar tu diagnóstico en este momento. Intentá nuevamente en unos minutos." },
+    "success": { "title": "Gracias por compartir tu momento.", "description": "Recibimos tu información y vamos a orientarte sobre el recorrido Senda que mejor puede acompañarte.", "cta": "Volver al inicio" }
   }
 }

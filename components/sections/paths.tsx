@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { ArrowRight } from "lucide-react";
 import { Section, Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +15,7 @@ const paths = [
   },
   {
     title: "Actualizacion digital e IA",
-    desc: "Si sientes que el contexto te corrio de eje, ordenamos que necesitas aprender y para que.",
+    desc: "Si sentís que el contexto te corrió de eje, ordenamos qué necesitás aprender y para qué.",
     badge: "Upskilling",
   },
   {
@@ -25,7 +25,7 @@ const paths = [
   },
   {
     title: "Cambio de rumbo",
-    desc: "Cuando quieres pivotear de industria o funcion sin tirar por la borda todo lo construido.",
+    desc: "Cuando querés pivotear de industria o función sin tirar por la borda todo lo construido.",
     badge: "Pivot",
   },
   {
@@ -50,7 +50,7 @@ export function PathsSection() {
               </Heading>
               <Text variant="body-lg" className="mt-5 max-w-xl text-[#5d6372]">
                 La pregunta no es solo que opcion existe, sino cual encaja mejor con tu momento, tu energia y el tipo
-                de vida que quieres construir.
+                de vida que querés construir.
               </Text>
             </div>
 

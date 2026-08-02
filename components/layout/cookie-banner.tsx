@@ -78,14 +78,14 @@ export function CookieBanner() {
 
   return (
         <div className="fixed inset-0 z-[60] flex items-end justify-center p-3 pointer-events-none sm:justify-end sm:p-5">
-          <div className="pointer-events-auto w-full max-w-md max-h-[72vh] overflow-y-auto rounded-2xl border border-border bg-white shadow-[0_24px_70px_-28px_rgba(23,59,49,.5)]">
+          <div className="pointer-events-auto max-h-[72vh] w-full max-w-md overflow-y-auto rounded-2xl border border-border bg-card text-card-foreground shadow-[0_24px_70px_-28px_rgba(23,59,49,.5)] dark:border-white/15 dark:shadow-[0_24px_70px_-28px_rgba(0,0,0,.85)]">
             {!showPreferences ? (
               <div className="p-5 md:p-6">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-heading font-bold text-foreground">{t("title")}</h3>
                   <button
                     onClick={rejectAll}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    className="rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
                     aria-label={t("closeLabel")}
                   >
                     <X className="h-5 w-5" />
@@ -98,7 +98,7 @@ export function CookieBanner() {
                   <Button
                     variant="outline"
                     onClick={rejectAll}
-                    className="rounded-full px-6 h-11 font-semibold"
+                    className="h-11 rounded-full px-6 font-semibold dark:border-white/20 dark:bg-white/5 dark:text-[#f6efe7] dark:hover:bg-white/10"
                   >
                     {t("rejectCookies")}
                   </Button>
@@ -111,7 +111,7 @@ export function CookieBanner() {
                   </Button>
                 </div>
 
-                <button onClick={handleOpenPreferences} className="text-sm text-primary font-medium hover:underline">
+                <button onClick={handleOpenPreferences} className="rounded-sm text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card dark:text-[#f0a27f]">
                   {t("managePreferences")}
                 </button>
               </div>
@@ -121,7 +121,7 @@ export function CookieBanner() {
                   <h3 className="text-xl font-heading font-bold text-foreground">{t("preferencesTitle")}</h3>
                   <button
                     onClick={() => setShowPreferences(false)}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    className="rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
                     aria-label={t("closeLabel")}
                   >
                     <X className="h-5 w-5" />

@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Camera, CheckCircle2, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ function initialsFor(name: string, email: string) {
 }
 
 export function ProfileForm({ initialProfile }: { initialProfile: PersonalProfile }) {
+  const t = useTranslations("Profile");
   const [profile, setProfile] = useState(initialProfile);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
@@ -38,12 +40,12 @@ export function ProfileForm({ initialProfile }: { initialProfile: PersonalProfil
     if (!file) return;
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
       setStatus("error");
-      setMessage("Elegí una imagen JPG, PNG o WebP.");
+      setMessage(t("errors.invalidImageType"));
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
       setStatus("error");
-      setMessage("La imagen debe pesar menos de 5 MB.");
+      setMessage(t("errors.imageTooLarge"));
       return;
     }
     setAvatarFile(file);
@@ -55,7 +57,11 @@ export function ProfileForm({ initialProfile }: { initialProfile: PersonalProfil
   async function saveProfile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const supabase = createClient();
-    if (!supabase) return;
+    if (!supabase) {
+      setStatus("error");
+      setMessage(t("errors.unavailable"));
+      return;
+    }
 
     setStatus("saving");
     setMessage("");
@@ -96,72 +102,80 @@ export function ProfileForm({ initialProfile }: { initialProfile: PersonalProfil
       setAvatarFile(null);
       setAvatarPreview(null);
       setStatus("saved");
-      setMessage("Tus datos quedaron guardados.");
+      setMessage(t("success"));
     } catch (error) {
       console.error(error);
       setStatus("error");
-      setMessage("No pudimos guardar los cambios. Probá nuevamente.");
+      setMessage(t("errors.save"));
     }
   }
 
   const avatarSrc = avatarPreview ?? profile.avatarUrl;
 
   return (
-    <form onSubmit={saveProfile} className="space-y-8">
+    <form onSubmit={saveProfile} className="space-y-8" aria-label={t("formLabel")}>
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
         <div className="relative h-28 w-28 flex-none">
           {avatarSrc ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={avatarSrc} alt="Foto de perfil" className="h-28 w-28 rounded-full border-4 border-background object-cover shadow-md" />
+            <img src={avatarSrc} alt={t("avatarAlt")} className="h-28 w-28 rounded-full border-4 border-background object-cover shadow-md" />
           ) : (
             <div className="flex h-28 w-28 items-center justify-center rounded-full border-4 border-background bg-[#2f3647] font-heading text-3xl font-bold text-[#f6efe7] shadow-md">
               {initials}
             </div>
           )}
-          <label className="absolute bottom-0 right-0 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-background bg-[#e47c56] text-white shadow-md hover:bg-[#d86f49]" aria-label="Cambiar foto">
-            <Camera className="h-4 w-4" />
+          <label className="absolute bottom-0 right-0 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-background bg-[#bd5734] text-white shadow-md hover:bg-[#a84729] focus-within:outline-none focus-within:ring-2 focus-within:ring-secondary focus-within:ring-offset-2" aria-label={t("changePhoto")}>
+            <Camera aria-hidden="true" className="h-4 w-4" />
             <input type="file" accept="image/jpeg,image/png,image/webp" onChange={selectAvatar} className="sr-only" />
           </label>
         </div>
         <div>
-          <h2 className="font-heading text-2xl font-semibold text-foreground">Tu imagen</h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">JPG, PNG o WebP de hasta 5 MB. Si no cargás una foto, mostraremos tus iniciales.</p>
+          <h2 className="font-heading text-2xl font-semibold text-foreground">{t("imageTitle")}</h2>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("imageDescription")}</p>
         </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="space-y-2 sm:col-span-2">
-          <span className="text-sm font-semibold text-foreground">Nombre para mostrar</span>
-          <input value={profile.fullName} onChange={(event) => setProfile({ ...profile, fullName: event.target.value })} maxLength={100} className="h-12 w-full rounded-xl border bg-background px-4 text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
+          <span className="text-sm font-semibold text-foreground">{t("displayName")}</span>
+          <input name="fullName" autoComplete="name" value={profile.fullName} onChange={(event) => setProfile({ ...profile, fullName: event.target.value })} maxLength={100} className="h-12 w-full rounded-xl border bg-background px-4 text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
         </label>
         <label className="space-y-2">
-          <span className="text-sm font-semibold text-foreground">Nombre</span>
-          <input value={profile.firstName} onChange={(event) => setProfile({ ...profile, firstName: event.target.value })} maxLength={60} className="h-12 w-full rounded-xl border bg-background px-4 text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
+          <span className="text-sm font-semibold text-foreground">{t("firstName")}</span>
+          <input name="firstName" autoComplete="given-name" value={profile.firstName} onChange={(event) => setProfile({ ...profile, firstName: event.target.value })} maxLength={60} className="h-12 w-full rounded-xl border bg-background px-4 text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
         </label>
         <label className="space-y-2">
-          <span className="text-sm font-semibold text-foreground">Apellido</span>
-          <input value={profile.lastName} onChange={(event) => setProfile({ ...profile, lastName: event.target.value })} maxLength={60} className="h-12 w-full rounded-xl border bg-background px-4 text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
+          <span className="text-sm font-semibold text-foreground">{t("lastName")}</span>
+          <input name="lastName" autoComplete="family-name" value={profile.lastName} onChange={(event) => setProfile({ ...profile, lastName: event.target.value })} maxLength={60} className="h-12 w-full rounded-xl border bg-background px-4 text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
         </label>
         <label className="space-y-2 sm:col-span-2">
-          <span className="text-sm font-semibold text-foreground">Correo de acceso</span>
-          <input value={profile.email} disabled className="h-12 w-full rounded-xl border bg-muted px-4 text-muted-foreground" />
-          <span className="block text-xs text-muted-foreground">Este correo proviene de tu cuenta de Google y no se modifica desde Senda.</span>
+          <span className="text-sm font-semibold text-foreground">{t("accessEmail")}</span>
+          <input name="email" autoComplete="email" value={profile.email} disabled aria-describedby="profile-email-help" className="h-12 w-full rounded-xl border bg-muted px-4 text-muted-foreground" />
+          <span id="profile-email-help" className="block text-xs text-muted-foreground">{t("accessEmailHelp")}</span>
         </label>
         <label className="space-y-2">
-          <span className="text-sm font-semibold text-foreground">País (código)</span>
-          <input value={profile.countryCode} onChange={(event) => setProfile({ ...profile, countryCode: event.target.value })} maxLength={2} placeholder="AR" className="h-12 w-full rounded-xl border bg-background px-4 uppercase text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
+          <span className="text-sm font-semibold text-foreground">{t("countryCode")}</span>
+          <input name="countryCode" autoComplete="country" value={profile.countryCode} onChange={(event) => setProfile({ ...profile, countryCode: event.target.value })} maxLength={2} placeholder={t("countryCodePlaceholder")} className="h-12 w-full rounded-xl border bg-background px-4 uppercase text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
         </label>
         <label className="space-y-2">
-          <span className="text-sm font-semibold text-foreground">Zona horaria</span>
-          <input value={profile.timezone} onChange={(event) => setProfile({ ...profile, timezone: event.target.value })} maxLength={80} placeholder="America/Argentina/Buenos_Aires" className="h-12 w-full rounded-xl border bg-background px-4 text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
+          <span className="text-sm font-semibold text-foreground">{t("timezone")}</span>
+          <input name="timezone" value={profile.timezone} onChange={(event) => setProfile({ ...profile, timezone: event.target.value })} maxLength={80} placeholder={t("timezonePlaceholder")} className="h-12 w-full rounded-xl border bg-background px-4 text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
         </label>
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Button type="submit" disabled={status === "saving"} className="h-12 rounded-full bg-[#e47c56] px-8 text-white hover:bg-[#d86f49]">
-          {status === "saving" ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Guardando…</> : "Guardar cambios"}
+        <Button type="submit" disabled={status === "saving"} className="h-12 rounded-full bg-[#bd5734] px-8 text-white hover:bg-[#a84729]">
+          {status === "saving" ? <><Loader2 aria-hidden="true" className="mr-2 h-4 w-4 animate-spin" />{t("saving")}</> : t("save")}
         </Button>
-        {message && <p role="status" className={`flex items-center gap-2 text-sm ${status === "error" ? "text-destructive" : "text-foreground"}`}>{status === "saved" && <CheckCircle2 className="h-4 w-4 text-green-600" />}{message}</p>}
+        {message && (
+          <p
+            role={status === "error" ? "alert" : "status"}
+            className={`flex items-center gap-2 text-sm ${status === "error" ? "text-destructive" : "text-foreground"}`}
+          >
+            {status === "saved" && <CheckCircle2 aria-hidden="true" className="h-4 w-4 text-green-600" />}
+            {message}
+          </p>
+        )}
       </div>
     </form>
   );

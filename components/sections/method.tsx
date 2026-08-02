@@ -7,7 +7,7 @@ const steps = [
   {
     step: "ETAPA 01",
     title: "Escuchar y ordenar",
-    desc: "Abrimos un espacio para entender tu momento, lo que te pesa hoy y lo que ya no quieres seguir sosteniendo.",
+    desc: "Abrimos un espacio para entender tu momento, lo que te pesa hoy y lo que ya no querés seguir sosteniendo.",
   },
   {
     step: "ETAPA 02",

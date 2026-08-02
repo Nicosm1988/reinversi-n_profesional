@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { ArrowRight } from "lucide-react";
 import { Section, Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
@@ -21,8 +21,8 @@ export function ServicesSection() {
               Tu siguiente movimiento puede empezar con una sola conversacion.
             </Heading>
             <Text className="mx-auto mt-5 max-w-2xl text-lg text-[#e8d8c8]/84">
-              Haz el diagnostico, ordena tus opciones y descubre que tipo de camino profesional tiene mas sentido para
-              ti en este momento.
+              Hacé el diagnóstico, ordená tus opciones y descubrí qué tipo de camino profesional tiene más sentido para
+              vos en este momento.
             </Text>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">

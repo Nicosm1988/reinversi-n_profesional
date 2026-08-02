@@ -5,6 +5,7 @@
 - Availability (monthly): `99.9%` for web and API.
 - API p95 latency:
   - `POST /api/leads` < `700ms`
+  - `POST /api/initial-diagnostic` < `700ms`
   - `POST /api/diagnostics/analyze` < `3500ms`
 - Error budget:
   - 0.1% monthly downtime budget.
@@ -30,6 +31,7 @@
   - `/api/health`
 - Synthetic flow:
   - Contact form submit
+  - Initial diagnostic submit
   - Diagnostic analyze submit
 - Log monitor on structured events:
   - `*.error`

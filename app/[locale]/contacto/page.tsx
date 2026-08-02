@@ -1,18 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Section, Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn } from "@/components/motion";
-import { ArrowRight, Mail, Clock, Send, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Mail, Send, CheckCircle2 } from "lucide-react";
 import { TurnstileWidget } from "@/components/security/turnstile-widget";
 
 export default function ContactoPage() {
   const t = useTranslations("Contact");
+  const locale = useLocale();
 
   const contactReasons = [
     t("reasonDiagnostic"),
@@ -25,6 +26,7 @@ export default function ContactoPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | undefined>();
+  const [captchaError, setCaptchaError] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const captchaEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
   const [formData, setFormData] = useState({
@@ -42,7 +44,6 @@ export default function ContactoPage() {
     setErrorMessage(null);
 
     try {
-      const locale = window.location.pathname.startsWith("/en") ? "en" : "es";
       const response = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -60,13 +61,12 @@ export default function ContactoPage() {
       });
 
       if (!response.ok) {
-        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(payload?.error ?? "No se pudo enviar tu consulta");
+        throw new Error(t("errorSubmit"));
       }
 
       setSubmitted(true);
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Error inesperado al enviar la consulta");
+      setErrorMessage(error instanceof Error ? error.message : t("errorUnexpected"));
     } finally {
       setIsSubmitting(false);
     }
@@ -77,7 +77,7 @@ export default function ContactoPage() {
       <section className="wati-page-hero py-20 lg:py-28">
         <Container>
           <FadeIn className="max-w-2xl mx-auto text-center relative z-10">
-            <Heading level="h1" className="text-primary text-4xl sm:text-5xl lg:text-6xl mb-6">
+            <Heading level="h1" className="text-primary text-4xl sm:text-5xl lg:text-6xl mb-6 dark:text-[#f6efe7]">
               {t("heroTitle")} <span className="italic text-secondary">{t("heroTitleAccent")}</span>
             </Heading>
             <Text variant="lead" className="max-w-xl mx-auto">{t("heroDescription")}</Text>
@@ -127,7 +127,7 @@ export default function ContactoPage() {
                         required
                         value={formData.reason}
                         onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow appearance-none"
+                        className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow appearance-none dark:[color-scheme:dark]"
                       >
                         <option value="">{t("placeholderReason")}</option>
                         {contactReasons.map((reason) => (
@@ -158,23 +158,32 @@ export default function ContactoPage() {
                         required
                       />
                       <span>
-                        Acepto los <Link href="/terminos" className="underline hover:text-primary">Terminos y Condiciones</Link> y la{" "}
-                        <Link href="/privacidad" className="underline hover:text-primary">Politica de Privacidad</Link>.
+                        {t.rich("consent", {
+                          terms: (chunks) => <Link href="/terminos" className="underline hover:text-foreground">{chunks}</Link>,
+                          privacy: (chunks) => <Link href="/privacidad" className="underline hover:text-foreground">{chunks}</Link>,
+                        })}
                       </span>
                     </label>
 
-                    {errorMessage && <p className="text-sm text-destructive">{errorMessage}</p>}
-                    <TurnstileWidget onTokenChange={setCaptchaToken} action="lead_contact" className="min-h-[65px]" />
+                    {errorMessage && <p className="text-sm text-destructive" role="alert">{errorMessage}</p>}
+                    <TurnstileWidget
+                      onTokenChange={setCaptchaToken}
+                      onErrorChange={setCaptchaError}
+                      action="lead_contact"
+                      language={locale}
+                      className="min-h-[65px]"
+                    />
+                    {captchaError && <p className="text-sm text-destructive" role="alert">{t("captchaError")}</p>}
 
                     <Button type="submit" size="lg" variant="secondary" disabled={isSubmitting || !acceptedTerms || (captchaEnabled && !captchaToken)} className="rounded-full px-10 h-14 text-base w-full md:w-auto">
-                      {isSubmitting ? "Enviando..." : t("submitButton")} <Send className="ml-2 h-4 w-4" />
+                      {isSubmitting ? t("submitting") : t("submitButton")} <Send aria-hidden="true" className="ml-2 h-4 w-4" />
                     </Button>
                   </form>
                 </Card>
               ) : (
                 <Card className="bg-background p-8 md:p-12 text-center">
                   <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle2 className="h-8 w-8 text-accent" />
+                    <CheckCircle2 aria-hidden="true" className="h-8 w-8 text-accent" />
                   </div>
                   <h2 className="text-2xl font-heading font-medium text-foreground mb-4">{t("successTitle")}</h2>
                   <Text variant="body-lg" className="mb-8 max-w-md mx-auto">{t("successDescription")}</Text>
@@ -200,21 +209,11 @@ export default function ContactoPage() {
                   <div className="space-y-5">
                     <div className="flex items-start gap-4 group">
                       <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
-                        <Mail className="h-5 w-5 text-secondary" />
+                        <Mail aria-hidden="true" className="h-5 w-5 text-secondary" />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-foreground">{t("sidebarEmailLabel")}</p>
                         <a href="mailto:contacto@senda.com" className="text-sm text-muted-foreground hover:text-secondary transition-colors">contacto@senda.com</a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4 group">
-                      <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
-                        <Clock className="h-5 w-5 text-secondary" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-foreground">{t("sidebarHoursLabel")}</p>
-                        <p className="text-sm text-muted-foreground">{t("sidebarHoursValue")}</p>
                       </div>
                     </div>
                   </div>
@@ -224,8 +223,8 @@ export default function ContactoPage() {
                   <h3 className="font-heading font-medium text-foreground text-lg mb-4">{t("sidebarCtaTitle")}</h3>
                   <Text className="text-sm mb-6">{t("sidebarCtaDescription")}</Text>
                   <Button variant="default" size="lg" className="rounded-full px-8 h-12 w-full font-semibold" asChild>
-                    <Link href="/diagnostico/ancla-de-carrera">
-                      {t("sidebarCtaButton")} <ArrowRight className="ml-2 h-4 w-4" />
+                    <Link href="/diagnostico">
+                      {t("sidebarCtaButton")} <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
                 </div>

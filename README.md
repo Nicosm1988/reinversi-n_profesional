@@ -62,6 +62,7 @@ npm run dev
 
 - `POST /api/diagnostics/analyze`
 - `POST /api/diagnostics/save` (retirado; responde `410 Gone`)
+- `POST /api/initial-diagnostic`
 - `POST /api/leads`
 - `GET /api/health`
 
@@ -73,6 +74,9 @@ Migraciones relevantes:
 - `supabase/migrations/20260303203000_lead_requests_hardening.sql`
 - `supabase/migrations/20260304100000_lead_requests_lockdown.sql`
 - `supabase/migrations/20260531183000_require_auth_for_diagnostics.sql`
+- `supabase/migrations/20260802150000_initial_diagnostics.sql`
+
+El diagnóstico inicial se persiste en `public.initial_diagnostics`. La tabla tiene RLS activa, no concede acceso a `anon` ni `authenticated`, y recibe escrituras únicamente a través del backend con `service_role`.
 
 Comandos recomendados:
 

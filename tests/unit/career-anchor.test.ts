@@ -26,6 +26,15 @@ describe("careerAnchorAnalyzeRequestSchema", () => {
     expect(careerAnchorAnalyzeRequestSchema.safeParse(buildValidPayload()).success).toBe(true);
   });
 
+  it("accepts supported locales and rejects unknown locales", () => {
+    expect(
+      careerAnchorAnalyzeRequestSchema.safeParse({ ...buildValidPayload(), locale: "en" }).success,
+    ).toBe(true);
+    expect(
+      careerAnchorAnalyzeRequestSchema.safeParse({ ...buildValidPayload(), locale: "fr" }).success,
+    ).toBe(false);
+  });
+
   it("rejects missing and foreign question identifiers", () => {
     const payload = buildValidPayload();
     delete payload.rawAnswers.answers["40"];
@@ -60,6 +69,9 @@ describe("calculateDominantCareerAnchor", () => {
 
     expect(calculateDominantCareerAnchor(payload.rawAnswers)).toEqual({
       name: "Autonomía/Independencia",
+    });
+    expect(calculateDominantCareerAnchor(payload.rawAnswers, "en")).toEqual({
+      name: "Autonomy/Independence",
     });
   });
 });

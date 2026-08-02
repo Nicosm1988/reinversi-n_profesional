@@ -10,7 +10,8 @@ export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
   const next = sanitizeNextPath(searchParams.get("next"));
-  const loginErrorPath = "/login?error=auth-callback-failed";
+  const isEnglishFlow = next === "/en" || next.startsWith("/en/");
+  const loginErrorPath = `${isEnglishFlow ? "/en" : ""}/login?error=auth-callback-failed`;
 
   try {
     if (!hasSupabasePublicConfig()) {

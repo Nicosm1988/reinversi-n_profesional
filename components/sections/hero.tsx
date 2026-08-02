@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { ArrowRight, Compass, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Heading, Text } from "@/components/ui/typography";

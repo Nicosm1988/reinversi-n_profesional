@@ -41,6 +41,13 @@ npm run verify:env:strict
 2. Confirm Supabase table `lead_requests` exists and policies are active.
 3. If captcha is enabled, validate Turnstile client/server keys.
 
+## If the initial diagnostic fails
+
+1. Check `POST /api/initial-diagnostic` logs (`initial_diagnostic.*` events).
+2. Confirm migration `20260802150000_initial_diagnostics.sql` is applied.
+3. Confirm `initial_diagnostics` has RLS enabled, no direct grants for `anon` or `authenticated`, and the required `service_role` grants.
+4. If captcha is enabled, validate the `initial_diagnostic` Turnstile action and client/server keys.
+
 ## If OAuth callback fails
 
 1. Check `auth.callback.*` logs.

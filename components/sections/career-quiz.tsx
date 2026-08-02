@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 import {
   ArrowLeft,
   ArrowRight,
@@ -10,8 +11,9 @@ import {
   ChevronRight,
   Sparkles,
 } from "lucide-react";
-import Link from "next/link";
-import quizData from "@/lib/data/anchors.json";
+import { Link } from "@/navigation";
+import englishQuizData from "@/lib/data/anchors.en.json";
+import spanishQuizData from "@/lib/data/anchors.json";
 import { PreQuizForm, type PreQuizData } from "@/components/forms/pre-quiz-form";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
@@ -44,8 +46,18 @@ export type ExistingCareerDiagnostic = {
   aiFeedback: AiDiagnosticResult;
 };
 
-type QuizQuestion = (typeof quizData.questions)[number];
-type QuizResult = (typeof quizData.anchors)[number] & {
+type QuizQuestion = {
+  id: number;
+  text: string;
+};
+
+type QuizResult = {
+  id: string;
+  name: string;
+  article: string;
+  description: string;
+  longDescription: string;
+  questions: number[];
   score: number;
   mean: number;
 };
@@ -62,11 +74,10 @@ function chunkQuestions<T>(items: T[], size: number) {
   return chunks;
 }
 
-const questionPages = chunkQuestions(quizData.questions, QUESTIONS_PER_PAGE);
 const warmCardClass =
   "overflow-hidden border-[#d7c3ae] bg-[#f6efe7]/95 shadow-[0_28px_80px_-42px_rgba(17,24,39,0.55)] backdrop-blur-sm";
 const warmPrimaryButtonClass =
-  "rounded-full border-[#d86f49] bg-[#e47c56] text-white shadow-[0_18px_40px_-18px_rgba(228,124,86,0.9)] hover:border-[#c85f3a] hover:bg-[#d86f49]";
+  "rounded-full border-[#a84729] bg-[#bd5734] text-white shadow-[0_18px_40px_-18px_rgba(189,87,52,0.85)] hover:border-[#963f25] hover:bg-[#a84729]";
 const warmSecondaryButtonClass =
   "rounded-full border-[#d4c0ad] bg-[#fbf5ee] text-[#2f3647] shadow-[0_18px_36px_-26px_rgba(47,54,71,0.45)] hover:bg-[#efe3d5]";
 const warmSectionEyebrowClass = "font-semibold uppercase tracking-[0.18em] text-[#cf724e]";
@@ -77,6 +88,13 @@ type CareerQuizProps = {
 };
 
 export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizProps) {
+  const locale = useLocale();
+  const t = useTranslations("CareerQuiz");
+  const quizData = locale === "en" ? englishQuizData : spanishQuizData;
+  const questionPages = useMemo(
+    () => chunkQuestions(quizData.questions, QUESTIONS_PER_PAGE),
+    [quizData.questions],
+  );
   const storedAnswers = existingDiagnostic
     ? Object.fromEntries(
         Object.entries(existingDiagnostic.rawAnswers.answers).map(([questionId, value]) => [Number(questionId), value]),
@@ -131,7 +149,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
     });
 
     return results.sort((a, b) => b.score - a.score);
-  }, [allAnswered, answers, bonusQuestions]);
+  }, [allAnswered, answers, bonusQuestions, quizData.anchors]);
 
   const handleAnswer = (questionId: number, value: number) => {
     setAnswers((previous) => ({ ...previous, [questionId]: value }));
@@ -163,7 +181,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
     setStep("results");
 
     if (!dominantAnchor) {
-      setAnalysisError("No pudimos calcular tu ancla principal. Reinicia el test e intenta nuevamente.");
+      setAnalysisError(t("calculateError"));
       setIsAnalyzing(false);
       return;
     }
@@ -179,6 +197,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
             bonus: bonusQuestions,
           },
           captchaToken,
+          locale,
         }),
       });
 
@@ -196,7 +215,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
           return;
         }
 
-        throw new Error(aiData?.error ?? "No se pudo generar el diagnóstico");
+        throw new Error(aiData?.error ?? t("analyzeRequestError"));
       }
 
       setAiResult(aiData);
@@ -204,7 +223,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
     } catch (error) {
       console.error(error);
       setAnalysisError(
-        "No pudimos generar la lectura personalizada en este momento, pero ya podés consultar el ranking completo.",
+        t("analysisUnavailable"),
       );
     } finally {
       setIsAnalyzing(false);
@@ -237,15 +256,15 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 <div className="space-y-6 text-center">
                   <div className="inline-flex items-center rounded-full border border-[#d7c3ae] bg-[#f2e5d7] px-4 py-2 text-sm font-medium text-[#cf724e]">
                     <BarChart3 className="mr-2 h-4 w-4" />
-                    Modelo de Edgar Schein
+                    {t("introBadge")}
                   </div>
 
                   <Heading level="h2" className="text-4xl text-[#2f3647] dark:text-[#f6efe7] md:text-5xl">
-                    ¿Cuál es tu Ancla de Carrera?
+                    {t("introTitle")}
                   </Heading>
 
                   <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#f6efe7]">
-                    Un diagnóstico inicial, cálido y claro para entender qué necesita tu carrera para sentirse en eje.
+                    {t("introLead")}
                   </Text>
                 </div>
 
@@ -253,32 +272,26 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                   <CardContent className="grid gap-8 p-8 md:grid-cols-[1.1fr_0.9fr] md:p-10">
                     <div className="space-y-5 text-left">
                       <Text variant="lead" className="font-semibold text-[#2f3647]">
-                        Una brújula interna para comprender mejor tu recorrido.
+                        {t("introSubtitle")}
                       </Text>
-                      <Text>
-                        Edgar Schein desarrolló este concepto para identificar esa combinación de capacidades,
-                        motivaciones y valores a la que no renunciarías fácilmente en tu vida profesional.
-                      </Text>
-                      <Text>
-                        Cuando conocés tu ancla, tomar decisiones deja de sentirse difuso: ves con más claridad qué
-                        entornos, roles y desafíos te expanden de verdad y cuáles te desgastan.
-                      </Text>
+                      <Text>{t("introParagraph1")}</Text>
+                      <Text>{t("introParagraph2")}</Text>
 
                       <div className="grid gap-3 sm:grid-cols-2">
                         <div className="rounded-2xl border border-[#e0cbb6] bg-[#fbf5ee] p-4">
                           <Text variant="small" className="font-semibold text-[#2f3647]">
-                            4 bloques de 10
+                            {t("introBlocksTitle")}
                           </Text>
                           <Text variant="small" className="mt-1 text-[#5a6275]">
-                            Avanzas por partes, sin una pantalla eterna.
+                            {t("introBlocksText")}
                           </Text>
                         </div>
                         <div className="rounded-2xl border border-[#e6c9be] bg-[#f7e5dc] p-4">
                           <Text variant="small" className="font-semibold text-[#cf724e]">
-                            Sesión segura
+                            {t("introSessionTitle")}
                           </Text>
                           <Text variant="small" className="mt-1 text-[#6b6170]">
-                            Tus respuestas quedan guardadas en tu cuenta para retomarlas luego.
+                            {t("introSessionText")}
                           </Text>
                         </div>
                       </div>
@@ -286,13 +299,13 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
 
                     <div className="space-y-4 rounded-[28px] border border-[#d8c5b3] bg-gradient-to-br from-[#f9f2ea] via-[#f6ede4] to-[#eeded0] p-6">
                       <Text variant="small" className={warmSectionEyebrowClass}>
-                        Qué te vas a llevar
+                        {t("introTakeawaysTitle")}
                       </Text>
                       <div className="space-y-4">
                         {[
-                          "Un ranking completo de tus 8 anclas de carrera.",
-                          "Una lectura profunda de tus 3 anclas más fuertes.",
-                          "Una devolución personalizada sobre tu contexto actual.",
+                          t("introTakeawayRanking"),
+                          t("introTakeawayTopThree"),
+                          t("introTakeawayPersonalized"),
                         ].map((item) => (
                           <div key={item} className="flex gap-3">
                             <div className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#f0d7c5] text-[#cf724e]">
@@ -307,10 +320,10 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
 
                       <div className="rounded-2xl border border-dashed border-[#cf724e]/35 bg-[#fffaf4] p-4">
                         <Text variant="small" className="font-semibold text-[#2f3647]">
-                          Tiempo estimado
+                          {t("introEstimatedTitle")}
                         </Text>
                         <Text variant="small" className="mt-1 text-[#5d6372]">
-                          Entre 8 y 12 minutos, incluida una selección final de 3 afirmaciones importantes.
+                          {t("introEstimatedText")}
                         </Text>
                       </div>
                     </div>
@@ -327,7 +340,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                       setStep("questions");
                     }}
                   >
-                    Comenzar test
+                    {t("introCta")}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </div>
@@ -346,19 +359,25 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                       <div className="space-y-2">
                         <Text variant="small" className={warmSectionEyebrowClass}>
-                          Bloque {questionPageIndex + 1} de {questionPages.length}
+                          {t("questionsBlock", {
+                            current: questionPageIndex + 1,
+                            total: questionPages.length,
+                          })}
                         </Text>
                         <CardTitle className="text-2xl md:text-3xl">
-                          Preguntas {questionBlockStart} a {questionBlockEnd}
+                          {t("questionsRange", {
+                            start: questionBlockStart,
+                            end: questionBlockEnd,
+                          })}
                         </CardTitle>
                         <CardDescription className="text-base">
-                          Respondé cada afirmación en una escala del 1 al 6. Las presentamos en grupos de 10 para que puedas avanzar con calma.
+                          {t("questionsScaleDesc")}
                         </CardDescription>
                       </div>
 
                       <div className="min-w-[220px] rounded-2xl border border-[#dac5b2] bg-[#fffaf4] p-4">
                         <div className="mb-2 flex items-center justify-between text-sm font-medium text-foreground/70">
-                          <span>Progreso general</span>
+                          <span>{t("questionsGeneralProgress")}</span>
                           <span>
                             {answeredCount}/{quizData.questions.length}
                           </span>
@@ -399,7 +418,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                               key={value}
                               type="button"
                               onClick={() => handleAnswer(question.id, value)}
-                              className={`h-12 rounded-2xl border text-sm font-bold transition-all duration-200 ${
+                              className={`h-12 rounded-2xl border text-sm font-bold transition-[color,background-color,border-color,box-shadow,transform] duration-200 ${
                                 answers[question.id] === value
                                   ? "scale-[1.03] border-[#e47c56] bg-[#2f3647] text-[#f6efe7] shadow-md"
                                   : "border-[#dbc7b3] bg-[#fffaf4] text-[#2f3647] hover:border-[#e47c56]/60 hover:bg-[#f4e5d8]"
@@ -411,8 +430,8 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                         </div>
 
                         <div className="mt-3 flex justify-between text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                          <span>Nunca</span>
-                          <span>Siempre</span>
+                          <span>{t("scaleNever")}</span>
+                          <span>{t("scaleAlways")}</span>
                         </div>
                       </div>
                     ))}
@@ -433,7 +452,9 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                         }}
                       >
                         <ArrowLeft className="mr-2 h-4 w-4" />
-                        {questionPageIndex === 0 ? "Volver al inicio" : "Volver un bloque"}
+                        {questionPageIndex === 0
+                          ? t("questionsBackToStart")
+                          : t("questionsBackBlock")}
                       </Button>
 
                       <Button
@@ -450,14 +471,14 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                           setQuestionPageIndex((previous) => previous + 1);
                         }}
                       >
-                        {isLastQuestionPage ? "Continuar" : "Siguiente bloque"}
+                        {isLastQuestionPage ? t("questionsContinue") : t("questionsNextBlock")}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
 
                     {!currentQuestionPageComplete && (
                       <Text variant="small" className="text-center text-muted-foreground">
-                        Respondé las 10 afirmaciones de este grupo para continuar.
+                        {t("questionsIncomplete")}
                       </Text>
                     )}
                   </CardFooter>
@@ -479,25 +500,23 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
 
                 <div className="space-y-4">
                   <Heading level="h2" className="text-3xl text-[#2f3647] dark:text-[#f6efe7] md:text-4xl">
-                    Ya casi llegás a tu resultado
+                    {t("transitionTitle")}
                   </Heading>
                   <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#f6efe7]">
-                    Falta una última elección para reconocer qué aspectos son realmente irrenunciables para vos.
+                    {t("transitionSubtitle")}
                   </Text>
                 </div>
 
                 <Card className="mx-auto max-w-3xl border-[#d7c3ae] bg-[#f6efe7]/95 shadow-[0_28px_80px_-42px_rgba(17,24,39,0.45)]">
                   <CardContent className="space-y-5 p-8 text-left">
                     <Text>
-                      Vas a volver a recorrer las 40 afirmaciones. Esta vez, elegí las <strong>3 que mejor representen
-                      aquello que necesitás preservar</strong> en tu vida profesional, incluso cuando cambian el rol o el contexto.
+                      {t.rich("transitionInstruction", {
+                        strong: (chunks) => <strong>{chunks}</strong>,
+                      })}
                     </Text>
-                    <Text>
-                      No hay respuestas correctas. Estas tres elecciones tendrán un peso adicional en el cálculo para
-                      ayudarnos a identificar con mayor claridad tu ancla principal.
-                    </Text>
-                      <Text variant="small" className="text-muted-foreground">
-                      No hace falta que recuerdes lo que marcaste antes: elegí lo que hoy sentís más propio.
+                    <Text>{t("transitionNote")}</Text>
+                    <Text variant="small" className="text-muted-foreground">
+                      {t("transitionReminder")}
                     </Text>
                   </CardContent>
                 </Card>
@@ -511,7 +530,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     setStep("bonus");
                   }}
                 >
-                  Elegir las 3 más importantes
+                  {t("transitionCta")}
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Button>
               </motion.div>
@@ -529,19 +548,22 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                       <div className="space-y-2">
                         <Text variant="small" className={warmSectionEyebrowClass}>
-                          Elección final
+                          {t("bonusTitle")}
                         </Text>
                         <CardTitle className="text-2xl md:text-3xl">
-                          Afirmaciones {bonusBlockStart} a {bonusBlockEnd}
+                          {t("bonusRange", {
+                            start: bonusBlockStart,
+                            end: bonusBlockEnd,
+                          })}
                         </CardTitle>
                         <CardDescription className="text-base">
-                          Elegí solo 3 afirmaciones en total. Podés recorrer todos los grupos antes de confirmar.
+                          {t("bonusSubtitle")}
                         </CardDescription>
                       </div>
 
                       <div className="rounded-2xl border border-[#dbc7b3] bg-[#fffaf4] p-4 text-left">
                         <Text variant="small" className="font-semibold text-[#2f3647]">
-                          Seleccionadas
+                          {t("bonusSelectedLabel")}
                         </Text>
                         <Text className="mt-1 text-2xl font-bold text-foreground">{bonusQuestions.length} / 3</Text>
                       </div>
@@ -559,7 +581,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                           type="button"
                           onClick={() => handleBonusToggle(question.id)}
                           disabled={disabled}
-                          className={`flex w-full items-start gap-4 rounded-[24px] border p-5 text-left transition-all ${
+                          className={`flex w-full items-start gap-4 rounded-[24px] border p-5 text-left transition-[color,background-color,border-color,box-shadow,transform] ${
                             selected
                               ? "border-[#e47c56]/55 bg-[#f0dfd0] shadow-sm"
                               : "border-[#dcc8b5] bg-gradient-to-br from-[#fffaf4] to-[#f2e4d7] hover:border-[#e47c56]/45"
@@ -597,7 +619,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                         }}
                       >
                         <ArrowLeft className="mr-2 h-4 w-4" />
-                        {bonusPageIndex === 0 ? "Volver" : "Bloque anterior"}
+                        {bonusPageIndex === 0 ? t("bonusBack") : t("bonusPreviousBlock")}
                       </Button>
 
                       {isLastBonusPage ? (
@@ -607,7 +629,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                           disabled={bonusQuestions.length !== 3}
                           onClick={() => setStep("pre-quiz")}
                         >
-                          Recibir mi diagnóstico
+                          {t("bonusCta")}
                           <ChevronRight className="ml-2 h-4 w-4" />
                         </Button>
                       ) : (
@@ -616,14 +638,14 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                           className={`px-8 ${warmPrimaryButtonClass}`}
                           onClick={() => setBonusPageIndex((previous) => previous + 1)}
                         >
-                          Siguiente bloque
+                          {t("bonusNextBlock")}
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                       )}
                     </div>
 
                     <Text variant="small" className="text-center text-muted-foreground">
-                      Tus respuestas se guardan de forma segura en tu cuenta para que puedas volver a consultarlas.
+                      {t("responsesSaved")}
                     </Text>
                   </CardFooter>
                 </Card>
@@ -639,13 +661,16 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 className="space-y-8"
               >
                 <div className="space-y-3 text-center">
-                  <Heading level="h2" className="text-[#2f3647] dark:text-[#f6efe7]">Ya tenemos procesadas tus respuestas</Heading>
+                  <Heading level="h2" className="text-[#2f3647] dark:text-[#f6efe7]">
+                    {t("prequizTitle")}
+                  </Heading>
                   <Text className="mx-auto max-w-2xl text-[#596173] dark:text-[#f6efe7]">
-                    Para personalizar mejor tu lectura final, necesitamos algunos datos basicos de tu contexto actual.
+                    {t("prequizSubtitle")}
                   </Text>
                   <Text variant="small" className="text-[#687080] dark:text-[#eadfd4]">
-                    Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta
-                    {userEmail ? ` (${userEmail})` : ""}.
+                    {userEmail
+                      ? t("prequizPrivacyWithEmail", { email: userEmail })
+                      : t("prequizPrivacy")}
                   </Text>
                 </div>
 
@@ -662,18 +687,20 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
               >
                 <div className="space-y-4 text-center">
                   <div className="inline-flex items-center rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-1.5 text-sm font-bold text-[#cf724e]">
-                    Lectura completada
+                    {t("resultsBadge")}
                   </div>
-                  <Heading level="h2" className="text-[#2f3647] dark:text-[#fff7ef]">Tu mapa de anclas de carrera</Heading>
+                  <Heading level="h2" className="text-[#2f3647] dark:text-[#fff7ef]">
+                    {t("resultsTitle")}
+                  </Heading>
                   <Text className="mx-auto max-w-2xl italic text-[#596173] dark:text-[#f6efe7]">
-                    &quot;El ancla de carrera reúne capacidades, motivaciones y valores que una persona procura preservar a lo largo de su recorrido profesional.&quot; — Síntesis del modelo de Edgar Schein
+                    {t("resultsScheinQuote")}
                   </Text>
                 </div>
 
                 <Card className="border-[#d7c3ae] bg-[#f6efe7]/95 shadow-[0_28px_80px_-42px_rgba(17,24,39,0.55)]">
                   <CardHeader>
-                    <CardTitle>Ranking de tus anclas</CardTitle>
-                    <CardDescription>Este orden refleja el peso relativo de cada ancla según tus respuestas y tus tres elecciones finales.</CardDescription>
+                    <CardTitle>{t("resultsRankingTitle")}</CardTitle>
+                    <CardDescription>{t("resultsRankingDescription")}</CardDescription>
                   </CardHeader>
                   <CardContent className="grid gap-4">
                     {calculateResults.map((result, index) => (
@@ -692,7 +719,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                             index === 0
                               ? "bg-[#2f3647] text-[#f6efe7]"
                               : index === 1
-                                ? "bg-[#e47c56] text-white"
+                                ? "bg-[#bd5734] text-white"
                                 : "bg-[#eadacd] text-[#2f3647]"
                           }`}
                         >
@@ -702,7 +729,9 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                         <div className="flex-1">
                           <div className="mb-2 flex items-center justify-between gap-4">
                             <span className="font-bold text-foreground">{result.name}</span>
-                            <span className="text-sm font-medium text-muted-foreground">{result.score} puntos</span>
+                            <span className="text-sm font-medium text-muted-foreground">
+                              {t("resultsScore", { score: result.score })}
+                            </span>
                           </div>
                           <div className="h-2.5 overflow-hidden rounded-full bg-muted">
                             <motion.div
@@ -725,7 +754,9 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 </Card>
 
                 <div className="space-y-8">
-                  <Heading level="h3" className="text-[#2f3647] dark:text-[#f6efe7]">Tu perfil en profundidad</Heading>
+                  <Heading level="h3" className="text-[#2f3647] dark:text-[#f6efe7]">
+                    {t("resultsProfileTitle")}
+                  </Heading>
 
                   {calculateResults.slice(0, 3).map((result, index) => (
                     <Card
@@ -746,7 +777,11 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                           <div>
                             <CardTitle className="text-2xl">{result.name}</CardTitle>
                             <CardDescription>
-                              {index === 0 ? "Tu ancla dominante" : index === 1 ? "Tu ancla secundaria" : "Tu tercera ancla"}
+                              {index === 0
+                                ? t("resultsDominant")
+                                : index === 1
+                                  ? t("resultsSecondary")
+                                  : t("resultsThird")}
                             </CardDescription>
                           </div>
                         </div>
@@ -761,14 +796,15 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                         {index === 0 && (
                           <div className="rounded-2xl border border-[#e0c1ab] bg-[#f3e0d3] p-6">
                             <Text className="leading-relaxed">
-                              Dado que tu ancla dominante es <strong>{result.article} {result.name}</strong>, cualquier
-                              movimiento profesional que hagas debería cuidar ese aspecto central de tu perfil. Si este
-                              resultado te despierta preguntas, no tenés que resolverlas a solas: podés escribirnos y
-                              podemos ayudarte a encontrar el acompañamiento más adecuado para vos.
+                              {t.rich("resultsDominantText", {
+                                article: result.article,
+                                name: result.name,
+                                strong: (chunks) => <strong>{chunks}</strong>,
+                              })}
                             </Text>
                             <div className="mt-6">
                               <Button asChild variant="default" className={`px-8 ${warmPrimaryButtonClass}`}>
-                                <Link href="/contacto">Recibir orientación profesional</Link>
+                                <Link href="/contacto">{t("resultsCtaSession")}</Link>
                               </Button>
                             </div>
                           </div>
@@ -782,9 +818,13 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                   <Card className="border-[#dfbaa1] bg-[#f4dfd3] shadow-lg">
                     <CardContent className="space-y-4 py-8 text-center">
                       <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-[#e8c8b6] border-t-[#e47c56]" />
-                      <Heading level="h4" className="text-[#2f3647]">Estamos preparando tu lectura personalizada</Heading>
+                      <Heading level="h4" className="text-[#2f3647]">
+                        {t("resultsAiLoadingTitle")}
+                      </Heading>
                       <Text className="text-[#5f6573]">
-                        Cruzando tus respuestas con tu contexto actual para devolverte un diagnóstico más afinado.
+                        {t("resultsAiLoadingText", {
+                          occupation: userData?.occupation ?? t("occupationUnknown"),
+                        })}
                       </Text>
                     </CardContent>
                   </Card>
@@ -793,10 +833,12 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 {aiResult && !isAnalyzing && (
                   <div className="space-y-8">
                     <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                      <Heading level="h3" className="text-[#2f3647] dark:text-[#f6efe7]">Tu análisis personalizado</Heading>
+                      <Heading level="h3" className="text-[#2f3647] dark:text-[#f6efe7]">
+                        {t("resultsAiTitle")}
+                      </Heading>
                       {saveStatus === "saved" && (
                         <div className="rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-2 text-sm font-semibold text-[#2f3647]">
-                          Guardado en tu cuenta
+                          {t("resultsSaved")}
                         </div>
                       )}
                     </div>
@@ -804,7 +846,10 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                       <CardHeader className="bg-[#f0dfd1]">
                         <CardTitle className="text-2xl text-[#2f3647]">{aiResult.title}</CardTitle>
                         <CardDescription className="text-base text-foreground/80">
-                          Basado en tu actividad actual: {userData?.occupation || "sin especificar"}.
+                          {t("resultsAiSubtitle", {
+                            age: userData?.age ?? "",
+                            occupation: userData?.occupation ?? t("occupationUnknown"),
+                          })}
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-8 pt-8">
@@ -813,7 +858,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                         <div className="grid gap-6 md:grid-cols-2">
                           <div className="rounded-2xl border border-[#ebc5b5] bg-[#faece3] p-6">
                             <Heading level="h4" className="mb-4 text-lg text-[#c56543]">
-                              Puntos probables de fricción
+                              {t("resultsFrictionTitle")}
                             </Heading>
                             <ul className="space-y-3">
                               {aiResult.frictionAreas.map((friction) => (
@@ -827,7 +872,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
 
                           <div className="rounded-2xl border border-[#dcc5b2] bg-[#f8efe6] p-6">
                             <Heading level="h4" className="mb-4 text-lg text-[#2f3647]">
-                              Tu ecosistema natural
+                              {t("resultsEcosystemTitle")}
                             </Heading>
                             <Text className="text-sm leading-relaxed text-[#5b6272]">
                               {aiResult.idealEcosystem}
@@ -856,21 +901,19 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                 <div className="space-y-8 py-6 text-center">
                   <div className="mx-auto max-w-2xl space-y-4">
                     <Heading level="h3" className="text-2xl text-[#2f3647] dark:text-[#f6efe7] md:text-3xl">
-                      Tu proceso merece una mirada humana
+                      {t("resultsClosingTitle")}
                     </Heading>
                     <Text className="text-lg leading-relaxed text-[#596173] dark:text-[#f6efe7]">
-                      Tu diagnóstico queda disponible para que vuelvas a consultarlo cuando quieras. Si sentís que
-                      necesitás profundizar lo que apareció, podemos escucharte y ayudarte a encontrar el tipo de
-                      espacio de orientación más adecuado para vos.
+                      {t("resultsClosingText")}
                     </Text>
                   </div>
 
                   <Button asChild size="lg" variant="default" className={`h-14 px-12 text-lg ${warmPrimaryButtonClass}`}>
-                    <Link href="/contacto">Recibir orientación profesional</Link>
+                    <Link href="/contacto">{t("resultsClosingCta")}</Link>
                   </Button>
 
                   <Text className="text-sm text-[#687080] dark:text-[#ddd5cc]">
-                    Este resultado es orientativo y puede complementarse con una conversación individual con el equipo.
+                    {t("resultsDisclaimer")}
                   </Text>
                 </div>
               </motion.div>

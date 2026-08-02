@@ -1,7 +1,9 @@
 import { z } from "zod";
-import quizData from "@/lib/data/anchors.json";
+import englishQuizData from "@/lib/data/anchors.en.json";
+import spanishQuizData from "@/lib/data/anchors.json";
 
-const questionIds = new Set(quizData.questions.map((question) => String(question.id)));
+const questionIds = new Set(spanishQuizData.questions.map((question) => String(question.id)));
+const careerAnchorLocaleSchema = z.enum(["es", "en"]);
 
 export const careerAnchorAnalyzeRequestSchema = z
   .object({
@@ -21,6 +23,7 @@ export const careerAnchorAnalyzeRequestSchema = z
       })
       .strict(),
     captchaToken: z.string().trim().min(1).max(4096).optional(),
+    locale: careerAnchorLocaleSchema.optional().default("es"),
   })
   .strict()
   .superRefine((value, context) => {
@@ -45,9 +48,14 @@ export const careerAnchorAnalyzeRequestSchema = z
 
 export type CareerAnchorAnalyzeRequest = z.infer<typeof careerAnchorAnalyzeRequestSchema>;
 export type CareerAnchor = { name: string };
+export type CareerAnchorLocale = z.infer<typeof careerAnchorLocaleSchema>;
 
-export function calculateDominantCareerAnchor(rawAnswers: CareerAnchorAnalyzeRequest["rawAnswers"]): CareerAnchor {
+export function calculateDominantCareerAnchor(
+  rawAnswers: CareerAnchorAnalyzeRequest["rawAnswers"],
+  locale: CareerAnchorLocale = "es",
+): CareerAnchor {
   const bonusIds = new Set(rawAnswers.bonus);
+  const quizData = locale === "en" ? englishQuizData : spanishQuizData;
   const ranked = quizData.anchors.map((anchor) => ({
     name: anchor.name,
     score: anchor.questions.reduce(

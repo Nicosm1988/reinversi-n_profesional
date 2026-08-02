@@ -9,7 +9,11 @@ export default defineConfig({
     coverage: {
       reporter: ["text", "lcov"],
       include: ["lib/**/*.ts"],
-      exclude: ["lib/supabase/admin.ts", "lib/supabase/auth.ts"],
+      exclude: [
+        "lib/supabase/admin.ts",
+        "lib/supabase/auth.ts",
+        "lib/data/senda-processes.ts",
+      ],
     },
   },
   resolve: {

@@ -6,6 +6,9 @@ const routes = [
   "/contacto",
   "/diagnostico",
   "/orientacion-vocacional",
+  "/procesos/orientacion-vocacional",
+  "/procesos/reinvencion-profesional",
+  "/procesos/transicion-laboral",
   "/privacidad",
   "/terminos",
   "/quienes-somos",
@@ -14,10 +17,24 @@ const routes = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = getSiteUrl();
 
-  return routes.map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: route === "" ? ("weekly" as const) : ("monthly" as const),
-    priority: route === "" ? 1 : 0.7,
-  }));
+  return routes.flatMap((route) =>
+    (["es", "en"] as const).map((locale) => {
+      const localePrefix = locale === "en" ? "/en" : "";
+      const spanishUrl = `${baseUrl}${route}`;
+      const englishUrl = `${baseUrl}/en${route}`;
+
+      return {
+        url: `${baseUrl}${localePrefix}${route}`,
+        lastModified: new Date(),
+        changeFrequency: route === "" ? ("weekly" as const) : ("monthly" as const),
+        priority: route === "" ? 1 : 0.7,
+        alternates: {
+          languages: {
+            es: spanishUrl,
+            en: englishUrl,
+          },
+        },
+      };
+    }),
+  );
 }

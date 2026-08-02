@@ -1,0 +1,230 @@
+{
+  "anchors": [
+    {
+      "id": "technical",
+      "name": "Technical/Functional Competence",
+      "article": "the",
+      "description": "People who care more about the content and purpose of their work than its context. They seek deep mastery and continually develop their skills in a specific field.",
+      "longDescription": "Your result suggests that the deepest driver of your career is connected to technical excellence and mastery of your specialty. You tend to feel most fulfilled when you can deepen what you know, refine your skills, and have your expertise recognized in your field.\n\nYou may have felt uncomfortable when you were asked to move away from your area of expertise and into a more generalist or purely managerial role. That does not mean you cannot lead; it means that your way of leading is closely connected to your technical knowledge. Your authority comes from what you know, not only from the position you hold.\n\nDuring a professional transition, any move you make needs to preserve and strengthen this connection with your specialty. A change that separates you from your technical knowledge can create deep dissatisfaction, even if the new role appears more prestigious or better paid.\n\nThe encouraging part is that specialized technical profiles are highly valued in today's market. The key is to find a setting where your expertise meets a real need and challenges you without pulling you away from what genuinely interests you.",
+      "questions": [1, 9, 17, 25, 33]
+    },
+    {
+      "id": "management",
+      "name": "General Management",
+      "article": "the",
+      "description": "People driven by responsibility and broad impact. They develop leadership, emotional intelligence, and the ability to coordinate others toward shared results.",
+      "longDescription": "Your profile reflects a natural orientation toward leadership and large-scale decision-making. This is not simply ambition: your professional satisfaction is closely tied to your ability to influence, coordinate efforts, and see how your decisions affect an organization as a whole.\n\nYou may have felt frustrated in roles where your authority was limited or where you could not see the full picture. People with this anchor often have a natural ability to integrate different perspectives, navigate complexity, and mobilize teams around shared goals.\n\nThis orientation also involves a particular relationship with responsibility: you do not avoid it; you seek it. Knowing that your decisions have real consequences and that you can create tangible impact tends to energize you.\n\nDuring a professional transition, it is important for your next step to move you closer to greater strategic influence. A role limited to execution, without a broader view, may create quiet but significant strain. Your next move should give you room to exercise the integrated leadership your profile needs.",
+      "questions": [2, 10, 18, 26, 34]
+    },
+    {
+      "id": "autonomy",
+      "name": "Autonomy/Independence",
+      "article": "the",
+      "description": "People who resist close supervision and externally imposed rules. They seek flexibility in when and how they work, with room to use their own judgment.",
+      "longDescription": "Your result points to something you may already sense: you need room to do things in your own way. This is not rebellion or an inability to collaborate. It means that your strongest professional self emerges when you have the freedom to decide how, when, and where you work.\n\nPeople with this anchor often feel constrained in environments shaped by excessive control, micromanagement, or rigid structures. If you have held a well-paid role where every step was predetermined, you may have felt a restlessness that was hard to explain. That feeling can be understood as your need for autonomy being compressed.\n\nThis does not mean you cannot have a manager or work within an organization. It means you need to negotiate—or build—spaces where your judgment is valued and where you have room to approach challenges in your own way.\n\nDuring a professional transition, consider not only WHAT you will do but HOW you will be able to do it. A role with compelling work but little autonomy can quickly create internal friction. Independent consulting, highly self-directed remote roles, or organizations built on trust may be worth exploring.",
+      "questions": [3, 11, 19, 27, 35]
+    },
+    {
+      "id": "security",
+      "name": "Security/Stability",
+      "article": "the",
+      "description": "People who prioritize financial and professional security. They value loyalty, predictability, and the ability to build on solid foundations.",
+      "longDescription": "Your result suggests that predictability and stability are central to your relationship with work. This is neither a weakness nor a lack of ambition. It is a legitimate value that reflects your need to build on solid foundations.\n\nPeople with this anchor are often loyal, dependable, and deeply committed to the organizations where they work. You may value knowing what to expect: reliable income, a clear career path, and predictable benefits. When those elements are present, both your wellbeing and your contribution can grow significantly.\n\nToday's environment of rapid change, automation, and economic uncertainty may create a particular kind of anxiety for you. That is understandable: your values are being challenged by a context that often appears to reward volatility. Yet seeking stability does not mean standing still. It means learning how to build security in a changing world.\n\nDuring a professional transition, the goal is not to abandon your need for security but to update how you create it. That might mean diversifying income, developing durable skills, or finding resilient organizations that value continuity and long-term commitment.",
+      "questions": [4, 12, 20, 28, 36]
+    },
+    {
+      "id": "entrepreneurial",
+      "name": "Entrepreneurial Creativity",
+      "article": "the",
+      "description": "People motivated to create something of their own. They apply imagination, experimentation, and initiative to build products, services, or ventures.",
+      "longDescription": "Your result points to a creative force that needs expression. This is not only about wanting autonomy; it is a deeper need to build something genuinely your own and leave a tangible mark through your ability to create.\n\nPeople with this anchor often feel a particular energy when imagining new products, services, or ways of doing things. You may have a physical or mental notebook filled with business ideas, projects, and concepts you want to develop. In traditional roles, you may have felt that this creative energy was contained.\n\nIt is useful to distinguish this motivation from ordinary job dissatisfaction. You do not simply want to leave because you are frustrated; you want to build because building gives your work meaning. Visible, tangible ownership of what you create is an important part of your professional identity.\n\nDuring a transition, some form of entrepreneurship may be a natural direction, but it does not have to involve an unplanned leap. A structured validation process and thoughtful guidance can help turn that creative energy into a viable project without exposing more of your current stability than necessary.",
+      "questions": [5, 13, 21, 29, 37]
+    },
+    {
+      "id": "service",
+      "name": "Service/Dedication to a Cause",
+      "article": "the",
+      "description": "People who want their work to reflect their values and improve the world around them. Contribution and positive impact are central to their choices.",
+      "longDescription": "Your result suggests that the social purpose of your work is not simply a welcome addition; it is a central need. For you, professional success is closely connected to the feeling that you are contributing to something larger than yourself.\n\nPeople with this anchor can experience a specific conflict: they may be excellent at what they do and well compensated, yet still feel that something is missing when their work does not have a positive impact on others or on society. A raise or promotion does not resolve that sense of emptiness.\n\nOver the course of your career, you may have made choices that seemed unconventional from the outside: declining a better-paid offer to remain where your work mattered, or selecting projects for their impact rather than their financial return. Those choices were not mistakes; they reflected this anchor.\n\nDuring a professional transition, service and contribution need to be present in the design of your next step—not only as a future aspiration, but as a current decision criterion. Your next move should help you answer a practical question: who do I want to help, and how?",
+      "questions": [6, 14, 22, 30, 38]
+    },
+    {
+      "id": "challenge",
+      "name": "Pure Challenge",
+      "article": "the",
+      "description": "People motivated by overcoming difficult obstacles and testing the limits of their abilities. Complex problems and meaningful competition energize them.",
+      "longDescription": "Your result suggests that what moves you is not ease but conquest. Your professional energy rises in the face of complex problems, demanding situations, and challenges that others may consider impossible. You do not seek comfort; you seek the experience of overcoming what is difficult.\n\nPeople with this anchor often become bored in routine or predictable roles. If you have had a stable, well-paid job where there was nothing new left to solve, you may have felt increasingly restless. That was not ingratitude; it was your competitive nature looking for a new field in which to grow.\n\nThis orientation carries a major strength: it can support resilience, adaptability, and strong performance under pressure. It also has a risk worth recognizing—the tendency to pursue challenge for its own sake without asking whether it aligns with your other values and life goals.\n\nDuring a transition, the key question is not only “Is this difficult?” but “Is this the right kind of difficult?” Thoughtful guidance can help you direct your competitive energy toward challenges that stimulate you and move you toward the professional life you want in the years ahead.",
+      "questions": [7, 15, 23, 31, 39]
+    },
+    {
+      "id": "lifestyle",
+      "name": "Lifestyle",
+      "article": "the",
+      "description": "People who want work to fit their personal and family needs. They prioritize flexibility and seek a sustainable integration of life and career.",
+      "longDescription": "Your result reflects something that is often misunderstood in today's work culture: work is not the center of your life, but an important part of a broader whole. That is not a lack of commitment. It is clarity about what matters to you.\n\nPeople with this anchor actively seek a career that integrates well with personal life, family, and interests beyond work. You may have learned through experience that no professional achievement can compensate for harm to your health, relationships, or emotional wellbeing.\n\nYou may have declined opportunities that others would have accepted without hesitation: promotions with impossible schedules, relocations that disrupted your balance, or fascinating projects that consumed all your time. Those choices were not cowardice; they were acts of consistency with your deeper values.\n\nDuring a professional transition, the design of your next step should begin with your life, not the other way around. First define how you want to live, then look for a professional model that supports that vision. This is not about giving up ambition but redefining it: success is measured through an integrated sense of balance, not only through work achievements.",
+      "questions": [8, 16, 24, 32, 40]
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "text": "I would like to become so good at what I do that people continually ask me for advice and suggestions"
+    },
+    {
+      "id": 2,
+      "text": "I am most satisfied with my work when I can integrate and manage the efforts of others"
+    },
+    {
+      "id": 3,
+      "text": "I would like a career that gives me autonomy and lets me set my own deadlines"
+    },
+    {
+      "id": 4,
+      "text": "Security and stability are more important to me than freedom and autonomy"
+    },
+    {
+      "id": 5,
+      "text": "I am always looking for ideas that would allow me to start my own business"
+    },
+    {
+      "id": 6,
+      "text": "I consider my career successful only if I feel that I have contributed to the common good"
+    },
+    {
+      "id": 7,
+      "text": "I would like a career in which I can solve problems or prevail in highly challenging situations"
+    },
+    {
+      "id": 8,
+      "text": "I would rather leave my organization than accept a role that compromised the attention I give to my family and personal life"
+    },
+    {
+      "id": 9,
+      "text": "For me, success means developing my technical or functional skills to a very high level of mastery"
+    },
+    {
+      "id": 10,
+      "text": "I would like to be responsible for a complex organization and make decisions that affect many people"
+    },
+    {
+      "id": 11,
+      "text": "I am most satisfied when I have complete freedom to define my own activities, schedules, and procedures"
+    },
+    {
+      "id": 12,
+      "text": "I would rather leave my organization than accept an assignment that threatened my security there"
+    },
+    {
+      "id": 13,
+      "text": "Building my own business is more important to me than reaching a senior management position in someone else's organization"
+    },
+    {
+      "id": 14,
+      "text": "I am most satisfied with my career when I can use my talents in service of others"
+    },
+    {
+      "id": 15,
+      "text": "I consider my career successful only when I face and overcome major challenges"
+    },
+    {
+      "id": 16,
+      "text": "I would like a career that allows me to integrate my personal, family, and professional needs"
+    },
+    {
+      "id": 17,
+      "text": "I am more drawn to becoming a senior leader in my functional area than to becoming a general manager"
+    },
+    {
+      "id": 18,
+      "text": "I consider my career successful only if I become the general manager of an organization"
+    },
+    {
+      "id": 19,
+      "text": "I consider my career successful only if I achieve complete autonomy and freedom"
+    },
+    {
+      "id": 20,
+      "text": "I look for work in organizations that provide security and stability"
+    },
+    {
+      "id": 21,
+      "text": "I am most satisfied with my career when I create something that results from my own ideas and efforts"
+    },
+    {
+      "id": 22,
+      "text": "Using my abilities to create a better world in which to live and work is more important to me than holding a senior management position"
+    },
+    {
+      "id": 23,
+      "text": "I have been most satisfied in my career when I solved seemingly impossible problems or succeeded against the odds"
+    },
+    {
+      "id": 24,
+      "text": "I am satisfied with my life only when I achieve a balance among my personal, family, and professional demands"
+    },
+    {
+      "id": 25,
+      "text": "I would rather leave my organization than accept an assignment that required me to leave my area of expertise"
+    },
+    {
+      "id": 26,
+      "text": "I am more drawn to becoming a general manager than to becoming a senior leader in my area of expertise"
+    },
+    {
+      "id": 27,
+      "text": "The opportunity to work according to my own criteria, without excessive rules or constraints, is more important to me than security"
+    },
+    {
+      "id": 28,
+      "text": "I am most satisfied with my work when I feel financially and professionally secure"
+    },
+    {
+      "id": 29,
+      "text": "I consider my career successful only if I create or build something that is entirely my own product or idea"
+    },
+    {
+      "id": 30,
+      "text": "I would like a career that makes a significant contribution to humanity and society"
+    },
+    {
+      "id": 31,
+      "text": "I seek work opportunities that test my ability to solve problems or compete"
+    },
+    {
+      "id": 32,
+      "text": "Balancing the demands of my personal and professional life is more important to me than reaching a senior management position"
+    },
+    {
+      "id": 33,
+      "text": "I am most satisfied with my work when I have the opportunity to use my abilities and talents"
+    },
+    {
+      "id": 34,
+      "text": "I would rather leave my organization than accept a role that took me away from the path toward general management"
+    },
+    {
+      "id": 35,
+      "text": "I would rather leave my organization than accept a role that limited my autonomy and freedom"
+    },
+    {
+      "id": 36,
+      "text": "I would like a career that gives me a meaningful level of security and stability"
+    },
+    {
+      "id": 37,
+      "text": "I would like to create and build my own business"
+    },
+    {
+      "id": 38,
+      "text": "I would rather leave my organization than accept an assignment that limited my ability to help others"
+    },
+    {
+      "id": 39,
+      "text": "Working on seemingly unsolvable problems is more important to me than reaching a senior management position"
+    },
+    {
+      "id": 40,
+      "text": "I have always sought professional opportunities that do not interfere too much with my personal and family concerns"
+    }
+  ]
+}

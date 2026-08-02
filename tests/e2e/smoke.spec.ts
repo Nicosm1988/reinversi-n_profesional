@@ -1,14 +1,21 @@
 import { test, expect } from "@playwright/test";
 
-test("smoke: landing is accessible and diagnostic requires login", async ({ page }) => {
+test("smoke: landing, public intake and protected account routes are accessible", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle(/Senda/i);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("heading", { name: /próximo paso|next step/i }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: /dirección para el cambio|direction for the change/i }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: /orientación vocacional|vocational guidance/i })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: /reinvención profesional|professional reinvention/i })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: /transición laboral|career transition/i })).toBeVisible();
 
   await page.setViewportSize({ width: 390, height: 844 });
   const bodyWidth = await page.locator("body").evaluate((element) => element.scrollWidth);
   expect(bodyWidth).toBeLessThanOrEqual(390);
+
+  await page.goto("/diagnostico");
+  await expect(page).toHaveURL(/\/diagnostico$/);
+  await expect(page.getByRole("group", { name: /situación describe mejor|situation best describes/i })).toBeVisible();
 
   await page.goto("/diagnostico/ancla-de-carrera");
   await expect(page).toHaveURL(/\/login\?next=.*diagnostico%2Fancla-de-carrera/);

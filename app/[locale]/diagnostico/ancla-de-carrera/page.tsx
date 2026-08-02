@@ -3,6 +3,8 @@ import { getAuthenticatedUser } from "@/lib/supabase/auth";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { canRepeatCareerAnchorTest } from "@/lib/diagnostics/access";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 const storedDiagnosticSchema = z.object({
   user_data: z.object({
@@ -25,10 +27,18 @@ const storedDiagnosticSchema = z.object({
   }),
 });
 
-export const metadata = {
-    title: "Test de Anclas de Carrera | Senda",
-    description: "Descubrí tu ancla de carrera con el modelo de Edgar Schein. Una lectura gratuita para comprender tu recorrido y orientar tus próximos pasos.",
-};
+export async function generateMetadata(
+  props: Readonly<{ params: Promise<{ locale: string }> }>,
+): Promise<Metadata> {
+  const { locale } = await props.params;
+  const t = await getTranslations({ locale, namespace: "CareerQuiz" });
+
+  return {
+    title: t("metadataTitle"),
+    description: t("metadataDescription"),
+    robots: { index: false, follow: false },
+  };
+}
 
 export default async function AnclaDeCarreraPage(
   props: Readonly<{

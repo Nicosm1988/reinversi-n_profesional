@@ -25,6 +25,7 @@ declare global {
 
 type TurnstileWidgetProps = {
   onTokenChange: (token: string | undefined) => void;
+  onErrorChange?: (hasError: boolean) => void;
   className?: string;
   action?: string;
   language?: string;
@@ -35,6 +36,7 @@ const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 export function TurnstileWidget({
   onTokenChange,
+  onErrorChange,
   className,
   action,
   language = "auto",
@@ -51,14 +53,21 @@ export function TurnstileWidget({
     }
 
     onTokenChange(undefined);
+    onErrorChange?.(false);
     widgetIdRef.current = window.turnstile.render(containerRef.current, {
       sitekey: siteKey,
       action,
       language,
       theme,
-      callback: (token) => onTokenChange(token),
+      callback: (token) => {
+        onErrorChange?.(false);
+        onTokenChange(token);
+      },
       "expired-callback": () => onTokenChange(undefined),
-      "error-callback": () => onTokenChange(undefined),
+      "error-callback": () => {
+        onTokenChange(undefined);
+        onErrorChange?.(true);
+      },
     });
 
     return () => {
@@ -68,7 +77,7 @@ export function TurnstileWidget({
       window.turnstile.remove(widgetIdRef.current);
       widgetIdRef.current = null;
     };
-  }, [action, language, onTokenChange, scriptReady, theme]);
+  }, [action, language, onErrorChange, onTokenChange, scriptReady, theme]);
 
   if (!siteKey) {
     return null;

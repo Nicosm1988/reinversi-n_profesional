@@ -44,7 +44,7 @@ function main() {
 
   const hasSupabaseServiceRole = isPresent(process.env.SUPABASE_SERVICE_ROLE_KEY);
   if (!hasSupabaseServiceRole) {
-    const message = "SUPABASE_SERVICE_ROLE_KEY missing: /api/leads will return 503.";
+    const message = "SUPABASE_SERVICE_ROLE_KEY missing: server-backed forms will return 503.";
     if (strict) {
       errors.push(message);
     } else {

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -27,8 +27,10 @@ interface PreQuizFormProps {
 
 export function PreQuizForm({ onSubmit }: PreQuizFormProps) {
   const t = useTranslations("PreQuizForm");
+  const locale = useLocale();
   const captchaEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
   const [captchaToken, setCaptchaToken] = React.useState<string | undefined>();
+  const [captchaError, setCaptchaError] = React.useState(false);
   const warmInputClass =
     "border-[#d7c3ae] bg-[#fffaf4] text-[#2f3647] placeholder:text-[#8d8278] focus-visible:ring-[#e47c56]";
 
@@ -110,14 +112,25 @@ export function PreQuizForm({ onSubmit }: PreQuizFormProps) {
             </div>
 
             <div className="mt-8 border-t border-[#dcc7b3] pt-4">
-              <TurnstileWidget onTokenChange={setCaptchaToken} action="diagnostic_prequiz" className="mb-4" />
+              <TurnstileWidget
+                onTokenChange={setCaptchaToken}
+                onErrorChange={setCaptchaError}
+                action="diagnostic_prequiz"
+                language={locale}
+                className="mb-4"
+              />
+              {captchaError && (
+                <p className="mb-4 text-sm text-destructive" role="alert">
+                  {t("captchaError")}
+                </p>
+              )}
               <Button
                 type="submit"
                 disabled={!canSubmit}
                 variant="default"
-                className="h-14 w-full rounded-full border-[#d86f49] bg-[#e47c56] text-lg text-white shadow-[0_18px_40px_-18px_rgba(228,124,86,0.9)] hover:border-[#c85f3a] hover:bg-[#d86f49]"
+                className="h-14 w-full rounded-full border-[#a84729] bg-[#bd5734] text-lg text-white shadow-[0_18px_40px_-18px_rgba(189,87,52,0.85)] hover:border-[#963f25] hover:bg-[#a84729]"
               >
-                {isSubmitting ? t("submitLoading") : t("submitDefault")} <ArrowRight className="ml-2 w-5 h-5" />
+                {isSubmitting ? t("submitLoading") : t("submitDefault")} <ArrowRight aria-hidden="true" className="ml-2 h-5 w-5" />
               </Button>
             </div>
           </form>

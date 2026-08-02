@@ -1,5 +1,6 @@
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { ArrowRight, Compass, UserRound } from "lucide-react";
 import { z } from "zod";
 import { Container } from "@/components/layout/container";
@@ -17,10 +18,20 @@ const savedResultSchema = z.object({
   updated_at: z.string(),
 });
 
-export const metadata = { title: "Mi recorrido | Senda" };
+type PanelPageProps = {
+  params: Promise<{ locale: string }>;
+};
 
-export default async function PersonalPanelPage({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({ params }: PanelPageProps) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Panel" });
+
+  return { title: t("metadataTitle"), robots: { index: false, follow: false } };
+}
+
+export default async function PersonalPanelPage({ params }: PanelPageProps) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Panel" });
   const auth = await getAuthenticatedUser();
   if (!auth.ok) {
     const panelPath = locale === "en" ? "/en/panel" : "/panel";
@@ -59,36 +70,53 @@ export default async function PersonalPanelPage({ params }: { params: Promise<{ 
     <div className="wati-page-shell min-h-screen pb-20 pt-28 md:pt-32">
       <Container className="relative z-10 max-w-5xl">
         <div id="resumen" className="mb-10 max-w-3xl scroll-mt-28">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm font-semibold text-secondary"><UserRound className="h-4 w-4" />Tu espacio personal</div>
-          <h1 className="font-heading text-4xl font-semibold text-foreground md:text-5xl">Mi recorrido</h1>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">Administrá tus datos y volvé a las herramientas que ya forman parte de tu camino.</p>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm font-semibold text-secondary">
+            <UserRound aria-hidden="true" className="h-4 w-4" />
+            {t("eyebrow")}
+          </div>
+          <h1 className="font-heading text-4xl font-semibold text-foreground md:text-5xl">{t("title")}</h1>
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{t("description")}</p>
         </div>
 
         <div className="space-y-8">
           <section id="resultado" className="scroll-mt-28 rounded-[28px] border bg-card p-6 shadow-sm md:p-10">
             <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
               <div className="max-w-2xl">
-                <div className="flex items-center gap-2 text-sm font-semibold text-secondary"><Compass className="h-5 w-5" />Tu último resultado</div>
+                <div className="flex items-center gap-2 text-sm font-semibold text-secondary">
+                  <Compass aria-hidden="true" className="h-5 w-5" />
+                  {t("latestResult")}
+                </div>
                 {savedResult ? (
                   <>
                     <h2 className="mt-4 font-heading text-3xl font-semibold text-foreground">{savedResult.ai_feedback.title}</h2>
                     <p className="mt-4 leading-relaxed text-muted-foreground">{savedResult.ai_feedback.summary}</p>
                     <div className="mt-6 rounded-2xl border bg-background p-5">
-                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-secondary">Ancla principal</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-secondary">{t("primaryAnchor")}</p>
                       <p className="mt-2 font-heading text-xl font-semibold text-foreground">{savedResult.dominant_result.name}</p>
                       {savedResult.ai_feedback.strategicQuestion && <p className="mt-3 italic text-muted-foreground">“{savedResult.ai_feedback.strategicQuestion}”</p>}
                     </div>
-                    <p className="mt-4 text-xs text-muted-foreground">Actualizado el {new Intl.DateTimeFormat("es-AR", { dateStyle: "long" }).format(new Date(savedResult.updated_at))}.</p>
+                    <p className="mt-4 text-xs text-muted-foreground">
+                      {t("updatedAt", {
+                        date: new Intl.DateTimeFormat(locale === "en" ? "en-US" : "es-AR", {
+                          dateStyle: "long",
+                        }).format(new Date(savedResult.updated_at)),
+                      })}
+                    </p>
                   </>
                 ) : (
                   <>
-                    <h2 className="mt-4 font-heading text-3xl font-semibold text-foreground">Todavía no hay un resultado guardado</h2>
-                    <p className="mt-3 leading-relaxed text-muted-foreground">Cuando completes el test de Anclas de Carrera, vas a encontrar acá tu última lectura.</p>
+                    <h2 className="mt-4 font-heading text-3xl font-semibold text-foreground">{t("emptyTitle")}</h2>
+                    <p className="mt-3 leading-relaxed text-muted-foreground">{t("emptyDescription")}</p>
                   </>
                 )}
               </div>
-              <Link href="/diagnostico/ancla-de-carrera" className="inline-flex flex-none items-center gap-2 rounded-full bg-[#e47c56] px-6 py-3 text-sm font-semibold text-white hover:bg-[#d86f49]">
-                {savedResult && canRepeat ? "Repetir test" : savedResult ? "Ver resultado completo" : "Comenzar test"}<ArrowRight className="h-4 w-4" />
+              <Link href="/diagnostico/ancla-de-carrera" className="inline-flex flex-none items-center gap-2 rounded-full bg-[#bd5734] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a84729]">
+                {savedResult && canRepeat
+                  ? t("repeatTest")
+                  : savedResult
+                    ? t("viewFullResult")
+                    : t("startTest")}
+                <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </div>
           </section>
