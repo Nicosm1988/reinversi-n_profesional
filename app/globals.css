@@ -4,27 +4,27 @@
 
 @layer base {
   :root {
-    --senda-bg: #f4efe4;
-    --senda-ink: #272b23;
-    --senda-dark: #272b23;
-    --senda-dark-hover: #3f4738;
-    --senda-light: #f4efe4;
-    --senda-accent: #b96549;
-    --senda-accent-soft: #d8987f;
-    --senda-accent-dark: #87412e;
-    --senda-border: #d9d1c2;
-    --senda-card: #faf7ef;
-    --senda-paper: #faf7ef;
-    --senda-stone: #eae4d8;
-    --senda-section: #eae4d8;
-    --senda-section-warm: #e6d9c8;
-    --senda-muted: #64665d;
-    --senda-olive: #4a5540;
-    --senda-terracotta: #b96549;
-    --senda-charcoal: #272b23;
+    --senda-bg: #fcf5ec;
+    --senda-ink: #2f3647;
+    --senda-dark: #31384a;
+    --senda-dark-hover: #414a61;
+    --senda-light: #fcf5ec;
+    --senda-accent: #e47c56;
+    --senda-accent-soft: #f0b08d;
+    --senda-accent-dark: #b95d3e;
+    --senda-border: #dcc8b5;
+    --senda-card: #fffaf4;
+    --senda-paper: #fffaf4;
+    --senda-stone: #f8efe6;
+    --senda-section: #f8efe6;
+    --senda-section-warm: #efe5da;
+    --senda-muted: #5d6372;
+    --senda-olive: #7f9b7a;
+    --senda-terracotta: #e47c56;
+    --senda-charcoal: #2f3647;
     --senda-gold: #b99a5e;
-    --background: 40 40% 93%;
-    --foreground: 80 10% 15%;
+    --background: 34 48% 96%;
+    --foreground: 223 16% 24%;
 
     --card: 0 0% 100%;
     --card-foreground: 45 6% 11%;
@@ -32,24 +32,24 @@
     --popover: 0 0% 100%;
     --popover-foreground: 45 6% 11%;
 
-    --primary: 80 10% 15%;
-    --primary-foreground: 40 40% 93%;
+    --primary: 223 16% 24%;
+    --primary-foreground: 34 48% 96%;
 
-    --secondary: 15 43% 51%;
+    --secondary: 18 73% 61%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 39 27% 88%;
-    --muted-foreground: 69 5% 38%;
+    --muted: 29 34% 91%;
+    --muted-foreground: 223 11% 43%;
 
-    --accent: 92 14% 35%;
-    --accent-foreground: 40 40% 93%;
+    --accent: 104 18% 65%;
+    --accent-foreground: 223 16% 24%;
 
     --destructive: 0 72% 42%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 39 21% 81%;
-    --input: 39 21% 81%;
-    --ring: 92 14% 35%;
+    --border: 30 32% 79%;
+    --input: 30 32% 79%;
+    --ring: 18 73% 61%;
 
     --radius: 1rem;
   }
@@ -118,7 +118,7 @@
     background-image:
       radial-gradient(circle at 12% -4%, hsl(var(--accent) / 0.14), transparent 34%),
       radial-gradient(circle at 88% 4%, hsl(var(--secondary) / 0.12), transparent 30%),
-      linear-gradient(180deg, #f7f2e8 0%, #f4efe4 38%, #f8f4eb 100%);
+      linear-gradient(180deg, #fffaf4 0%, #fcf5ec 38%, #fffaf4 100%);
     text-rendering: optimizeLegibility;
   }
 

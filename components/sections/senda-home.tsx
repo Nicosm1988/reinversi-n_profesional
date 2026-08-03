@@ -7,11 +7,7 @@ import { sendaProcesses } from "@/lib/data/senda-processes";
 const howSteps = ["name", "find", "experience", "return"] as const;
 const territories = ["work", "identity", "learning", "purpose", "technology"] as const;
 const faqs = ["which", "switch", "format", "duration", "single", "diagnostic", "receive"] as const;
-const processAccentClasses = {
-  olive: "text-[var(--senda-olive)]",
-  terracotta: "text-[var(--senda-terracotta)]",
-  charcoal: "text-[var(--senda-charcoal)] dark:text-[#aeb4a7]",
-} as const;
+const processIllustrations = ["/illustrations/problem.png", "/illustrations/method.png", "/illustrations/paths.png"] as const;
 
 function TopographicLines({ className = "" }: { className?: string }) {
   return (
@@ -32,13 +28,14 @@ export function SendaHome() {
   return (
     <div className="senda-home overflow-hidden bg-[var(--senda-bg)] text-[var(--senda-ink)]">
       <section className="relative min-h-[780px] overflow-hidden border-b border-black/10 pt-24 sm:min-h-[850px] lg:flex lg:min-h-[min(940px,100svh)] lg:items-center lg:pt-20">
+        <div className="absolute inset-0 bg-[#fcf5ec]" />
         <Image
-          src="/brand/senda-hero.png"
+          src="/illustrations/hero.png"
           alt={t("hero.imageAlt")}
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[67%_55%]"
+          className="object-contain object-[85%_55%] p-5 opacity-95 sm:p-10 lg:object-[82%_55%] lg:p-16"
         />
         <div className="senda-hero-overlay absolute inset-0" />
         <div className="relative mx-auto w-full max-w-[1440px] px-5 pb-28 pt-16 sm:px-8 sm:pt-24 lg:px-12 lg:pb-20 lg:pt-24 xl:px-20">
@@ -79,14 +76,16 @@ export function SendaHome() {
           </div>
 
           <div className="mt-16 grid gap-px overflow-hidden rounded-[2rem] border border-[var(--senda-border)] bg-[var(--senda-border)] lg:grid-cols-3">
-            {sendaProcesses.map((process) => (
+            {sendaProcesses.map((process, index) => (
               <article key={process.slug} className="senda-process-card group relative flex min-h-[490px] flex-col overflow-hidden bg-[var(--senda-paper)] p-7 sm:p-9">
-                <TopographicLines className={`absolute -right-28 -top-14 h-64 w-[30rem] stroke-current opacity-[0.16] [&_path]:stroke-[1.1] ${processAccentClasses[process.accent]}`} />
+                <div className="absolute inset-x-5 top-14 h-44 overflow-hidden rounded-[1.4rem] bg-[#fcf5ec]">
+                  <Image src={processIllustrations[index]} alt="" fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                </div>
                 <div className="relative flex items-center justify-between text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-muted)]">
                   <span>{process.number}</span>
                   <span>{processT(`items.${process.key}.duration`, { count: process.durationMeetings })}</span>
                 </div>
-                <div className="relative mt-auto pt-28">
+                <div className="relative mt-auto pt-52">
                   <h3 className="max-w-[12ch] font-heading text-4xl leading-none tracking-[-0.035em] sm:text-[2.7rem]">{processT(`items.${process.key}.title`)}</h3>
                   <p className="mt-6 text-lg font-semibold leading-7 text-[var(--senda-ink)]">{processT(`items.${process.key}.lead`)}</p>
                   <p className="mt-4 text-[15px] leading-7 text-[var(--senda-muted)]">{processT(`items.${process.key}.cardDescription`)}</p>
@@ -101,16 +100,20 @@ export function SendaHome() {
       </section>
 
       <section className="px-5 pb-24 sm:px-8 md:pb-36 lg:px-12 xl:px-20">
-        <div className="senda-reveal relative mx-auto grid max-w-[1280px] overflow-hidden rounded-[2.25rem] bg-[var(--senda-olive)] px-7 py-14 text-[#f7f2e8] sm:px-12 sm:py-16 lg:grid-cols-[1fr_auto] lg:items-end lg:px-16">
-          <TopographicLines className="absolute -right-20 -top-28 h-[28rem] w-[48rem] stroke-[#d8c997] opacity-20 [&_path]:stroke-[1]" />
+        <div className="senda-reveal relative mx-auto grid max-w-[1280px] overflow-hidden rounded-[2.25rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] text-[var(--senda-ink)] shadow-[0_24px_60px_-36px_rgba(47,54,71,.45)] lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+          <div className="relative min-h-72 lg:min-h-full">
+            <Image src="/illustrations/trust.png" alt="" fill loading="eager" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
+          </div>
+          <div className="relative px-7 py-14 sm:px-12 sm:py-16 lg:px-16">
           <div className="relative max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9cfad]">{t("bridge.eyebrow")}</p>
+            <p className="senda-kicker">{t("bridge.eyebrow")}</p>
             <h2 className="mt-5 font-heading text-4xl leading-[1.02] tracking-[-0.035em] sm:text-6xl">{t("bridge.title")}</h2>
             <p className="mt-6 max-w-2xl text-base leading-8 text-[#e9e4d8]/80 sm:text-lg">{t("bridge.description")}</p>
           </div>
-          <Link href="/diagnostico" className="relative mt-9 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[#f4efe4] px-7 py-3.5 text-sm font-bold text-[var(--senda-ink)] hover:bg-white lg:ml-10 lg:mt-0">
+          <Link href="/diagnostico" className="relative mt-9 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[var(--senda-ink)] px-7 py-3.5 text-sm font-bold text-white hover:bg-[var(--senda-dark-hover)]">
             {t("bridge.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
+          </div>
         </div>
       </section>
 
@@ -120,7 +123,11 @@ export function SendaHome() {
             <p className="senda-kicker">{t("method.eyebrow")}</p>
             <h2 className="mt-5 font-heading text-5xl leading-none tracking-[-0.04em] sm:text-7xl">{t("method.title")}</h2>
           </div>
-          <ol className="mt-16 grid gap-0 border-t border-[var(--senda-ink)]/15 lg:grid-cols-4">
+          <div className="mt-16 grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+          <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-3 shadow-[0_24px_60px_-36px_rgba(47,54,71,.45)]">
+            <Image src="/illustrations/method.png" alt="" fill loading="eager" sizes="(min-width: 1024px) 36vw, 100vw" className="object-cover p-3" />
+          </div>
+          <ol className="grid gap-0 border-t border-[var(--senda-ink)]/15 md:grid-cols-2">
             {howSteps.map((key, index) => (
               <li key={key} className="senda-reveal relative border-b border-[var(--senda-ink)]/15 py-9 lg:border-b-0 lg:border-r lg:px-7 lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0">
                 <span className="text-xs font-bold tracking-[0.16em] text-[var(--senda-terracotta)]">0{index + 1}</span>
@@ -129,6 +136,7 @@ export function SendaHome() {
               </li>
             ))}
           </ol>
+          </div>
         </div>
       </section>
 
@@ -141,7 +149,11 @@ export function SendaHome() {
             </div>
             <p className="max-w-xl text-lg leading-8 text-[var(--senda-muted)] lg:justify-self-end">{t("territories.intro")}</p>
           </div>
-          <div className="mt-16 border-t border-[var(--senda-border)]">
+          <div className="mt-16 grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+          <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] shadow-[0_24px_60px_-36px_rgba(47,54,71,.45)] lg:sticky lg:top-28">
+            <Image src="/illustrations/paths.png" alt="" fill loading="eager" sizes="(min-width: 1024px) 38vw, 100vw" className="object-cover" />
+          </div>
+          <div className="border-t border-[var(--senda-border)]">
             {territories.map((key, index) => (
               <article key={key} className="senda-territory grid gap-4 border-b border-[var(--senda-border)] py-7 sm:grid-cols-[5rem_0.7fr_1.3fr] sm:items-center sm:py-9">
                 <span className="text-xs font-bold tracking-[0.16em] text-[var(--senda-terracotta)]">0{index + 1}</span>
@@ -150,17 +162,22 @@ export function SendaHome() {
               </article>
             ))}
           </div>
+          </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[var(--senda-ink)] px-5 py-28 text-[#f4efe4] sm:px-8 md:py-44 lg:px-12 xl:px-20">
-        <TopographicLines className="absolute -bottom-12 -right-24 h-[35rem] w-[58rem] stroke-[#c69b7c] opacity-[0.14] [&_path]:stroke-[1]" />
-        <div className="senda-reveal relative mx-auto max-w-[1050px]">
+      <section className="relative overflow-hidden bg-[var(--senda-ink)] px-5 py-28 text-[#f4efe4] sm:px-8 md:py-36 lg:px-12 xl:px-20">
+        <div className="senda-reveal relative mx-auto grid max-w-[1180px] gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+          <div>
           <Asterisk className="h-10 w-10 text-[var(--senda-terracotta)]" aria-hidden="true" />
           <blockquote className="mt-10 font-heading text-[clamp(2.5rem,5.5vw,5.6rem)] leading-[1.02] tracking-[-0.04em]">
             <p>{t("manifesto.first")}</p>
             <p className="mt-8 text-[#f4efe4]/62">{t("manifesto.second")}</p>
           </blockquote>
+          </div>
+          <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-white/10 bg-[#fcf5ec] p-3">
+            <Image src="/illustrations/services.png" alt="" fill loading="eager" sizes="(min-width: 1024px) 36vw, 100vw" className="object-cover p-3" />
+          </div>
         </div>
       </section>
 
