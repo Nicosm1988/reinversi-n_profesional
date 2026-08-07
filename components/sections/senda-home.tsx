@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { ArrowRight, Asterisk, MoveDown } from "lucide-react";
+import { ArrowRight, Asterisk, Compass, MoveDown } from "lucide-react";
 import { Link } from "@/navigation";
 import { sendaProcesses } from "@/lib/data/senda-processes";
 
@@ -113,6 +113,22 @@ export function SendaHome() {
           <Link href="/diagnostico" className="relative mt-9 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[var(--senda-ink)] px-7 py-3.5 text-sm font-bold text-white hover:bg-[var(--senda-dark-hover)] dark:bg-[#f4efe4] dark:text-[#272b23] dark:hover:bg-white">
             {t("bridge.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 pb-24 sm:px-8 md:pb-36 lg:px-12 xl:px-20">
+        <div className="senda-reveal mx-auto flex max-w-[1280px] flex-col items-start gap-8 rounded-[2rem] border border-[var(--senda-terracotta)]/30 bg-[var(--senda-paper)] p-8 sm:p-10 lg:flex-row lg:items-center lg:justify-between lg:p-12">
+          <div className="max-w-2xl">
+            <p className="senda-kicker">{t("anchorTool.eyebrow")}</p>
+            <h2 className="mt-4 font-heading text-3xl leading-tight tracking-[-0.03em] sm:text-4xl">{t("anchorTool.title")}</h2>
+            <p className="mt-4 text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("anchorTool.description")}</p>
+          </div>
+          <div className="flex w-full flex-col items-start gap-3 lg:w-auto lg:shrink-0 lg:items-end">
+            <Link href="/diagnostico/ancla-de-carrera" className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full border border-[var(--senda-ink)] px-7 py-3.5 text-sm font-bold text-[var(--senda-ink)] hover:bg-[var(--senda-ink)] hover:text-[var(--senda-paper)] sm:w-auto">
+              {t("anchorTool.cta")} <Compass className="h-4 w-4" aria-hidden="true" />
+            </Link>
+            <p className="text-xs text-[var(--senda-muted)]">{t("anchorTool.note")}</p>
           </div>
         </div>
       </section>

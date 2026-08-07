@@ -648,6 +648,13 @@
       "description": "A veces no es fácil saber si lo que está pasando es una duda vocacional, una crisis de sentido o una transición laboral. El diagnóstico inicial de Senda te ayuda a nombrar el momento que estás atravesando y a reconocer qué recorrido puede acompañarte mejor.",
       "cta": "Empezar diagnóstico"
     },
+    "anchorTool": {
+      "eyebrow": "Un camino directo",
+      "title": "¿Ya sabés que tu pregunta es sobre tu carrera?",
+      "description": "Si lo que necesitás explorar es tu relación con el trabajo —qué te motiva, qué te frustra y qué entornos te potencian—, podés empezar directo con el test gratuito de Anclas de Carrera, sin pasar primero por el diagnóstico inicial.",
+      "cta": "Hacer el test de Anclas de Carrera",
+      "note": "Gratis · Con tu cuenta de Google · Un resultado por cuenta"
+    },
     "method": {
       "eyebrow": "Cómo funciona",
       "title": "Una dirección se construye por etapas.",

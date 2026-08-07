@@ -648,6 +648,13 @@
       "description": "It isn't always easy to know whether you are facing a vocational question, a crisis of meaning, or a career transition. Senda's initial diagnostic helps name your moment and identify which journey may support you best.",
       "cta": "Start the diagnostic"
     },
+    "anchorTool": {
+      "eyebrow": "A direct path",
+      "title": "Already know your question is about your career?",
+      "description": "If what you need to explore is your relationship with work — what drives you, what frustrates you, and what kind of environments bring out your best — you can start directly with the free Career Anchor test, without going through the initial diagnostic first.",
+      "cta": "Take the Career Anchor test",
+      "note": "Free · Sign in with Google · One result per account"
+    },
     "method": {
       "eyebrow": "How it works",
       "title": "Direction is built in stages.",
