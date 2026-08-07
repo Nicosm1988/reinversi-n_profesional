@@ -110,7 +110,7 @@ export function SendaHome() {
             <h2 className="mt-5 font-heading text-4xl leading-[1.02] tracking-[-0.035em] sm:text-6xl">{t("bridge.title")}</h2>
             <p className="mt-6 max-w-2xl text-base leading-8 text-[#e9e4d8]/80 sm:text-lg">{t("bridge.description")}</p>
           </div>
-          <Link href="/diagnostico" className="relative mt-9 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[var(--senda-ink)] px-7 py-3.5 text-sm font-bold text-white hover:bg-[var(--senda-dark-hover)]">
+          <Link href="/diagnostico" className="relative mt-9 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[var(--senda-ink)] px-7 py-3.5 text-sm font-bold text-white hover:bg-[var(--senda-dark-hover)] dark:bg-[#f4efe4] dark:text-[#272b23] dark:hover:bg-white">
             {t("bridge.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
           </div>
@@ -166,7 +166,7 @@ export function SendaHome() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[var(--senda-ink)] px-5 py-28 text-[#f4efe4] sm:px-8 md:py-36 lg:px-12 xl:px-20">
+      <section className="relative overflow-hidden bg-[var(--senda-ink-fixed)] px-5 py-28 text-[#f4efe4] sm:px-8 md:py-36 lg:px-12 xl:px-20">
         <div className="senda-reveal relative mx-auto grid max-w-[1180px] gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div>
           <Asterisk className="h-10 w-10 text-[var(--senda-terracotta)]" aria-hidden="true" />
@@ -210,7 +210,7 @@ export function SendaHome() {
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/70">{t("final.eyebrow")}</p>
             <h2 className="mt-6 max-w-[15ch] font-heading text-[clamp(3rem,6.8vw,6.8rem)] leading-[0.92] tracking-[-0.05em]">{t("final.title")}</h2>
             <p className="mt-7 max-w-xl text-lg leading-8 text-white/78">{t("final.description")}</p>
-            <Link href="/diagnostico" className="mt-9 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[var(--senda-ink)] px-7 py-3.5 text-sm font-bold text-white hover:bg-[var(--senda-olive)]">
+            <Link href="/diagnostico" className="mt-9 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[var(--senda-ink-fixed)] px-7 py-3.5 text-sm font-bold text-white hover:bg-[var(--senda-olive)]">
               {t("final.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>

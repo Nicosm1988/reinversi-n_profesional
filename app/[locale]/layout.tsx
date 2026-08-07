@@ -80,7 +80,7 @@ export default async function RootLayout(
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <CookieProvider>
-            <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 rounded-full bg-[var(--senda-ink)] px-5 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0">
+            <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 rounded-full bg-[var(--senda-ink)] px-5 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0 dark:bg-[#f4efe4] dark:text-[#272b23]">
               {locale === "en" ? "Skip to content" : "Saltar al contenido"}
             </a>
             <PointerIllumination />

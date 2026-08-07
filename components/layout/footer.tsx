@@ -6,14 +6,14 @@ export function Footer() {
   const t = useTranslations("Footer");
 
   return (
-    <footer className="border-t border-white/10 bg-[var(--senda-ink)] px-5 pb-8 pt-16 text-[#f4efe4] sm:px-8 md:pt-24 lg:px-12 xl:px-20">
+    <footer className="border-t border-white/10 bg-[var(--senda-ink-fixed)] px-5 pb-8 pt-16 text-[#f4efe4] sm:px-8 md:pt-24 lg:px-12 xl:px-20">
       <div className="mx-auto max-w-[1280px]">
         <div className="grid gap-14 border-b border-white/12 pb-16 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:pb-20">
           <div className="max-w-xl">
             <Link href="/" className="inline-flex items-center gap-3" aria-label={t("homeLabel")}>
               <span className="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/35">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--senda-terracotta)]" />
-                <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full border border-white/35 bg-[var(--senda-ink)]" />
+                <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full border border-white/35 bg-[var(--senda-ink-fixed)]" />
               </span>
               <span className="font-heading text-3xl">Senda</span>
             </Link>

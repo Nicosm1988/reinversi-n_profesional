@@ -6,6 +6,8 @@
   :root {
     --senda-bg: #fcf5ec;
     --senda-ink: #2f3647;
+    /* Fixed dark ink for accent bands (footer, manifesto, process header) that must stay dark in both themes. */
+    --senda-ink-fixed: #2f3647;
     --senda-dark: #31384a;
     --senda-dark-hover: #414a61;
     --senda-light: #fcf5ec;
