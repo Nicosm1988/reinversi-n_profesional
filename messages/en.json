@@ -535,7 +535,7 @@
     "metadataTitle": "Career Anchors Assessment | Senda",
     "metadataDescription": "Discover your career anchor through Edgar Schein's model. A free interpretation to help you understand your journey and guide your next steps.",
     "introBadge": "Edgar Schein's Model",
-    "introTitle": "What Is Your Career Anchor?",
+    "introTitle": "Your career GPS: explore what drives you at work",
     "introSubtitle": "An inner compass for understanding your journey more clearly.",
     "introParagraph1": "Edgar Schein developed this model to explore the combination of abilities, motivations, and values that a person seeks to preserve throughout their working life.",
     "introParagraph2": "Your career anchor is the unique combination of abilities, motivations, and values that you would not easily give up. Understanding it can help you make choices that are more consistent with who you are and recognize what you need to protect during a time of change.",
@@ -649,11 +649,11 @@
       "cta": "Start the diagnostic"
     },
     "anchorTool": {
-      "eyebrow": "A direct path",
-      "title": "Already know your question is about your career?",
-      "description": "If what you need to explore is your relationship with work — what drives you, what frustrates you, and what kind of environments bring out your best — you can start directly with the free Career Anchor test, without going through the initial diagnostic first.",
+      "eyebrow": "Edgar Schein's model",
+      "title": "What's the thing you won't compromise on?",
+      "description": "Your abilities, motivations, and values form a unique combination: your career anchor. Knowing it helps you make decisions that fit who you are, especially in a moment of change. The Career Anchor test helps you name it.",
       "cta": "Take the Career Anchor test",
-      "note": "Free · Sign in with Google · One result per account"
+      "note": "Sign in with Google · One result per account"
     },
     "method": {
       "eyebrow": "How it works",
