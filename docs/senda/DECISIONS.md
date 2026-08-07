@@ -39,3 +39,9 @@ Formato por entrada: **Contexto → Decisión → Consecuencias**. Sólo se docu
 **Contexto:** El modelo de negocio es un programa high-ticket, no una suscripción ni infoproducto.
 **Decisión:** La pasarela de pagos es Fase 4 del roadmap; no se implementa hasta que se solicite explícitamente.
 **Consecuencias:** No agregar dependencias, rutas ni UI de checkout de forma anticipada. Fuente: `docs/product/master-architecture.md` §2, §9.
+
+## 007 — Este checkout se adoptó como fuente de verdad de `main`
+
+**Contexto:** Este checkout (sin `.git`) y `origin/main` (`github.com/Nicosm1988/reinversi-n_profesional`) habían divergido en 41 archivos con cambios de contenido reales (config, dependencias, componentes UI, `master-architecture.md`, migraciones), probablemente por evolución paralela vía v0.dev (ramas `v0/taniuskaynicolai-1559-*`).
+**Decisión (2026-08-06, confirmada explícitamente por el usuario):** se inicializó Git en este checkout, se conectó a `origin`, y se publicó un commit cuyo árbol es el contenido de este checkout con `origin/main` como padre (fast-forward, sin force push), dejando `main` remoto igual a este checkout.
+**Consecuencias:** el contenido previo de `origin/main` en esos 41 archivos quedó reemplazado por el de este checkout. Sigue accesible en el historial de Git (commit `d8c5691` y anteriores) por si algo de esa versión necesita recuperarse. Fuente: esta sesión, ver `docs/senda/STATE.md`.

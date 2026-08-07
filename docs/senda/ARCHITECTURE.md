@@ -38,7 +38,7 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 
 **Scripts** (`scripts/`): `verify-env.mjs`, `verify-deploy.mjs`, `load-test.mjs`.
 
-**Despliegue:** Vercel (producción legada: `reinvension-profesional.vercel.app`, ver `docs/architecture/project-naming.md`). `push-and-deploy.sh` / `.ps1` ejecutan `npm run release:check` y hacen `git push origin <branch>`; el deploy real lo dispara Vercel vía integración con Git.
+**Repositorio y despliegue:** GitHub `github.com/Nicosm1988/reinversi-n_profesional` (rama `main`), enlazado al proyecto Vercel `vercel.com/nmarcosan-2648s-projects/reinvension-profesional` (producción: `reinvension-profesional.vercel.app`, ver `docs/architecture/project-naming.md`). `push-and-deploy.sh` / `.ps1` ejecutan `npm run release:check` y hacen `git push origin <branch>`; el deploy real lo dispara Vercel vía integración con Git.
 
 ## Inferido
 
@@ -47,6 +47,6 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 
 ## Pendiente de verificar
 
-- Este checkout **no tiene `.git`** ni `node_modules/` instalados (ver `docs/senda/STATE.md`): no se pudo confirmar remoto de Git, historial de commits, ni ejecutar lint/typecheck/tests/build reales.
+- Este checkout **no tiene `node_modules/` instalados** (ver `docs/senda/STATE.md`): no se pudo ejecutar lint/typecheck/tests/build reales todavía.
 - No hay `.env.local` ni `.env.example` en este checkout; los valores reales de las variables de entorno no son verificables localmente.
 - Versión exacta de Node.js requerida (no hay campo `engines` en `package.json`; CI usa Node 20).

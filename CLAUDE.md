@@ -75,7 +75,7 @@ Reglas no negociables (fuente: `AGENTS.md`):
 - Pipeline completo: `npm run release:check` (lint + typecheck + test:unit + test:e2e + build)
 - Verificación de entorno: `npm run verify:env` / `npm run verify:env:strict`
 - Smoke post-deploy: `npm run verify:deploy -- --base-url <url>`
-- Deploy: `./push-and-deploy.sh "mensaje"` — nunca ejecutar sin autorización explícita; requiere repositorio Git inicializado (este checkout actualmente no tiene `.git`, ver `docs/senda/STATE.md`).
+- Deploy: `./push-and-deploy.sh "mensaje"` — nunca ejecutar sin autorización explícita. Repo: `github.com/Nicosm1988/reinversi-n_profesional` (rama `main`), conectado a Vercel (`vercel.com/nmarcosan-2648s-projects/reinvension-profesional`).
 
 ## 8. Formato de cierre
 
