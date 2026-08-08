@@ -26,6 +26,7 @@ Reglas no negociables (fuente: `AGENTS.md`):
 - No activar MCP, Skills, subagentes o equipos de agentes por curiosidad. Las skills locales en `.agent/skills/` (UX web moderna, copywriting, backend, psicometría, estrategia global) se consultan sólo cuando la tarea las necesita puntualmente.
 - No generar alternativas equivalentes, planes ceremoniales, documentación duplicada ni resúmenes reiterativos. No volcar logs completos; filtrar errores y evidencia relevante.
 - Detenerse cuando los criterios de aceptación estén cumplidos y verificados.
+- No investigar, instalar herramientas ni ejecutar procesos extensos que la tarea no requiera explícitamente. No repetir análisis, búsquedas o validaciones ya realizadas en la misma tarea. No modificar archivos, contenidos o funcionalidades no solicitados. Agrupar búsquedas y verificaciones relacionadas para reducir pasos. Si la instrucción es clara, ejecutarla sin pedir confirmaciones innecesarias; si hay ambigüedad que pueda producir un cambio incorrecto o ampliar el alcance, detenerse y consultar antes de asumir.
 
 ## 3. Protocolo de cada tarea
 
