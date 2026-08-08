@@ -83,6 +83,14 @@
     "analyticsDesc": "Estos elementos ayudan al operador del sitio web a entender cómo funciona su sitio web, cómo los visitantes interactúan con el sitio y si puede haber problemas técnicos. Este tipo de almacenamiento generalmente no recopila información que identifica a un visitante.",
     "confirmPreferences": "Confirmar preferencias y cerrar"
   },
+  "ProcessPopup": {
+    "eyebrow": "Acompañamiento personalizado",
+    "title": "¿Querés darle valor a tu trayectoria y reconectar con tu motivación profesional?",
+    "description": "Si preferís definir tus próximos pasos en un proceso personalizado, con acompañamiento humano, podemos ayudarte a diseñarlo.",
+    "cta": "Sí, quiero",
+    "dismiss": "Ahora no",
+    "closeLabel": "Cerrar"
+  },
   "Hero": {
     "slide0TitlePrefix": "En un mundo que cambia,",
     "slide0TitleSuffix": "te ayudamos a encontrar",
@@ -651,7 +659,7 @@
     "anchorTool": {
       "eyebrow": "El modelo de Edgar Schein",
       "title": "¿Qué es eso que no negociás?",
-      "description": "Tus capacidades, tus motivaciones y tus valores forman una combinación única: tu ancla de carrera. Conocerla ayuda a tomar decisiones más coherentes con vos, sobre todo en una etapa de cambio. El test de Anclas de Carrera te ayuda a nombrarla.",
+      "description": "¿Querés entender qué te impulsa, qué te frena y qué necesitás priorizar al tomar decisiones profesionales? Respondé 40 enunciados y descubrí las motivaciones que orientan tu carrera. Hacé el test y empezá a reconocer qué es verdaderamente importante para vos.",
       "cta": "Hacer el test de Anclas de Carrera",
       "note": "Con tu cuenta de Google · Un resultado por cuenta"
     },

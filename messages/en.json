@@ -83,6 +83,14 @@
     "analyticsDesc": "These items help the website operator understand how the website performs, how visitors interact with it, and whether there may be technical issues. This type of storage generally does not collect information that identifies a visitor.",
     "confirmPreferences": "Confirm preferences and close"
   },
+  "ProcessPopup": {
+    "eyebrow": "Personalized guidance",
+    "title": "Want to honor your career path and reconnect with what drives you?",
+    "description": "If you'd rather define your next steps in a personalized process, with human support, we can help you shape it.",
+    "cta": "Yes, I'm in",
+    "dismiss": "Not now",
+    "closeLabel": "Close"
+  },
   "Hero": {
     "slide0TitlePrefix": "In a changing world,",
     "slide0TitleSuffix": "we help you find",
@@ -651,7 +659,7 @@
     "anchorTool": {
       "eyebrow": "Edgar Schein's model",
       "title": "What's the thing you won't compromise on?",
-      "description": "Your abilities, motivations, and values form a unique combination: your career anchor. Knowing it helps you make decisions that fit who you are, especially in a moment of change. The Career Anchor test helps you name it.",
+      "description": "Want to understand what drives you, what holds you back, and what you need to prioritize when making career decisions? Respond to 40 statements and discover the motivations guiding your career. Take the test and start recognizing what truly matters to you.",
       "cta": "Take the Career Anchor test",
       "note": "Sign in with Google · One result per account"
     },
