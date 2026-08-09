@@ -1,77 +1,73 @@
-import { CareerQuiz, type ExistingCareerDiagnostic } from "@/components/sections/career-quiz";
-import { getAuthenticatedUser } from "@/lib/supabase/auth";
-import { redirect } from "next/navigation";
-import { z } from "zod";
-import { canRepeatCareerAnchorTest } from "@/lib/diagnostics/access";
-import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+"use client";
 
-const storedDiagnosticSchema = z.object({
-  user_data: z.object({
-    name: z.string(),
-    age: z.union([z.string(), z.number()]).transform(String),
-    occupation: z.string(),
-    city: z.string(),
-    country: z.string(),
-  }),
-  raw_answers: z.object({
-    answers: z.record(z.string(), z.number()),
-    bonus: z.array(z.number()),
-  }),
-  ai_feedback: z.object({
-    title: z.string(),
-    summary: z.string(),
-    frictionAreas: z.array(z.string()),
-    idealEcosystem: z.string(),
-    strategicQuestion: z.string(),
-  }),
-});
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
+import { Container, Section } from "@/components/layout/container";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Heading, Text } from "@/components/ui/typography";
 
-export async function generateMetadata(
-  props: Readonly<{ params: Promise<{ locale: string }> }>,
-): Promise<Metadata> {
-  const { locale } = await props.params;
-  const t = await getTranslations({ locale, namespace: "CareerQuiz" });
+const benefitKeys = ["benefit1", "benefit2", "benefit3", "benefit4", "benefit5"] as const;
 
-  return {
-    title: t("metadataTitle"),
-    description: t("metadataDescription"),
-    robots: { index: false, follow: false },
-  };
-}
+export default function CareerAnchorIntroPage() {
+  const t = useTranslations("CareerAnchorIntro");
 
-export default async function AnclaDeCarreraPage(
-  props: Readonly<{
-    params: Promise<{ locale: string }>;
-  }>,
-) {
-  const { locale } = await props.params;
-  const nextPath = locale === "en" ? "/en/diagnostico/ancla-de-carrera" : "/diagnostico/ancla-de-carrera";
-  const loginPath = locale === "en" ? "/en/login" : "/login";
-  const auth = await getAuthenticatedUser();
+  return (
+    <Section spacing="xl">
+      <Container size="tight">
+        <Text variant="caption" className="text-primary">
+          {t("label")}
+        </Text>
+        <Heading level="h1" className="mt-4">
+          {t("title")}
+        </Heading>
+        <Text variant="lead" className="mt-6">
+          {t("intro")}
+        </Text>
+        <Text variant="body" className="mt-4">
+          {t("introContinuation")}
+        </Text>
 
-  if (!auth.ok) {
-    redirect(`${loginPath}?next=${encodeURIComponent(nextPath)}&reason=${auth.reason}`);
-  }
+        <Card className="mt-10">
+          <CardContent className="p-7 md:p-9">
+            <Heading level="h3">{t("benefitsTitle")}</Heading>
+            <ul className="mt-6 space-y-4">
+              {benefitKeys.map((key) => (
+                <li key={key} className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                  <Text variant="body" className="text-foreground/85">
+                    {t(key)}
+                  </Text>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
 
-  const canRepeat = canRepeatCareerAnchorTest(auth.user.email);
-  const { data } = canRepeat
-    ? { data: null }
-    : await auth.supabase
-        .from("user_diagnostics")
-        .select("user_data, raw_answers, ai_feedback")
-        .eq("diagnostic_type", "career_anchor")
-        .eq("status", "completed")
-        .maybeSingle();
+        <Text variant="small" className="mt-8">
+          {t("clarification")}
+        </Text>
 
-  const parsed = storedDiagnosticSchema.safeParse(data);
-  const existingDiagnostic: ExistingCareerDiagnostic | null = parsed.success
-    ? {
-        userData: parsed.data.user_data,
-        rawAnswers: parsed.data.raw_answers,
-        aiFeedback: parsed.data.ai_feedback,
-      }
-    : null;
+        <Button asChild size="lg" className="mt-8">
+          <Link href="/diagnostico/ancla-de-carrera/test">
+            {t("cta")}
+            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+          </Link>
+        </Button>
 
-  return <CareerQuiz userEmail={auth.user.email ?? null} existingDiagnostic={existingDiagnostic} />;
+        <Card className="mt-16">
+          <CardContent className="p-7 md:p-9">
+            <Heading level="h3">{t("accompanimentTitle")}</Heading>
+            <Text variant="body" className="mt-4">
+              {t("accompanimentDescription")}
+            </Text>
+            <Button asChild variant="outline" size="lg" className="mt-6">
+              <Link href="/contacto">{t("accompanimentCta")}</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </Container>
+    </Section>
+  );
 }

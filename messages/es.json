@@ -84,12 +84,10 @@
     "confirmPreferences": "Confirmar preferencias y cerrar"
   },
   "ProcessPopup": {
-    "eyebrow": "Acompañamiento personalizado",
-    "title": "¿Querés darle valor a tu trayectoria y reconectar con tu motivación profesional?",
-    "description": "Si preferís definir tus próximos pasos en un proceso personalizado, con acompañamiento humano, podemos ayudarte a diseñarlo.",
-    "cta": "Sí, quiero",
-    "dismiss": "Ahora no",
-    "closeLabel": "Cerrar"
+    "title": "Tal vez no falte una respuesta, sino entender qué te mueve.",
+    "description": "Explorar tus anclas de carrera puede ayudarte a reconocer las motivaciones que influyen en tus decisiones y a comprender mejor qué buscás en esta etapa.",
+    "cta": "Explorar mis motivaciones",
+    "closeLabel": "Cerrar invitación"
   },
   "Hero": {
     "slide0TitlePrefix": "En un mundo que cambia,",
@@ -589,9 +587,9 @@
     "resultsAiSubtitle": "Análisis Basado en tu Perfil ({age} años, {occupation})",
     "resultsFrictionTitle": "Puntos probables de fricción",
     "resultsEcosystemTitle": "Tu ecosistema natural",
-    "resultsClosingTitle": "Cada recorrido es particular.",
-    "resultsClosingText": "Por eso, darte espacio para explorar el cambio con orientación especializada puede ayudarte a transformar la incertidumbre en un plan coherente con vos.",
-    "resultsClosingCta": "Agendá tu espacio",
+    "resultsClosingTitle": "¿Preferís explorar tu trayectoria y próximos pasos con acompañamiento profesional?",
+    "resultsClosingText": "Si estás atravesando una decisión, un cambio o una etapa de incertidumbre, el acompañamiento individual de Senda ofrece un espacio para trabajar tus motivaciones, releer tu trayectoria y construir próximos escenarios.",
+    "resultsClosingCta": "Conocer el acompañamiento individual",
     "resultsRestart": "Reiniciar Test",
     "authModalTitle": "Tus resultados están listos",
     "authModalDescription": "Ingresá para guardar tu progreso y volver a consultar el resultado de tu Ancla de Carrera cuando lo necesites.",
@@ -633,6 +631,25 @@
     "occupationUnknown": "sin especificar",
     "resultsDisclaimer": "Este resultado es orientativo y puede complementarse con una conversación individual con el equipo."
   },
+  "CareerAnchorIntro": {
+    "metadataTitle": "Test de Anclas de Carrera | Senda",
+    "metadataDescription": "Un test para entender qué motivaciones influyen en tus decisiones profesionales, antes de decidir tus próximos pasos.",
+    "label": "Test de anclas de carrera",
+    "title": "Las motivaciones detrás de tus decisiones profesionales",
+    "intro": "A lo largo de una trayectoria profesional, algunas motivaciones adquieren un peso especial. Influyen en los desafíos que elegimos, los entornos en los que podemos desplegarnos mejor y las decisiones que tomamos cuando algo necesita cambiar.",
+    "introContinuation": "El test de anclas de carrera propone explorar esas motivaciones para comprender mejor qué buscás hoy en tu relación con el trabajo y qué aspectos pueden orientar tus próximas decisiones.",
+    "benefitsTitle": "¿Para qué puede servirte?",
+    "benefit1": "Reconocer las motivaciones que tienen mayor peso en tu vida profesional.",
+    "benefit2": "Comprender qué condiciones laborales favorecen tu compromiso.",
+    "benefit3": "Identificar tensiones entre tu experiencia actual y aquello que buscás.",
+    "benefit4": "Analizar cambios y oportunidades con criterios más claros.",
+    "benefit5": "Abrir nuevas preguntas sobre tu trayectoria y el momento que estás atravesando.",
+    "clarification": "El resultado no define una profesión ni determina una decisión. Es un punto de partida para reflexionar sobre tu trayectoria, tus motivaciones y las posibilidades que querés explorar.",
+    "cta": "Empezar el test",
+    "accompanimentTitle": "¿Preferís explorar tu trayectoria y próximos pasos con acompañamiento profesional?",
+    "accompanimentDescription": "Si estás atravesando una decisión, un cambio o una etapa de incertidumbre, el acompañamiento individual de Senda ofrece un espacio para trabajar tus motivaciones, releer tu trayectoria y construir próximos escenarios.",
+    "accompanimentCta": "Conocer el acompañamiento individual"
+  },
   "Home": {
     "hero": {
       "eyebrow": "Senda · Orientación y movimiento",
@@ -657,10 +674,10 @@
       "cta": "Empezar diagnóstico"
     },
     "anchorTool": {
-      "eyebrow": "El modelo de Edgar Schein",
-      "title": "¿Qué es eso que no negociás?",
-      "description": "¿Querés entender qué te impulsa, qué te frena y qué necesitás priorizar al tomar decisiones profesionales? Respondé 40 enunciados y descubrí las motivaciones que orientan tu carrera. Hacé el test y empezá a reconocer qué es verdaderamente importante para vos.",
-      "cta": "Hacer el test de Anclas de Carrera",
+      "eyebrow": "Test de anclas de carrera",
+      "title": "¿Qué impulsa tus decisiones profesionales?",
+      "description": "Cada decisión laboral está atravesada por motivaciones diferentes: la búsqueda de autonomía, estabilidad, aprendizaje, impacto, especialización o nuevos desafíos. Explorar tus anclas de carrera puede ayudarte a entender qué tiene mayor peso para vos en este momento y por qué algunas experiencias profesionales se sienten más significativas que otras.",
+      "cta": "Conocer mis anclas de carrera",
       "note": "Con tu cuenta de Google · Un resultado por cuenta"
     },
     "method": {

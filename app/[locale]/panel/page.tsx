@@ -110,7 +110,7 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
                   </>
                 )}
               </div>
-              <Link href="/diagnostico/ancla-de-carrera" className="inline-flex flex-none items-center gap-2 rounded-full bg-[#bd5734] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a84729]">
+              <Link href="/diagnostico/ancla-de-carrera/test" className="inline-flex flex-none items-center gap-2 rounded-full bg-[#bd5734] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a84729]">
                 {savedResult && canRepeat
                   ? t("repeatTest")
                   : savedResult

@@ -17,8 +17,8 @@ test("smoke: landing, public intake and protected account routes are accessible"
   await expect(page).toHaveURL(/\/diagnostico$/);
   await expect(page.getByRole("group", { name: /situación describe mejor|situation best describes/i })).toBeVisible();
 
-  await page.goto("/diagnostico/ancla-de-carrera");
-  await expect(page).toHaveURL(/\/login\?next=.*diagnostico%2Fancla-de-carrera/);
+  await page.goto("/diagnostico/ancla-de-carrera/test");
+  await expect(page).toHaveURL(/\/login\?next=.*diagnostico%2Fancla-de-carrera%2Ftest/);
   await expect(page.getByRole("button", { name: /google/i })).toBeVisible();
 
   await page.goto("/panel");

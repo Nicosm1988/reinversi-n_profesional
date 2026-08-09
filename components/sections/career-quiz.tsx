@@ -11,7 +11,7 @@ import {
   ChevronRight,
   Sparkles,
 } from "lucide-react";
-import { Link } from "@/navigation";
+import { Link, useRouter } from "@/navigation";
 import englishQuizData from "@/lib/data/anchors.en.json";
 import spanishQuizData from "@/lib/data/anchors.json";
 import { PreQuizForm, type PreQuizData } from "@/components/forms/pre-quiz-form";
@@ -85,9 +85,13 @@ const warmSectionEyebrowClass = "font-semibold uppercase tracking-[0.18em] text-
 type CareerQuizProps = {
   userEmail?: string | null;
   existingDiagnostic?: ExistingCareerDiagnostic | null;
+  startAtQuestions?: boolean;
 };
 
-export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizProps) {
+const COMPLETED_STORAGE_KEY = "reinvencion_career_anchor_completed";
+
+export function CareerQuiz({ userEmail, existingDiagnostic = null, startAtQuestions = false }: CareerQuizProps) {
+  const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("CareerQuiz");
   const quizData = locale === "en" ? englishQuizData : spanishQuizData;
@@ -100,7 +104,9 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
         Object.entries(existingDiagnostic.rawAnswers.answers).map(([questionId, value]) => [Number(questionId), value]),
       )
     : {};
-  const [step, setStep] = useState<Step>(existingDiagnostic ? "results" : "intro");
+  const [step, setStep] = useState<Step>(
+    existingDiagnostic ? "results" : startAtQuestions ? "questions" : "intro",
+  );
   const [answers, setAnswers] = useState<Record<number, number>>(storedAnswers);
   const [bonusQuestions, setBonusQuestions] = useState<number[]>(existingDiagnostic?.rawAnswers.bonus ?? []);
   const [userData, setUserData] = useState<PreQuizData | null>(existingDiagnostic?.userData ?? null);
@@ -116,6 +122,12 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [step, questionPageIndex, bonusPageIndex]);
+
+  useEffect(() => {
+    if (saveStatus === "saved") {
+      window.localStorage.setItem(COMPLETED_STORAGE_KEY, "1");
+    }
+  }, [saveStatus]);
 
   const answeredCount = Object.keys(answers).length;
   const allAnswered = answeredCount >= quizData.questions.length;
@@ -444,6 +456,10 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null }: CareerQuizP
                         className={warmSecondaryButtonClass}
                         onClick={() => {
                           if (questionPageIndex === 0) {
+                            if (startAtQuestions) {
+                              router.push("/diagnostico/ancla-de-carrera");
+                              return;
+                            }
                             setStep("intro");
                             return;
                           }

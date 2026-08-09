@@ -84,12 +84,10 @@
     "confirmPreferences": "Confirm preferences and close"
   },
   "ProcessPopup": {
-    "eyebrow": "Personalized guidance",
-    "title": "Want to honor your career path and reconnect with what drives you?",
-    "description": "If you'd rather define your next steps in a personalized process, with human support, we can help you shape it.",
-    "cta": "Yes, I'm in",
-    "dismiss": "Not now",
-    "closeLabel": "Close"
+    "title": "Maybe you do not need an immediate answer, but a clearer sense of what drives you.",
+    "description": "Exploring your career anchors can help you recognize the motivations behind your decisions and better understand what matters at this stage.",
+    "cta": "Explore my motivations",
+    "closeLabel": "Close invitation"
   },
   "Hero": {
     "slide0TitlePrefix": "In a changing world,",
@@ -589,9 +587,9 @@
     "resultsAiSubtitle": "Analysis Based on Your Profile (age {age}, {occupation})",
     "resultsFrictionTitle": "Potential points of friction",
     "resultsEcosystemTitle": "Your natural ecosystem",
-    "resultsClosingTitle": "Every journey is unique.",
-    "resultsClosingText": "That is why making space to explore change with specialized guidance can help you turn uncertainty into a plan that feels true to who you are.",
-    "resultsClosingCta": "Book your session",
+    "resultsClosingTitle": "Would you prefer to explore your career and next steps with professional guidance?",
+    "resultsClosingText": "If you are navigating a decision, a change, or a period of uncertainty, Senda's individual guidance offers a space to explore your motivations, revisit your career story, and build possible next steps.",
+    "resultsClosingCta": "Explore individual guidance",
     "resultsRestart": "Restart Assessment",
     "authModalTitle": "Your results are ready",
     "authModalDescription": "Sign in to save your progress and revisit your Career Anchor result whenever you need it.",
@@ -633,6 +631,25 @@
     "occupationUnknown": "not specified",
     "resultsDisclaimer": "This result is for guidance and can be complemented by an individual conversation with the team."
   },
+  "CareerAnchorIntro": {
+    "metadataTitle": "Career Anchors Test | Senda",
+    "metadataDescription": "A test to understand what motivations influence your career decisions, before deciding your next steps.",
+    "label": "Career Anchors Test",
+    "title": "The motivations behind your career decisions",
+    "intro": "Throughout a career, certain motivations can become especially important. They influence the challenges we pursue, the environments where we thrive, and the decisions we make when something needs to change.",
+    "introContinuation": "The Career Anchors Test helps you explore those motivations and better understand what you are looking for in your relationship with work today.",
+    "benefitsTitle": "How can it help?",
+    "benefit1": "Recognize the motivations that carry the most weight in your professional life.",
+    "benefit2": "Understand which working conditions support your engagement.",
+    "benefit3": "Identify tensions between your current experience and what you are seeking.",
+    "benefit4": "Evaluate changes and opportunities with clearer criteria.",
+    "benefit5": "Open new questions about your career and your current stage.",
+    "clarification": "The result does not define a profession or determine a decision. It is a starting point for reflecting on your career, your motivations, and the possibilities you want to explore.",
+    "cta": "Start the test",
+    "accompanimentTitle": "Would you prefer to explore your career and next steps with professional guidance?",
+    "accompanimentDescription": "If you are navigating a decision, a change, or a period of uncertainty, Senda's individual guidance offers a space to explore your motivations, revisit your career story, and build possible next steps.",
+    "accompanimentCta": "Explore individual guidance"
+  },
   "Home": {
     "hero": {
       "eyebrow": "Senda · Guidance and movement",
@@ -657,10 +674,10 @@
       "cta": "Start the diagnostic"
     },
     "anchorTool": {
-      "eyebrow": "Edgar Schein's model",
-      "title": "What's the thing you won't compromise on?",
-      "description": "Want to understand what drives you, what holds you back, and what you need to prioritize when making career decisions? Respond to 40 statements and discover the motivations guiding your career. Take the test and start recognizing what truly matters to you.",
-      "cta": "Take the Career Anchor test",
+      "eyebrow": "Career Anchors Test",
+      "title": "What drives your career decisions?",
+      "description": "Every career decision is shaped by different motivations: autonomy, stability, learning, impact, expertise, or the desire for new challenges. Exploring your career anchors can help you understand what matters most at this stage and why some professional experiences feel more meaningful than others.",
+      "cta": "Explore my career anchors",
       "note": "Sign in with Google · One result per account"
     },
     "method": {
