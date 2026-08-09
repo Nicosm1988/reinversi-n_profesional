@@ -275,7 +275,14 @@ export function InitialDiagnosticForm() {
             </label>
             {errors.consentAccepted ? <p className="mt-2 text-xs text-[#9f422d]" role="alert">{errors.consentAccepted.message}</p> : null}
 
-            <TurnstileWidget onTokenChange={setCaptchaToken} onErrorChange={setCaptchaError} action="initial_diagnostic" language={locale} className="mt-6 min-h-[65px]" />
+            <TurnstileWidget
+              onTokenChange={setCaptchaToken}
+              onErrorChange={setCaptchaError}
+              action="initial_diagnostic"
+              language={locale}
+              className="mt-6 min-h-[65px]"
+              retryLabel={t("errors.captchaRetry")}
+            />
             {captchaError ? <p className="mt-2 text-sm text-[#9f422d]" role="alert">{t("errors.captcha")}</p> : null}
           </fieldset>
         ) : null}

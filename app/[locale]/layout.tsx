@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Manrope } from "next/font/google";
+import { Raleway } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { CookieBanner } from "@/components/layout/cookie-banner";
 import { ProcessPopup } from "@/components/layout/process-popup";
+import { WhatsappButton } from "@/components/layout/whatsapp-button";
 import { CookieProvider } from "@/lib/cookie-context";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -14,18 +15,21 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { PointerIllumination } from "@/components/effects/pointer-illumination";
 import { getSiteUrl } from "@/lib/site-url";
 
-const manrope = Manrope({
+// Editorial maturity pass: Raleway replaces Manrope/Instrument Serif as the
+// single type family (body + display), matching it via weight contrast
+// instead of a separate serif — Loos Wide (seen on benchmark sites) isn't
+// licensed for use here.
+const manrope = Raleway({
   subsets: ["latin"],
   variable: "--font-manrope",
   weight: ["400", "500", "600", "700"],
   display: "swap"
 });
 
-const instrumentSerif = Instrument_Serif({
+const instrumentSerif = Raleway({
   subsets: ["latin"],
   variable: "--font-instrument-serif",
-  weight: "400",
-  style: ["normal", "italic"],
+  weight: ["300", "500", "700", "800"],
   display: "swap"
 });
 
@@ -92,6 +96,7 @@ export default async function RootLayout(
             <Footer />
             <CookieBanner />
             <ProcessPopup />
+            <WhatsappButton locale={locale} />
             {process.env.NODE_ENV === "production" && <SpeedInsights />}
             </CookieProvider>
           </NextIntlClientProvider>

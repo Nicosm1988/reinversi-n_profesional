@@ -89,6 +89,10 @@
     "cta": "Explorar mis motivaciones",
     "closeLabel": "Cerrar invitación"
   },
+  "WhatsApp": {
+    "ariaLabel": "Contactar a Senda por WhatsApp",
+    "message": "Hola, estuve recorriendo la web de Senda y quisiera recibir más información."
+  },
   "Hero": {
     "slide0TitlePrefix": "En un mundo que cambia,",
     "slide0TitleSuffix": "te ayudamos a encontrar",
@@ -200,7 +204,8 @@
     "placeholderCountry": "Ej. Argentina",
     "submitLoading": "Analizando...",
     "submitDefault": "Ver mis resultados",
-    "captchaError": "No pudimos validar que sos una persona. Reintentá la verificación."
+    "captchaError": "No pudimos conectar con el servicio de verificación. Podés reintentar, o comprobar si una extensión, VPN o configuración de red está bloqueando challenges.cloudflare.com. Tus datos quedan guardados.",
+    "captchaRetry": "Reintentar verificación"
   },
   "Login": {
     "title": "Te damos la bienvenida",
@@ -234,7 +239,8 @@
     "consent": "Acepto los <terms>Términos y Condiciones</terms> y la <privacy>Política de Privacidad</privacy>.",
     "errorSubmit": "No se pudo enviar tu consulta.",
     "errorUnexpected": "Ocurrió un error inesperado al enviar la consulta.",
-    "captchaError": "No pudimos validar que sos una persona. Reintentá la verificación.",
+    "captchaError": "No pudimos conectar con el servicio de verificación. Podés reintentar, o comprobar si una extensión, VPN o configuración de red está bloqueando challenges.cloudflare.com. Tus datos quedan guardados.",
+    "captchaRetry": "Reintentar verificación",
     "successTitle": "¡Gracias por escribirnos!",
     "successDescription": "Recibimos tu consulta. Te vamos a responder en menos de 24 horas a tu correo electrónico.",
     "successAnother": "Enviar otra consulta",
@@ -290,7 +296,7 @@
     "midCtaButton": "Quiero comenzar",
     "processLabel": "El Proceso",
     "processTitle": "¿Cómo funciona la orientación vocacional?",
-    "processSubtitle": "8 sesiones individuales de 60 a 90 minutos, a tu ritmo (semanal o quincenal). 100% online desde donde estés.",
+    "processSubtitle": "5 sesiones individuales de 60 a 90 minutos, a tu ritmo (semanal o quincenal). 100% online desde donde estés.",
     "sessionLabel": "SESIÓN",
     "session01Title": "Tu historia y tu momento",
     "session01Desc": "Comenzamos explorando tu trayectoria, tu situación actual y qué te trajo hasta acá. Escuchamos sin juicios para entender a fondo tu contexto.",
@@ -623,6 +629,7 @@
     "bonusPreviousBlock": "Bloque anterior",
     "bonusNextBlock": "Siguiente bloque",
     "responsesSaved": "Tus respuestas se guardan de forma segura en tu cuenta para que puedas volver a consultarlas.",
+    "responsesLocalOnly": "Tus respuestas se calculan en este dispositivo y no se envían a ningún servidor.",
     "prequizPrivacy": "Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta.",
     "prequizPrivacyWithEmail": "Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta ({email}).",
     "resultsRankingDescription": "Este orden refleja el peso relativo de cada ancla según tus respuestas y tus tres elecciones finales.",
@@ -666,6 +673,39 @@
       "title": "No todos los cambios se atraviesan igual.",
       "intro": "En el fondo, todos son procesos de cambio. Pero la pregunta que trae cada persona, el momento que está atravesando y el tipo de recorrido que necesita pueden ser muy distintos.",
       "cta": "Conocer el proceso"
+    },
+    "situations": {
+      "eyebrow": "Situaciones",
+      "title": "¿Qué necesitás ordenar en tu vida profesional?",
+      "intro": "Distintos momentos profesionales requieren recorridos diferentes. Identificá qué situación se parece más a la que estás atravesando y conocé cómo podemos acompañarte.",
+      "cta": "Conocer este recorrido",
+      "items": {
+        "experience": {
+          "title": "Tengo experiencia, pero no tengo claro cuál debería ser mi próximo paso",
+          "description": "Tu trayectoria tiene valor, aunque el rol que ocupás hoy ya no alcance para explicar lo que querés construir. Este recorrido permite revisar tu historia, reconocer qué te mueve y ordenar escenarios posibles.",
+          "serviceLabel": "Reinvención Profesional"
+        },
+        "change": {
+          "title": "Quiero cambiar de rol, empresa o sector sin empezar de cero",
+          "description": "Cuando la búsqueda no avanza o las oportunidades no representan lo que buscás, trabajamos sobre el valor de tu experiencia, el foco de la transición y una estrategia coherente con tu próxima etapa.",
+          "serviceLabel": "Transiciones Laborales"
+        },
+        "project": {
+          "title": "Tengo una idea o un proyecto y necesito convertirlo en una opción viable",
+          "description": "Exploramos cómo se relaciona el proyecto con tu trayectoria, qué condiciones necesita y qué pasos permiten evaluarlo sin idealizarlo ni descartarlo antes de tiempo.",
+          "serviceLabel": "Reinvención Profesional"
+        },
+        "leadership": {
+          "title": "Ocupo un rol de responsabilidad y necesito pensar mi próxima etapa con perspectiva",
+          "description": "Las decisiones profesionales se vuelven más complejas cuando implican equipos, estabilidad, identidad y años de experiencia. Senda ofrece un espacio para tomar distancia, ordenar criterios y construir alternativas posibles.",
+          "serviceLabel": "Reinvención Profesional"
+        },
+        "vocation": {
+          "title": "Necesito elegir una carrera o formación con mayor claridad",
+          "description": "Un proceso para reconocer intereses, motivaciones y posibilidades, y construir una decisión que no dependa solamente de expectativas externas o de una salida rápida.",
+          "serviceLabel": "Orientación Vocacional"
+        }
+      }
     },
     "bridge": {
       "eyebrow": "Un primer umbral",
@@ -714,7 +754,7 @@
         "which": { "question": "¿Cómo sé cuál de los tres procesos necesito?", "answer": "No hace falta que lo sepas de antemano. El diagnóstico inicial permite comprender tu momento, ordenar la pregunta y reconocer qué recorrido puede acompañarte mejor." },
         "switch": { "question": "¿Qué pasa si empiezo un proceso y descubro que necesito otro?", "answer": "Los recorridos no son compartimentos rígidos. Si durante el proceso aparece otra necesidad, se revisa la dirección y se acuerda la continuidad más adecuada para tu momento." },
         "format": { "question": "¿Los encuentros son virtuales o presenciales?", "answer": "Los encuentros se realizan de manera virtual, para que puedas sostener el proceso desde donde estés. Si existiera una alternativa presencial para tu caso, se conversa antes de comenzar." },
-        "duration": { "question": "¿Cuánto dura cada proceso?", "answer": "Orientación vocacional comprende 6 encuentros individuales. Reinvención profesional y transición laboral comprenden 8 encuentros cada uno." },
+        "duration": { "question": "¿Cuánto dura cada proceso?", "answer": "Orientación vocacional comprende 5 encuentros individuales. Reinvención profesional y transición laboral comprenden 7 encuentros cada uno." },
         "single": { "question": "¿Puedo hacer una única sesión?", "answer": "Senda trabaja con recorridos completos porque los procesos de cambio necesitan tiempo, continuidad e integración. El diagnóstico inicial permite reconocer si este es el momento y el proceso adecuado para vos." },
         "diagnostic": { "question": "¿Cómo funciona el diagnóstico inicial?", "answer": "Es un formulario breve y no clínico sobre tu situación, lo que necesitás, tu etapa y la urgencia del cambio. El equipo recibe esa información para orientarte sobre el recorrido que mejor puede acompañarte." },
         "receive": { "question": "¿Qué recibo al finalizar?", "answer": "Cada proceso cierra con una síntesis personalizada, herramientas concretas y una hoja de ruta. Los entregables específicos dependen del recorrido que hayas atravesado." }
@@ -817,7 +857,7 @@
     "next": "Continuar",
     "submit": "Enviar diagnóstico",
     "sending": "Enviando…",
-    "errors": { "selection": "Elegí una opción para continuar.", "name": "Ingresá tu nombre.", "email": "Ingresá un email válido.", "consent": "Necesitamos tu consentimiento para guardar la información.", "captcha": "No pudimos verificar el envío. Intentá nuevamente.", "submit": "No pudimos guardar tu diagnóstico en este momento. Intentá nuevamente en unos minutos." },
+    "errors": { "selection": "Elegí una opción para continuar.", "name": "Ingresá tu nombre.", "email": "Ingresá un email válido.", "consent": "Necesitamos tu consentimiento para guardar la información.", "captcha": "No pudimos conectar con el servicio de verificación. Podés reintentar, o comprobar si una extensión, VPN o configuración de red está bloqueando challenges.cloudflare.com. Tus respuestas quedan guardadas.", "captchaRetry": "Reintentar verificación", "submit": "No pudimos guardar tu diagnóstico en este momento. Intentá nuevamente en unos minutos." },
     "success": { "title": "Gracias por compartir tu momento.", "description": "Recibimos tu información y vamos a orientarte sobre el recorrido Senda que mejor puede acompañarte.", "cta": "Volver al inicio" }
   }
 }

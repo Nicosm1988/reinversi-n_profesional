@@ -86,11 +86,23 @@ type CareerQuizProps = {
   userEmail?: string | null;
   existingDiagnostic?: ExistingCareerDiagnostic | null;
   startAtQuestions?: boolean;
+  /**
+   * Public, backend-free mode: skips the contact form, Turnstile and the
+   * server-side AI analysis/persistence step. Only the locally computed
+   * ranking is shown. Used while login/captcha/Supabase stay out of the
+   * test's required path.
+   */
+  publicMode?: boolean;
 };
 
 const COMPLETED_STORAGE_KEY = "reinvencion_career_anchor_completed";
 
-export function CareerQuiz({ userEmail, existingDiagnostic = null, startAtQuestions = false }: CareerQuizProps) {
+export function CareerQuiz({
+  userEmail,
+  existingDiagnostic = null,
+  startAtQuestions = false,
+  publicMode = false,
+}: CareerQuizProps) {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("CareerQuiz");
@@ -643,7 +655,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, startAtQuesti
                           variant="default"
                           className={`px-8 ${warmPrimaryButtonClass}`}
                           disabled={bonusQuestions.length !== 3}
-                          onClick={() => setStep("pre-quiz")}
+                          onClick={() => setStep(publicMode ? "results" : "pre-quiz")}
                         >
                           {t("bonusCta")}
                           <ChevronRight className="ml-2 h-4 w-4" />
@@ -661,14 +673,14 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, startAtQuesti
                     </div>
 
                     <Text variant="small" className="text-center text-muted-foreground">
-                      {t("responsesSaved")}
+                      {publicMode ? t("responsesLocalOnly") : t("responsesSaved")}
                     </Text>
                   </CardFooter>
                 </Card>
               </motion.div>
             )}
 
-            {step === "pre-quiz" && (
+            {step === "pre-quiz" && !publicMode && (
               <motion.div
                 key="pre-quiz"
                 initial={{ opacity: 0, scale: 0.96 }}

@@ -1,6 +1,5 @@
 import { CareerQuiz, type ExistingCareerDiagnostic } from "@/components/sections/career-quiz";
 import { getAuthenticatedUser } from "@/lib/supabase/auth";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { canRepeatCareerAnchorTest } from "@/lib/diagnostics/access";
 import type { Metadata } from "next";
@@ -40,18 +39,14 @@ export async function generateMetadata(
   };
 }
 
-export default async function AnclaDeCarreraTestPage(
-  props: Readonly<{
-    params: Promise<{ locale: string }>;
-  }>,
-) {
-  const { locale } = await props.params;
-  const nextPath = locale === "en" ? "/en/diagnostico/ancla-de-carrera/test" : "/diagnostico/ancla-de-carrera/test";
-  const loginPath = locale === "en" ? "/en/login" : "/login";
+export default async function AnclaDeCarreraTestPage() {
+  // The test is public: an active Supabase session (e.g. someone arriving
+  // from the Panel to view/repeat a saved result) unlocks the persisted,
+  // AI-assisted flow, but its absence never blocks taking the test.
   const auth = await getAuthenticatedUser();
 
   if (!auth.ok) {
-    redirect(`${loginPath}?next=${encodeURIComponent(nextPath)}&reason=${auth.reason}`);
+    return <CareerQuiz userEmail={null} existingDiagnostic={null} startAtQuestions publicMode />;
   }
 
   const canRepeat = canRepeatCareerAnchorTest(auth.user.email);

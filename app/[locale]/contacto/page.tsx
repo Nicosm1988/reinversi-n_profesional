@@ -172,6 +172,7 @@ export default function ContactoPage() {
                       action="lead_contact"
                       language={locale}
                       className="min-h-[65px]"
+                      retryLabel={t("captchaRetry")}
                     />
                     {captchaError && <p className="text-sm text-destructive" role="alert">{t("captchaError")}</p>}
 

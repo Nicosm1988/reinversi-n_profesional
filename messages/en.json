@@ -89,6 +89,10 @@
     "cta": "Explore my motivations",
     "closeLabel": "Close invitation"
   },
+  "WhatsApp": {
+    "ariaLabel": "Contact Senda on WhatsApp",
+    "message": "Hello, I was exploring Senda's website and would like more information."
+  },
   "Hero": {
     "slide0TitlePrefix": "In a changing world,",
     "slide0TitleSuffix": "we help you find",
@@ -200,7 +204,8 @@
     "placeholderCountry": "E.g., Argentina",
     "submitLoading": "Analyzing...",
     "submitDefault": "View my results",
-    "captchaError": "We could not verify that you are a person. Please retry the verification."
+    "captchaError": "We couldn't connect to the verification service. You can retry, or check whether a browser extension, VPN, or network setting is blocking challenges.cloudflare.com. Your data is still saved.",
+    "captchaRetry": "Retry verification"
   },
   "Login": {
     "title": "Welcome",
@@ -234,7 +239,8 @@
     "consent": "I accept the <terms>Terms and Conditions</terms> and the <privacy>Privacy Policy</privacy>.",
     "errorSubmit": "We could not send your inquiry.",
     "errorUnexpected": "An unexpected error occurred while sending your inquiry.",
-    "captchaError": "We could not verify that you are a person. Please retry the verification.",
+    "captchaError": "We couldn't connect to the verification service. You can retry, or check whether a browser extension, VPN, or network setting is blocking challenges.cloudflare.com. Your data is still saved.",
+    "captchaRetry": "Retry verification",
     "successTitle": "Thank you for reaching out!",
     "successDescription": "We received your inquiry. We will reply by email within 24 hours.",
     "successAnother": "Send another inquiry",
@@ -290,7 +296,7 @@
     "midCtaButton": "I want to begin",
     "processLabel": "The Process",
     "processTitle": "How does vocational guidance work?",
-    "processSubtitle": "8 individual sessions of 60 to 90 minutes, at your own pace (weekly or every other week). 100% online, wherever you are.",
+    "processSubtitle": "5 individual sessions of 60 to 90 minutes, at your own pace (weekly or every other week). 100% online, wherever you are.",
     "sessionLabel": "SESSION",
     "session01Title": "Your story and where you are now",
     "session01Desc": "We begin by exploring your journey, your current situation, and what brought you here. We listen without judgment to understand your context in depth.",
@@ -623,6 +629,7 @@
     "bonusPreviousBlock": "Previous block",
     "bonusNextBlock": "Next block",
     "responsesSaved": "Your answers are stored securely in your account so you can review them later.",
+    "responsesLocalOnly": "Your answers are calculated on this device and are not sent to any server.",
     "prequizPrivacy": "Your information is used to personalize and save the diagnostic in your account.",
     "prequizPrivacyWithEmail": "Your information is used to personalize and save the diagnostic in your account ({email}).",
     "resultsRankingDescription": "This order reflects the relative weight of each anchor based on your answers and your three final selections.",
@@ -666,6 +673,39 @@
       "title": "Not every change is navigated in the same way.",
       "intro": "At their core, these are all processes of change. But each person's question, moment, and the kind of journey they need can be very different.",
       "cta": "Explore the process"
+    },
+    "situations": {
+      "eyebrow": "Situations",
+      "title": "What do you need to sort out in your professional life?",
+      "intro": "Different professional moments call for different journeys. Identify which situation feels closest to what you're going through and see how we can support you.",
+      "cta": "Explore this journey",
+      "items": {
+        "experience": {
+          "title": "I have experience, but I'm not sure what my next step should be",
+          "description": "Your track record has value, even if the role you hold today no longer explains what you want to build. This journey revisits your story, helps you recognize what drives you, and maps out possible scenarios.",
+          "serviceLabel": "Professional Reinvention"
+        },
+        "change": {
+          "title": "I want to change role, company, or industry without starting from zero",
+          "description": "When the search stalls or the opportunities don't match what you're after, we work on the value of your experience, the focus of the transition, and a strategy that fits your next stage.",
+          "serviceLabel": "Career Transition"
+        },
+        "project": {
+          "title": "I have an idea or a project and need to turn it into a viable option",
+          "description": "We explore how the project relates to your career, what conditions it needs, and what steps let you evaluate it without idealizing or dismissing it too soon.",
+          "serviceLabel": "Professional Reinvention"
+        },
+        "leadership": {
+          "title": "I hold a role with real responsibility and need perspective on my next stage",
+          "description": "Professional decisions get more complex when they involve teams, stability, identity, and years of experience. Senda offers a space to step back, clarify criteria, and build possible alternatives.",
+          "serviceLabel": "Professional Reinvention"
+        },
+        "vocation": {
+          "title": "I need more clarity to choose a career path or field of study",
+          "description": "A process to recognize interests, motivations, and possibilities, and build a decision that doesn't rely only on outside expectations or a quick way out.",
+          "serviceLabel": "Vocational Guidance"
+        }
+      }
     },
     "bridge": {
       "eyebrow": "A first threshold",
@@ -714,7 +754,7 @@
         "which": { "question": "How do I know which process I need?", "answer": "You don't need to know in advance. The initial diagnostic helps us understand your moment, organize the question, and identify which journey may support you best." },
         "switch": { "question": "What if I begin one process and discover I need another?", "answer": "The journeys are not rigid compartments. If another need emerges, we revisit the direction and agree on the most suitable way forward." },
         "format": { "question": "Are meetings virtual or in person?", "answer": "Meetings take place virtually, so you can sustain the process wherever you are. If an in-person alternative is available for your case, it will be discussed before you begin." },
-        "duration": { "question": "How long does each process take?", "answer": "Vocational guidance includes 6 individual meetings. Professional reinvention and career transition include 8 meetings each." },
+        "duration": { "question": "How long does each process take?", "answer": "Vocational guidance includes 5 individual meetings. Professional reinvention and career transition include 7 meetings each." },
         "single": { "question": "Can I book a single session?", "answer": "Senda works through complete journeys because change requires time, continuity, and integration. The initial diagnostic helps determine whether this is the right moment and process for you." },
         "diagnostic": { "question": "How does the initial diagnostic work?", "answer": "It is a brief, non-clinical form about your situation, what you need, your current stage, and the urgency of the change. The team receives this information to guide you toward the most suitable journey." },
         "receive": { "question": "What will I receive at the end?", "answer": "Each process closes with a personalized synthesis, practical tools, and a roadmap. The specific deliverables depend on your journey." }
@@ -817,7 +857,7 @@
     "next": "Continue",
     "submit": "Send diagnostic",
     "sending": "Sending…",
-    "errors": { "selection": "Choose an option to continue.", "name": "Enter your name.", "email": "Enter a valid email.", "consent": "We need your consent to save this information.", "captcha": "We couldn't verify this submission. Please try again.", "submit": "We couldn't save your diagnostic right now. Please try again in a few minutes." },
+    "errors": { "selection": "Choose an option to continue.", "name": "Enter your name.", "email": "Enter a valid email.", "consent": "We need your consent to save this information.", "captcha": "We couldn't connect to the verification service. You can retry, or check whether a browser extension, VPN, or network setting is blocking challenges.cloudflare.com. Your answers are still saved.", "captchaRetry": "Retry verification", "submit": "We couldn't save your diagnostic right now. Please try again in a few minutes." },
     "success": { "title": "Thank you for sharing your moment.", "description": "We received your information and will guide you toward the Senda journey that may support you best.", "cta": "Back to the home page" }
   }
 }

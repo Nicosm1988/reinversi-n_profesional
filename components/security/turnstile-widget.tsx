@@ -19,6 +19,7 @@ declare global {
         },
       ) => string;
       remove: (widgetId: string) => void;
+      reset: (widgetId: string) => void;
     };
   }
 }
@@ -30,9 +31,10 @@ type TurnstileWidgetProps = {
   action?: string;
   language?: string;
   theme?: "auto" | "light" | "dark";
+  retryLabel?: string;
 };
 
-const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() || undefined;
 
 export function TurnstileWidget({
   onTokenChange,
@@ -41,10 +43,12 @@ export function TurnstileWidget({
   action,
   language = "auto",
   theme = "auto",
+  retryLabel,
 }: TurnstileWidgetProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const widgetIdRef = useRef<string | null>(null);
   const [scriptReady, setScriptReady] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const id = useId().replace(/:/g, "");
 
   useEffect(() => {
@@ -61,12 +65,14 @@ export function TurnstileWidget({
       theme,
       callback: (token) => {
         onErrorChange?.(false);
+        setHasError(false);
         onTokenChange(token);
       },
       "expired-callback": () => onTokenChange(undefined),
       "error-callback": () => {
         onTokenChange(undefined);
         onErrorChange?.(true);
+        setHasError(true);
       },
     });
 
@@ -83,6 +89,14 @@ export function TurnstileWidget({
     return null;
   }
 
+  function handleRetry() {
+    if (!widgetIdRef.current || !window.turnstile) return;
+    onTokenChange(undefined);
+    onErrorChange?.(false);
+    setHasError(false);
+    window.turnstile.reset(widgetIdRef.current);
+  }
+
   return (
     <>
       <Script
@@ -91,6 +105,15 @@ export function TurnstileWidget({
         onReady={() => setScriptReady(true)}
       />
       <div id={`turnstile-${id}`} ref={containerRef} className={className} />
+      {hasError && retryLabel ? (
+        <button
+          type="button"
+          onClick={handleRetry}
+          className="text-sm font-semibold underline underline-offset-2"
+        >
+          {retryLabel}
+        </button>
+      ) : null}
     </>
   );
 }

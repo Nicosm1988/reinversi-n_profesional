@@ -118,6 +118,7 @@ export function PreQuizForm({ onSubmit }: PreQuizFormProps) {
                 action="diagnostic_prequiz"
                 language={locale}
                 className="mb-4"
+                retryLabel={t("captchaRetry")}
               />
               {captchaError && (
                 <p className="mb-4 text-sm text-destructive" role="alert">

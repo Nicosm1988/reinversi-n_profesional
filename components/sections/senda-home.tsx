@@ -2,12 +2,21 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ArrowRight, Asterisk, Compass, MoveDown } from "lucide-react";
 import { Link } from "@/navigation";
-import { sendaProcesses } from "@/lib/data/senda-processes";
+import { getSendaProcess, sendaProcesses, type ProcessSlug } from "@/lib/data/senda-processes";
 
 const howSteps = ["name", "find", "experience", "return"] as const;
 const territories = ["work", "identity", "learning", "purpose", "technology"] as const;
 const faqs = ["which", "switch", "format", "duration", "single", "diagnostic", "receive"] as const;
 const processIllustrations = ["/illustrations/problem.png", "/illustrations/method.png", "/illustrations/paths.png"] as const;
+
+const situationKeys = ["experience", "change", "project", "leadership", "vocation"] as const;
+const situationSlugs: Record<(typeof situationKeys)[number], ProcessSlug> = {
+  experience: "reinvencion-profesional",
+  change: "transicion-laboral",
+  project: "reinvencion-profesional",
+  leadership: "reinvencion-profesional",
+  vocation: "orientacion-vocacional",
+};
 
 function TopographicLines({ className = "" }: { className?: string }) {
   return (
@@ -95,6 +104,53 @@ export function SendaHome() {
                 </div>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="situaciones" className="scroll-mt-24 px-5 py-24 sm:px-8 md:py-36 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1280px]">
+          <div className="senda-reveal max-w-3xl">
+            <p className="senda-kicker">{t("situations.eyebrow")}</p>
+            <h2 className="mt-5 max-w-[16ch] font-heading text-5xl leading-[0.98] tracking-[-0.04em] sm:text-6xl">{t("situations.title")}</h2>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--senda-muted)]">{t("situations.intro")}</p>
+          </div>
+
+          <div className="mt-16 border-t border-[var(--senda-border)]">
+            {situationKeys.map((key, index) => {
+              const process = getSendaProcess(situationSlugs[key]);
+
+              return (
+                <article
+                  key={key}
+                  className="senda-reveal grid gap-5 border-b border-[var(--senda-border)] py-9 sm:grid-cols-[3.5rem_1fr] sm:py-10"
+                >
+                  <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">0{index + 1}</span>
+                  <div className="grid gap-6 lg:grid-cols-[1.3fr_0.9fr] lg:items-center">
+                    <div>
+                      <h3 className="max-w-[28ch] font-heading text-2xl leading-[1.15] sm:text-3xl">{t(`situations.items.${key}.title`)}</h3>
+                      <p className="mt-4 max-w-2xl text-[15px] leading-7 text-[var(--senda-muted)]">{t(`situations.items.${key}.description`)}</p>
+                    </div>
+                    <div className="flex flex-col items-start gap-3 lg:items-end">
+                      <div className="text-sm text-[var(--senda-muted)] lg:text-right">
+                        <p className="font-bold text-[var(--senda-ink)]">{t(`situations.items.${key}.serviceLabel`)}</p>
+                        {process ? (
+                          <p>{processT(`items.${process.key}.duration`, { count: process.durationMeetings })}</p>
+                        ) : null}
+                      </div>
+                      {process ? (
+                        <Link
+                          href={`/procesos/${process.slug}`}
+                          className="inline-flex items-center gap-2 text-sm font-bold text-[var(--senda-ink)] underline decoration-[var(--senda-terracotta)]/45 decoration-1 underline-offset-8 hover:decoration-[var(--senda-terracotta)]"
+                        >
+                          {t("situations.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
+                      ) : null}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

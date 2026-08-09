@@ -34,16 +34,14 @@ export function ProcessPopup() {
     return () => clearTimeout(timer);
   }, [pathname, isExcludedPath, visible]);
 
-  useEffect(() => {
-    if (visible && isExcludedPath) setVisible(false);
-  }, [visible, isExcludedPath]);
+  const shouldRender = visible && !isExcludedPath;
 
   useEffect(() => {
-    if (visible) closeButtonRef.current?.focus();
-  }, [visible]);
+    if (shouldRender) closeButtonRef.current?.focus();
+  }, [shouldRender]);
 
   useEffect(() => {
-    if (!visible) return;
+    if (!shouldRender) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setVisible(false);
@@ -51,12 +49,12 @@ export function ProcessPopup() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [visible]);
+  }, [shouldRender]);
 
-  if (!visible) return null;
+  if (!shouldRender) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[70] flex justify-center p-3 sm:justify-end sm:p-5">
+    <div className="pointer-events-none fixed inset-x-0 bottom-24 z-[70] flex justify-center p-3 sm:justify-end sm:p-5">
       <div
         role="dialog"
         aria-modal="false"

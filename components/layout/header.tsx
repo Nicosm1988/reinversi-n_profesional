@@ -123,11 +123,11 @@ export function Header() {
     >
       <div className="mx-auto flex h-[82px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12 xl:px-20">
         <Link href="/" className="group relative z-10 flex items-center gap-3" aria-label={t("homeLabel")}>
-          <span className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[var(--senda-ink)]/45 dark:border-[#f4efe4]/45">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--senda-terracotta)]" />
-            <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full border border-[var(--senda-ink)]/45 bg-[#f4efe4] transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5 dark:border-[#f4efe4]/45 dark:bg-[#252a22]" />
+          <span className="relative flex h-[2.6rem] w-[2.6rem] items-center justify-center rounded-full border border-[var(--senda-ink)]/45 dark:border-[#f4efe4]/45">
+            <span className="h-2 w-2 rounded-full bg-[var(--senda-terracotta)]" />
+            <span className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border border-[var(--senda-ink)]/45 bg-[#f4efe4] transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5 dark:border-[#f4efe4]/45 dark:bg-[#252a22]" />
           </span>
-          <span className="font-heading text-2xl font-medium tracking-[-0.03em] text-[var(--senda-ink)] dark:text-[#f4efe4]">Senda</span>
+          <span className="font-heading text-[1.75rem] font-medium tracking-[-0.03em] text-[var(--senda-ink)] dark:text-[#f4efe4]">Senda</span>
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label={t("primaryNavigation")}>

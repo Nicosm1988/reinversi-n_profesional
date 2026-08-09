@@ -17,9 +17,11 @@ test("smoke: landing, public intake and protected account routes are accessible"
   await expect(page).toHaveURL(/\/diagnostico$/);
   await expect(page.getByRole("group", { name: /situación describe mejor|situation best describes/i })).toBeVisible();
 
+  // The career anchor test is public: no login, captcha, or backend call
+  // should be required to take it and see a result.
   await page.goto("/diagnostico/ancla-de-carrera/test");
-  await expect(page).toHaveURL(/\/login\?next=.*diagnostico%2Fancla-de-carrera%2Ftest/);
-  await expect(page.getByRole("button", { name: /google/i })).toBeVisible();
+  await expect(page).not.toHaveURL(/\/login/);
+  await expect(page.getByText(/Preguntas 1 a 10|Questions 1 to 10/i)).toBeVisible();
 
   await page.goto("/panel");
   await expect(page).toHaveURL(/\/login\?next=%2Fpanel/);
