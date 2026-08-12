@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/
 import { Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn } from "@/components/motion";
+import { UniverseField } from "@/components/visual/universe-field";
 
 export default function LoginPage() {
   const t = useTranslations("Login");
@@ -73,11 +74,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="wati-page-shell min-h-screen flex flex-col justify-center">
-      <Container>
+    <div className="wati-page-shell flex min-h-screen flex-col justify-center pb-16 pt-28">
+      <UniverseField compact className="left-[34%] text-[#5c7776] opacity-10 dark:text-[#89a9bd] dark:opacity-15" />
+      <Container className="relative z-10">
         <div className="max-w-md mx-auto w-full">
           <FadeIn>
-            <Card className="border-primary/10 bg-background/95 backdrop-blur-xl">
+            <Card className="senda-editorial-card rounded-[1.35rem] bg-background/95 backdrop-blur-xl">
               <CardHeader className="text-center pb-8 pt-8 space-y-4">
                 <Heading level="h1" className="text-2xl font-bold font-heading">{t("title")}</Heading>
                 <CardDescription className="text-base">{t("description")}</CardDescription>

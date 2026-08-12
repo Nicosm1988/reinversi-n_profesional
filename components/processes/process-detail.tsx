@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { ArrowLeft, ArrowRight, Check, Clock3 } from "lucide-react";
 import { Link } from "@/navigation";
 import type { getSendaProcess } from "@/lib/data/senda-processes";
+import { UniverseField } from "@/components/visual/universe-field";
 
 type SendaProcess = NonNullable<ReturnType<typeof getSendaProcess>>;
 
@@ -10,7 +11,8 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
 
   return (
     <article className={`senda-process-detail senda-process-detail--${process.accent} bg-[var(--senda-bg)] text-[var(--senda-ink)]`}>
-      <header className="relative overflow-hidden border-b border-white/10 bg-[var(--senda-ink-fixed)] px-5 pb-24 pt-36 text-[#f4efe4] sm:px-8 md:pb-32 md:pt-44 lg:px-12 xl:px-20">
+      <header className="senda-night border-b border-white/10 px-5 pb-24 pt-36 text-[#f4efe4] sm:px-8 md:pb-32 md:pt-44 lg:px-12 xl:px-20">
+        <UniverseField className="left-[34%] text-[#89a9bd] opacity-25" />
         <svg className="absolute -right-44 -top-28 h-[42rem] w-[70rem] stroke-[#d2ba8a] opacity-[0.15]" viewBox="0 0 800 500" fill="none" aria-hidden="true">
           {[0, 1, 2, 3, 4, 5].map((line) => (
             <path key={line} d={`M-60 ${430 - line * 42}C90 ${320 - line * 29} 212 ${480 - line * 46} 364 ${345 - line * 25}c130-116 223 8 354-122 54-54 99-126 135-204`} />
@@ -21,11 +23,11 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
             <ArrowLeft className="h-4 w-4" aria-hidden="true" /> {t("back")}
           </Link>
           <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_0.7fr] lg:items-end">
-            <div>
+            <div className="min-w-0">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--senda-terracotta)]">{t("eyebrow", { number: process.number })}</p>
               <h1 className="mt-6 max-w-[10ch] font-heading text-[clamp(4rem,8vw,8rem)] leading-[0.86] tracking-[-0.055em]">{t(`items.${process.key}.title`)}</h1>
             </div>
-            <div className="border-l border-white/20 pl-6 sm:pl-8">
+            <div className="min-w-0 border-l border-white/20 pl-6 sm:pl-8">
               <p className="text-xl font-semibold leading-8 text-white">{t(`items.${process.key}.lead`)}</p>
               <p className="mt-5 flex items-center gap-2 text-sm text-[#f4efe4]/65">
                 <Clock3 className="h-4 w-4" aria-hidden="true" /> {t(`items.${process.key}.duration`, { count: process.durationMeetings })}
@@ -68,7 +70,7 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
       </section>
 
       <section className="px-5 py-24 sm:px-8 md:py-36 lg:px-12 xl:px-20">
-        <div className="senda-reveal mx-auto grid max-w-[1100px] gap-12 rounded-[2.2rem] bg-[var(--senda-paper)] p-7 shadow-[0_30px_80px_-62px_rgba(36,40,31,.55)] sm:p-12 lg:grid-cols-[0.7fr_1fr] lg:p-16">
+        <div className="senda-editorial-card senda-reveal mx-auto grid max-w-[1100px] gap-12 rounded-[1.35rem] p-7 sm:p-12 lg:grid-cols-[0.7fr_1fr] lg:p-16">
           <div>
             <p className="senda-kicker">{t("takeaways.eyebrow")}</p>
             <h2 className="mt-5 max-w-[10ch] font-heading text-5xl leading-none tracking-[-0.04em] sm:text-6xl">{t("takeaways.title")}</h2>
@@ -85,7 +87,8 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
       </section>
 
       <section className="px-5 pb-10 sm:px-8 lg:px-12 xl:px-20">
-        <div className="relative mx-auto overflow-hidden rounded-[2.4rem] bg-[var(--senda-olive)] px-7 py-16 text-[#f4efe4] sm:px-12 md:py-24 lg:px-20">
+        <div className="senda-night relative mx-auto overflow-hidden rounded-[1.4rem] border border-white/10 px-7 py-16 text-[#f4efe4] sm:px-12 md:py-24 lg:px-20">
+          <UniverseField compact className="left-[35%] text-[#89a9bd] opacity-20" />
           <div className="relative max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#d9cfad]">{t("cta.eyebrow")}</p>
             <h2 className="mt-6 font-heading text-5xl leading-[0.98] tracking-[-0.04em] sm:text-7xl">{t("cta.title")}</h2>
@@ -99,4 +102,3 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
     </article>
   );
 }
-

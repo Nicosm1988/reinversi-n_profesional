@@ -4,29 +4,32 @@
 
 @layer base {
   :root {
-    --senda-bg: #fcf5ec;
-    --senda-ink: #2f3647;
+    --senda-bg: #f4f1ea;
+    --senda-ink: #17263a;
     /* Fixed dark ink for accent bands (footer, manifesto, process header) that must stay dark in both themes. */
-    --senda-ink-fixed: #2f3647;
-    --senda-dark: #31384a;
-    --senda-dark-hover: #414a61;
-    --senda-light: #fcf5ec;
-    --senda-accent: #e47c56;
-    --senda-accent-soft: #f0b08d;
-    --senda-accent-dark: #b95d3e;
-    --senda-border: #dcc8b5;
-    --senda-card: #fffaf4;
-    --senda-paper: #fffaf4;
-    --senda-stone: #f8efe6;
-    --senda-section: #f8efe6;
-    --senda-section-warm: #efe5da;
-    --senda-muted: #5d6372;
-    --senda-olive: #7f9b7a;
-    --senda-terracotta: #e47c56;
-    --senda-charcoal: #2f3647;
-    --senda-gold: #b99a5e;
-    --background: 34 48% 96%;
-    --foreground: 223 16% 24%;
+    --senda-ink-fixed: #111d2c;
+    --senda-dark: #101c2c;
+    --senda-dark-hover: #203650;
+    --senda-light: #f7f3eb;
+    --senda-accent: #92513f;
+    --senda-accent-soft: #d8a08a;
+    --senda-accent-dark: #92513f;
+    --senda-border: #ced2d3;
+    --senda-card: #fbf9f4;
+    --senda-paper: #faf7f0;
+    --senda-stone: #e9ebe9;
+    --senda-section: #eaebe8;
+    --senda-section-warm: #e9e2d8;
+    --senda-muted: #5b6876;
+    --senda-olive: #5c7776;
+    --senda-terracotta: #92513f;
+    --senda-action: #92513f;
+    --senda-action-hover: #743b2e;
+    --senda-charcoal: #17263a;
+    --senda-gold: #c2a366;
+    --senda-sky: #89a9bd;
+    --background: 39 26% 94%;
+    --foreground: 215 43% 16%;
 
     --card: 0 0% 100%;
     --card-foreground: 45 6% 11%;
@@ -34,51 +37,54 @@
     --popover: 0 0% 100%;
     --popover-foreground: 45 6% 11%;
 
-    --primary: 223 16% 24%;
-    --primary-foreground: 34 48% 96%;
+    --primary: 215 43% 16%;
+    --primary-foreground: 39 31% 95%;
 
-    --secondary: 18 73% 61%;
+    --secondary: 13 40% 41%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 29 34% 91%;
-    --muted-foreground: 223 11% 43%;
+    --muted: 180 5% 89%;
+    --muted-foreground: 211 13% 41%;
 
-    --accent: 104 18% 65%;
-    --accent-foreground: 223 16% 24%;
+    --accent: 179 13% 41%;
+    --accent-foreground: 39 31% 95%;
 
     --destructive: 0 72% 42%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 32% 79%;
-    --input: 30 32% 79%;
-    --ring: 18 73% 61%;
+    --border: 190 5% 82%;
+    --input: 190 5% 82%;
+    --ring: 179 13% 41%;
 
     --radius: 1rem;
   }
 
   .dark {
     color-scheme: dark;
-    --senda-bg: #242a38;
-    --senda-ink: #f6efe7;
-    --senda-dark: #1d2230;
-    --senda-dark-hover: #3b4358;
-    --senda-light: #f8eee4;
-    --senda-accent: #d8896d;
-    --senda-accent-soft: #f4b99f;
-    --senda-accent-dark: #f0a27f;
-    --senda-border: #4a5145;
-    --senda-card: #30362d;
-    --senda-paper: #30362d;
-    --senda-stone: #2b3028;
-    --senda-section: #2b3028;
-    --senda-section-warm: #3b332d;
-    --senda-muted: #c7c0b8;
-    --senda-olive: #4f5b45;
-    --senda-terracotta: #d8896d;
-    --senda-charcoal: #252a22;
-    --senda-gold: #c9ad71;
-    --background: 223 18% 18%;
-    --foreground: 0 0% 97%;
+    --senda-bg: #0d1725;
+    --senda-ink: #edf0f2;
+    --senda-dark: #09121f;
+    --senda-dark-hover: #213650;
+    --senda-light: #f5f1e8;
+    --senda-accent: #cf8a70;
+    --senda-accent-soft: #e0aa96;
+    --senda-accent-dark: #e2a088;
+    --senda-border: #314154;
+    --senda-card: #152337;
+    --senda-paper: #17273a;
+    --senda-stone: #111e2e;
+    --senda-section: #111f31;
+    --senda-section-warm: #202b37;
+    --senda-muted: #b9c2ca;
+    --senda-olive: #7fa09d;
+    --senda-terracotta: #cf8a70;
+    --senda-action: #92513f;
+    --senda-action-hover: #743b2e;
+    --senda-charcoal: #0d1725;
+    --senda-gold: #d0b77d;
+    --senda-sky: #8eb3c9;
+    --background: 216 47% 10%;
+    --foreground: 204 16% 94%;
 
     --card: 225 17% 12%;
     --card-foreground: 0 0% 97%;
@@ -86,24 +92,24 @@
     --popover: 225 17% 12%;
     --popover-foreground: 0 0% 97%;
 
-    --primary: 223 16% 24%;
-    --primary-foreground: 34 48% 96%;
+    --primary: 204 16% 94%;
+    --primary-foreground: 216 47% 10%;
 
-    --secondary: 18 73% 61%;
-    --secondary-foreground: 223 18% 18%;
+    --secondary: 16 45% 63%;
+    --secondary-foreground: 216 47% 10%;
 
-    --muted: 225 15% 18%;
-    --muted-foreground: 220 9% 72%;
+    --muted: 215 35% 17%;
+    --muted-foreground: 207 13% 73%;
 
-    --accent: 201 100% 65%;
-    --accent-foreground: 225 18% 9%;
+    --accent: 178 17% 56%;
+    --accent-foreground: 216 47% 10%;
 
     --destructive: 0 72% 70%;
     --destructive-foreground: 223 18% 12%;
 
-    --border: 225 15% 24%;
-    --input: 225 15% 24%;
-    --ring: 18 73% 61%;
+    --border: 214 25% 26%;
+    --input: 214 25% 26%;
+    --ring: 178 17% 56%;
   }
 
   * {
@@ -118,17 +124,17 @@
   body {
     @apply min-h-screen bg-background text-foreground antialiased;
     background-image:
-      radial-gradient(circle at 12% -4%, hsl(var(--accent) / 0.14), transparent 34%),
-      radial-gradient(circle at 88% 4%, hsl(var(--secondary) / 0.12), transparent 30%),
-      linear-gradient(180deg, #fffaf4 0%, #fcf5ec 38%, #fffaf4 100%);
+      radial-gradient(circle at 14% -6%, rgba(137, 169, 189, 0.14), transparent 34%),
+      radial-gradient(circle at 88% 4%, rgba(184, 109, 84, 0.09), transparent 30%),
+      linear-gradient(180deg, #f8f5ee 0%, #f1f0ea 46%, #f7f3ec 100%);
     text-rendering: optimizeLegibility;
   }
 
   .dark body {
     background-image:
-      radial-gradient(circle at 12% -4%, hsl(var(--accent) / 0.09), transparent 34%),
-      radial-gradient(circle at 88% 4%, hsl(var(--secondary) / 0.08), transparent 30%),
-      linear-gradient(180deg, #242a38 0%, #202633 45%, #242a38 100%);
+      radial-gradient(circle at 12% -4%, rgba(137, 169, 189, 0.1), transparent 34%),
+      radial-gradient(circle at 88% 4%, rgba(207, 138, 112, 0.08), transparent 30%),
+      linear-gradient(180deg, #0d1725 0%, #101d2c 45%, #0d1725 100%);
   }
 
   a {
@@ -227,7 +233,7 @@
     --senda-border: #d9d1c2;
     --senda-muted: #64665d;
     --senda-olive: #4a5540;
-    --senda-terracotta: #b96549;
+    --senda-terracotta: #92513f;
   }
 
   @media (max-width: 1023px) {
@@ -425,4 +431,316 @@
   --border: 30 27% 76%;
   --card-foreground: 225 20% 23%;
   --popover-foreground: 225 20% 23%;
+}
+
+/* Universo Senda: an editorial system with quiet coordinates and trajectories. */
+body {
+  overflow-x: clip;
+}
+
+.universe-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: currentColor;
+  pointer-events: none;
+}
+
+.universe-field path,
+.universe-field ellipse {
+  stroke: currentColor;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.universe-field circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.universe-field__constellation {
+  stroke-dasharray: 3 8;
+}
+
+.universe-field__drift {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: universe-drift 24s ease-in-out infinite alternate;
+}
+
+.universe-field--compact .universe-field__drift {
+  animation-duration: 30s;
+}
+
+@keyframes universe-drift {
+  from {
+    opacity: 0.72;
+    transform: translate3d(-0.4rem, 0.2rem, 0) scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0.5rem, -0.35rem, 0) scale(1.015);
+  }
+}
+
+.senda-night {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #f5f1e8;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(137, 169, 189, 0.16), transparent 27%),
+    radial-gradient(circle at 16% 82%, rgba(184, 109, 84, 0.13), transparent 24%),
+    linear-gradient(145deg, #0a1422 0%, #13243a 54%, #0d1929 100%);
+}
+
+.senda-night::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.14;
+  background-image:
+    linear-gradient(rgba(223, 232, 237, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(223, 232, 237, 0.16) 1px, transparent 1px);
+  background-size: clamp(4rem, 9vw, 8.5rem) clamp(4rem, 9vw, 8.5rem);
+  mask-image: linear-gradient(to bottom, black, transparent 82%);
+  pointer-events: none;
+}
+
+.senda-coordinate-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.senda-coordinate-label::before {
+  content: "";
+  width: 1.85rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.senda-editorial-card {
+  border: 1px solid color-mix(in srgb, var(--senda-border) 88%, transparent);
+  background: color-mix(in srgb, var(--senda-paper) 94%, transparent);
+  box-shadow: 0 30px 80px -60px rgba(10, 20, 34, 0.68);
+}
+
+.senda-cookie-card {
+  background: var(--senda-paper);
+}
+
+.senda-image-frame {
+  position: relative;
+  border: 1px solid rgba(222, 231, 236, 0.2);
+  background: rgba(246, 243, 235, 0.06);
+  box-shadow: 0 42px 90px -48px rgba(0, 0, 0, 0.8);
+}
+
+.senda-image-frame::before,
+.senda-image-frame::after {
+  content: "";
+  position: absolute;
+  width: 3.5rem;
+  height: 3.5rem;
+  pointer-events: none;
+}
+
+.senda-image-frame::before {
+  left: -0.8rem;
+  top: -0.8rem;
+  border-left: 1px solid rgba(194, 163, 102, 0.75);
+  border-top: 1px solid rgba(194, 163, 102, 0.75);
+}
+
+.senda-image-frame::after {
+  right: -0.8rem;
+  bottom: -0.8rem;
+  border-right: 1px solid rgba(137, 169, 189, 0.65);
+  border-bottom: 1px solid rgba(137, 169, 189, 0.65);
+}
+
+.senda-orbit-mark {
+  position: relative;
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+
+.senda-orbit-mark::before {
+  content: "";
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: var(--senda-terracotta);
+  box-shadow: 1rem -0.85rem 0 -0.12rem var(--senda-gold);
+}
+
+.senda-orbit-mark::after {
+  content: "";
+  position: absolute;
+  inset: 0.38rem -0.2rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.38;
+  transform: rotate(-28deg);
+}
+
+.senda-home {
+  background:
+    radial-gradient(circle at 90% 16%, rgba(137, 169, 189, 0.1), transparent 26rem),
+    var(--senda-bg);
+}
+
+.senda-reveal {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+.senda-home > section:not(.senda-night) {
+  position: relative;
+}
+
+.senda-home > section:not(.senda-night)::before {
+  content: "";
+  position: absolute;
+  left: max(1.25rem, calc((100vw - 1280px) / 2));
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(23, 38, 58, 0.08) 16%, rgba(23, 38, 58, 0.08) 84%, transparent);
+  pointer-events: none;
+}
+
+.dark .senda-home > section:not(.senda-night)::before {
+  background: linear-gradient(to bottom, transparent, rgba(230, 237, 240, 0.08) 16%, rgba(230, 237, 240, 0.08) 84%, transparent);
+}
+
+.wati-page-shell {
+  background:
+    radial-gradient(circle at 90% 12%, rgba(137, 169, 189, 0.11), transparent 28rem),
+    linear-gradient(180deg, #f7f4ed, #f0f0eb 58%, #f6f2ea);
+}
+
+.wati-page-shell::before {
+  opacity: 0.42;
+  background-image:
+    linear-gradient(rgba(23, 38, 58, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 38, 58, 0.05) 1px, transparent 1px);
+  background-size: 6rem 6rem;
+  mask-image: linear-gradient(to bottom, black, transparent 58%);
+}
+
+.wati-page-hero {
+  --primary: 39 31% 95%;
+  --foreground: 39 31% 95%;
+  --muted-foreground: 207 15% 76%;
+  --secondary: 16 45% 63%;
+  --secondary-foreground: 216 47% 10%;
+  color: #f5f1e8;
+  border-color: rgba(222, 231, 236, 0.12);
+  background:
+    radial-gradient(circle at 78% 12%, rgba(137, 169, 189, 0.18), transparent 28%),
+    linear-gradient(145deg, #0a1422, #14263c 58%, #0d1929);
+}
+
+.wati-page-hero::before {
+  opacity: 0.25;
+  background-image:
+    radial-gradient(circle at 22% 28%, rgba(237, 241, 242, 0.7) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 72%, rgba(194, 163, 102, 0.7) 0 1.2px, transparent 1.7px),
+    linear-gradient(118deg, transparent 42%, rgba(137, 169, 189, 0.45) 42.1%, transparent 42.3%);
+  background-size: 9rem 9rem, 13rem 13rem, 100% 100%;
+}
+
+.wati-feature-card,
+.wati-page-shell [data-cursor-glow]:not(.senda-night) {
+  border-color: color-mix(in srgb, var(--senda-border) 82%, transparent);
+  background: color-mix(in srgb, var(--senda-paper) 95%, transparent);
+  box-shadow: 0 30px 74px -58px rgba(10, 20, 34, 0.72);
+}
+
+.wati-dark-cta {
+  border-color: rgba(222, 231, 236, 0.16);
+  background:
+    radial-gradient(circle at 86% 10%, rgba(137, 169, 189, 0.18), transparent 30%),
+    linear-gradient(145deg, #0b1625, #172b43);
+  box-shadow: 0 30px 70px -42px rgba(6, 14, 25, 0.86);
+}
+
+.initial-diagnostic-page,
+.career-quiz {
+  --senda-bg: #f1f0eb;
+  --senda-ink: #17263a;
+  --senda-paper: #fbf9f4;
+  --senda-stone: #e8ebe9;
+  --senda-border: #ccd2d5;
+  --senda-muted: #5b6876;
+  --senda-olive: #5c7776;
+  --senda-terracotta: #92513f;
+}
+
+.career-quiz > div:first-child {
+  background-image:
+    radial-gradient(circle at 82% 10%, rgba(137, 169, 189, 0.16), transparent 32%),
+    linear-gradient(180deg, #f7f4ed 0%, #eef0ed 48%, #e7e9e8 100%);
+}
+
+.career-quiz > div:nth-child(2),
+.career-quiz > div:nth-child(3),
+.career-quiz > div:nth-child(4) {
+  opacity: 0.35;
+}
+
+.dark .wati-page-shell {
+  background:
+    radial-gradient(circle at 90% 12%, rgba(137, 169, 189, 0.1), transparent 28rem),
+    linear-gradient(180deg, #0d1725, #101d2c 58%, #0d1725);
+}
+
+.dark .wati-page-hero {
+  background:
+    radial-gradient(circle at 78% 12%, rgba(137, 169, 189, 0.16), transparent 28%),
+    linear-gradient(145deg, #08121f, #13243a 58%, #0a1625);
+}
+
+@media (max-width: 767px) {
+  .senda-home > section:not(.senda-night)::before {
+    left: 1.25rem;
+  }
+
+  .senda-night::after {
+    background-size: 4.5rem 4.5rem;
+  }
+
+  .wati-page-shell::before {
+    background-size: 4.5rem 4.5rem;
+  }
+}
+
+@media (max-width: 399px) {
+  .senda-home h1,
+  .senda-home h2,
+  .senda-process-detail h1,
+  .initial-diagnostic-page h1 {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .universe-field__drift {
+    animation: none;
+  }
 }

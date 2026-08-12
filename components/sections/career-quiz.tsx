@@ -26,6 +26,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Heading, Text } from "@/components/ui/typography";
+import { UniverseField } from "@/components/visual/universe-field";
 
 type Step = "intro" | "questions" | "transition" | "bonus" | "pre-quiz" | "results";
 
@@ -75,12 +76,12 @@ function chunkQuestions<T>(items: T[], size: number) {
 }
 
 const warmCardClass =
-  "overflow-hidden border-[#d7c3ae] bg-[#f6efe7]/95 shadow-[0_28px_80px_-42px_rgba(17,24,39,0.55)] backdrop-blur-sm";
+  "overflow-hidden border-[#cbd1d4] bg-[#fbf9f4]/95 shadow-[0_30px_82px_-54px_rgba(10,20,34,0.62)] backdrop-blur-sm";
 const warmPrimaryButtonClass =
-  "rounded-full border-[#a84729] bg-[#bd5734] text-white shadow-[0_18px_40px_-18px_rgba(189,87,52,0.85)] hover:border-[#963f25] hover:bg-[#a84729]";
+  "rounded-full border-[#824634] bg-[#92513f] text-white shadow-[0_18px_40px_-20px_rgba(116,59,46,0.72)] hover:border-[#6b3529] hover:bg-[#743b2e]";
 const warmSecondaryButtonClass =
-  "rounded-full border-[#d4c0ad] bg-[#fbf5ee] text-[#2f3647] shadow-[0_18px_36px_-26px_rgba(47,54,71,0.45)] hover:bg-[#efe3d5]";
-const warmSectionEyebrowClass = "font-semibold uppercase tracking-[0.18em] text-[#cf724e]";
+  "rounded-full border-[#cbd1d4] bg-[#fbf9f4] text-[#17263a] shadow-[0_18px_36px_-28px_rgba(10,20,34,0.48)] hover:bg-[#e8eceb]";
+const warmSectionEyebrowClass = "font-semibold uppercase tracking-[0.18em] text-[#92513f]";
 
 type CareerQuizProps = {
   userEmail?: string | null;
@@ -260,14 +261,16 @@ export function CareerQuiz({
   const bonusBlockEnd = Math.min(bonusBlockStart + QUESTIONS_PER_PAGE - 1, quizData.questions.length);
 
   return (
-    <div className="career-quiz relative min-h-screen overflow-hidden bg-[#f7eee4] transition-colors dark:bg-[#31384a]">
+    <div className="career-quiz relative min-h-screen overflow-hidden bg-[#eef0ed] transition-colors dark:bg-[#0d1725]">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(228,124,86,0.14),transparent_38%),linear-gradient(180deg,#fffaf4_0%,#f7eee4_42%,#efe1d2_100%)] dark:bg-[radial-gradient(circle_at_top,rgba(253,241,229,0.18),transparent_34%),linear-gradient(180deg,#31384a_0%,#374055_34%,#2a3243_100%)]" />
+      <UniverseField className="left-[36%] text-[#5c7776] opacity-10 dark:text-[#89a9bd] dark:opacity-15" />
       <div className="pointer-events-none absolute left-[-8%] top-16 h-80 w-80 rounded-full bg-[#f2c8a7]/16 blur-3xl" />
       <div className="pointer-events-none absolute right-[-8%] top-24 h-[28rem] w-[28rem] rounded-full bg-[#df8d67]/14 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 left-1/2 h-72 w-[44rem] -translate-x-1/2 rounded-full bg-[#f5efe7]/8 blur-3xl" />
 
       <Container className="relative z-10">
         <div className="mx-auto max-w-5xl pb-12 pt-28 md:pb-20 md:pt-32">
+          <h1 className="sr-only">{t("metadataTitle")}</h1>
           <AnimatePresence mode="wait">
             {step === "intro" && (
               <motion.div
@@ -278,7 +281,7 @@ export function CareerQuiz({
                 className="space-y-8"
               >
                 <div className="space-y-6 text-center">
-                  <div className="inline-flex items-center rounded-full border border-[#d7c3ae] bg-[#f2e5d7] px-4 py-2 text-sm font-medium text-[#cf724e]">
+                  <div className="inline-flex items-center rounded-full border border-[#d7c3ae] bg-[#f2e5d7] px-4 py-2 text-sm font-medium text-[#92513f]">
                     <BarChart3 className="mr-2 h-4 w-4" />
                     {t("introBadge")}
                   </div>
@@ -311,7 +314,7 @@ export function CareerQuiz({
                           </Text>
                         </div>
                         <div className="rounded-2xl border border-[#e6c9be] bg-[#f7e5dc] p-4">
-                          <Text variant="small" className="font-semibold text-[#cf724e]">
+                          <Text variant="small" className="font-semibold text-[#92513f]">
                             {t("introSessionTitle")}
                           </Text>
                           <Text variant="small" className="mt-1 text-[#6b6170]">
@@ -332,7 +335,7 @@ export function CareerQuiz({
                           t("introTakeawayPersonalized"),
                         ].map((item) => (
                           <div key={item} className="flex gap-3">
-                            <div className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#f0d7c5] text-[#cf724e]">
+                            <div className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#f0d7c5] text-[#92513f]">
                               <CheckCircle2 className="h-4 w-4" />
                             </div>
                             <Text variant="small" className="text-[#4f5566]">
@@ -522,7 +525,7 @@ export function CareerQuiz({
                 exit={{ opacity: 0, scale: 1.04 }}
                 className="space-y-8 py-12 text-center"
               >
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#f3dfd0] text-[#cf724e] shadow-[0_18px_40px_-24px_rgba(228,124,86,0.85)]">
+                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#f3dfd0] text-[#92513f] shadow-[0_18px_40px_-24px_rgba(228,124,86,0.85)]">
                   <Sparkles className="h-10 w-10" />
                 </div>
 
@@ -714,7 +717,7 @@ export function CareerQuiz({
                 className="space-y-12"
               >
                 <div className="space-y-4 text-center">
-                  <div className="inline-flex items-center rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-1.5 text-sm font-bold text-[#cf724e]">
+                  <div className="inline-flex items-center rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-1.5 text-sm font-bold text-[#92513f]">
                     {t("resultsBadge")}
                   </div>
                   <Heading level="h2" className="text-[#2f3647] dark:text-[#fff7ef]">
@@ -885,13 +888,13 @@ export function CareerQuiz({
 
                         <div className="grid gap-6 md:grid-cols-2">
                           <div className="rounded-2xl border border-[#ebc5b5] bg-[#faece3] p-6">
-                            <Heading level="h4" className="mb-4 text-lg text-[#c56543]">
+                            <Heading level="h4" className="mb-4 text-lg text-[#92513f]">
                               {t("resultsFrictionTitle")}
                             </Heading>
                             <ul className="space-y-3">
                               {aiResult.frictionAreas.map((friction) => (
                                 <li key={friction} className="flex items-start gap-2 text-sm leading-relaxed text-[#6c5560]">
-                                  <span className="font-bold text-[#cf724e]">&bull;</span>
+                                  <span className="font-bold text-[#92513f]">&bull;</span>
                                   <span>{friction}</span>
                                 </li>
                               ))}

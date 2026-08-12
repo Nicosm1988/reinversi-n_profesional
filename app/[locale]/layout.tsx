@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Raleway } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { PointerIllumination } from "@/components/effects/pointer-illumination";
 import { getSiteUrl } from "@/lib/site-url";
 
 // Editorial maturity pass: Raleway replaces Manrope/Instrument Serif as the
@@ -32,6 +31,14 @@ const instrumentSerif = Raleway({
   weight: ["300", "500", "700", "800"],
   display: "swap"
 });
+
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f1ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d1725" },
+  ],
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -88,7 +95,6 @@ export default async function RootLayout(
             <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 rounded-full bg-[var(--senda-ink)] px-5 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0 dark:bg-[#f4efe4] dark:text-[#272b23]">
               {locale === "en" ? "Skip to content" : "Saltar al contenido"}
             </a>
-            <PointerIllumination />
             <Header />
             <main id="main-content" className="flex flex-1 flex-col" tabIndex={-1}>
               {children}
@@ -105,4 +111,3 @@ export default async function RootLayout(
     </html>
   );
 }
-

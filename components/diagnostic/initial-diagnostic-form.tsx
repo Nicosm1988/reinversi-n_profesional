@@ -241,7 +241,7 @@ export function InitialDiagnosticForm() {
                 {t("fields.name")}
                 <input
                   autoComplete="name"
-                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-white px-4 text-base outline-none transition-shadow focus:ring-2 focus:ring-[var(--senda-olive)]"
+                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-white px-4 text-base transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
                   {...register("fullName", { required: t("errors.name"), minLength: { value: 2, message: t("errors.name") } })}
                   aria-invalid={Boolean(errors.fullName)}
                 />
@@ -252,7 +252,7 @@ export function InitialDiagnosticForm() {
                 <input
                   type="email"
                   autoComplete="email"
-                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-white px-4 text-base outline-none transition-shadow focus:ring-2 focus:ring-[var(--senda-olive)]"
+                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-white px-4 text-base transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
                   {...register("email", { required: t("errors.email"), pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: t("errors.email") } })}
                   aria-invalid={Boolean(errors.email)}
                 />
@@ -263,7 +263,7 @@ export function InitialDiagnosticForm() {
                 <input
                   type="tel"
                   autoComplete="tel"
-                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-white px-4 text-base outline-none transition-shadow focus:ring-2 focus:ring-[var(--senda-olive)]"
+                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-white px-4 text-base transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
                   {...register("phone")}
                 />
               </label>
@@ -311,7 +311,7 @@ export function InitialDiagnosticForm() {
             {t("next")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>
         ) : (
-          <button type="submit" disabled={isSubmitting || (captchaEnabled && !captchaToken)} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-terracotta)] px-6 font-semibold text-white hover:bg-[#9e5038] disabled:cursor-not-allowed disabled:opacity-55">
+          <button type="submit" disabled={isSubmitting || (captchaEnabled && !captchaToken)} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 font-semibold text-white hover:bg-[var(--senda-action-hover)] disabled:cursor-not-allowed disabled:opacity-55">
             {isSubmitting ? t("sending") : t("submit")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>
         )}

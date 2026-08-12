@@ -6,12 +6,13 @@ import { useCookies } from "@/lib/cookie-context";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
-function Toggle({ checked, onChange, disabled }: { checked: boolean; onChange: (v: boolean) => void; disabled?: boolean }) {
+function Toggle({ checked, onChange, label, disabled }: { checked: boolean; onChange: (v: boolean) => void; label: string; disabled?: boolean }) {
   return (
     <button
       type="button"
       role="switch"
       aria-checked={checked}
+      aria-label={label}
       disabled={disabled}
       onClick={() => !disabled && onChange(!checked)}
       className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ${
@@ -49,7 +50,7 @@ function CategoryItem({
         {alwaysActive ? (
           <span className="text-sm font-semibold text-foreground">{alwaysActiveLabel}</span>
         ) : (
-          <Toggle checked={checked} onChange={onChange} />
+          <Toggle checked={checked} onChange={onChange} label={title} />
         )}
       </div>
       <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
@@ -77,41 +78,44 @@ export function CookieBanner() {
   if (!showBanner) return null;
 
   return (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center p-3 pointer-events-none sm:justify-end sm:p-5">
-          <div className="pointer-events-auto max-h-[72vh] w-full max-w-md overflow-y-auto rounded-2xl border border-border bg-card text-card-foreground shadow-[0_24px_70px_-28px_rgba(23,59,49,.5)] dark:border-white/15 dark:shadow-[0_24px_70px_-28px_rgba(0,0,0,.85)]">
+        <div
+          className="pointer-events-none fixed inset-0 z-[60] flex items-end justify-center p-3 sm:justify-end sm:p-5"
+          style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 0.75rem)" }}
+        >
+          <div role="region" aria-label={t("title")} className="senda-editorial-card senda-cookie-card pointer-events-auto max-h-[68svh] w-full max-w-md overscroll-contain overflow-y-auto rounded-[1.2rem] text-card-foreground shadow-[0_28px_74px_-30px_rgba(10,20,34,.72)] sm:max-h-[72vh] dark:border-white/15 dark:shadow-[0_28px_74px_-30px_rgba(0,0,0,.88)]">
             {!showPreferences ? (
-              <div className="p-5 md:p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-heading font-bold text-foreground">{t("title")}</h3>
+              <div className="p-4 sm:p-5 md:p-6">
+                <div className="mb-3 flex items-start justify-between gap-4">
+                  <h3 className="font-heading text-lg font-bold text-foreground sm:text-xl">{t("title")}</h3>
                   <button
                     onClick={rejectAll}
                     className="rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
                     aria-label={t("closeLabel")}
                   >
-                    <X className="h-5 w-5" />
+                    <X className="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>
 
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6">{t("description")}</p>
+                <p className="mb-4 text-[13px] leading-5 text-muted-foreground sm:text-sm sm:leading-relaxed">{t("description")}</p>
 
-                <div className="flex flex-wrap gap-3 mb-4">
+                <div className="mb-3 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3">
                   <Button
                     variant="outline"
                     onClick={rejectAll}
-                    className="h-11 rounded-full px-6 font-semibold dark:border-white/20 dark:bg-white/5 dark:text-[#f6efe7] dark:hover:bg-white/10"
+                    className="h-10 rounded-full px-3 text-xs font-semibold sm:h-11 sm:px-6 sm:text-sm dark:border-white/20 dark:bg-white/5 dark:text-[#f6efe7] dark:hover:bg-white/10"
                   >
                     {t("rejectCookies")}
                   </Button>
                   <Button
                     variant="secondary"
                     onClick={acceptAll}
-                    className="rounded-full px-6 h-11 font-semibold"
+                    className="h-10 rounded-full px-3 text-xs font-semibold sm:h-11 sm:px-6 sm:text-sm"
                   >
                     {t("acceptCookies")}
                   </Button>
                 </div>
 
-                <button onClick={handleOpenPreferences} className="rounded-sm text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card dark:text-[#f0a27f]">
+                <button onClick={handleOpenPreferences} className="rounded-sm text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card sm:text-sm dark:text-[#cf8a70]">
                   {t("managePreferences")}
                 </button>
               </div>
@@ -124,7 +128,7 @@ export function CookieBanner() {
                     className="rounded-md text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
                     aria-label={t("closeLabel")}
                   >
-                    <X className="h-5 w-5" />
+                    <X className="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>
 
