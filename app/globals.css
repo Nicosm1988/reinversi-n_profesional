@@ -548,21 +548,18 @@ body {
 
 .senda-logo__trail {
   position: absolute;
-  left: -0.08em;
-  bottom: -0.12rem;
-  width: calc(100% + 0.22rem);
-  height: 0.7rem;
+  left: 0;
+  bottom: 0.06rem;
+  width: calc(100% + 0.16rem);
+  height: 0.72rem;
   overflow: visible;
   pointer-events: none;
 }
 
 .senda-logo__trail path {
-  stroke: currentColor;
-  stroke-width: 0.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.5;
-  vector-effect: non-scaling-stroke;
+  fill: currentColor;
+  opacity: 1;
+  shape-rendering: geometricPrecision;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -575,8 +572,7 @@ body {
   }
 
   .senda-logo__trail path {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
+    clip-path: inset(0 100% 0 0);
     animation: senda-trail-draw 2.8s 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 }
@@ -601,7 +597,7 @@ body {
 
 @keyframes senda-trail-draw {
   to {
-    stroke-dashoffset: 0;
+    clip-path: inset(0 0 0 0);
   }
 }
 
