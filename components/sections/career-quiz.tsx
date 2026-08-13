@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig, useReducedMotion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import {
   ArrowLeft,
@@ -76,12 +76,12 @@ function chunkQuestions<T>(items: T[], size: number) {
 }
 
 const warmCardClass =
-  "overflow-hidden border-[#cbd1d4] bg-[#fbf9f4]/95 shadow-[0_30px_82px_-54px_rgba(10,20,34,0.62)] backdrop-blur-sm";
+  "overflow-hidden border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-raised)_95%,transparent)] shadow-[0_30px_82px_-54px_var(--quiz-shadow)] backdrop-blur-sm";
 const warmPrimaryButtonClass =
-  "rounded-full border-[#824634] bg-[#92513f] text-white shadow-[0_18px_40px_-20px_rgba(116,59,46,0.72)] hover:border-[#6b3529] hover:bg-[#743b2e]";
+  "rounded-full border-[var(--senda-action)] bg-[var(--senda-action)] text-white shadow-[0_18px_40px_-20px_var(--quiz-shadow)] hover:border-[var(--senda-action-hover)] hover:bg-[var(--senda-action-hover)]";
 const warmSecondaryButtonClass =
-  "rounded-full border-[#cbd1d4] bg-[#fbf9f4] text-[#17263a] shadow-[0_18px_36px_-28px_rgba(10,20,34,0.48)] hover:bg-[#e8eceb]";
-const warmSectionEyebrowClass = "font-semibold uppercase tracking-[0.18em] text-[#92513f]";
+  "rounded-full border-[var(--quiz-border)] bg-[var(--quiz-surface-raised)] text-[var(--quiz-ink)] shadow-[0_18px_36px_-28px_var(--quiz-shadow)] hover:bg-[var(--quiz-choice-hover)]";
+const warmSectionEyebrowClass = "font-semibold uppercase tracking-[0.18em] text-[var(--quiz-accent)]";
 
 type CareerQuizProps = {
   userEmail?: string | null;
@@ -107,6 +107,7 @@ export function CareerQuiz({
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("CareerQuiz");
+  const reduceMotion = useReducedMotion();
   const quizData = locale === "en" ? englishQuizData : spanishQuizData;
   const questionPages = useMemo(
     () => chunkQuestions(quizData.questions, QUESTIONS_PER_PAGE),
@@ -133,8 +134,8 @@ export function CareerQuiz({
   const [bonusPageIndex, setBonusPageIndex] = useState(0);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [step, questionPageIndex, bonusPageIndex]);
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  }, [step, questionPageIndex, bonusPageIndex, reduceMotion]);
 
   useEffect(() => {
     if (saveStatus === "saved") {
@@ -261,19 +262,20 @@ export function CareerQuiz({
   const bonusBlockEnd = Math.min(bonusBlockStart + QUESTIONS_PER_PAGE - 1, quizData.questions.length);
 
   return (
-    <div className="career-quiz relative min-h-screen overflow-hidden bg-[#eef0ed] transition-colors dark:bg-[#0d1725]">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(228,124,86,0.14),transparent_38%),linear-gradient(180deg,#fffaf4_0%,#f7eee4_42%,#efe1d2_100%)] dark:bg-[radial-gradient(circle_at_top,rgba(253,241,229,0.18),transparent_34%),linear-gradient(180deg,#31384a_0%,#374055_34%,#2a3243_100%)]" />
-      <UniverseField className="left-[36%] text-[#5c7776] opacity-10 dark:text-[#89a9bd] dark:opacity-15" />
-      <div className="pointer-events-none absolute left-[-8%] top-16 h-80 w-80 rounded-full bg-[#f2c8a7]/16 blur-3xl" />
-      <div className="pointer-events-none absolute right-[-8%] top-24 h-[28rem] w-[28rem] rounded-full bg-[#df8d67]/14 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 left-1/2 h-72 w-[44rem] -translate-x-1/2 rounded-full bg-[#f5efe7]/8 blur-3xl" />
+    <div className="career-quiz relative min-h-screen overflow-hidden bg-[var(--quiz-bg)] transition-colors">
+      <div className="career-quiz__background pointer-events-none absolute inset-0" />
+      <UniverseField className="left-[36%] text-[var(--senda-olive)] opacity-10 dark:opacity-15" />
+      <div className="pointer-events-none absolute left-[-8%] top-16 h-80 w-80 rounded-full bg-[color-mix(in_srgb,var(--quiz-accent)_12%,transparent)] blur-3xl" />
+      <div className="pointer-events-none absolute right-[-8%] top-24 h-[28rem] w-[28rem] rounded-full bg-[color-mix(in_srgb,var(--senda-gold)_10%,transparent)] blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 left-1/2 h-72 w-[44rem] -translate-x-1/2 rounded-full bg-[color-mix(in_srgb,var(--quiz-surface)_8%,transparent)] blur-3xl" />
 
       <Container className="relative z-10">
         <div className="mx-auto max-w-5xl pb-12 pt-28 md:pb-20 md:pt-32">
           <h1 className="sr-only">{t("metadataTitle")}</h1>
-          <AnimatePresence mode="wait">
-            {step === "intro" && (
-              <motion.div
+          <MotionConfig reducedMotion="user">
+            <AnimatePresence mode="wait">
+              {step === "intro" && (
+                <motion.div
                 key="intro"
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -281,16 +283,16 @@ export function CareerQuiz({
                 className="space-y-8"
               >
                 <div className="space-y-6 text-center">
-                  <div className="inline-flex items-center rounded-full border border-[#d7c3ae] bg-[#f2e5d7] px-4 py-2 text-sm font-medium text-[#92513f]">
+                  <div className="inline-flex items-center rounded-full border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] px-4 py-2 text-sm font-medium text-[var(--quiz-accent)]">
                     <BarChart3 className="mr-2 h-4 w-4" />
                     {t("introBadge")}
                   </div>
 
-                  <Heading level="h2" className="text-4xl text-[#2f3647] dark:text-[#f6efe7] md:text-5xl">
+                  <Heading level="h2" className="text-4xl text-[var(--quiz-ink)] md:text-5xl">
                     {t("introTitle")}
                   </Heading>
 
-                  <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#f6efe7]">
+                  <Text variant="lead" className="mx-auto max-w-3xl text-[var(--quiz-muted)]">
                     {t("introLead")}
                   </Text>
                 </div>
@@ -298,33 +300,33 @@ export function CareerQuiz({
                 <Card className={warmCardClass}>
                   <CardContent className="grid gap-8 p-8 md:grid-cols-[1.1fr_0.9fr] md:p-10">
                     <div className="space-y-5 text-left">
-                      <Text variant="lead" className="font-semibold text-[#2f3647]">
+                      <Text variant="lead" className="font-semibold text-[var(--quiz-ink)]">
                         {t("introSubtitle")}
                       </Text>
                       <Text>{t("introParagraph1")}</Text>
                       <Text>{t("introParagraph2")}</Text>
 
                       <div className="grid gap-3 sm:grid-cols-2">
-                        <div className="rounded-2xl border border-[#e0cbb6] bg-[#fbf5ee] p-4">
-                          <Text variant="small" className="font-semibold text-[#2f3647]">
+                        <div className="rounded-2xl border border-[var(--quiz-border-soft)] bg-[var(--quiz-surface-raised)] p-4">
+                          <Text variant="small" className="font-semibold text-[var(--quiz-ink)]">
                             {t("introBlocksTitle")}
                           </Text>
-                          <Text variant="small" className="mt-1 text-[#5a6275]">
+                          <Text variant="small" className="mt-1 text-[var(--quiz-muted)]">
                             {t("introBlocksText")}
                           </Text>
                         </div>
-                        <div className="rounded-2xl border border-[#e6c9be] bg-[#f7e5dc] p-4">
-                          <Text variant="small" className="font-semibold text-[#92513f]">
+                        <div className="rounded-2xl border border-[var(--quiz-border-soft)] bg-[var(--quiz-surface-accent)] p-4">
+                          <Text variant="small" className="font-semibold text-[var(--quiz-accent)]">
                             {t("introSessionTitle")}
                           </Text>
-                          <Text variant="small" className="mt-1 text-[#6b6170]">
+                          <Text variant="small" className="mt-1 text-[var(--quiz-muted)]">
                             {t("introSessionText")}
                           </Text>
                         </div>
                       </div>
                     </div>
 
-                    <div className="space-y-4 rounded-[28px] border border-[#d8c5b3] bg-gradient-to-br from-[#f9f2ea] via-[#f6ede4] to-[#eeded0] p-6">
+                    <div className="space-y-4 rounded-[28px] border border-[var(--quiz-border)] bg-gradient-to-br from-[var(--quiz-surface-raised)] via-[var(--quiz-surface-soft)] to-[var(--quiz-surface-warm)] p-6">
                       <Text variant="small" className={warmSectionEyebrowClass}>
                         {t("introTakeawaysTitle")}
                       </Text>
@@ -335,21 +337,21 @@ export function CareerQuiz({
                           t("introTakeawayPersonalized"),
                         ].map((item) => (
                           <div key={item} className="flex gap-3">
-                            <div className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#f0d7c5] text-[#92513f]">
+                            <div className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--quiz-accent-soft)] text-[var(--quiz-accent)]">
                               <CheckCircle2 className="h-4 w-4" />
                             </div>
-                            <Text variant="small" className="text-[#4f5566]">
+                            <Text variant="small" className="text-[var(--quiz-muted)]">
                               {item}
                             </Text>
                           </div>
                         ))}
                       </div>
 
-                      <div className="rounded-2xl border border-dashed border-[#cf724e]/35 bg-[#fffaf4] p-4">
-                        <Text variant="small" className="font-semibold text-[#2f3647]">
+                      <div className="rounded-2xl border border-dashed border-[color-mix(in_srgb,var(--quiz-accent)_42%,transparent)] bg-[var(--quiz-surface)] p-4">
+                        <Text variant="small" className="font-semibold text-[var(--quiz-ink)]">
                           {t("introEstimatedTitle")}
                         </Text>
-                        <Text variant="small" className="mt-1 text-[#5d6372]">
+                        <Text variant="small" className="mt-1 text-[var(--quiz-muted)]">
                           {t("introEstimatedText")}
                         </Text>
                       </div>
@@ -382,7 +384,7 @@ export function CareerQuiz({
                 exit={{ opacity: 0, x: -24 }}
               >
                 <Card className={warmCardClass}>
-                  <CardHeader className="space-y-4 border-b border-[#dbc8b5] bg-gradient-to-r from-[#f5ebdf] via-[#f8f1e9] to-[#f3e0d3] pb-6">
+                  <CardHeader className="space-y-4 border-b border-[var(--quiz-border-soft)] bg-gradient-to-r from-[var(--quiz-surface-soft)] via-[var(--quiz-surface-raised)] to-[var(--quiz-surface-warm)] pb-6">
                     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                       <div className="space-y-2">
                         <Text variant="small" className={warmSectionEyebrowClass}>
@@ -402,16 +404,16 @@ export function CareerQuiz({
                         </CardDescription>
                       </div>
 
-                      <div className="min-w-[220px] rounded-2xl border border-[#dac5b2] bg-[#fffaf4] p-4">
+                      <div className="min-w-[220px] rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface)] p-4">
                         <div className="mb-2 flex items-center justify-between text-sm font-medium text-foreground/70">
                           <span>{t("questionsGeneralProgress")}</span>
                           <span>
                             {answeredCount}/{quizData.questions.length}
                           </span>
                         </div>
-                        <div className="h-2 overflow-hidden rounded-full bg-[#e9d7c6]">
+                        <div className="h-2 overflow-hidden rounded-full bg-[var(--quiz-accent-soft)]">
                           <motion.div
-                            className="h-full bg-gradient-to-r from-[#e47c56] to-[#f0b08d]"
+                            className="h-full bg-gradient-to-r from-[var(--quiz-accent)] to-[var(--senda-accent-soft)]"
                             initial={{ width: 0 }}
                             animate={{ width: `${(answeredCount / quizData.questions.length) * 100}%` }}
                           />
@@ -422,37 +424,45 @@ export function CareerQuiz({
 
                   <CardContent className="space-y-5 p-6 md:p-8">
                     {currentQuestionPage.map((question: QuizQuestion) => (
-                      <div
+                      <fieldset
                         key={question.id}
-                        className="rounded-[24px] border border-[#dcc8b5] bg-gradient-to-br from-[#fffaf4] to-[#f3e6d9] p-5 shadow-sm"
+                        className="rounded-[24px] border border-[var(--quiz-border-soft)] bg-gradient-to-br from-[var(--quiz-surface)] to-[var(--quiz-surface-soft)] p-5 shadow-sm"
                       >
-                        <div className="mb-4 flex gap-4">
-                          <div
-                            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                              answers[question.id] !== undefined
-                                ? "bg-[#2f3647] text-[#f6efe7]"
-                                : "bg-[#eadacc] text-[#2f3647]"
-                            }`}
-                          >
-                            {question.id}
-                          </div>
-                          <Text className="text-lg font-medium leading-relaxed">{question.text}</Text>
-                        </div>
+                        <legend className="mb-4 w-full">
+                          <span className="flex gap-4">
+                            <span
+                              className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+                                answers[question.id] !== undefined
+                                  ? "bg-[var(--senda-dark)] text-[var(--senda-light)]"
+                                  : "bg-[var(--quiz-accent-soft)] text-[var(--quiz-ink)]"
+                              }`}
+                            >
+                              {question.id}
+                            </span>
+                            <Text as="span" className="text-lg font-medium leading-relaxed">{question.text}</Text>
+                          </span>
+                        </legend>
 
                         <div className="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3">
                           {[1, 2, 3, 4, 5, 6].map((value) => (
-                            <button
+                            <label
                               key={value}
-                              type="button"
-                              onClick={() => handleAnswer(question.id, value)}
-                              className={`h-12 rounded-2xl border text-sm font-bold transition-[color,background-color,border-color,box-shadow,transform] duration-200 ${
+                              className={`flex h-12 cursor-pointer items-center justify-center rounded-2xl border text-sm font-bold transition-[color,background-color,border-color,box-shadow,transform] duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--quiz-accent)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--quiz-surface)] ${
                                 answers[question.id] === value
-                                  ? "scale-[1.03] border-[#e47c56] bg-[#2f3647] text-[#f6efe7] shadow-md"
-                                  : "border-[#dbc7b3] bg-[#fffaf4] text-[#2f3647] hover:border-[#e47c56]/60 hover:bg-[#f4e5d8]"
+                                  ? "scale-[1.03] border-[var(--quiz-accent)] bg-[var(--senda-dark)] text-[var(--senda-light)] shadow-md"
+                                  : "border-[var(--quiz-border-soft)] bg-[var(--quiz-surface)] text-[var(--quiz-ink)] hover:border-[var(--quiz-accent)] hover:bg-[var(--quiz-choice-hover)]"
                               }`}
                             >
+                              <input
+                                type="radio"
+                                name={`question-${question.id}`}
+                                value={value}
+                                checked={answers[question.id] === value}
+                                onChange={() => handleAnswer(question.id, value)}
+                                className="sr-only"
+                              />
                               {value}
-                            </button>
+                            </label>
                           ))}
                         </div>
 
@@ -460,11 +470,11 @@ export function CareerQuiz({
                           <span>{t("scaleNever")}</span>
                           <span>{t("scaleAlways")}</span>
                         </div>
-                      </div>
+                      </fieldset>
                     ))}
                   </CardContent>
 
-                  <CardFooter className="flex flex-col gap-4 border-t border-[#dbc7b3] bg-[#f4e9de] p-6">
+                  <CardFooter className="flex flex-col gap-4 border-t border-[var(--quiz-border-soft)] bg-[var(--quiz-surface-muted)] p-6">
                     <div className="flex w-full flex-col gap-3 md:flex-row md:items-center md:justify-between">
                       <Button
                         variant="outline"
@@ -525,20 +535,20 @@ export function CareerQuiz({
                 exit={{ opacity: 0, scale: 1.04 }}
                 className="space-y-8 py-12 text-center"
               >
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#f3dfd0] text-[#92513f] shadow-[0_18px_40px_-24px_rgba(228,124,86,0.85)]">
+                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[var(--quiz-surface-warm)] text-[var(--quiz-accent)] shadow-[0_18px_40px_-24px_var(--quiz-shadow)]">
                   <Sparkles className="h-10 w-10" />
                 </div>
 
                 <div className="space-y-4">
-                  <Heading level="h2" className="text-3xl text-[#2f3647] dark:text-[#f6efe7] md:text-4xl">
+                  <Heading level="h2" className="text-3xl text-[var(--quiz-ink)] md:text-4xl">
                     {t("transitionTitle")}
                   </Heading>
-                  <Text variant="lead" className="mx-auto max-w-3xl text-[#596173] dark:text-[#f6efe7]">
+                  <Text variant="lead" className="mx-auto max-w-3xl text-[var(--quiz-muted)]">
                     {t("transitionSubtitle")}
                   </Text>
                 </div>
 
-                <Card className="mx-auto max-w-3xl border-[#d7c3ae] bg-[#f6efe7]/95 shadow-[0_28px_80px_-42px_rgba(17,24,39,0.45)]">
+                <Card className="mx-auto max-w-3xl border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-soft)_95%,transparent)] shadow-[0_28px_80px_-42px_var(--quiz-shadow)]">
                   <CardContent className="space-y-5 p-8 text-left">
                     <Text>
                       {t.rich("transitionInstruction", {
@@ -575,7 +585,7 @@ export function CareerQuiz({
                 exit={{ opacity: 0, x: -24 }}
               >
                 <Card className={warmCardClass}>
-                  <CardHeader className="space-y-4 border-b border-[#dbc7b3] bg-gradient-to-r from-[#f5ebdf] via-[#f8f1e9] to-[#f0dfd0] pb-6">
+                  <CardHeader className="space-y-4 border-b border-[var(--quiz-border-soft)] bg-gradient-to-r from-[var(--quiz-surface-soft)] via-[var(--quiz-surface-raised)] to-[var(--quiz-surface-warm)] pb-6">
                     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                       <div className="space-y-2">
                         <Text variant="small" className={warmSectionEyebrowClass}>
@@ -592,8 +602,8 @@ export function CareerQuiz({
                         </CardDescription>
                       </div>
 
-                      <div className="rounded-2xl border border-[#dbc7b3] bg-[#fffaf4] p-4 text-left">
-                        <Text variant="small" className="font-semibold text-[#2f3647]">
+                      <div className="rounded-2xl border border-[var(--quiz-border-soft)] bg-[var(--quiz-surface)] p-4 text-left">
+                        <Text variant="small" className="font-semibold text-[var(--quiz-ink)]">
                           {t("bonusSelectedLabel")}
                         </Text>
                         <Text className="mt-1 text-2xl font-bold text-foreground">{bonusQuestions.length} / 3</Text>
@@ -614,15 +624,15 @@ export function CareerQuiz({
                           disabled={disabled}
                           className={`flex w-full items-start gap-4 rounded-[24px] border p-5 text-left transition-[color,background-color,border-color,box-shadow,transform] ${
                             selected
-                              ? "border-[#e47c56]/55 bg-[#f0dfd0] shadow-sm"
-                              : "border-[#dcc8b5] bg-gradient-to-br from-[#fffaf4] to-[#f2e4d7] hover:border-[#e47c56]/45"
+                              ? "border-[var(--quiz-accent)] bg-[var(--quiz-surface-warm)] shadow-sm"
+                              : "border-[var(--quiz-border-soft)] bg-gradient-to-br from-[var(--quiz-surface)] to-[var(--quiz-surface-soft)] hover:border-[var(--quiz-accent)]"
                           } ${disabled ? "cursor-not-allowed opacity-70" : ""}`}
                         >
                           <div
                             className={`mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border-2 ${
                               selected
-                                ? "border-[#2f3647] bg-[#2f3647] text-[#f6efe7]"
-                                : "border-[#c7b6a7] text-[#7a7280]"
+                                ? "border-[var(--senda-dark)] bg-[var(--senda-dark)] text-[var(--senda-light)]"
+                                : "border-[var(--quiz-border)] text-[var(--quiz-muted)]"
                             }`}
                           >
                             {selected ? <CheckCircle2 className="h-4 w-4" /> : <span className="text-xs font-bold">{question.id}</span>}
@@ -635,7 +645,7 @@ export function CareerQuiz({
                     })}
                   </CardContent>
 
-                  <CardFooter className="flex flex-col gap-4 border-t border-[#dbc7b3] bg-[#f4e9de] p-6">
+                  <CardFooter className="flex flex-col gap-4 border-t border-[var(--quiz-border-soft)] bg-[var(--quiz-surface-muted)] p-6">
                     <div className="flex w-full flex-col gap-3 md:flex-row md:items-center md:justify-between">
                       <Button
                         variant="outline"
@@ -692,13 +702,13 @@ export function CareerQuiz({
                 className="space-y-8"
               >
                 <div className="space-y-3 text-center">
-                  <Heading level="h2" className="text-[#2f3647] dark:text-[#f6efe7]">
+                  <Heading level="h2" className="text-[var(--quiz-ink)]">
                     {t("prequizTitle")}
                   </Heading>
-                  <Text className="mx-auto max-w-2xl text-[#596173] dark:text-[#f6efe7]">
+                  <Text className="mx-auto max-w-2xl text-[var(--quiz-muted)]">
                     {t("prequizSubtitle")}
                   </Text>
-                  <Text variant="small" className="text-[#687080] dark:text-[#eadfd4]">
+                  <Text variant="small" className="text-[var(--quiz-muted)]">
                     {userEmail
                       ? t("prequizPrivacyWithEmail", { email: userEmail })
                       : t("prequizPrivacy")}
@@ -717,18 +727,18 @@ export function CareerQuiz({
                 className="space-y-12"
               >
                 <div className="space-y-4 text-center">
-                  <div className="inline-flex items-center rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-1.5 text-sm font-bold text-[#92513f]">
+                  <div className="inline-flex items-center rounded-full border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] px-4 py-1.5 text-sm font-bold text-[var(--quiz-accent)]">
                     {t("resultsBadge")}
                   </div>
-                  <Heading level="h2" className="text-[#2f3647] dark:text-[#fff7ef]">
+                  <Heading level="h2" className="text-[var(--quiz-ink)]">
                     {t("resultsTitle")}
                   </Heading>
-                  <Text className="mx-auto max-w-2xl italic text-[#596173] dark:text-[#f6efe7]">
+                  <Text className="mx-auto max-w-2xl italic text-[var(--quiz-muted)]">
                     {t("resultsScheinQuote")}
                   </Text>
                 </div>
 
-                <Card className="border-[#d7c3ae] bg-[#f6efe7]/95 shadow-[0_28px_80px_-42px_rgba(17,24,39,0.55)]">
+                <Card className="border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-soft)_95%,transparent)] shadow-[0_28px_80px_-42px_var(--quiz-shadow)]">
                   <CardHeader>
                     <CardTitle>{t("resultsRankingTitle")}</CardTitle>
                     <CardDescription>{t("resultsRankingDescription")}</CardDescription>
@@ -739,19 +749,19 @@ export function CareerQuiz({
                         key={result.id}
                         className={`flex items-center gap-4 rounded-2xl border p-5 ${
                           index === 0
-                            ? "border-[#2f3647]/30 bg-[#efe1d3] shadow-sm"
+                            ? "border-[color-mix(in_srgb,var(--quiz-ink)_36%,transparent)] bg-[var(--quiz-surface-warm)] shadow-sm"
                             : index === 1
-                              ? "border-[#e2b79d] bg-[#f7e4d8]"
-                              : "border-[#dcc8b5] bg-[#fffaf4]"
+                              ? "border-[var(--quiz-accent)] bg-[var(--quiz-surface-accent)]"
+                              : "border-[var(--quiz-border-soft)] bg-[var(--quiz-surface)]"
                         }`}
                       >
                         <div
                           className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-lg font-bold ${
                             index === 0
-                              ? "bg-[#2f3647] text-[#f6efe7]"
+                              ? "bg-[var(--senda-dark)] text-[var(--senda-light)]"
                               : index === 1
-                                ? "bg-[#bd5734] text-white"
-                                : "bg-[#eadacd] text-[#2f3647]"
+                                ? "bg-[var(--senda-action)] text-white"
+                                : "bg-[var(--quiz-accent-soft)] text-[var(--quiz-ink)]"
                           }`}
                         >
                           {index + 1}
@@ -768,10 +778,10 @@ export function CareerQuiz({
                             <motion.div
                               className={`h-full rounded-full ${
                                 index === 0
-                                  ? "bg-[#2f3647]"
+                                  ? "bg-[var(--senda-dark)]"
                                   : index === 1
-                                    ? "bg-[#e47c56]"
-                                    : "bg-[#d6b59c]"
+                                    ? "bg-[var(--quiz-accent)]"
+                                    : "bg-[var(--senda-gold)]"
                               }`}
                               initial={{ width: 0 }}
                               animate={{ width: `${(result.score / (calculateResults[0]?.score || 1)) * 100}%` }}
@@ -785,7 +795,7 @@ export function CareerQuiz({
                 </Card>
 
                 <div className="space-y-8">
-                  <Heading level="h3" className="text-[#2f3647] dark:text-[#f6efe7]">
+                  <Heading level="h3" className="text-[var(--quiz-ink)]">
                     {t("resultsProfileTitle")}
                   </Heading>
 
@@ -794,15 +804,15 @@ export function CareerQuiz({
                       key={result.id}
                       className={`overflow-hidden ${
                         index === 0
-                          ? "border-[#d7c3ae] shadow-xl"
+                          ? "border-[var(--quiz-border)] shadow-xl"
                           : index === 1
-                            ? "border-[#dfbaa1] shadow-lg"
-                            : "border-[#d7c3ae] shadow-md"
+                            ? "border-[var(--quiz-accent)] shadow-lg"
+                            : "border-[var(--quiz-border)] shadow-md"
                       }`}
                     >
-                      <CardHeader className={index === 0 ? "bg-[#efe1d3]" : index === 1 ? "bg-[#f4dfd3]" : "bg-[#f7efe6]"}>
+                      <CardHeader className={index === 0 ? "bg-[var(--quiz-surface-warm)]" : index === 1 ? "bg-[var(--quiz-surface-accent)]" : "bg-[var(--quiz-surface-soft)]"}>
                         <div className="flex items-center gap-4">
-                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#d7c3ae] bg-[#fffaf4] text-2xl font-bold text-[#2f3647] shadow-sm">
+                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface)] text-2xl font-bold text-[var(--quiz-ink)] shadow-sm">
                             #{index + 1}
                           </div>
                           <div>
@@ -825,7 +835,7 @@ export function CareerQuiz({
                         ))}
 
                         {index === 0 && (
-                          <div className="rounded-2xl border border-[#e0c1ab] bg-[#f3e0d3] p-6">
+                          <div className="rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] p-6">
                             <Text className="leading-relaxed">
                               {t.rich("resultsDominantText", {
                                 article: result.article,
@@ -846,13 +856,13 @@ export function CareerQuiz({
                 </div>
 
                 {isAnalyzing && (
-                  <Card className="border-[#dfbaa1] bg-[#f4dfd3] shadow-lg">
+                  <Card className="border-[var(--quiz-accent)] bg-[var(--quiz-surface-accent)] shadow-lg">
                     <CardContent className="space-y-4 py-8 text-center">
-                      <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-[#e8c8b6] border-t-[#e47c56]" />
-                      <Heading level="h4" className="text-[#2f3647]">
+                      <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-[var(--quiz-accent-soft)] border-t-[var(--quiz-accent)] motion-reduce:animate-none" />
+                      <Heading level="h4" className="text-[var(--quiz-ink)]">
                         {t("resultsAiLoadingTitle")}
                       </Heading>
-                      <Text className="text-[#5f6573]">
+                      <Text className="text-[var(--quiz-muted)]">
                         {t("resultsAiLoadingText", {
                           occupation: userData?.occupation ?? t("occupationUnknown"),
                         })}
@@ -864,18 +874,18 @@ export function CareerQuiz({
                 {aiResult && !isAnalyzing && (
                   <div className="space-y-8">
                     <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                      <Heading level="h3" className="text-[#2f3647] dark:text-[#f6efe7]">
+                      <Heading level="h3" className="text-[var(--quiz-ink)]">
                         {t("resultsAiTitle")}
                       </Heading>
                       {saveStatus === "saved" && (
-                        <div className="rounded-full border border-[#d8c2af] bg-[#f0dfd1] px-4 py-2 text-sm font-semibold text-[#2f3647]">
+                        <div className="rounded-full border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] px-4 py-2 text-sm font-semibold text-[var(--quiz-ink)]">
                           {t("resultsSaved")}
                         </div>
                       )}
                     </div>
-                    <Card className="overflow-hidden border-[#d7c3ae] bg-[#f6efe7]/95 shadow-xl">
-                      <CardHeader className="bg-[#f0dfd1]">
-                        <CardTitle className="text-2xl text-[#2f3647]">{aiResult.title}</CardTitle>
+                    <Card className="overflow-hidden border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-soft)_95%,transparent)] shadow-xl">
+                      <CardHeader className="bg-[var(--quiz-surface-warm)]">
+                        <CardTitle className="text-2xl text-[var(--quiz-ink)]">{aiResult.title}</CardTitle>
                         <CardDescription className="text-base text-foreground/80">
                           {t("resultsAiSubtitle", {
                             age: userData?.age ?? "",
@@ -887,32 +897,32 @@ export function CareerQuiz({
                         <Text className="leading-relaxed text-foreground/90">{aiResult.summary}</Text>
 
                         <div className="grid gap-6 md:grid-cols-2">
-                          <div className="rounded-2xl border border-[#ebc5b5] bg-[#faece3] p-6">
-                            <Heading level="h4" className="mb-4 text-lg text-[#92513f]">
+                          <div className="rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-accent)] p-6">
+                            <Heading level="h4" className="mb-4 text-lg text-[var(--quiz-accent)]">
                               {t("resultsFrictionTitle")}
                             </Heading>
                             <ul className="space-y-3">
                               {aiResult.frictionAreas.map((friction) => (
-                                <li key={friction} className="flex items-start gap-2 text-sm leading-relaxed text-[#6c5560]">
-                                  <span className="font-bold text-[#92513f]">&bull;</span>
+                                <li key={friction} className="flex items-start gap-2 text-sm leading-relaxed text-[var(--quiz-muted)]">
+                                  <span className="font-bold text-[var(--quiz-accent)]">&bull;</span>
                                   <span>{friction}</span>
                                 </li>
                               ))}
                             </ul>
                           </div>
 
-                          <div className="rounded-2xl border border-[#dcc5b2] bg-[#f8efe6] p-6">
-                            <Heading level="h4" className="mb-4 text-lg text-[#2f3647]">
+                          <div className="rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-soft)] p-6">
+                            <Heading level="h4" className="mb-4 text-lg text-[var(--quiz-ink)]">
                               {t("resultsEcosystemTitle")}
                             </Heading>
-                            <Text className="text-sm leading-relaxed text-[#5b6272]">
+                            <Text className="text-sm leading-relaxed text-[var(--quiz-muted)]">
                               {aiResult.idealEcosystem}
                             </Text>
                           </div>
                         </div>
 
-                        <div className="rounded-2xl border border-[#dcc6b3] bg-[#fff8f0] p-8 text-center">
-                          <Text variant="lead" className="italic text-[#2f3647]/82">
+                        <div className="rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface)] p-8 text-center">
+                          <Text variant="lead" className="italic text-[var(--quiz-ink)] opacity-85">
                             &quot;{aiResult.strategicQuestion}&quot;
                           </Text>
                         </div>
@@ -922,19 +932,19 @@ export function CareerQuiz({
                 )}
 
                 {analysisError && !isAnalyzing && !aiResult && (
-                  <Card className="border-[#e2c5ac] bg-[#faede3] shadow-sm">
+                  <Card className="border-[var(--quiz-border)] bg-[var(--quiz-danger-soft)] shadow-sm">
                     <CardContent className="py-6 text-center">
-                      <Text className="text-[#9a5f45]">{analysisError}</Text>
+                      <Text className="text-[var(--quiz-danger)]">{analysisError}</Text>
                     </CardContent>
                   </Card>
                 )}
 
                 <div className="space-y-8 py-6 text-center">
                   <div className="mx-auto max-w-2xl space-y-4">
-                    <Heading level="h3" className="text-2xl text-[#2f3647] dark:text-[#f6efe7] md:text-3xl">
+                    <Heading level="h3" className="text-2xl text-[var(--quiz-ink)] md:text-3xl">
                       {t("resultsClosingTitle")}
                     </Heading>
-                    <Text className="text-lg leading-relaxed text-[#596173] dark:text-[#f6efe7]">
+                    <Text className="text-lg leading-relaxed text-[var(--quiz-muted)]">
                       {t("resultsClosingText")}
                     </Text>
                   </div>
@@ -943,13 +953,14 @@ export function CareerQuiz({
                     <Link href="/contacto">{t("resultsClosingCta")}</Link>
                   </Button>
 
-                  <Text className="text-sm text-[#687080] dark:text-[#ddd5cc]">
+                  <Text className="text-sm text-[var(--quiz-muted)]">
                     {t("resultsDisclaimer")}
                   </Text>
                 </div>
               </motion.div>
-            )}
-          </AnimatePresence>
+              )}
+            </AnimatePresence>
+          </MotionConfig>
         </div>
       </Container>
     </div>

@@ -6,7 +6,7 @@
   :root {
     --senda-bg: #f4f1ea;
     --senda-ink: #17263a;
-    /* Fixed dark ink for accent bands (footer, manifesto, process header) that must stay dark in both themes. */
+    /* Fixed dark ink for light CTA labels that must stay dark in both themes. */
     --senda-ink-fixed: #111d2c;
     --senda-dark: #101c2c;
     --senda-dark-hover: #203650;
@@ -28,6 +28,25 @@
     --senda-charcoal: #17263a;
     --senda-gold: #c2a366;
     --senda-sky: #89a9bd;
+    --senda-on-olive: #ffffff;
+    --quiz-bg: #eef0ed;
+    --quiz-ink: #2f3647;
+    --quiz-muted: #596173;
+    --quiz-border: #d7c3ae;
+    --quiz-border-soft: #dcc8b5;
+    --quiz-surface: #fffaf4;
+    --quiz-surface-raised: #fbf9f4;
+    --quiz-surface-soft: #f6efe7;
+    --quiz-surface-muted: #f4e9de;
+    --quiz-surface-warm: #f0dfd1;
+    --quiz-surface-accent: #f4dfd3;
+    --quiz-choice-hover: #f4e5d8;
+    --quiz-accent: #92513f;
+    --quiz-accent-strong: #743b2e;
+    --quiz-accent-soft: #eadacc;
+    --quiz-danger: #9f422d;
+    --quiz-danger-soft: #f5e3dc;
+    --quiz-shadow: rgba(10, 20, 34, 0.5);
     --background: 39 26% 94%;
     --foreground: 215 43% 16%;
 
@@ -83,6 +102,25 @@
     --senda-charcoal: #0d1725;
     --senda-gold: #d0b77d;
     --senda-sky: #8eb3c9;
+    --senda-on-olive: #09121f;
+    --quiz-bg: #0d1725;
+    --quiz-ink: #edf0f2;
+    --quiz-muted: #b9c2ca;
+    --quiz-border: #3b4d61;
+    --quiz-border-soft: #314154;
+    --quiz-surface: #0f1d2d;
+    --quiz-surface-raised: #152337;
+    --quiz-surface-soft: #17273a;
+    --quiz-surface-muted: #1b2c40;
+    --quiz-surface-warm: #2c2c36;
+    --quiz-surface-accent: #342d35;
+    --quiz-choice-hover: #24364b;
+    --quiz-accent: #cf8a70;
+    --quiz-accent-strong: #e2a088;
+    --quiz-accent-soft: #3b3540;
+    --quiz-danger: #f1a28d;
+    --quiz-danger-soft: #3c2528;
+    --quiz-shadow: rgba(0, 0, 0, 0.46);
     --background: 216 47% 10%;
     --foreground: 204 16% 94%;
 
@@ -163,16 +201,6 @@
     color: var(--senda-accent-dark);
   }
 
-  .senda-hero-overlay {
-    background: linear-gradient(
-      90deg,
-      rgba(244, 239, 228, 0.98) 0%,
-      rgba(244, 239, 228, 0.93) 37%,
-      rgba(244, 239, 228, 0.36) 67%,
-      rgba(244, 239, 228, 0.08) 100%
-    );
-  }
-
   .senda-process-card::after {
     content: "";
     position: absolute;
@@ -188,83 +216,8 @@
     transform: scaleX(1);
   }
 
-  .dark .senda-hero-overlay {
-    background: linear-gradient(
-      90deg,
-      rgba(33, 37, 30, 0.98) 0%,
-      rgba(33, 37, 30, 0.91) 40%,
-      rgba(33, 37, 30, 0.4) 70%,
-      rgba(33, 37, 30, 0.1) 100%
-    );
-  }
-
-  .senda-territory {
-    transition: padding-left 350ms ease, background-color 350ms ease;
-  }
-
-  .senda-territory:hover {
-    padding-left: 1rem;
-    background: color-mix(in srgb, var(--senda-paper) 55%, transparent);
-  }
-
-  .senda-reveal {
-    animation: senda-rise linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 28%;
-  }
-
-  @keyframes senda-rise {
-    from {
-      opacity: 0;
-      transform: translateY(1.5rem);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .initial-diagnostic-page,
-  .career-quiz {
-    --senda-bg: #f4efe4;
-    --senda-ink: #272b23;
-    --senda-paper: #faf7ef;
-    --senda-stone: #eae4d8;
-    --senda-border: #d9d1c2;
-    --senda-muted: #64665d;
-    --senda-olive: #4a5540;
-    --senda-terracotta: #92513f;
-  }
-
-  @media (max-width: 1023px) {
-    .senda-hero-overlay {
-      background: linear-gradient(
-        180deg,
-        rgba(244, 239, 228, 0.98) 0%,
-        rgba(244, 239, 228, 0.9) 48%,
-        rgba(244, 239, 228, 0.22) 78%,
-        rgba(244, 239, 228, 0.06) 100%
-      );
-    }
-
-    .dark .senda-hero-overlay {
-      background: linear-gradient(
-        180deg,
-        rgba(33, 37, 30, 0.98) 0%,
-        rgba(33, 37, 30, 0.91) 52%,
-        rgba(33, 37, 30, 0.28) 82%,
-        rgba(33, 37, 30, 0.08) 100%
-      );
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .senda-reveal {
-      animation: none;
-    }
-
-    .senda-process-card,
-    .senda-territory {
+    .senda-process-card::after {
       transition: none;
     }
   }
@@ -272,7 +225,7 @@
 
 @layer components {
   .pointer-illumination {
-    --pointer-illumination-size: 32rem;
+    --pointer-illumination-size: 28rem;
     position: fixed;
     top: calc(var(--pointer-illumination-size) / -2);
     left: calc(var(--pointer-illumination-size) / -2);
@@ -282,26 +235,27 @@
     border-radius: 9999px;
     background: radial-gradient(
       circle,
-      hsl(var(--secondary) / 0.1) 0%,
-      hsl(var(--accent) / 0.055) 38%,
+      hsl(var(--secondary) / 0.07) 0%,
+      hsl(var(--accent) / 0.035) 38%,
       transparent 70%
     );
     opacity: 0;
     pointer-events: none;
     transform: translate3d(-100vw, -100vh, 0);
-    transition: opacity 180ms ease-out;
+    contain: strict;
+    transition: opacity 160ms ease-out;
     will-change: transform, opacity;
   }
 
   .pointer-illumination[data-visible="true"] {
-    opacity: 1;
+    opacity: 0.82;
   }
 
   .dark .pointer-illumination {
     background: radial-gradient(
       circle,
-      hsl(var(--secondary) / 0.16) 0%,
-      hsl(var(--accent) / 0.08) 38%,
+      hsl(var(--secondary) / 0.1) 0%,
+      hsl(var(--accent) / 0.05) 38%,
       transparent 70%
     );
   }
@@ -319,7 +273,7 @@
     border-radius: inherit;
     background: radial-gradient(
       15rem circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
-      hsl(var(--secondary) / 0.12),
+      hsl(var(--secondary) / 0.07),
       transparent 72%
     );
     opacity: 0;
@@ -330,7 +284,7 @@
   .dark [data-cursor-glow]::before {
     background: radial-gradient(
       15rem circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
-      hsl(var(--secondary) / 0.18),
+      hsl(var(--secondary) / 0.1),
       transparent 72%
     );
   }
@@ -418,19 +372,6 @@
 .dark .wati-feature-card {
     background: hsl(var(--card));
   }
-}
-
-/* The diagnostic uses warm paper surfaces over a dark path. Keep their semantic
-   text tokens dark in both themes so text-foreground never becomes white on paper. */
-.career-quiz {
-  --background: 36 100% 98%;
-  --foreground: 225 20% 23%;
-  --card: 34 48% 94%;
-  --muted-foreground: 225 12% 39%;
-  --muted: 31 32% 86%;
-  --border: 30 27% 76%;
-  --card-foreground: 225 20% 23%;
-  --popover-foreground: 225 20% 23%;
 }
 
 /* Universo Senda: an editorial system with quiet coordinates and trajectories. */
@@ -537,36 +478,6 @@ body {
   background: var(--senda-paper);
 }
 
-.senda-image-frame {
-  position: relative;
-  border: 1px solid rgba(222, 231, 236, 0.2);
-  background: rgba(246, 243, 235, 0.06);
-  box-shadow: 0 42px 90px -48px rgba(0, 0, 0, 0.8);
-}
-
-.senda-image-frame::before,
-.senda-image-frame::after {
-  content: "";
-  position: absolute;
-  width: 3.5rem;
-  height: 3.5rem;
-  pointer-events: none;
-}
-
-.senda-image-frame::before {
-  left: -0.8rem;
-  top: -0.8rem;
-  border-left: 1px solid rgba(194, 163, 102, 0.75);
-  border-top: 1px solid rgba(194, 163, 102, 0.75);
-}
-
-.senda-image-frame::after {
-  right: -0.8rem;
-  bottom: -0.8rem;
-  border-right: 1px solid rgba(137, 169, 189, 0.65);
-  border-bottom: 1px solid rgba(137, 169, 189, 0.65);
-}
-
 .senda-orbit-mark {
   position: relative;
   display: inline-flex;
@@ -601,12 +512,6 @@ body {
   background:
     radial-gradient(circle at 90% 16%, rgba(137, 169, 189, 0.1), transparent 26rem),
     var(--senda-bg);
-}
-
-.senda-reveal {
-  animation: none;
-  opacity: 1;
-  transform: none;
 }
 
 .senda-home > section:not(.senda-night) {
@@ -682,20 +587,50 @@ body {
 
 .initial-diagnostic-page,
 .career-quiz {
-  --senda-bg: #f1f0eb;
-  --senda-ink: #17263a;
-  --senda-paper: #fbf9f4;
-  --senda-stone: #e8ebe9;
-  --senda-border: #ccd2d5;
-  --senda-muted: #5b6876;
-  --senda-olive: #5c7776;
-  --senda-terracotta: #92513f;
+  color: var(--senda-ink);
+  background: var(--senda-bg);
+}
+
+.career-quiz {
+  --background: 180 5% 93%;
+  --foreground: 225 20% 23%;
+  --card: 40 31% 97%;
+  --card-foreground: 225 20% 23%;
+  --muted: 30 28% 88%;
+  --muted-foreground: 225 12% 39%;
+  --border: 30 27% 76%;
+  --input: 30 27% 76%;
+  --ring: 13 40% 41%;
+}
+
+.career-quiz__background {
+  background:
+    radial-gradient(circle at top, color-mix(in srgb, var(--quiz-accent) 14%, transparent), transparent 38%),
+    linear-gradient(180deg, var(--senda-bg) 0%, var(--quiz-bg) 42%, var(--senda-section-warm) 100%);
+}
+
+.dark .career-quiz {
+  --background: 216 47% 10%;
+  --foreground: 204 16% 94%;
+  --card: 216 35% 15%;
+  --card-foreground: 204 16% 94%;
+  --muted: 215 35% 17%;
+  --muted-foreground: 207 13% 73%;
+  --border: 214 25% 26%;
+  --input: 214 25% 26%;
+  --ring: 16 45% 63%;
 }
 
 .career-quiz > div:first-child {
   background-image:
     radial-gradient(circle at 82% 10%, rgba(137, 169, 189, 0.16), transparent 32%),
-    linear-gradient(180deg, #f7f4ed 0%, #eef0ed 48%, #e7e9e8 100%);
+    linear-gradient(180deg, var(--senda-bg) 0%, var(--quiz-bg) 48%, var(--senda-stone) 100%);
+}
+
+.dark .career-quiz > div:first-child {
+  background-image:
+    radial-gradient(circle at 82% 10%, rgba(137, 169, 189, 0.1), transparent 32%),
+    linear-gradient(180deg, #0d1725 0%, #101d2c 48%, #0d1725 100%);
 }
 
 .career-quiz > div:nth-child(2),
@@ -740,6 +675,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html.scroll-smooth {
+    scroll-behavior: auto;
+  }
+
   .universe-field__drift {
     animation: none;
   }

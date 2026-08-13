@@ -1,14 +1,13 @@
 # Senda
 
-> Senda acompaña procesos de orientación vocacional, reinvención profesional y transición laboral mediante recorridos personalizados.
+> Senda acompaña dos recorridos personalizados para tomar decisiones de estudio, trabajo y trayectoria con claridad y criterio.
 
 ## Sitio principal
 
 - [Inicio](https://reinvension-profesional.vercel.app/)
 - [Diagnóstico inicial](https://reinvension-profesional.vercel.app/diagnostico)
-- [Orientación vocacional](https://reinvension-profesional.vercel.app/procesos/orientacion-vocacional)
-- [Reinvención profesional](https://reinvension-profesional.vercel.app/procesos/reinvencion-profesional)
-- [Transición laboral](https://reinvension-profesional.vercel.app/procesos/transicion-laboral)
+- [Brújula](https://reinvension-profesional.vercel.app/procesos/brujula)
+- [Nueva Etapa Profesional](https://reinvension-profesional.vercel.app/procesos/nueva-etapa-profesional)
 - [Contacto](https://reinvension-profesional.vercel.app/contacto)
 
 ## Información importante

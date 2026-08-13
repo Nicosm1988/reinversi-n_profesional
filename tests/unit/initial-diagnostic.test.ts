@@ -14,9 +14,24 @@ const baseInput = {
 
 describe("initial diagnostic", () => {
   it("maps explicit situations to their corresponding process", () => {
-    expect(suggestRoute({ ...baseInput, situation: "choosing-direction", need: "choose-alternatives" })).toBe("orientacion-vocacional");
-    expect(suggestRoute({ ...baseInput, situation: "trajectory-no-longer-represents-me", need: "redefine-direction" })).toBe("reinvencion-profesional");
-    expect(suggestRoute({ ...baseInput, situation: "concrete-work-change", need: "organize-transition" })).toBe("transicion-laboral");
+    expect(suggestRoute({ ...baseInput, situation: "choosing-direction", need: "choose-alternatives", careerStage: "secondary-school" })).toBe("brujula");
+    expect(suggestRoute({ ...baseInput, situation: "trajectory-no-longer-represents-me", need: "redefine-direction" })).toBe("nueva-etapa-profesional");
+    expect(suggestRoute({ ...baseInput, situation: "concrete-work-change", need: "organize-transition" })).toBe("nueva-etapa-profesional");
+  });
+
+  it("uses career stage to avoid mismatched journey recommendations", () => {
+    expect(suggestRoute({
+      ...baseInput,
+      situation: "choosing-direction",
+      need: "choose-alternatives",
+      careerStage: "leadership",
+    })).toBe("entrevista-admision-requerida");
+    expect(suggestRoute({
+      ...baseInput,
+      situation: "concrete-work-change",
+      need: "organize-transition",
+      careerStage: "secondary-school",
+    })).toBe("entrevista-admision-requerida");
   });
 
   it("requires an admission interview when an unclear situation is urgent", () => {
@@ -40,7 +55,7 @@ describe("initial diagnostic", () => {
       email: "persona@example.com",
       phone: null,
       suggested_route: "entrevista-admision-requerida",
-      routing_version: 1,
+      routing_version: 2,
       form_version: 1,
     });
   });
@@ -60,7 +75,7 @@ describe("initial diagnostic", () => {
       email: "persona@example.com",
       consentAccepted: true,
       sourcePage: "https://example.com",
-      suggestedRoute: "orientacion-vocacional",
+      suggestedRoute: "brujula",
     });
 
     expect(parsed.success).toBe(false);

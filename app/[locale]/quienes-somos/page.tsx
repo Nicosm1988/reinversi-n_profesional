@@ -1,6 +1,5 @@
 ﻿"use client";
 
-import { BridgeIllustration } from "@/components/illustrations";
 import { Container, Section } from "@/components/layout/container";
 import { FadeIn, StaggerContainer } from "@/components/motion";
 import { Button } from "@/components/ui/button";
@@ -67,9 +66,6 @@ export default function QuienesSomosPage() {
             <Text variant="lead" className="mx-auto max-w-xl">
               {t("heroDescription")}
             </Text>
-            <div className="mx-auto mt-10 max-w-md overflow-hidden rounded-[2rem] border border-border bg-card p-3 shadow-soft">
-              <BridgeIllustration className="rounded-[1.5rem]" />
-            </div>
           </FadeIn>
         </Container>
       </section>

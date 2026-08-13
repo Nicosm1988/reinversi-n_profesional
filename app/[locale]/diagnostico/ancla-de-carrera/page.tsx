@@ -24,7 +24,7 @@ export default function CareerAnchorIntroPage() {
               <Text variant="caption" className="senda-coordinate-label text-[#d2b879]">
                 {t("label")}
               </Text>
-              <Heading level="h1" className="mt-7 max-w-[12ch] text-pretty text-[#f5f1e8] lg:text-7xl">
+              <Heading level="h1" className="mt-7 max-w-[12ch] text-pretty text-[#f5f1e8]">
                 {t("title")}
               </Heading>
             </div>

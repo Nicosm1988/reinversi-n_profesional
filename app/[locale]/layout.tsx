@@ -12,6 +12,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { PointerIllumination } from "@/components/effects/pointer-illumination";
 import { getSiteUrl } from "@/lib/site-url";
 
 // Editorial maturity pass: Raleway replaces Manrope/Instrument Serif as the
@@ -46,8 +47,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   return {
     title: isEnglish
-      ? "Senda | A clearer path through professional change"
-      : "Senda | Orientación para tu camino profesional",
+      ? "Senda | A clearer direction for your professional path"
+      : "Senda | Una dirección para tu camino profesional",
     description: isEnglish
       ? "Explore work, identity and purpose with thoughtful tools and human support."
       : "Procesos personalizados para comprender el cambio, encontrar una dirección y construir próximos pasos posibles.",
@@ -58,9 +59,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       siteName: "Senda",
       title: isEnglish ? "Senda | A clearer path through professional change" : "Senda | Una dirección para el cambio",
       description: isEnglish
-        ? "Personalized journeys for vocational guidance, professional reinvention, and career transition."
-        : "Recorridos personalizados de orientación vocacional, reinvención profesional y transición laboral.",
-      images: [{ url: "/brand/senda-hero.png", width: 1536, height: 1024, alt: "Senda" }],
+        ? "Compass and New Professional Stage: two personalized journeys for decisions about study, work, and experienced careers."
+        : "Brújula y Nueva Etapa Profesional: dos recorridos personalizados para decisiones de estudio, trabajo y trayectoria.",
     },
     robots: { index: true, follow: true },
     icons: { icon: "/senda-mark.svg" },
@@ -90,6 +90,7 @@ export default async function RootLayout(
         )}
       >
         <ThemeProvider>
+          <PointerIllumination />
           <NextIntlClientProvider messages={messages}>
             <CookieProvider>
             <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 rounded-full bg-[var(--senda-ink)] px-5 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0 dark:bg-[#f4efe4] dark:text-[#272b23]">

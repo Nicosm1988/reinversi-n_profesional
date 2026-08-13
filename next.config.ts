@@ -58,6 +58,50 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   allowedDevOrigins: ["127.0.0.1", "localhost"],
+  async redirects() {
+    return [
+      {
+        source: "/orientacion-vocacional",
+        destination: "/procesos/brujula",
+        permanent: true,
+      },
+      {
+        source: "/procesos/orientacion-vocacional",
+        destination: "/procesos/brujula",
+        permanent: true,
+      },
+      {
+        source: "/procesos/reinvencion-profesional",
+        destination: "/procesos/nueva-etapa-profesional",
+        permanent: true,
+      },
+      {
+        source: "/procesos/transicion-laboral",
+        destination: "/procesos/nueva-etapa-profesional",
+        permanent: true,
+      },
+      {
+        source: "/en/orientacion-vocacional",
+        destination: "/en/procesos/brujula",
+        permanent: true,
+      },
+      {
+        source: "/en/procesos/orientacion-vocacional",
+        destination: "/en/procesos/brujula",
+        permanent: true,
+      },
+      {
+        source: "/en/procesos/reinvencion-profesional",
+        destination: "/en/procesos/nueva-etapa-profesional",
+        permanent: true,
+      },
+      {
+        source: "/en/procesos/transicion-laboral",
+        destination: "/en/procesos/nueva-etapa-profesional",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

@@ -1,17 +1,16 @@
 import "server-only";
 
 export const processSlugs = [
-  "orientacion-vocacional",
-  "reinvencion-profesional",
-  "transicion-laboral",
+  "brujula",
+  "nueva-etapa-profesional",
 ] as const;
 
 export type ProcessSlug = (typeof processSlugs)[number];
 
 type ProcessDefinition = {
   slug: ProcessSlug;
-  key: "orientation" | "reinvention" | "transition";
-  number: "01" | "02" | "03";
+  key: "compass" | "newStage";
+  number: "01" | "02";
   durationMeetings: number;
   internalPriceUsd: number | null;
   stageKeys: readonly string[];
@@ -25,34 +24,24 @@ type ProcessDefinition = {
  */
 export const sendaProcesses = [
   {
-    slug: "orientacion-vocacional",
-    key: "orientation",
+    slug: "brujula",
+    key: "compass",
     number: "01",
     durationMeetings: 5,
     internalPriceUsd: null,
     accent: "olive",
-    stageKeys: ["name", "interests", "desires", "possibilities", "validate", "integrate"],
-    takeawayKeys: ["map", "hypotheses", "alternatives", "questions", "plan"],
+    stageKeys: ["question", "signals", "worlds", "criteria", "alternatives", "direction"],
+    takeawayKeys: ["signals", "map", "criteria", "alternatives", "plan"],
   },
   {
-    slug: "reinvencion-profesional",
-    key: "reinvention",
+    slug: "nueva-etapa-profesional",
+    key: "newStage",
     number: "02",
     durationMeetings: 7,
-    internalPriceUsd: 1500,
+    internalPriceUsd: null,
     accent: "terracotta",
-    stageKeys: ["moment", "identity", "patterns", "criteria", "direction", "futures", "movement", "integrate"],
-    takeawayKeys: ["trajectory", "strengths", "hypothesis", "narrative", "roadmap"],
-  },
-  {
-    slug: "transicion-laboral",
-    key: "transition",
-    number: "03",
-    durationMeetings: 7,
-    internalPriceUsd: 1800,
-    accent: "charcoal",
-    stageKeys: ["understand", "objective", "movement", "execution", "positioning", "presence", "exposure", "continue"],
-    takeawayKeys: ["strategy", "objective", "plan", "assets", "pitch", "networking"],
+    stageKeys: ["moment", "trajectory", "identity", "criteria", "direction", "positioning", "strategy", "integrate"],
+    takeawayKeys: ["trajectory", "strengths", "direction", "narrative", "positioning", "roadmap"],
   },
 ] as const satisfies readonly ProcessDefinition[];
 

@@ -39,36 +39,44 @@ describe("translation catalogs", () => {
     }
   });
 
-  it("preserves the five Senda territories", () => {
-    expect(spanishMessages.Home.territories.items).toEqual({
-      work: {
-        title: "Trabajo",
-        description: "Qué lugar ocupa el trabajo en tu vida y qué querés construir.",
-      },
-      identity: {
-        title: "Identidad",
-        description:
-          "Quién sos cuando tu título o rol profesional ya no te representan.",
-      },
-      learning: {
-        title: "Aprendizaje",
-        description: "Qué necesitás aprender, desaprender o explorar.",
-      },
-      purpose: {
-        title: "Propósito",
-        description: "Qué dirección tiene sentido para vos en esta etapa.",
-      },
-      technology: {
-        title: "Tecnología",
-        description: "Cómo convivir en la nueva era tecnológica.",
-      },
-    });
+  it("publishes exactly two journeys and one split situations section", () => {
+    expect(Object.keys(spanishMessages.Home.journeys.items)).toEqual([
+      "compass",
+      "newStage",
+    ]);
+    expect(Object.keys(spanishMessages.Home.situations.items)).toEqual([
+      "compass",
+      "newStage",
+    ]);
+    expect("territories" in spanishMessages.Home).toBe(false);
+    expect("manifesto" in spanishMessages.Home).toBe(false);
+    expect(spanishMessages.Contact.reasonCompass).toBe("Brújula");
+    expect(spanishMessages.Contact.reasonNewStage).toBe("Nueva Etapa Profesional");
+    expect("reasonVocational" in spanishMessages.Contact).toBe(false);
+
+    for (const legacyNamespace of [
+      "Hero",
+      "Trust",
+      "Problem",
+      "Method",
+      "Paths",
+      "Services",
+      "FAQ",
+      "Diagnostics",
+      "Journey",
+    ]) {
+      expect(legacyNamespace in spanishMessages).toBe(false);
+      expect(legacyNamespace in englishMessages).toBe(false);
+    }
   });
 
-  it("publishes the complete 6/8/8 process journeys without public prices", () => {
-    expect(Object.keys(spanishMessages.Processes.items.orientation.stages)).toHaveLength(6);
-    expect(Object.keys(spanishMessages.Processes.items.reinvention.stages)).toHaveLength(8);
-    expect(Object.keys(spanishMessages.Processes.items.transition.stages)).toHaveLength(8);
+  it("publishes the complete 6/8 journeys without public prices", () => {
+    expect(Object.keys(spanishMessages.Processes.items)).toEqual([
+      "compass",
+      "newStage",
+    ]);
+    expect(Object.keys(spanishMessages.Processes.items.compass.stages)).toHaveLength(6);
+    expect(Object.keys(spanishMessages.Processes.items.newStage.stages)).toHaveLength(8);
 
     for (const catalog of [spanishMessages, englishMessages]) {
       const publicCopy = JSON.stringify({
@@ -77,6 +85,14 @@ describe("translation catalogs", () => {
         diagnostic: catalog.InitialDiagnostic,
       });
       expect(publicCopy).not.toMatch(/\b(?:1500|1800|USD)\b|US\$/i);
+    }
+  });
+
+  it("does not publish the retired journey names", () => {
+    for (const catalog of [spanishMessages, englishMessages]) {
+      expect(JSON.stringify(catalog)).not.toMatch(
+        /orientaci[oó]n vocacional|vocational guidance|reinvenci[oó]n profesional|professional reinvention|transici[oó]n laboral|career transition/i,
+      );
     }
   });
 

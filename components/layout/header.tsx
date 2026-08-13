@@ -121,17 +121,17 @@ export function Header() {
           : "border-[var(--senda-border)] bg-[rgba(247,244,237,.94)] shadow-[0_18px_48px_-40px_rgba(10,20,34,.75)] backdrop-blur-xl dark:border-white/10 dark:bg-[rgba(10,20,34,.92)]",
       )}
     >
-      <div className="mx-auto flex h-[82px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12 xl:px-20">
+      <div className="mx-auto flex h-[82px] max-w-[1440px] items-center justify-between px-3 min-[360px]:px-5 sm:px-8 lg:px-12 xl:px-20">
         <Link
           href="/"
           className={cn(
-            "group relative z-10 flex items-center gap-3 transition-colors",
+            "group relative z-10 flex shrink-0 items-center gap-2 min-[360px]:gap-3 transition-colors",
             transparent ? "text-[#f5f1e8]" : "text-[var(--senda-ink)] dark:text-[#f5f1e8]",
           )}
           aria-label={t("homeLabel")}
         >
           <span className="senda-orbit-mark h-[2.55rem] w-[2.55rem] opacity-90 transition-transform duration-300 group-hover:rotate-6" aria-hidden="true" />
-          <span className="font-heading text-[1.8rem] font-medium tracking-[-0.04em]">Senda</span>
+          <span className="hidden font-heading text-[1.8rem] font-medium tracking-[-0.04em] min-[360px]:inline">Senda</span>
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label={t("primaryNavigation")}>
@@ -191,7 +191,7 @@ export function Header() {
           </Link>
         </div>
 
-        <div className="flex items-center gap-1.5 lg:hidden">
+        <div className="flex shrink-0 items-center gap-1.5 lg:hidden">
           <LanguageSwitcher compact />
           <ThemeToggle />
           <button

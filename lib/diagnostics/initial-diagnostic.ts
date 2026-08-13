@@ -33,9 +33,8 @@ export const diagnosticUrgencies = [
 ] as const;
 
 export const suggestedRoutes = [
-  "orientacion-vocacional",
-  "reinvencion-profesional",
-  "transicion-laboral",
+  "brujula",
+  "nueva-etapa-profesional",
   "entrevista-admision-requerida",
 ] as const;
 
@@ -73,9 +72,19 @@ export function suggestRoute(input: Pick<InitialDiagnosticInput, "situation" | "
     return "entrevista-admision-requerida";
   }
 
-  if (input.situation === "choosing-direction") return "orientacion-vocacional";
-  if (input.situation === "trajectory-no-longer-represents-me") return "reinvencion-profesional";
-  if (input.situation === "concrete-work-change") return "transicion-laboral";
+  if (input.situation === "choosing-direction") {
+    return ["secondary-school", "higher-education", "early-career"].includes(input.careerStage)
+      ? "brujula"
+      : "entrevista-admision-requerida";
+  }
+  if (
+    input.situation === "trajectory-no-longer-represents-me"
+    || input.situation === "concrete-work-change"
+  ) {
+    return ["early-career", "experienced-professional", "leadership", "life-stage-change"].includes(input.careerStage)
+      ? "nueva-etapa-profesional"
+      : "entrevista-admision-requerida";
+  }
   return "entrevista-admision-requerida";
 }
 
@@ -90,7 +99,7 @@ export function toInitialDiagnosticInsert(input: InitialDiagnosticInput, userId:
     career_stage: input.careerStage,
     urgency: input.urgency,
     suggested_route: suggestRoute(input),
-    routing_version: 1,
+    routing_version: 2,
     form_version: 1,
     locale: input.locale,
     source_page: input.sourcePage ?? null,

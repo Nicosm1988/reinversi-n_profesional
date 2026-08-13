@@ -18,7 +18,8 @@ export default function ContactoPage() {
 
   const contactReasons = [
     t("reasonDiagnostic"),
-    t("reasonVocational"),
+    t("reasonCompass"),
+    t("reasonNewStage"),
     t("reasonGeneral"),
     t("reasonOther"),
   ];

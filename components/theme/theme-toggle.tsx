@@ -17,11 +17,14 @@ export function ThemeToggle() {
     <button
       type="button"
       aria-label={label}
+      data-state={mounted ? (isDark ? "dark" : "light") : "loading"}
       title={label}
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ccd2d5] bg-[#fbf9f4] text-[#17263a] shadow-[0_10px_24px_-20px_rgba(10,20,34,.65)] transition-colors hover:bg-[#e8eceb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b86d54] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fbf9f4] dark:border-white/15 dark:bg-white/10 dark:text-[#f5f1e8] dark:hover:bg-white/15 dark:focus-visible:ring-[#cf8a70] dark:focus-visible:ring-offset-[#0d1725]"
+      disabled={!mounted}
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--senda-border)] bg-[var(--senda-paper)] text-[var(--senda-ink)] shadow-[0_10px_24px_-20px_rgba(10,20,34,.65)] transition-[color,background-color,border-color,box-shadow] hover:bg-[var(--senda-stone)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-bg)] disabled:cursor-wait disabled:opacity-70"
     >
-      {isDark ? <Sun aria-hidden="true" className="h-[18px] w-[18px]" /> : <Moon aria-hidden="true" className="h-[18px] w-[18px]" />}
+      <Moon aria-hidden="true" className="h-[18px] w-[18px] dark:hidden" />
+      <Sun aria-hidden="true" className="hidden h-[18px] w-[18px] dark:block" />
     </button>
   );
 }
