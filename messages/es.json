@@ -143,6 +143,7 @@
     "successAnother": "Enviar otra consulta",
     "sidebarTitle": "Otras formas de contactarnos",
     "sidebarEmailLabel": "Email",
+    "directGmail": "Abrir Gmail para escribir a Senda (se abre en una pestaña nueva)",
     "sidebarWhatsappLabel": "WhatsApp",
     "directWhatsapp": "Contactar a Senda por WhatsApp"
   },

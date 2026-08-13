@@ -66,6 +66,8 @@ const API_ERROR_CODES = new Set<ContactApiError>([
   "unexpected",
 ]);
 
+const GMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT_EMAIL)}`;
+
 function parseApiError(value: unknown): ContactApiError {
   if (!value || typeof value !== "object" || !("code" in value)) return "unexpected";
   const code = (value as { code?: unknown }).code;
@@ -183,13 +185,13 @@ export default function ContactoPage() {
 
       <Section spacing="lg">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
-            <FadeIn className="min-w-0 lg:col-span-3">
+          <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-12">
+            <FadeIn className="min-w-0">
               {status !== "success" ? (
-                <Card className="bg-background p-6 sm:p-8 md:p-10">
-                  <h2 className="mb-8 font-heading text-2xl font-medium text-foreground">{t("formTitle")}</h2>
-                  <form onSubmit={handleSubmit} noValidate className="space-y-6" aria-busy={status === "submitting"}>
-                    <div className="grid gap-6 md:grid-cols-2">
+                <Card data-contact-panel="form" className="bg-background p-6 sm:p-8 lg:p-9">
+                  <h2 className="mb-6 font-heading text-2xl font-medium text-foreground">{t("formTitle")}</h2>
+                  <form onSubmit={handleSubmit} noValidate className="space-y-5" aria-busy={status === "submitting"}>
+                    <div className="grid gap-5 md:grid-cols-3 md:gap-6">
                       <div>
                         <label htmlFor="contact-name" className="mb-2 block text-sm font-medium text-foreground">{t("labelName")}</label>
                         <input
@@ -227,46 +229,45 @@ export default function ContactoPage() {
                         />
                         {fieldErrors.phone ? <p id="contact-phone-error" className="mt-2 text-sm text-destructive">{fieldErrors.phone}</p> : null}
                       </div>
-                    </div>
+                      <div>
+                        <label htmlFor="contact-email" className="mb-2 block text-sm font-medium text-foreground">{t("labelEmail")}</label>
+                        <input
+                          id="contact-email"
+                          name="email"
+                          type="email"
+                          autoComplete="email"
+                          spellCheck={false}
+                          required
+                          maxLength={CONTACT_LIMITS.email}
+                          value={form.email}
+                          onChange={(event) => updateField("email", event.target.value)}
+                          aria-invalid={Boolean(fieldErrors.email)}
+                          aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
+                          className={inputClassName(Boolean(fieldErrors.email))}
+                          placeholder={t("placeholderEmail")}
+                        />
+                        {fieldErrors.email ? <p id="contact-email-error" className="mt-2 text-sm text-destructive">{fieldErrors.email}</p> : null}
+                      </div>
 
-                    <div>
-                      <label htmlFor="contact-email" className="mb-2 block text-sm font-medium text-foreground">{t("labelEmail")}</label>
-                      <input
-                        id="contact-email"
-                        name="email"
-                        type="email"
-                        autoComplete="email"
-                        spellCheck={false}
-                        required
-                        maxLength={CONTACT_LIMITS.email}
-                        value={form.email}
-                        onChange={(event) => updateField("email", event.target.value)}
-                        aria-invalid={Boolean(fieldErrors.email)}
-                        aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
-                        className={inputClassName(Boolean(fieldErrors.email))}
-                        placeholder={t("placeholderEmail")}
-                      />
-                      {fieldErrors.email ? <p id="contact-email-error" className="mt-2 text-sm text-destructive">{fieldErrors.email}</p> : null}
-                    </div>
-
-                    <div>
-                      <label htmlFor="contact-message" className="mb-2 block text-sm font-medium text-foreground">{t("labelMessage")}</label>
-                      <textarea
-                        id="contact-message"
-                        name="message"
-                        autoComplete="off"
-                        rows={6}
-                        required
-                        minLength={10}
-                        maxLength={CONTACT_LIMITS.message}
-                        value={form.message}
-                        onChange={(event) => updateField("message", event.target.value)}
-                        aria-invalid={Boolean(fieldErrors.message)}
-                        aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
-                        className={`${inputClassName(Boolean(fieldErrors.message))} resize-y`}
-                        placeholder={t("placeholderMessage")}
-                      />
-                      {fieldErrors.message ? <p id="contact-message-error" className="mt-2 text-sm text-destructive">{fieldErrors.message}</p> : null}
+                      <div className="md:col-span-3">
+                        <label htmlFor="contact-message" className="mb-2 block text-sm font-medium text-foreground">{t("labelMessage")}</label>
+                        <textarea
+                          id="contact-message"
+                          name="message"
+                          autoComplete="off"
+                          rows={6}
+                          required
+                          minLength={10}
+                          maxLength={CONTACT_LIMITS.message}
+                          value={form.message}
+                          onChange={(event) => updateField("message", event.target.value)}
+                          aria-invalid={Boolean(fieldErrors.message)}
+                          aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
+                          className={`${inputClassName(Boolean(fieldErrors.message))} resize-y md:h-32`}
+                          placeholder={t("placeholderMessage")}
+                        />
+                        {fieldErrors.message ? <p id="contact-message-error" className="mt-2 text-sm text-destructive">{fieldErrors.message}</p> : null}
+                      </div>
                     </div>
 
                     <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
@@ -283,23 +284,6 @@ export default function ContactoPage() {
                       />
                     </div>
 
-                    <div>
-                      <label className="flex items-start gap-3 text-sm text-muted-foreground">
-                        <input
-                          type="checkbox"
-                          name="consent"
-                          required
-                          checked={form.consent}
-                          onChange={(event) => updateField("consent", event.target.checked)}
-                          aria-invalid={Boolean(fieldErrors.consent)}
-                          aria-describedby={fieldErrors.consent ? "contact-consent-error" : undefined}
-                          className="mt-1 h-4 w-4 accent-secondary"
-                        />
-                        <span>{t("consent")}</span>
-                      </label>
-                      {fieldErrors.consent ? <p id="contact-consent-error" className="mt-2 text-sm text-destructive">{fieldErrors.consent}</p> : null}
-                    </div>
-
                     {formError ? (
                       <p
                         ref={formErrorRef}
@@ -311,16 +295,35 @@ export default function ContactoPage() {
                       </p>
                     ) : null}
 
-                    <Button
-                      type="submit"
-                      size="lg"
-                      variant="secondary"
-                      disabled={status === "submitting"}
-                      className="h-14 w-full rounded-full px-10 text-base md:w-auto"
-                    >
-                      {status === "submitting" ? t("submitting") : t("submitButton")}
-                      <Send aria-hidden="true" className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+                      <div className="min-w-0">
+                        <label className="flex items-start gap-3 text-sm text-muted-foreground">
+                          <input
+                            type="checkbox"
+                            name="consent"
+                            required
+                            checked={form.consent}
+                            onChange={(event) => updateField("consent", event.target.checked)}
+                            aria-invalid={Boolean(fieldErrors.consent)}
+                            aria-describedby={fieldErrors.consent ? "contact-consent-error" : undefined}
+                            className="mt-1 h-4 w-4 flex-none accent-secondary"
+                          />
+                          <span>{t("consent")}</span>
+                        </label>
+                        {fieldErrors.consent ? <p id="contact-consent-error" className="mt-2 text-sm text-destructive">{fieldErrors.consent}</p> : null}
+                      </div>
+
+                      <Button
+                        type="submit"
+                        size="lg"
+                        variant="secondary"
+                        disabled={status === "submitting"}
+                        className="h-14 w-full flex-none rounded-full px-10 text-base md:w-auto"
+                      >
+                        {status === "submitting" ? t("submitting") : t("submitButton")}
+                        <Send aria-hidden="true" className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
                   </form>
                 </Card>
               ) : (
@@ -346,13 +349,17 @@ export default function ContactoPage() {
               )}
             </FadeIn>
 
-            <FadeIn className="min-w-0 lg:col-span-2">
+            <FadeIn className="min-w-0">
               <div>
                 <h2 className="mb-4 font-heading text-lg font-medium text-foreground">{t("sidebarTitle")}</h2>
                 <div className="space-y-5">
                   <a
-                    href={`mailto:${CONTACT_EMAIL}`}
+                    href={GMAIL_COMPOSE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    referrerPolicy="no-referrer"
                     className="group flex items-start gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
+                    aria-label={`${t("directGmail")}: ${CONTACT_EMAIL}`}
                   >
                     <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-secondary/10 transition-colors group-hover:bg-secondary/20">
                       <Mail aria-hidden="true" className="h-5 w-5 text-secondary" />

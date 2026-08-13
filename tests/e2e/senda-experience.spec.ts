@@ -69,7 +69,17 @@ test("contact form validates locally and preserves every value after a controlle
   });
 
   await page.goto("/contacto");
-  await expect(page.locator('main a[href="mailto:hola@universosenda.com"]')).toBeVisible();
+  const gmailLink = page.locator('main a[href^="https://mail.google.com/mail/"]');
+  await expect(gmailLink).toBeVisible();
+  const gmailUrl = new URL((await gmailLink.getAttribute("href")) ?? "");
+  expect(gmailUrl.origin).toBe("https://mail.google.com");
+  expect(gmailUrl.pathname).toBe("/mail/");
+  expect(gmailUrl.searchParams.get("view")).toBe("cm");
+  expect(gmailUrl.searchParams.get("fs")).toBe("1");
+  expect(gmailUrl.searchParams.get("to")).toBe("hola@universosenda.com");
+  await expect(gmailLink).toHaveAttribute("target", "_blank");
+  await expect(gmailLink).toHaveAttribute("rel", "noopener noreferrer");
+  await expect(gmailLink).toHaveAttribute("referrerpolicy", "no-referrer");
   await expect(page.locator("main").getByText("+54 9 11 3673-6778", { exact: true })).toBeVisible();
 
   await page.getByRole("button", { name: "Enviar consulta" }).click();
@@ -110,6 +120,37 @@ test("contact form validates locally and preserves every value after a controlle
   expect(requestHeader).toBe("contact");
 });
 
+test("contact form is landscape on desktop and stacks without overflow on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/contacto");
+
+  const panel = page.locator('[data-contact-panel="form"]');
+  const desktopPanel = await panel.boundingBox();
+  expect(desktopPanel).not.toBeNull();
+  expect(desktopPanel!.width / desktopPanel!.height).toBeGreaterThan(1.4);
+
+  const desktopFieldTops = await Promise.all(
+    ["#contact-name", "#contact-phone", "#contact-email"].map(async (selector) =>
+      page.locator(selector).evaluate((element) => element.getBoundingClientRect().top),
+    ),
+  );
+  expect(Math.max(...desktopFieldTops) - Math.min(...desktopFieldTops)).toBeLessThanOrEqual(2);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+
+  const mobileFieldTops = await Promise.all(
+    ["#contact-name", "#contact-phone", "#contact-email", "#contact-message"].map(async (selector) =>
+      page.locator(selector).evaluate((element) => element.getBoundingClientRect().top),
+    ),
+  );
+  expect(mobileFieldTops).toEqual([...mobileFieldTops].sort((a, b) => a - b));
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  expect(overflow).toBeLessThanOrEqual(1);
+});
+
 test("contact form confirms success only after the API accepts a valid submission", async ({ page }) => {
   await page.route("**/api/contact", async (route) => {
     await route.fulfill({
@@ -120,7 +161,11 @@ test("contact form confirms success only after the API accepts a valid submissio
   });
 
   await page.goto("/en/contacto");
-  await expect(page.locator('main a[href="mailto:hola@universosenda.com"]')).toBeVisible();
+  const gmailLink = page.locator('main a[href^="https://mail.google.com/mail/"]');
+  await expect(gmailLink).toHaveAttribute(
+    "aria-label",
+    "Open Gmail to write to Senda (opens in a new tab): hola@universosenda.com",
+  );
   await expect(page.locator("main").getByText("+54 9 11 3673-6778", { exact: true })).toBeVisible();
   await page.getByLabel("Full name").fill("Grace Hopper");
   await page.getByLabel("Email", { exact: true }).fill("grace@example.com");
