@@ -59,7 +59,7 @@ export function ProcessPopup() {
         role="dialog"
         aria-modal="false"
         aria-label={t("title")}
-        className="pointer-events-auto w-full max-w-sm animate-in fade-in slide-in-from-bottom-4 rounded-[1.75rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-6 text-[var(--senda-ink)] shadow-[0_24px_70px_-28px_rgba(23,59,49,.5)] duration-300 motion-reduce:animate-none dark:border-white/15 dark:shadow-[0_24px_70px_-28px_rgba(0,0,0,.85)]"
+        className="senda-editorial-card pointer-events-auto w-full max-w-sm animate-in fade-in slide-in-from-bottom-4 rounded-[1.2rem] p-5 text-[var(--senda-ink)] shadow-[0_28px_74px_-32px_rgba(10,20,34,.72)] duration-300 motion-reduce:animate-none sm:p-6 dark:border-white/15 dark:shadow-[0_28px_74px_-32px_rgba(0,0,0,.9)]"
       >
         <div className="flex items-start justify-between gap-4">
           <h3 className="font-heading text-2xl leading-tight tracking-[-0.02em]">{t("title")}</h3>
@@ -70,7 +70,7 @@ export function ProcessPopup() {
             aria-label={t("closeLabel")}
             className="shrink-0 rounded-md text-[var(--senda-muted)] transition-colors hover:text-[var(--senda-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)] focus-visible:ring-offset-2"
           >
-            <X className="h-5 w-5" />
+            <X className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
         <p className="mt-3 text-[15px] leading-7 text-[var(--senda-muted)]">{t("description")}</p>

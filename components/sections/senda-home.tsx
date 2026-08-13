@@ -1,32 +1,30 @@
-import Image from "next/image";
+import { ArrowRight, MoveDown } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { ArrowRight, Asterisk, Compass, MoveDown } from "lucide-react";
+import { sendaProcesses } from "@/lib/data/senda-processes";
 import { Link } from "@/navigation";
-import { getSendaProcess, sendaProcesses, type ProcessSlug } from "@/lib/data/senda-processes";
+import { UniverseField } from "@/components/visual/universe-field";
 
-const howSteps = ["name", "find", "experience", "return"] as const;
-const territories = ["work", "identity", "learning", "purpose", "technology"] as const;
-const faqs = ["which", "switch", "format", "duration", "single", "diagnostic", "receive"] as const;
-const processIllustrations = ["/illustrations/problem.png", "/illustrations/method.png", "/illustrations/paths.png"] as const;
+const situationJourneys = ["compass", "newStage"] as const;
+const situationPoints = ["point1", "point2", "point3", "point4"] as const;
+const methodSteps = ["listen", "map", "define", "move"] as const;
+const teamItems = ["multidisciplinary", "human", "rigor"] as const;
+const faqs = ["choose", "compass", "newStage", "format", "duration", "diagnostic", "results"] as const;
 
-const situationKeys = ["experience", "change", "project", "leadership", "vocation"] as const;
-const situationSlugs: Record<(typeof situationKeys)[number], ProcessSlug> = {
-  experience: "reinvencion-profesional",
-  change: "transicion-laboral",
-  project: "reinvencion-profesional",
-  leadership: "reinvencion-profesional",
-  vocation: "orientacion-vocacional",
-};
-
-function TopographicLines({ className = "" }: { className?: string }) {
+function RouteMap() {
   return (
-    <svg className={className} viewBox="0 0 620 360" fill="none" aria-hidden="true">
-      <path d="M-40 289C74 222 142 335 261 269c111-62 199 10 307-71 51-38 81-91 112-139" />
-      <path d="M-62 323C68 247 144 365 278 294c117-62 214 5 329-83 49-37 75-80 100-127" />
-      <path d="M-18 255c104-61 165 46 271-18 107-65 191 1 295-70 55-37 91-94 124-151" />
-      <path d="M16 216c88-48 144 44 236-12 100-61 183-4 281-67 60-39 101-102 137-164" />
-      <path d="M51 180c72-35 121 37 198-9 92-56 171-9 262-64 62-38 109-103 148-169" />
-    </svg>
+    <div className="relative mx-auto aspect-[5/4] w-full max-w-[31rem]" aria-hidden="true">
+      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 500 400" fill="none">
+        <ellipse cx="250" cy="200" rx="212" ry="112" className="stroke-white/20" />
+        <ellipse cx="250" cy="200" rx="156" ry="176" className="stroke-white/12" transform="rotate(38 250 200)" />
+        <path d="M48 294C136 244 177 310 264 225c66-64 117-71 190-121" className="stroke-[#d2b879]/45" />
+        <path d="M65 330C161 273 207 344 303 253c58-55 102-65 154-97" className="stroke-white/12" strokeDasharray="4 9" />
+        <circle cx="125" cy="276" r="6" className="fill-[#cf8a70]" />
+        <circle cx="264" cy="225" r="8" className="fill-[#d2b879]" />
+        <circle cx="407" cy="135" r="5" className="fill-[#89a9bd]" />
+      </svg>
+      <span className="absolute left-[18%] top-[64%] text-[10px] font-bold uppercase tracking-[0.18em] text-white/55">01 · 34°36&apos;S</span>
+      <span className="absolute right-[8%] top-[26%] text-[10px] font-bold uppercase tracking-[0.18em] text-white/55">02 · 58°22&apos;W</span>
+    </div>
   );
 }
 
@@ -36,70 +34,55 @@ export function SendaHome() {
 
   return (
     <div className="senda-home overflow-hidden bg-[var(--senda-bg)] text-[var(--senda-ink)]">
-      <section className="relative min-h-[780px] overflow-hidden border-b border-black/10 pt-24 sm:min-h-[850px] lg:flex lg:min-h-[min(940px,100svh)] lg:items-center lg:pt-20">
-        <div className="absolute inset-0 bg-[#fcf5ec]" />
-        <Image
-          src="/illustrations/hero.png"
-          alt={t("hero.imageAlt")}
-          fill
-          priority
-          sizes="100vw"
-          className="object-contain object-[85%_55%] p-5 opacity-95 sm:p-10 lg:object-[82%_55%] lg:p-16"
-        />
-        <div className="senda-hero-overlay absolute inset-0" />
-        <div className="relative mx-auto w-full max-w-[1440px] px-5 pb-28 pt-16 sm:px-8 sm:pt-24 lg:px-12 lg:pb-20 lg:pt-24 xl:px-20">
+      <section className="senda-night border-b border-white/10 px-5 pb-20 pt-32 sm:px-8 sm:pb-24 sm:pt-36 lg:px-12 lg:pb-28 xl:px-20">
+        <UniverseField className="left-[28%] text-[#89a9bd] opacity-20" />
+        <div className="relative mx-auto grid w-full max-w-[1240px] gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
           <div className="max-w-3xl">
-            <p className="mb-7 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] text-[var(--senda-olive)]">
-              <span className="h-px w-9 bg-current" aria-hidden="true" /> {t("hero.eyebrow")}
-            </p>
-            <h1 className="max-w-[12ch] font-heading text-[clamp(3.5rem,7.2vw,7.4rem)] font-medium leading-[0.88] tracking-[-0.055em] text-[var(--senda-ink)]">
+            <p className="senda-coordinate-label text-[#d2b879]">{t("hero.eyebrow")}</p>
+            <h1 className="mt-7 max-w-[14ch] text-pretty font-heading text-[clamp(2.5rem,5vw,4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[#f7f3eb]">
               {t("hero.title")}
             </h1>
-            <div className="mt-9 max-w-xl border-l border-[var(--senda-terracotta)]/65 pl-5 sm:pl-7">
-              <p className="whitespace-pre-line text-lg leading-8 text-[var(--senda-ink)]/75 sm:text-xl">{t("hero.rhythm")}</p>
-              <p className="mt-5 text-[15px] leading-7 text-[var(--senda-muted)] sm:text-base">{t("hero.description")}</p>
+            <div className="mt-7 max-w-2xl border-l border-[#cf8a70]/70 pl-5 sm:pl-7">
+              <p className="whitespace-pre-line text-base leading-7 text-[#f7f3eb]/90 sm:text-lg sm:leading-8">{t("hero.rhythm")}</p>
+              <p className="mt-4 text-base leading-7 text-[#cbd4da] sm:text-lg">{t("hero.description")}</p>
             </div>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/diagnostico" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[var(--senda-ink)] px-7 py-3.5 text-sm font-bold text-white shadow-[0_18px_40px_-24px_rgba(32,35,29,.8)] hover:bg-[var(--senda-olive)] dark:bg-[#f4efe4] dark:text-[#272b23] dark:hover:bg-white">
+              <Link href="/diagnostico" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#f5f1e8] px-7 py-3 text-sm font-bold text-[#17263a] shadow-[0_20px_50px_-28px_rgba(0,0,0,.85)] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#101c2c]">
                 {t("hero.primaryCta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
-              <Link href="#procesos" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-[var(--senda-ink)]/25 bg-[#f7f2e8]/65 px-7 py-3.5 text-sm font-bold text-[var(--senda-ink)] backdrop-blur-sm hover:border-[var(--senda-ink)]/60 hover:bg-[#f7f2e8] dark:border-white/25 dark:bg-black/10 dark:hover:bg-black/20">
+              <Link href="/#procesos" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 bg-white/[0.04] px-7 py-3 text-sm font-bold text-[#f5f1e8] backdrop-blur-sm transition-colors hover:border-white/55 hover:bg-white/[0.09] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                 {t("hero.secondaryCta")} <MoveDown className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
           </div>
-        </div>
-        <div className="absolute bottom-6 right-6 hidden items-center gap-3 rounded-full border border-white/25 bg-black/20 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-md md:flex">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#d2aa67]" /> {t("hero.caption")}
+          <RouteMap />
         </div>
       </section>
 
-      <section id="procesos" className="scroll-mt-24 px-5 py-24 sm:px-8 md:py-36 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1280px]">
-          <div className="senda-reveal grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+      <section id="procesos" className="scroll-mt-24 px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="grid gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="senda-kicker">{t("processes.eyebrow")}</p>
-              <h2 className="mt-5 max-w-[13ch] font-heading text-5xl leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-7xl">{t("processes.title")}</h2>
+              <p className="senda-kicker">{t("journeys.eyebrow")}</p>
+              <h2 className="mt-4 max-w-[14ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("journeys.title")}</h2>
             </div>
-            <p className="max-w-2xl text-lg leading-8 text-[var(--senda-muted)] lg:justify-self-end lg:text-xl">{t("processes.intro")}</p>
+            <p className="max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg lg:justify-self-end">{t("journeys.intro")}</p>
           </div>
 
-          <div className="mt-16 grid gap-px overflow-hidden rounded-[2rem] border border-[var(--senda-border)] bg-[var(--senda-border)] lg:grid-cols-3">
-            {sendaProcesses.map((process, index) => (
-              <article key={process.slug} className="senda-process-card group relative flex min-h-[490px] flex-col overflow-hidden bg-[var(--senda-paper)] p-7 sm:p-9">
-                <div className="absolute inset-x-5 top-14 h-44 overflow-hidden rounded-[1.4rem] bg-[#fcf5ec]">
-                  <Image src={processIllustrations[index]} alt="" fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
-                </div>
-                <div className="relative flex items-center justify-between text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-muted)]">
+          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            {sendaProcesses.map((process) => (
+              <article key={process.slug} data-cursor-glow className="senda-process-card senda-editorial-card group relative flex min-h-[23rem] flex-col overflow-hidden rounded-[1.35rem] p-7 sm:p-9">
+                <div className="relative z-10 flex items-center justify-between gap-4 border-b border-[var(--senda-border)] pb-5 text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-muted)]">
                   <span>{process.number}</span>
                   <span>{processT(`items.${process.key}.duration`, { count: process.durationMeetings })}</span>
                 </div>
-                <div className="relative mt-auto pt-52">
-                  <h3 className="max-w-[12ch] font-heading text-4xl leading-none tracking-[-0.035em] sm:text-[2.7rem]">{processT(`items.${process.key}.title`)}</h3>
-                  <p className="mt-6 text-lg font-semibold leading-7 text-[var(--senda-ink)]">{processT(`items.${process.key}.lead`)}</p>
-                  <p className="mt-4 text-[15px] leading-7 text-[var(--senda-muted)]">{processT(`items.${process.key}.cardDescription`)}</p>
-                  <Link href={`/procesos/${process.slug}`} className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[var(--senda-ink)] underline decoration-[var(--senda-terracotta)]/45 decoration-1 underline-offset-8 group-hover:decoration-[var(--senda-terracotta)]">
-                    {t("processes.cta")} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                <div className="relative z-10 mt-auto pt-12">
+                  <p className="senda-kicker">{t(`journeys.items.${process.key}.label`)}</p>
+                  <h3 className="mt-3 max-w-[16ch] text-pretty font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.08] tracking-[-0.03em]">{t(`journeys.items.${process.key}.title`)}</h3>
+                  <p className="mt-5 max-w-[36rem] text-lg font-semibold leading-7">{t(`journeys.items.${process.key}.lead`)}</p>
+                  <p className="mt-3 max-w-[38rem] text-base leading-7 text-[var(--senda-muted)]">{t(`journeys.items.${process.key}.description`)}</p>
+                  <Link href={`/procesos/${process.slug}`} className="mt-7 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 transition-colors hover:text-[var(--senda-accent)]">
+                    {t("journeys.cta")} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" aria-hidden="true" />
                   </Link>
                 </div>
               </article>
@@ -108,46 +91,36 @@ export function SendaHome() {
         </div>
       </section>
 
-      <section id="situaciones" className="scroll-mt-24 px-5 py-24 sm:px-8 md:py-36 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1280px]">
-          <div className="senda-reveal max-w-3xl">
+      <section id="situaciones" className="scroll-mt-24 border-y border-[var(--senda-border)] bg-[var(--senda-section)] px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="max-w-3xl">
             <p className="senda-kicker">{t("situations.eyebrow")}</p>
-            <h2 className="mt-5 max-w-[16ch] font-heading text-5xl leading-[0.98] tracking-[-0.04em] sm:text-6xl">{t("situations.title")}</h2>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--senda-muted)]">{t("situations.intro")}</p>
+            <h2 className="mt-4 text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("situations.title")}</h2>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("situations.intro")}</p>
           </div>
 
-          <div className="mt-16 border-t border-[var(--senda-border)]">
-            {situationKeys.map((key, index) => {
-              const process = getSendaProcess(situationSlugs[key]);
-
+          <div className="mt-12 grid gap-px overflow-hidden rounded-[1.35rem] border border-[var(--senda-border)] bg-[var(--senda-border)] lg:grid-cols-2">
+            {situationJourneys.map((key, index) => {
+              const process = sendaProcesses[index];
               return (
-                <article
-                  key={key}
-                  className="senda-reveal grid gap-5 border-b border-[var(--senda-border)] py-9 sm:grid-cols-[3.5rem_1fr] sm:py-10"
-                >
-                  <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">0{index + 1}</span>
-                  <div className="grid gap-6 lg:grid-cols-[1.3fr_0.9fr] lg:items-center">
-                    <div>
-                      <h3 className="max-w-[28ch] font-heading text-2xl leading-[1.15] sm:text-3xl">{t(`situations.items.${key}.title`)}</h3>
-                      <p className="mt-4 max-w-2xl text-[15px] leading-7 text-[var(--senda-muted)]">{t(`situations.items.${key}.description`)}</p>
-                    </div>
-                    <div className="flex flex-col items-start gap-3 lg:items-end">
-                      <div className="text-sm text-[var(--senda-muted)] lg:text-right">
-                        <p className="font-bold text-[var(--senda-ink)]">{t(`situations.items.${key}.serviceLabel`)}</p>
-                        {process ? (
-                          <p>{processT(`items.${process.key}.duration`, { count: process.durationMeetings })}</p>
-                        ) : null}
-                      </div>
-                      {process ? (
-                        <Link
-                          href={`/procesos/${process.slug}`}
-                          className="inline-flex items-center gap-2 text-sm font-bold text-[var(--senda-ink)] underline decoration-[var(--senda-terracotta)]/45 decoration-1 underline-offset-8 hover:decoration-[var(--senda-terracotta)]"
-                        >
-                          {t("situations.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                        </Link>
-                      ) : null}
-                    </div>
+                <article key={key} className="bg-[var(--senda-paper)] p-7 sm:p-9">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">0{index + 1}</span>
+                    <span className="h-px flex-1 bg-[var(--senda-border)]" aria-hidden="true" />
                   </div>
+                  <h3 className="mt-7 text-pretty font-heading text-2xl leading-tight tracking-[-0.025em] sm:text-3xl">{t(`situations.items.${key}.title`)}</h3>
+                  <p className="mt-4 text-base leading-7 text-[var(--senda-muted)]">{t(`situations.items.${key}.description`)}</p>
+                  <ul className="mt-7 space-y-3 border-t border-[var(--senda-border)] pt-6">
+                    {situationPoints.map((point) => (
+                      <li key={point} className="flex gap-3 text-base leading-6">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--senda-terracotta)]" aria-hidden="true" />
+                        {t(`situations.items.${key}.${point}`)}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={`/procesos/${process.slug}`} className="mt-7 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
+                    {t("journeys.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
                 </article>
               );
             })}
@@ -155,136 +128,124 @@ export function SendaHome() {
         </div>
       </section>
 
-      <section className="px-5 pb-24 sm:px-8 md:pb-36 lg:px-12 xl:px-20">
-        <div className="senda-reveal relative mx-auto grid max-w-[1280px] overflow-hidden rounded-[2.25rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] text-[var(--senda-ink)] shadow-[0_24px_60px_-36px_rgba(47,54,71,.45)] lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <div className="relative min-h-72 lg:min-h-full">
-            <Image src="/illustrations/trust.png" alt="" fill loading="eager" sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
+      <section id="como-funciona" className="scroll-mt-24 px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="grid gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="senda-kicker">{t("method.eyebrow")}</p>
+              <h2 className="mt-4 text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("method.title")}</h2>
+            </div>
+            <p className="max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg lg:justify-self-end">{t("method.intro")}</p>
           </div>
-          <div className="relative px-7 py-14 sm:px-12 sm:py-16 lg:px-16">
-          <div className="relative max-w-3xl">
-            <p className="senda-kicker">{t("bridge.eyebrow")}</p>
-            <h2 className="mt-5 font-heading text-4xl leading-[1.02] tracking-[-0.035em] sm:text-6xl">{t("bridge.title")}</h2>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-[#e9e4d8]/80 sm:text-lg">{t("bridge.description")}</p>
-          </div>
-          <Link href="/diagnostico" className="relative mt-9 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[var(--senda-ink)] px-7 py-3.5 text-sm font-bold text-white hover:bg-[var(--senda-dark-hover)] dark:bg-[#f4efe4] dark:text-[#272b23] dark:hover:bg-white">
-            {t("bridge.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 pb-24 sm:px-8 md:pb-36 lg:px-12 xl:px-20">
-        <div className="senda-reveal mx-auto flex max-w-[1280px] flex-col items-start gap-8 rounded-[2rem] border border-[var(--senda-terracotta)]/30 bg-[var(--senda-paper)] p-8 sm:p-10 lg:flex-row lg:items-center lg:justify-between lg:p-12">
-          <div className="max-w-2xl">
-            <p className="senda-kicker">{t("anchorTool.eyebrow")}</p>
-            <h2 className="mt-4 font-heading text-3xl leading-tight tracking-[-0.03em] sm:text-4xl">{t("anchorTool.title")}</h2>
-            <p className="mt-4 text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("anchorTool.description")}</p>
-          </div>
-          <div className="flex w-full flex-col items-start gap-3 lg:w-auto lg:shrink-0 lg:items-end">
-            <Link href="/diagnostico/ancla-de-carrera" className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-full border border-[var(--senda-ink)] px-7 py-3.5 text-sm font-bold text-[var(--senda-ink)] hover:bg-[var(--senda-ink)] hover:text-[var(--senda-paper)] sm:w-auto">
-              {t("anchorTool.cta")} <Compass className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <p className="text-xs text-[var(--senda-muted)]">{t("anchorTool.note")}</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="como-funciona" className="scroll-mt-24 border-y border-[var(--senda-border)] bg-[var(--senda-stone)] px-5 py-24 sm:px-8 md:py-36 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1280px]">
-          <div className="senda-reveal max-w-3xl">
-            <p className="senda-kicker">{t("method.eyebrow")}</p>
-            <h2 className="mt-5 font-heading text-5xl leading-none tracking-[-0.04em] sm:text-7xl">{t("method.title")}</h2>
-          </div>
-          <div className="mt-16 grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
-          <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-3 shadow-[0_24px_60px_-36px_rgba(47,54,71,.45)]">
-            <Image src="/illustrations/method.png" alt="" fill loading="eager" sizes="(min-width: 1024px) 36vw, 100vw" className="object-cover p-3" />
-          </div>
-          <ol className="grid gap-0 border-t border-[var(--senda-ink)]/15 md:grid-cols-2">
-            {howSteps.map((key, index) => (
-              <li key={key} className="senda-reveal relative border-b border-[var(--senda-ink)]/15 py-9 lg:border-b-0 lg:border-r lg:px-7 lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0">
-                <span className="text-xs font-bold tracking-[0.16em] text-[var(--senda-terracotta)]">0{index + 1}</span>
-                <h3 className="mt-10 max-w-[13ch] font-heading text-3xl leading-[1.05]">{t(`method.steps.${key}.title`)}</h3>
-                <p className="mt-5 text-[15px] leading-7 text-[var(--senda-muted)]">{t(`method.steps.${key}.description`)}</p>
+          <ol className="mt-12 grid gap-px overflow-hidden rounded-[1.25rem] border border-[var(--senda-border)] bg-[var(--senda-border)] sm:grid-cols-2 lg:grid-cols-4">
+            {methodSteps.map((step) => (
+              <li key={step} className="bg-[var(--senda-paper)] p-6 sm:p-7">
+                <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">{t(`method.steps.${step}.number`)}</span>
+                <h3 className="mt-8 font-heading text-2xl leading-tight">{t(`method.steps.${step}.title`)}</h3>
+                <p className="mt-4 text-base leading-7 text-[var(--senda-muted)]">{t(`method.steps.${step}.description`)}</p>
               </li>
             ))}
           </ol>
-          </div>
         </div>
       </section>
 
-      <section className="px-5 py-24 sm:px-8 md:py-36 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1280px]">
-          <div className="senda-reveal grid gap-10 lg:grid-cols-2 lg:items-end">
-            <div>
-              <p className="senda-kicker">{t("territories.eyebrow")}</p>
-              <h2 className="mt-5 font-heading text-5xl leading-none tracking-[-0.04em] sm:text-7xl">{t("territories.title")}</h2>
-            </div>
-            <p className="max-w-xl text-lg leading-8 text-[var(--senda-muted)] lg:justify-self-end">{t("territories.intro")}</p>
+      <section id="fases" className="scroll-mt-24 border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)] px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="max-w-3xl">
+            <p className="senda-kicker">{t("phases.eyebrow")}</p>
+            <h2 className="mt-4 text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("phases.title")}</h2>
+            <p className="mt-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("phases.intro")}</p>
           </div>
-          <div className="mt-16 grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
-          <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] shadow-[0_24px_60px_-36px_rgba(47,54,71,.45)] lg:sticky lg:top-28">
-            <Image src="/illustrations/paths.png" alt="" fill loading="eager" sizes="(min-width: 1024px) 38vw, 100vw" className="object-cover" />
-          </div>
-          <div className="border-t border-[var(--senda-border)]">
-            {territories.map((key, index) => (
-              <article key={key} className="senda-territory grid gap-4 border-b border-[var(--senda-border)] py-7 sm:grid-cols-[5rem_0.7fr_1.3fr] sm:items-center sm:py-9">
-                <span className="text-xs font-bold tracking-[0.16em] text-[var(--senda-terracotta)]">0{index + 1}</span>
-                <h3 className="font-heading text-3xl sm:text-4xl">{t(`territories.items.${key}.title`)}</h3>
-                <p className="max-w-xl leading-7 text-[var(--senda-muted)] sm:justify-self-end">{t(`territories.items.${key}.description`)}</p>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            {sendaProcesses.map((process) => (
+              <article key={process.slug} className="rounded-[1.3rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-7 sm:p-9">
+                <div className="flex items-start justify-between gap-5 border-b border-[var(--senda-border)] pb-6">
+                  <div>
+                    <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">{process.number}</span>
+                    <h3 className="mt-3 font-heading text-3xl leading-tight">{processT(`items.${process.key}.title`)}</h3>
+                  </div>
+                  <span className="shrink-0 text-xs font-semibold text-[var(--senda-muted)]">{processT(`items.${process.key}.duration`, { count: process.durationMeetings })}</span>
+                </div>
+                <ol className="mt-2 divide-y divide-[var(--senda-border)]">
+                  {process.stageKeys.map((stageKey, index) => (
+                    <li key={stageKey} className="grid grid-cols-[2rem_1fr] gap-3 py-4 text-base leading-6">
+                      <span className="text-xs font-bold tracking-[0.12em] text-[var(--senda-muted)]">{String(index + 1).padStart(2, "0")}</span>
+                      <span className="font-semibold">{processT(`items.${process.key}.stages.${stageKey}.title`)}</span>
+                    </li>
+                  ))}
+                </ol>
+                <Link href={`/procesos/${process.slug}`} className="mt-6 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
+                  {t("phases.view")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="equipo" className="scroll-mt-24 px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="grid gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <p className="senda-kicker">{t("team.eyebrow")}</p>
+              <h2 className="mt-4 text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("team.title")}</h2>
+            </div>
+            <div className="max-w-2xl lg:justify-self-end">
+              <p className="text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("team.intro")}</p>
+              <Link href="/quienes-somos" className="mt-5 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
+                {t("team.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {teamItems.map((item, index) => (
+              <article key={item} className="senda-editorial-card rounded-[1.2rem] p-7">
+                <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">0{index + 1}</span>
+                <h3 className="mt-8 font-heading text-2xl leading-tight">{t(`team.items.${item}.title`)}</h3>
+                <p className="mt-4 text-base leading-7 text-[var(--senda-muted)]">{t(`team.items.${item}.description`)}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[var(--senda-ink-fixed)] px-5 py-28 text-[#f4efe4] sm:px-8 md:py-36 lg:px-12 xl:px-20">
-        <div className="senda-reveal relative mx-auto grid max-w-[1180px] gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <div>
-          <Asterisk className="h-10 w-10 text-[var(--senda-terracotta)]" aria-hidden="true" />
-          <blockquote className="mt-10 font-heading text-[clamp(2.5rem,5.5vw,5.6rem)] leading-[1.02] tracking-[-0.04em]">
-            <p>{t("manifesto.first")}</p>
-            <p className="mt-8 text-[#f4efe4]/62">{t("manifesto.second")}</p>
-          </blockquote>
-          </div>
-          <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-white/10 bg-[#fcf5ec] p-3">
-            <Image src="/illustrations/services.png" alt="" fill loading="eager" sizes="(min-width: 1024px) 36vw, 100vw" className="object-cover p-3" />
-          </div>
-        </div>
-      </section>
-
-      <section id="preguntas" className="scroll-mt-24 px-5 py-24 sm:px-8 md:py-36 lg:px-12 xl:px-20">
-        <div className="mx-auto grid max-w-[1180px] gap-14 lg:grid-cols-[0.7fr_1.3fr]">
-          <div className="senda-reveal lg:sticky lg:top-32 lg:self-start">
+      <section id="preguntas" className="scroll-mt-24 border-y border-[var(--senda-border)] bg-[var(--senda-section)] px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+        <div className="mx-auto grid max-w-[1180px] gap-12 lg:grid-cols-[0.7fr_1.3fr]">
+          <div className="lg:sticky lg:top-28 lg:self-start">
             <p className="senda-kicker">{t("faq.eyebrow")}</p>
-            <h2 className="mt-5 font-heading text-5xl leading-none tracking-[-0.04em] sm:text-6xl">{t("faq.title")}</h2>
-            <p className="mt-6 max-w-md leading-7 text-[var(--senda-muted)]">{t("faq.intro")}</p>
+            <h2 className="mt-4 text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("faq.title")}</h2>
+            <p className="mt-5 max-w-md text-base leading-7 text-[var(--senda-muted)]">{t("faq.intro")}</p>
           </div>
           <div className="border-t border-[var(--senda-border)]">
-            {faqs.map((key, index) => (
-              <details key={key} className="senda-faq group border-b border-[var(--senda-border)]">
-                <summary className="flex cursor-pointer list-none items-center gap-5 py-7 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)] focus-visible:ring-offset-4 [&::-webkit-details-marker]:hidden">
-                  <span className="text-xs font-bold text-[var(--senda-terracotta)]">0{index + 1}</span>
-                  <span className="flex-1 font-heading text-2xl leading-tight sm:text-3xl">{t(`faq.items.${key}.question`)}</span>
-                  <span className="relative h-5 w-5 shrink-0" aria-hidden="true"><span className="absolute left-0 top-1/2 h-px w-5 bg-current" /><span className="absolute left-1/2 top-0 h-5 w-px bg-current transition-transform group-open:rotate-90 group-open:opacity-0" /></span>
+            {faqs.map((faq) => (
+              <details key={faq} className="group border-b border-[var(--senda-border)]">
+                <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 font-heading text-xl font-semibold leading-7 marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)] focus-visible:ring-offset-4">
+                  {t(`faq.items.${faq}.question`)}
+                  <span className="text-xl font-normal text-[var(--senda-terracotta)] transition-transform group-open:rotate-45 motion-reduce:transform-none motion-reduce:transition-none" aria-hidden="true">+</span>
                 </summary>
-                <p className="max-w-2xl pb-8 pl-10 text-base leading-8 text-[var(--senda-muted)] sm:pl-12">{t(`faq.items.${key}.answer`)}</p>
+                <p className="max-w-2xl pb-6 pr-10 text-base leading-7 text-[var(--senda-muted)]">{t(`faq.items.${faq}.answer`)}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="px-5 pb-10 sm:px-8 lg:px-12 xl:px-20">
-        <div className="relative mx-auto flex min-h-[580px] max-w-[1380px] items-end overflow-hidden rounded-[2.5rem] bg-[var(--senda-terracotta)] px-7 py-12 text-white sm:px-12 sm:py-16 lg:px-20">
-          <TopographicLines className="absolute -right-24 -top-12 h-[42rem] w-[70rem] stroke-white opacity-[0.17] [&_path]:stroke-[1]" />
-          <div className="senda-reveal relative max-w-4xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-white/70">{t("final.eyebrow")}</p>
-            <h2 className="mt-6 max-w-[15ch] font-heading text-[clamp(3rem,6.8vw,6.8rem)] leading-[0.92] tracking-[-0.05em]">{t("final.title")}</h2>
-            <p className="mt-7 max-w-xl text-lg leading-8 text-white/78">{t("final.description")}</p>
-            <Link href="/diagnostico" className="mt-9 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[var(--senda-ink-fixed)] px-7 py-3.5 text-sm font-bold text-white hover:bg-[var(--senda-olive)]">
-              {t("final.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+      <section className="px-5 py-10 sm:px-8 sm:py-12 lg:px-12 xl:px-20">
+        <div className="senda-night relative mx-auto max-w-[1180px] overflow-hidden rounded-[1.5rem] border border-white/10 px-7 py-14 text-[#f5f1e8] sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+          <UniverseField compact className="left-[38%] text-[#89a9bd] opacity-20" />
+          <div className="relative max-w-3xl">
+            <p className="senda-coordinate-label text-[#d2b879]">{t("final.eyebrow")}</p>
+            <h2 className="mt-6 max-w-[18ch] text-pretty font-heading text-[clamp(2rem,4vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("final.title")}</h2>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[#d1d9de] sm:text-lg">{t("final.description")}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/diagnostico" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#f4efe4] px-7 py-3 text-sm font-bold text-[#17263a] transition-colors hover:bg-white">
+                {t("final.primaryCta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link href="/contacto" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/30 px-7 py-3 text-sm font-bold text-white transition-colors hover:border-white/60 hover:bg-white/[0.08]">
+                {t("final.secondaryCta")}
+              </Link>
+            </div>
           </div>
         </div>
       </section>

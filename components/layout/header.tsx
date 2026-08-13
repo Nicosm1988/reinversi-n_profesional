@@ -118,21 +118,25 @@ export function Header() {
         "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500",
         transparent
           ? "border-transparent bg-transparent"
-          : "border-[var(--senda-border)] bg-[rgba(247,242,232,.92)] shadow-[0_14px_42px_-36px_rgba(34,38,29,.8)] backdrop-blur-xl dark:border-white/10 dark:bg-[rgba(37,42,34,.92)]",
+          : "border-[var(--senda-border)] bg-[rgba(247,244,237,.94)] shadow-[0_18px_48px_-40px_rgba(10,20,34,.75)] backdrop-blur-xl dark:border-white/10 dark:bg-[rgba(10,20,34,.92)]",
       )}
     >
-      <div className="mx-auto flex h-[82px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12 xl:px-20">
-        <Link href="/" className="group relative z-10 flex items-center gap-3" aria-label={t("homeLabel")}>
-          <span className="relative flex h-[2.6rem] w-[2.6rem] items-center justify-center rounded-full border border-[var(--senda-ink)]/45 dark:border-[#f4efe4]/45">
-            <span className="h-2 w-2 rounded-full bg-[var(--senda-terracotta)]" />
-            <span className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border border-[var(--senda-ink)]/45 bg-[#f4efe4] transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5 dark:border-[#f4efe4]/45 dark:bg-[#252a22]" />
-          </span>
-          <span className="font-heading text-[1.75rem] font-medium tracking-[-0.03em] text-[var(--senda-ink)] dark:text-[#f4efe4]">Senda</span>
+      <div className="mx-auto flex h-[82px] max-w-[1440px] items-center justify-between px-3 min-[360px]:px-5 sm:px-8 lg:px-12 xl:px-20">
+        <Link
+          href="/"
+          className={cn(
+            "group relative z-10 flex shrink-0 items-center gap-2 min-[360px]:gap-3 transition-colors",
+            transparent ? "text-[#f5f1e8]" : "text-[var(--senda-ink)] dark:text-[#f5f1e8]",
+          )}
+          aria-label={t("homeLabel")}
+        >
+          <span className="senda-orbit-mark h-[2.55rem] w-[2.55rem] opacity-90 transition-transform duration-300 group-hover:rotate-6" aria-hidden="true" />
+          <span className="hidden font-heading text-[1.8rem] font-medium tracking-[-0.04em] min-[360px]:inline">Senda</span>
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label={t("primaryNavigation")}>
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="relative py-2 text-[13px] font-bold text-[var(--senda-ink)]/68 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-[var(--senda-terracotta)] after:transition-transform hover:text-[var(--senda-ink)] hover:after:scale-x-100 dark:text-[#f4efe4]/70 dark:hover:text-white">
+            <Link key={link.href} href={link.href} className={cn("relative py-2 text-[12px] font-bold uppercase tracking-[0.08em] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-[var(--senda-terracotta)] after:transition-transform hover:after:scale-x-100", transparent ? "text-[#f5f1e8]/70 hover:text-white" : "text-[var(--senda-ink)]/68 hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:text-white") }>
               {link.name}
             </Link>
           ))}
@@ -178,16 +182,16 @@ export function Header() {
               ) : null}
             </div>
           ) : authState.status === "anonymous" ? (
-            <Link href="/login" className="px-2 text-xs font-bold text-[var(--senda-ink)]/65 hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:text-white">{t("ctaLogin")}</Link>
+            <Link href="/login" className={cn("px-2 text-xs font-bold", transparent ? "text-[#f5f1e8]/70 hover:text-white" : "text-[var(--senda-ink)]/65 hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:text-white")}>{t("ctaLogin")}</Link>
           ) : (
             <span className="h-3 w-14 animate-pulse rounded-full bg-[var(--senda-border)]" aria-label={t("authLoading")} />
           )}
-          <Link href="/diagnostico" className="ml-1 inline-flex min-h-11 items-center rounded-full bg-[var(--senda-ink)] px-5 text-xs font-bold text-white hover:bg-[var(--senda-olive)] dark:bg-[#f4efe4] dark:text-[#252a22] dark:hover:bg-white">
+          <Link href="/diagnostico" className="ml-1 inline-flex min-h-11 items-center rounded-full border border-white/10 bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
             {t("ctaDiagnostic")}
           </Link>
         </div>
 
-        <div className="flex items-center gap-1.5 lg:hidden">
+        <div className="flex shrink-0 items-center gap-1.5 lg:hidden">
           <LanguageSwitcher compact />
           <ThemeToggle />
           <button
@@ -196,7 +200,7 @@ export function Header() {
             aria-label={mobileMenuOpen ? t("closeMenu") : t("mobileMenu")}
             aria-expanded={mobileMenuOpen}
             aria-controls="senda-mobile-menu"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--senda-ink)]/15 bg-white/35 text-[var(--senda-ink)] backdrop-blur-sm hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/15 dark:bg-white/5 dark:text-[#f4efe4]"
+            className={cn("inline-flex h-10 w-10 items-center justify-center rounded-full border bg-white/60 backdrop-blur-sm hover:bg-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)]", transparent ? "border-white/25 text-[#17263a]" : "border-[var(--senda-ink)]/15 text-[var(--senda-ink)] dark:border-white/15 dark:bg-white/10 dark:text-[#f4efe4]")}
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -204,7 +208,7 @@ export function Header() {
       </div>
 
       {mobileMenuOpen ? (
-        <div id="senda-mobile-menu" className="h-[calc(100svh-82px)] overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f2e8] dark:border-white/10 dark:bg-[#252a22] lg:hidden">
+        <div id="senda-mobile-menu" className="h-[calc(100svh-82px)] overscroll-contain overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f4ed] dark:border-white/10 dark:bg-[#0d1725] lg:hidden">
           <div className="mx-auto flex min-h-full max-w-xl flex-col px-5 py-8 sm:px-8">
             <nav className="divide-y divide-[var(--senda-border)] border-y border-[var(--senda-border)] dark:divide-white/10 dark:border-white/10" aria-label={t("mobileNavigation")}>
               {navLinks.map((link, index) => (

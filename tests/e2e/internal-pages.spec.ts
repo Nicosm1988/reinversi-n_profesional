@@ -3,10 +3,10 @@ import { expect, test } from "@playwright/test";
 const routes = [
   "/contacto",
   "/diagnostico",
-  "/orientacion-vocacional",
-  "/procesos/orientacion-vocacional",
-  "/procesos/reinvencion-profesional",
-  "/procesos/transicion-laboral",
+  "/diagnostico/ancla-de-carrera",
+  "/diagnostico/ancla-de-carrera/test",
+  "/procesos/brujula",
+  "/procesos/nueva-etapa-profesional",
   "/quienes-somos",
   "/privacidad",
   "/terminos",
@@ -17,6 +17,13 @@ const routes = [
 const locales = [
   { prefix: "", themeToggle: /Activar modo (oscuro|claro)/ },
   { prefix: "/en", themeToggle: /Switch to (dark|light) mode/ },
+] as const;
+
+const legacyJourneyRedirects = [
+  { source: "/orientacion-vocacional", destination: "/procesos/brujula" },
+  { source: "/procesos/orientacion-vocacional", destination: "/procesos/brujula" },
+  { source: "/procesos/reinvencion-profesional", destination: "/procesos/nueva-etapa-profesional" },
+  { source: "/procesos/transicion-laboral", destination: "/procesos/nueva-etapa-profesional" },
 ] as const;
 
 for (const locale of locales) {
@@ -37,7 +44,9 @@ for (const locale of locales) {
         }
       });
 
-      await page.addInitScript(() => window.localStorage.setItem("theme", "light"));
+      await page.addInitScript(() => {
+        window.localStorage.setItem("theme", "light");
+      });
       await page.goto(localizedRoute);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
@@ -51,6 +60,26 @@ for (const locale of locales) {
       );
       expect(hasHorizontalOverflow).toBe(false);
       expect(failedSameOriginResources).toEqual([]);
+    });
+  }
+}
+
+for (const locale of locales) {
+  for (const redirect of legacyJourneyRedirects) {
+    const source = `${locale.prefix}${redirect.source}`;
+    const destination = `${locale.prefix}${redirect.destination}`;
+
+    test(`${source} permanently redirects to ${destination}`, async ({ page, request }) => {
+      const response = await request.get(source, { maxRedirects: 0 });
+      expect(response.status()).toBe(308);
+
+      const location = response.headers().location;
+      expect(location).toBeTruthy();
+      expect(new URL(location, response.url()).pathname).toBe(destination);
+
+      await page.goto(source);
+      expect(new URL(page.url()).pathname).toBe(destination);
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     });
   }
 }

@@ -7,6 +7,7 @@ import { Container } from "@/components/layout/container";
 import { ProfileForm, type PersonalProfile } from "@/components/profile/profile-form";
 import { getAuthenticatedUser } from "@/lib/supabase/auth";
 import { canRepeatCareerAnchorTest } from "@/lib/diagnostics/access";
+import { UniverseField } from "@/components/visual/universe-field";
 
 const savedResultSchema = z.object({
   dominant_result: z.object({ name: z.string(), score: z.number().optional() }),
@@ -68,6 +69,7 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
 
   return (
     <div className="wati-page-shell min-h-screen pb-20 pt-28 md:pt-32">
+      <UniverseField compact className="left-[42%] text-[#5c7776] opacity-[0.08] dark:text-[#89a9bd] dark:opacity-10" />
       <Container className="relative z-10 max-w-5xl">
         <div id="resumen" className="mb-10 max-w-3xl scroll-mt-28">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm font-semibold text-secondary">

@@ -4,10 +4,8 @@ test("smoke: landing, public intake and protected account routes are accessible"
   await page.goto("/");
   await expect(page).toHaveTitle(/Senda/i);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("heading", { name: /dirección para el cambio|direction for the change/i }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { level: 3, name: /orientación vocacional|vocational guidance/i })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 3, name: /reinvención profesional|professional reinvention/i })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 3, name: /transición laboral|career transition/i })).toBeVisible();
+  await expect(page.locator("#procesos").getByRole("heading", { name: /^(?:brújula|compass)$/i })).toBeVisible();
+  await expect(page.locator("#procesos").getByRole("heading", { name: /^(?:nueva etapa profesional|new professional stage)$/i })).toBeVisible();
 
   await page.setViewportSize({ width: 390, height: 844 });
   const bodyWidth = await page.locator("body").evaluate((element) => element.scrollWidth);

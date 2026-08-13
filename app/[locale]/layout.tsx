@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Raleway } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
@@ -33,14 +33,22 @@ const instrumentSerif = Raleway({
   display: "swap"
 });
 
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f1ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d1725" },
+  ],
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const isEnglish = locale === "en";
 
   return {
     title: isEnglish
-      ? "Senda | A clearer path through professional change"
-      : "Senda | Orientación para tu camino profesional",
+      ? "Senda | A clearer direction for your professional path"
+      : "Senda | Una dirección para tu camino profesional",
     description: isEnglish
       ? "Explore work, identity and purpose with thoughtful tools and human support."
       : "Procesos personalizados para comprender el cambio, encontrar una dirección y construir próximos pasos posibles.",
@@ -51,9 +59,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       siteName: "Senda",
       title: isEnglish ? "Senda | A clearer path through professional change" : "Senda | Una dirección para el cambio",
       description: isEnglish
-        ? "Personalized journeys for vocational guidance, professional reinvention, and career transition."
-        : "Recorridos personalizados de orientación vocacional, reinvención profesional y transición laboral.",
-      images: [{ url: "/brand/senda-hero.png", width: 1536, height: 1024, alt: "Senda" }],
+        ? "Compass and New Professional Stage: two personalized journeys for decisions about study, work, and experienced careers."
+        : "Brújula y Nueva Etapa Profesional: dos recorridos personalizados para decisiones de estudio, trabajo y trayectoria.",
     },
     robots: { index: true, follow: true },
     icons: { icon: "/senda-mark.svg" },
@@ -83,12 +90,12 @@ export default async function RootLayout(
         )}
       >
         <ThemeProvider>
+          <PointerIllumination />
           <NextIntlClientProvider messages={messages}>
             <CookieProvider>
             <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 rounded-full bg-[var(--senda-ink)] px-5 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0 dark:bg-[#f4efe4] dark:text-[#272b23]">
               {locale === "en" ? "Skip to content" : "Saltar al contenido"}
             </a>
-            <PointerIllumination />
             <Header />
             <main id="main-content" className="flex flex-1 flex-col" tabIndex={-1}>
               {children}
@@ -105,4 +112,3 @@ export default async function RootLayout(
     </html>
   );
 }
-

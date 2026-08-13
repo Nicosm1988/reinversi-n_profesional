@@ -10,6 +10,7 @@ import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn } from "@/components/motion";
 import { ArrowRight, Mail, Send, CheckCircle2 } from "lucide-react";
 import { TurnstileWidget } from "@/components/security/turnstile-widget";
+import { UniverseField } from "@/components/visual/universe-field";
 
 export default function ContactoPage() {
   const t = useTranslations("Contact");
@@ -17,7 +18,8 @@ export default function ContactoPage() {
 
   const contactReasons = [
     t("reasonDiagnostic"),
-    t("reasonVocational"),
+    t("reasonCompass"),
+    t("reasonNewStage"),
     t("reasonGeneral"),
     t("reasonOther"),
   ];
@@ -74,7 +76,8 @@ export default function ContactoPage() {
 
   return (
     <div className="wati-page-shell flex flex-col">
-      <section className="wati-page-hero py-20 lg:py-28">
+      <section className="wati-page-hero pb-24 pt-36 lg:pb-28 lg:pt-44">
+        <UniverseField className="left-[35%] text-[#89a9bd] opacity-20" />
         <Container>
           <FadeIn className="max-w-2xl mx-auto text-center relative z-10">
             <Heading level="h1" className="text-primary text-4xl sm:text-5xl lg:text-6xl mb-6 dark:text-[#f6efe7]">
@@ -88,7 +91,7 @@ export default function ContactoPage() {
       <Section spacing="lg">
         <Container>
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-            <FadeIn className="lg:col-span-3">
+            <FadeIn className="min-w-0 lg:col-span-3">
               {!submitted ? (
                 <Card className="bg-background p-8 md:p-10">
                   <h2 className="text-2xl font-heading font-medium text-foreground mb-8">{t("formTitle")}</h2>
@@ -98,11 +101,13 @@ export default function ContactoPage() {
                         <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">{t("labelName")}</label>
                         <input
                           id="contact-name"
+                          name="name"
                           type="text"
+                          autoComplete="name"
                           required
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow"
+                          className="w-full rounded-lg border border-border bg-muted px-4 py-3 text-sm text-foreground transition-shadow placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/50"
                           placeholder={t("placeholderName")}
                         />
                       </div>
@@ -110,11 +115,14 @@ export default function ContactoPage() {
                         <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-2">{t("labelEmail")}</label>
                         <input
                           id="contact-email"
+                          name="email"
                           type="email"
+                          autoComplete="email"
+                          spellCheck={false}
                           required
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow"
+                          className="w-full rounded-lg border border-border bg-muted px-4 py-3 text-sm text-foreground transition-shadow placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/50"
                           placeholder={t("placeholderEmail")}
                         />
                       </div>
@@ -124,10 +132,12 @@ export default function ContactoPage() {
                       <label htmlFor="contact-reason" className="block text-sm font-medium text-foreground mb-2">{t("labelReason")}</label>
                       <select
                         id="contact-reason"
+                        name="reason"
+                        autoComplete="off"
                         required
                         value={formData.reason}
                         onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow appearance-none dark:[color-scheme:dark]"
+                        className="w-full appearance-none rounded-lg border border-border bg-muted px-4 py-3 text-sm text-foreground transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/50 dark:[color-scheme:dark]"
                       >
                         <option value="">{t("placeholderReason")}</option>
                         {contactReasons.map((reason) => (
@@ -140,11 +150,13 @@ export default function ContactoPage() {
                       <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-2">{t("labelMessage")}</label>
                       <textarea
                         id="contact-message"
+                        name="message"
+                        autoComplete="off"
                         rows={5}
                         required
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow resize-none"
+                        className="w-full resize-none rounded-lg border border-border bg-muted px-4 py-3 text-sm text-foreground transition-shadow placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/50"
                         placeholder={t("placeholderMessage")}
                       />
                     </div>
@@ -152,6 +164,7 @@ export default function ContactoPage() {
                     <label className="flex items-start gap-3 text-sm text-muted-foreground">
                       <input
                         type="checkbox"
+                        name="consent"
                         className="mt-1"
                         checked={acceptedTerms}
                         onChange={(e) => setAcceptedTerms(e.target.checked)}
@@ -203,7 +216,7 @@ export default function ContactoPage() {
               )}
             </FadeIn>
 
-            <FadeIn className="lg:col-span-2">
+            <FadeIn className="min-w-0 lg:col-span-2">
               <div className="space-y-8">
                 <div>
                   <h3 className="font-heading font-medium text-foreground text-lg mb-4">{t("sidebarTitle")}</h3>
@@ -223,7 +236,7 @@ export default function ContactoPage() {
                 <div className="border-t border-border pt-8">
                   <h3 className="font-heading font-medium text-foreground text-lg mb-4">{t("sidebarCtaTitle")}</h3>
                   <Text className="text-sm mb-6">{t("sidebarCtaDescription")}</Text>
-                  <Button variant="default" size="lg" className="rounded-full px-8 h-12 w-full font-semibold" asChild>
+                  <Button variant="default" size="lg" className="h-auto min-h-12 w-full whitespace-normal rounded-full px-5 py-3 text-center font-semibold" asChild>
                     <Link href="/diagnostico">
                       {t("sidebarCtaButton")} <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
                     </Link>

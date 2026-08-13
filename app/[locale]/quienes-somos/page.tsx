@@ -1,6 +1,5 @@
 ﻿"use client";
 
-import { BridgeIllustration } from "@/components/illustrations";
 import { Container, Section } from "@/components/layout/container";
 import { FadeIn, StaggerContainer } from "@/components/motion";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Heading, Text } from "@/components/ui/typography";
 import { Link } from "@/navigation";
 import { ArrowRight, Brain, Compass, Heart, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { UniverseField } from "@/components/visual/universe-field";
 
 const pillars = [
   {
@@ -53,7 +53,8 @@ export default function QuienesSomosPage() {
 
   return (
     <div className="wati-page-shell flex flex-col">
-      <section className="wati-page-hero py-20 lg:py-32">
+      <section className="wati-page-hero pb-24 pt-36 lg:pb-32 lg:pt-44">
+        <UniverseField className="left-[36%] text-[#89a9bd] opacity-20" />
         <Container>
           <FadeIn className="relative z-10 mx-auto max-w-3xl text-center">
             <Heading
@@ -65,9 +66,6 @@ export default function QuienesSomosPage() {
             <Text variant="lead" className="mx-auto max-w-xl">
               {t("heroDescription")}
             </Text>
-            <div className="mx-auto mt-10 max-w-md overflow-hidden rounded-[2rem] border border-border bg-card p-3 shadow-soft">
-              <BridgeIllustration className="rounded-[1.5rem]" />
-            </div>
           </FadeIn>
         </Container>
       </section>
@@ -156,7 +154,7 @@ export default function QuienesSomosPage() {
               <Button
                 variant="secondary"
                 size="lg"
-                className="h-14 rounded-full px-10 text-base"
+                className="h-auto min-h-14 w-full whitespace-normal rounded-full px-5 py-3 text-center text-base sm:w-auto sm:px-10"
                 asChild
               >
                 <Link href="/diagnostico">

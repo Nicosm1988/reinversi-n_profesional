@@ -20,6 +20,13 @@ export function PointerIllumination() {
     let pointerX = 0;
     let pointerY = 0;
 
+    function hide() {
+      if (frameId) window.cancelAnimationFrame(frameId);
+      frameId = 0;
+      glow.removeAttribute("data-visible");
+      clearActiveTarget();
+    }
+
     function clearActiveTarget() {
       if (!activeTarget) return;
 
@@ -62,19 +69,26 @@ export function PointerIllumination() {
     }
 
     function onPointerMove(event: PointerEvent) {
-      if (event.pointerType !== "mouse") return;
+      if (event.pointerType !== "mouse") {
+        hide();
+        return;
+      }
 
       pointerX = event.clientX;
       pointerY = event.clientY;
       if (!frameId) frameId = window.requestAnimationFrame(paintPointer);
     }
 
+    function onVisibilityChange() {
+      if (document.visibilityState === "hidden") hide();
+    }
+
     function disable() {
       window.removeEventListener("pointermove", onPointerMove);
-      if (frameId) window.cancelAnimationFrame(frameId);
-      frameId = 0;
-      glow.removeAttribute("data-visible");
-      clearActiveTarget();
+      document.removeEventListener("pointerleave", hide);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("blur", hide);
+      hide();
     }
 
     function configure() {
@@ -82,6 +96,9 @@ export function PointerIllumination() {
       if (!finePointer.matches || reducedMotion.matches) return;
 
       window.addEventListener("pointermove", onPointerMove, { passive: true });
+      document.addEventListener("pointerleave", hide, { passive: true });
+      document.addEventListener("visibilitychange", onVisibilityChange);
+      window.addEventListener("blur", hide);
     }
 
     configure();

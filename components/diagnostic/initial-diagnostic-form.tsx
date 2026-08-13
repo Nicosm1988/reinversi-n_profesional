@@ -48,9 +48,9 @@ function OptionFieldset({
             <label
               key={option.value}
               className={cn(
-                "group flex min-h-24 cursor-pointer items-start gap-4 rounded-[1.4rem] border p-5 text-left transition-[background-color,border-color,box-shadow,transform] focus-within:ring-2 focus-within:ring-[var(--senda-olive)] focus-within:ring-offset-2",
+                "group flex min-h-24 cursor-pointer items-start gap-4 rounded-[1.4rem] border p-5 text-left transition-[background-color,border-color,box-shadow,transform] focus-within:ring-2 focus-within:ring-[var(--senda-olive)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--senda-bg)]",
                 checked
-                  ? "border-[var(--senda-olive)] bg-[#edf0e7] shadow-[0_18px_38px_-30px_rgba(45,55,37,.65)]"
+                  ? "border-[var(--senda-olive)] bg-[color-mix(in_srgb,var(--senda-olive)_14%,var(--senda-paper))] shadow-[0_18px_38px_-30px_rgba(10,20,34,.5)]"
                   : "border-[var(--senda-border)] bg-[var(--senda-paper)] hover:-translate-y-0.5 hover:border-[var(--senda-olive)]/55",
               )}
             >
@@ -65,18 +65,18 @@ function OptionFieldset({
                 className={cn(
                   "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-colors",
                   checked
-                    ? "border-[var(--senda-olive)] bg-[var(--senda-olive)] text-white"
-                    : "border-[#bbb5a8] bg-white text-transparent",
+                    ? "border-[var(--senda-olive)] bg-[var(--senda-olive)] text-[var(--senda-on-olive)]"
+                    : "border-[var(--senda-border)] bg-[var(--senda-card)] text-transparent",
                 )}
               >
                 <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
               </span>
-              <span className="text-[15px] font-medium leading-6 text-[var(--senda-ink)]">{option.label}</span>
+              <span className="text-base font-medium leading-6 text-[var(--senda-ink)]">{option.label}</span>
             </label>
           );
         })}
       </div>
-      {error ? <p id={`${name}-error`} className="mt-4 text-sm font-semibold text-[#9f422d]" role="alert">{error}</p> : null}
+      {error ? <p id={`${name}-error`} className="mt-4 text-sm font-semibold text-[var(--quiz-danger)]" role="alert">{error}</p> : null}
     </fieldset>
   );
 }
@@ -192,12 +192,12 @@ export function InitialDiagnosticForm() {
   if (completed) {
     return (
       <div className="rounded-[2rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-8 shadow-[0_28px_70px_-52px_rgba(37,42,32,.55)] sm:p-12" role="status">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--senda-olive)] text-white">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--senda-olive)] text-[var(--senda-on-olive)]">
           <Check className="h-6 w-6" />
         </span>
         <p className="mt-8 font-heading text-3xl leading-tight text-[var(--senda-ink)] sm:text-4xl">{t("success.title")}</p>
         <p className="mt-5 max-w-xl text-lg leading-8 text-[var(--senda-muted)]">{t("success.description")}</p>
-        <Link href="/" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-ink)] px-6 font-semibold text-white hover:bg-[var(--senda-olive)]">
+        <Link href="/" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 font-semibold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-bg)]">
           {t("success.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </div>
@@ -214,7 +214,7 @@ export function InitialDiagnosticForm() {
         </p>
         <div className="flex flex-1 gap-1.5" aria-hidden="true">
           {stepFields.map((_, index) => (
-            <span key={index} className={cn("h-1 flex-1 rounded-full", index <= step ? "bg-[var(--senda-terracotta)]" : "bg-[#ded8ca]")} />
+            <span key={index} className={cn("h-1 flex-1 rounded-full", index <= step ? "bg-[var(--senda-terracotta)]" : "bg-[var(--senda-border)]")} />
           ))}
         </div>
       </div>
@@ -241,29 +241,29 @@ export function InitialDiagnosticForm() {
                 {t("fields.name")}
                 <input
                   autoComplete="name"
-                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-white px-4 text-base outline-none transition-shadow focus:ring-2 focus:ring-[var(--senda-olive)]"
+                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-card)] px-4 text-base text-[var(--senda-ink)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
                   {...register("fullName", { required: t("errors.name"), minLength: { value: 2, message: t("errors.name") } })}
                   aria-invalid={Boolean(errors.fullName)}
                 />
-                {errors.fullName ? <span className="text-xs text-[#9f422d]" role="alert">{errors.fullName.message}</span> : null}
+                {errors.fullName ? <span className="text-xs text-[var(--quiz-danger)]" role="alert">{errors.fullName.message}</span> : null}
               </label>
               <label className="grid gap-2 text-sm font-semibold text-[var(--senda-ink)]">
                 {t("fields.email")}
                 <input
                   type="email"
                   autoComplete="email"
-                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-white px-4 text-base outline-none transition-shadow focus:ring-2 focus:ring-[var(--senda-olive)]"
+                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-card)] px-4 text-base text-[var(--senda-ink)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
                   {...register("email", { required: t("errors.email"), pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: t("errors.email") } })}
                   aria-invalid={Boolean(errors.email)}
                 />
-                {errors.email ? <span className="text-xs text-[#9f422d]" role="alert">{errors.email.message}</span> : null}
+                {errors.email ? <span className="text-xs text-[var(--quiz-danger)]" role="alert">{errors.email.message}</span> : null}
               </label>
               <label className="grid gap-2 text-sm font-semibold text-[var(--senda-ink)] sm:col-span-2">
                 {t("fields.phone")}
                 <input
                   type="tel"
                   autoComplete="tel"
-                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-white px-4 text-base outline-none transition-shadow focus:ring-2 focus:ring-[var(--senda-olive)]"
+                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-card)] px-4 text-base text-[var(--senda-ink)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
                   {...register("phone")}
                 />
               </label>
@@ -273,7 +273,7 @@ export function InitialDiagnosticForm() {
               <input type="checkbox" className="mt-1 h-4 w-4 accent-[var(--senda-olive)]" {...register("consentAccepted", { required: t("errors.consent") })} />
               <span>{t.rich("consent", { privacy: (chunks) => <Link href="/privacidad" className="font-semibold underline underline-offset-2">{chunks}</Link> })}</span>
             </label>
-            {errors.consentAccepted ? <p className="mt-2 text-xs text-[#9f422d]" role="alert">{errors.consentAccepted.message}</p> : null}
+            {errors.consentAccepted ? <p className="mt-2 text-xs text-[var(--quiz-danger)]" role="alert">{errors.consentAccepted.message}</p> : null}
 
             <TurnstileWidget
               onTokenChange={setCaptchaToken}
@@ -283,12 +283,12 @@ export function InitialDiagnosticForm() {
               className="mt-6 min-h-[65px]"
               retryLabel={t("errors.captchaRetry")}
             />
-            {captchaError ? <p className="mt-2 text-sm text-[#9f422d]" role="alert">{t("errors.captcha")}</p> : null}
+            {captchaError ? <p className="mt-2 text-sm text-[var(--quiz-danger)]" role="alert">{t("errors.captcha")}</p> : null}
           </fieldset>
         ) : null}
       </div>
 
-      {submitError ? <p className="mb-5 rounded-xl bg-[#f5e3dc] p-4 text-sm font-semibold text-[#8b3926]" role="alert">{submitError}</p> : null}
+      {submitError ? <p className="mb-5 rounded-xl bg-[var(--quiz-danger-soft)] p-4 text-sm font-semibold text-[var(--quiz-danger)]" role="alert">{submitError}</p> : null}
 
       <div className="mt-8 flex items-center justify-between gap-4 border-t border-[var(--senda-border)] pt-6">
         <button
@@ -306,12 +306,12 @@ export function InitialDiagnosticForm() {
               event.preventDefault();
               void goForward();
             }}
-            className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-ink)] px-6 font-semibold text-white hover:bg-[var(--senda-olive)]"
+            className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 font-semibold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-bg)]"
           >
             {t("next")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>
         ) : (
-          <button type="submit" disabled={isSubmitting || (captchaEnabled && !captchaToken)} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-terracotta)] px-6 font-semibold text-white hover:bg-[#9e5038] disabled:cursor-not-allowed disabled:opacity-55">
+          <button type="submit" disabled={isSubmitting || (captchaEnabled && !captchaToken)} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 font-semibold text-white hover:bg-[var(--senda-action-hover)] disabled:cursor-not-allowed disabled:opacity-55">
             {isSubmitting ? t("sending") : t("submit")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>
         )}

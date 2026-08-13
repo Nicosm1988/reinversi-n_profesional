@@ -38,6 +38,8 @@ test("Senda remains readable on a narrow mobile viewport", async ({ page }) => {
 
 test("theme control switches between light and dark modes", async ({ page }) => {
   await page.goto("/");
+  await page.evaluate(() => window.localStorage.setItem("theme", "light"));
+  await page.reload();
 
   const toggle = page.getByRole("button", { name: /Activar modo (oscuro|claro)/ }).first();
   await expect(toggle).toBeVisible();
@@ -48,4 +50,32 @@ test("theme control switches between light and dark modes", async ({ page }) => 
   await expect
     .poll(async () => page.locator("html").getAttribute("class"))
     .not.toBe(initialTheme);
+
+  await page.reload();
+  await expect.poll(() => page.locator("html").getAttribute("class")).toContain("dark");
+  await expect(toggle).toHaveAttribute("data-state", "dark");
+  await expect(toggle).toHaveAccessibleName("Activar modo claro");
+});
+
+test("career-anchor answers expose labeled radio groups", async ({ page }) => {
+  await page.goto("/diagnostico/ancla-de-carrera/test");
+
+  const firstQuestion = page.locator("fieldset").first();
+  await expect(firstQuestion).toBeVisible();
+  await expect(firstQuestion).not.toHaveAccessibleName("");
+
+  const choices = firstQuestion.getByRole("radio");
+  await expect(choices).toHaveCount(6);
+  await choices.nth(2).focus();
+  await page.keyboard.press("Space");
+  await expect(choices.nth(2)).toBeChecked();
+});
+
+test("reduced motion disables ambient effects", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/diagnostico/ancla-de-carrera/test");
+
+  await expect(page.locator(".pointer-illumination")).toHaveCSS("display", "none");
+  await expect(page.locator(".universe-field").first()).toHaveCSS("animation-name", "none");
+  await expect.poll(() => page.evaluate(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)).toBe(true);
 });
