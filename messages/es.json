@@ -6,8 +6,13 @@
     "mobileNavigation": "Navegación móvil",
     "navHome": "Inicio",
     "navProcesses": "Recorridos",
-    "navHow": "Cómo funciona",
+    "navHow": "Cómo trabajamos",
+    "navTeam": "Equipo",
     "navFaq": "Preguntas frecuentes",
+    "navContact": "Contacto",
+    "journeysMenuLabel": "Abrir menú de recorridos",
+    "journeyCompass": "Brújula",
+    "journeyNewStage": "Nueva Etapa Profesional",
     "closeMenu": "Cerrar menú",
     "ctaDiagnostic": "Realizá el diagnóstico",
     "ctaLogin": "Ingresar",
@@ -28,8 +33,11 @@
     "colExplore": "Explorar",
     "linkCompass": "Brújula",
     "linkNewStage": "Nueva Etapa Profesional",
+    "linkJourneys": "Todos los recorridos",
+    "linkTeam": "Equipo",
+    "linkContact": "Contacto",
     "linkInitialDiagnostic": "Diagnóstico inicial",
-    "linkHow": "Cómo funciona",
+    "linkHow": "Cómo trabajamos",
     "linkFaq": "Preguntas frecuentes",
     "linkCareerAnchor": "Test de Anclas de Carrera",
     "linkPrivacy": "Política de privacidad",
@@ -64,8 +72,7 @@
     "closeLabel": "Cerrar invitación"
   },
   "WhatsApp": {
-    "ariaLabel": "Contactar a Senda por WhatsApp",
-    "message": "Hola, estuve recorriendo la web de Senda y quisiera recibir más información."
+    "ariaLabel": "Contactar a Senda por WhatsApp"
   },
   "PreQuizForm": {
     "validationNameMin": "El nombre debe tener al menos 2 caracteres",
@@ -99,65 +106,45 @@
     "loading": "Iniciando sesión con Google…"
   },
   "Contact": {
+    "meta": {
+      "title": "Contacto",
+      "description": "Contactá al equipo de Senda por formulario, correo electrónico o WhatsApp."
+    },
     "heroTitle": "Hablemos de tu",
     "heroTitleAccent": "próximo paso",
-    "heroDescription": "Contanos en qué momento estás y cómo podemos ayudarte. Te respondemos en menos de 24 horas.",
+    "heroDescription": "Contanos en qué momento estás y qué necesitás ordenar. El equipo leerá y responderá personalmente tu consulta.",
     "formTitle": "Envianos tu consulta",
     "labelName": "Nombre completo",
     "placeholderName": "Tu nombre",
+    "labelPhone": "Teléfono (opcional)",
+    "placeholderPhone": "+54 9 11 0000-0000",
     "labelEmail": "Email",
     "placeholderEmail": "tu@email.com",
-    "labelReason": "¿Sobre qué querés consultar?",
-    "placeholderReason": "Elegí un motivo",
-    "reasonDiagnostic": "Quiero hacer mi diagnóstico de carrera",
-    "reasonCompass": "Brújula",
-    "reasonNewStage": "Nueva Etapa Profesional",
-    "reasonGeneral": "Consulta general",
-    "reasonOther": "Otro",
     "labelMessage": "Tu mensaje",
     "placeholderMessage": "Contanos en qué momento estás y cómo podemos ayudarte...",
     "submitButton": "Enviar consulta",
     "submitting": "Enviando...",
-    "consent": "Acepto los <terms>Términos y Condiciones</terms> y la <privacy>Política de Privacidad</privacy>.",
-    "errorSubmit": "No se pudo enviar tu consulta.",
-    "errorUnexpected": "Ocurrió un error inesperado al enviar la consulta.",
-    "captchaError": "No pudimos conectar con el servicio de verificación. Podés reintentar, o comprobar si una extensión, VPN o configuración de red está bloqueando challenges.cloudflare.com. Tus datos quedan guardados.",
-    "captchaRetry": "Reintentar verificación",
+    "consent": "Acepto que Senda utilice estos datos únicamente para responder mi consulta.",
+    "errors": {
+      "name": "Ingresá un nombre válido de entre 2 y 100 caracteres.",
+      "email": "Ingresá un correo electrónico válido.",
+      "message": "Escribí un mensaje de entre 10 y 4000 caracteres.",
+      "consent": "Necesitamos tu consentimiento para responder la consulta.",
+      "invalid": "Revisá los campos indicados y volvé a intentar.",
+      "tooLarge": "La consulta supera el tamaño permitido. Acortá el mensaje y volvé a intentar.",
+      "rateLimit": "Recibimos varios intentos seguidos. Esperá unos minutos antes de volver a enviar.",
+      "origin": "No pudimos validar el origen de la consulta. Recargá la página y volvé a intentar.",
+      "config": "El formulario no está disponible temporalmente. Podés escribirnos por correo o WhatsApp; tus datos permanecen en pantalla.",
+      "send": "El servidor de correo no aceptó la consulta. Tus datos permanecen en pantalla para que puedas reintentar.",
+      "unexpected": "Ocurrió un error inesperado. Tus datos permanecen en pantalla para que puedas reintentar."
+    },
     "successTitle": "¡Gracias por escribirnos!",
-    "successDescription": "Recibimos tu consulta. Te vamos a responder en menos de 24 horas a tu correo electrónico.",
+    "successDescription": "Tu consulta fue enviada correctamente. El equipo te responderá personalmente por correo electrónico.",
     "successAnother": "Enviar otra consulta",
     "sidebarTitle": "Otras formas de contactarnos",
     "sidebarEmailLabel": "Email",
     "sidebarWhatsappLabel": "WhatsApp",
-    "sidebarCtaTitle": "¿Preferís empezar ahora?",
-    "sidebarCtaDescription": "Podés contarnos qué está cambiando y recibir orientación sobre el recorrido que mejor puede acompañarte.",
-    "sidebarCtaButton": "Realizá el diagnóstico inicial"
-  },
-  "About": {
-    "heroTitle": "Quiénes somos",
-    "heroDescription": "Un equipo multidisciplinario que cree en las personas y en su capacidad de rediseñar su camino — a cualquier edad y en cualquier momento.",
-    "missionTitle": "Nuestra misión",
-    "missionText": "Senda nació para ofrecer un espacio donde pensar el futuro laboral con calma, claridad y orientación especializada. En un mundo donde la inteligencia artificial transformó las reglas del mercado, creemos que el autoconocimiento y la estrategia ayudan a encontrar un lugar propio.",
-    "whatWeDoTitle": "Qué hacemos",
-    "whatWeDoSubtitle": "Combinamos tres pilares para acompañar tu transición profesional.",
-    "pillarPsychometricTitle": "Metodología clara",
-    "pillarPsychometricDesc": "Herramientas de orientación basadas en modelos reconocidos para explorar intereses, aptitudes y valores.",
-    "pillarHumanTitle": "Acompañamiento humano",
-    "pillarHumanDesc": "Un equipo con experiencia en talento y estrategia de carrera que escucha, orienta y ayuda a tomar decisiones informadas.",
-    "pillarAiTitle": "Inteligencia artificial",
-    "pillarAiDesc": "Usamos IA como herramienta de apoyo para analizar tendencias, personalizar recomendaciones y potenciar tu proceso — siempre con supervisión humana.",
-    "valuesTitle": "Nuestros valores",
-    "valueWarmthTitle": "Calidez humana",
-    "valueWarmthDesc": "Cada persona que llega a nosotros trae una historia única. La escuchamos con empatía, sin juicios, y construimos desde ahí.",
-    "valueRigorTitle": "Rigor profesional",
-    "valueRigorDesc": "Usamos modelos reconocidos, una metodología estructurada e inteligencia artificial como complemento, nunca como reemplazo del criterio humano.",
-    "valueClarityTitle": "Claridad ante todo",
-    "valueClarityDesc": "No vendemos ilusiones. Te ayudamos a ver tu situación con honestidad para que puedas tomar decisiones informadas y estratégicas.",
-    "valueSupportTitle": "Acompañamiento real",
-    "valueSupportDesc": "No sos un número. Cada proceso es personal, a tu ritmo y con un equipo presente durante la transición.",
-    "ctaTitle": "¿Querés empezar a encontrar tu rumbo?",
-    "ctaDescription": "Podés empezar por poner en palabras lo que está cambiando. El diagnóstico inicial nos ayuda a orientarte sobre un recorrido posible.",
-    "ctaButton": "Realizá el diagnóstico inicial"
+    "directWhatsapp": "Contactar a Senda por WhatsApp"
   },
   "Privacy": {
     "title": "Política de Privacidad",
@@ -175,7 +162,7 @@
     "section6Title": "6. Tus derechos",
     "section6Text": "Podés solicitar acceso, rectificación o eliminación de tus datos, retirar consentimientos y consultar sobre su tratamiento. Conservamos la información mientras sea necesaria para prestar el servicio y cumplir obligaciones aplicables.",
     "section7Title": "7. Contacto",
-    "section7Text": "Para consultas sobre esta política podés escribirnos a <email>contacto@senda.com</email>."
+    "section7Text": "Para consultas sobre esta política podés escribirnos a <email>hola@universosenda.com</email>."
   },
   "Terms": {
     "title": "Términos y Condiciones",
@@ -195,7 +182,7 @@
     "section7Title": "7. Limitación de responsabilidad",
     "section7Text": "Senda no garantiza resultados específicos derivados del uso de sus servicios. Nuestro rol es brindar herramientas, información y orientación para cada transición. Las decisiones de carrera corresponden a cada persona.",
     "section8Title": "8. Contacto",
-    "section8Text": "Para consultas sobre estos términos, escribinos a <email>contacto@senda.com</email>."
+    "section8Text": "Para consultas sobre estos términos, escribinos a <email>hola@universosenda.com</email>."
   },
   "Panel": {
     "metadataTitle": "Mi recorrido | Senda",
@@ -368,11 +355,18 @@
       "primaryCta": "Realizá el diagnóstico",
       "secondaryCta": "Explorá los recorridos"
     },
+    "introduction": {
+      "eyebrow": "Un espacio para orientarte",
+      "title": "Claridad para decidir sin desconocer tu historia.",
+      "description": "Senda ofrece acompañamiento personalizado para explorar posibilidades, comprender tu momento y transformar preguntas complejas en una dirección propia.",
+      "cta": "Conocé cómo trabajamos"
+    },
     "journeys": {
       "eyebrow": "Dos recorridos",
       "title": "Una senda distinta para cada momento.",
       "intro": "No todas las preguntas profesionales parten del mismo lugar. Por eso Senda propone dos recorridos claros, personales y conectados con la realidad de cada etapa.",
       "cta": "Conocer el recorrido",
+      "viewAll": "Ver los dos recorridos",
       "items": {
         "compass": {
           "label": "Recorrido 01",
@@ -385,29 +379,6 @@
           "title": "Nueva Etapa Profesional",
           "lead": "Transformar tu trayectoria sin desconocer todo lo que ya construiste.",
           "description": "Para profesionales con experiencia, líderes y gerentes que necesitan revisar su identidad, cambiar de rol o industria, reposicionarse o construir una estrategia concreta para lo que sigue."
-        }
-      }
-    },
-    "situations": {
-      "eyebrow": "Puntos de partida",
-      "title": "Dos recorridos, distintas situaciones.",
-      "intro": "Reconocer dónde estás permite elegir un proceso acorde a tu momento, sin etiquetas rígidas ni respuestas prefabricadas.",
-      "items": {
-        "compass": {
-          "title": "Brújula puede acompañarte si…",
-          "description": "Estás comenzando a vincular tus intereses con opciones reales de estudio y trabajo.",
-          "point1": "No sabés qué estudiar o querés revisar una elección reciente.",
-          "point2": "Tenés varias opciones y necesitás criterios para compararlas.",
-          "point3": "Querés conocer mejor tus intereses, motivaciones y formas de aprender.",
-          "point4": "Necesitás pasar de la duda a una primera dirección posible."
-        },
-        "newStage": {
-          "title": "Nueva Etapa Profesional puede acompañarte si…",
-          "description": "Tenés experiencia y necesitás convertir una inquietud de cambio en una dirección y una estrategia.",
-          "point1": "Tu rol, industria o forma de trabajar ya no te representa.",
-          "point2": "Querés cambiar sin perder el valor de tu trayectoria.",
-          "point3": "Necesitás ordenar tu posicionamiento, narrativa o búsqueda.",
-          "point4": "Estás liderando, emprendiendo o atravesando un cambio laboral concreto."
         }
       }
     },
@@ -436,68 +407,8 @@
           "title": "Mover",
           "description": "Traducimos esa dirección en decisiones, conversaciones y próximos pasos."
         }
-      }
-    },
-    "phases": {
-      "eyebrow": "El recorrido en detalle",
-      "title": "Cada proceso tiene sus propias fases.",
-      "intro": "Conocé qué se trabaja en Brújula y en Nueva Etapa Profesional, desde la pregunta inicial hasta una hoja de ruta concreta.",
-      "view": "Ver todas las fases"
-    },
-    "team": {
-      "eyebrow": "El equipo",
-      "title": "Criterio profesional y escucha humana.",
-      "intro": "Senda reúne miradas complementarias para acompañar decisiones complejas con claridad, respeto y atención a cada trayectoria.",
-      "cta": "Conocer al equipo",
-      "items": {
-        "multidisciplinary": {
-          "title": "Mirada multidisciplinaria",
-          "description": "Integramos orientación, talento, estrategia de carrera y lectura del contexto laboral."
-        },
-        "human": {
-          "title": "Acompañamiento humano",
-          "description": "Cada proceso incluye conversaciones reales, criterio profesional y espacio para pensar sin presión."
-        },
-        "rigor": {
-          "title": "Método y rigor",
-          "description": "Usamos herramientas reconocidas como apoyo y convertimos lo explorado en decisiones fundamentadas."
-        }
-      }
-    },
-    "faq": {
-      "eyebrow": "Preguntas frecuentes",
-      "title": "Antes de empezar.",
-      "intro": "Respuestas claras para entender qué recorrido puede acompañarte y cómo se vive el proceso.",
-      "items": {
-        "choose": {
-          "question": "¿Cómo sé cuál de los dos recorridos necesito?",
-          "answer": "Brújula parte de preguntas sobre estudio, intereses y primeras decisiones de trabajo. Nueva Etapa Profesional acompaña a personas con trayectoria que necesitan transformarla, reposicionarse o construir una estrategia para lo que sigue. Si todavía no lo tenés claro, el diagnóstico inicial ayuda a ubicar tu momento."
-        },
-        "compass": {
-          "question": "¿Brújula es un test que indica qué carrera elegir?",
-          "answer": "No. Incluye herramientas de exploración, pero el centro del proceso está en conversar, investigar alternativas, construir criterios y reconocer una dirección propia. Ningún resultado decide por vos."
-        },
-        "newStage": {
-          "question": "¿Qué integra Nueva Etapa Profesional?",
-          "answer": "Integra la revisión de tu trayectoria e identidad profesional con la definición de una dirección, un posicionamiento, una narrativa y una estrategia de movimiento."
-        },
-        "format": {
-          "question": "¿Los encuentros son virtuales o presenciales?",
-          "answer": "Los encuentros se realizan de manera virtual para que puedas sostener el proceso desde donde estés. Cualquier alternativa presencial disponible se conversa antes de comenzar."
-        },
-        "duration": {
-          "question": "¿Cuánto dura cada recorrido?",
-          "answer": "La duración se define según el recorrido y se conversa antes de comenzar. Las fases tienen una secuencia clara, con espacio para adaptarlas al momento concreto de cada persona."
-        },
-        "diagnostic": {
-          "question": "¿Cómo funciona el diagnóstico inicial?",
-          "answer": "Es un formulario breve y no clínico sobre tu situación, lo que necesitás y la urgencia del cambio. Ayuda al equipo a orientarte; no reemplaza una evaluación ni un diagnóstico profesional."
-        },
-        "results": {
-          "question": "¿Qué recibo al finalizar?",
-          "answer": "Cerrás con una síntesis personalizada, criterios de decisión y una hoja de ruta. Los materiales concretos dependen del recorrido y de lo trabajado durante el proceso."
-        }
-      }
+      },
+      "cta": "Ver cómo trabajamos"
     },
     "final": {
       "eyebrow": "El primer paso",
@@ -505,6 +416,145 @@
       "description": "Podés comenzar por contar qué está cambiando. A partir de ahí, construimos una dirección y próximos pasos posibles.",
       "primaryCta": "Realizá el diagnóstico inicial",
       "secondaryCta": "Hablar con el equipo"
+    }
+  },
+  "Journeys": {
+    "meta": {
+      "title": "Recorridos",
+      "description": "Conocé Brújula y Nueva Etapa Profesional, los dos recorridos personalizados de Senda."
+    },
+    "hero": {
+      "eyebrow": "Recorridos",
+      "title": "Dos puntos de partida. Dos formas de construir dirección.",
+      "description": "Cada recorrido responde a un momento distinto y se adapta a la historia, las preguntas y la realidad de cada persona."
+    },
+    "intro": {
+      "title": "Elegir el acompañamiento adecuado empieza por reconocer dónde estás.",
+      "description": "Brújula abre posibilidades cuando comenzás a decidir. Nueva Etapa Profesional integra la experiencia acumulada para construir lo que sigue."
+    },
+    "items": {
+      "compass": {
+        "eyebrow": "Recorrido 01",
+        "title": "Brújula",
+        "lead": "No se trata de elegir para toda la vida, sino de empezar a reconocer una dirección propia.",
+        "description": "Para jóvenes que necesitan explorar intereses, conocer mundos de estudio y trabajo, reconocer señales y construir criterios propios para comenzar una dirección.",
+        "cta": "Conocer Brújula"
+      },
+      "newStage": {
+        "eyebrow": "Recorrido 02",
+        "title": "Nueva Etapa Profesional",
+        "lead": "Transformar tu trayectoria sin desconocer todo lo que ya construiste.",
+        "description": "Para profesionales, líderes y gerentes que necesitan releer su experiencia, revisar identidad y motivaciones, definir posicionamiento y diseñar una estrategia para su próxima etapa.",
+        "cta": "Conocer Nueva Etapa Profesional"
+      }
+    },
+    "closing": {
+      "title": "¿Todavía no sabés qué recorrido corresponde a tu momento?",
+      "description": "El diagnóstico inicial ofrece un punto de partida orientativo para conversar con el equipo.",
+      "cta": "Realizá el diagnóstico inicial"
+    }
+  },
+  "Methodology": {
+    "meta": {
+      "title": "Cómo trabajamos",
+      "description": "Conocé la metodología de Senda: escucha, exploración, criterios y próximos pasos personalizados."
+    },
+    "hero": {
+      "eyebrow": "Cómo trabajamos",
+      "title": "Una dirección se construye, no se impone.",
+      "description": "Combinamos conversaciones humanas, herramientas rigurosas y decisiones conectadas con la realidad."
+    },
+    "principles": {
+      "eyebrow": "Nuestra forma de acompañar",
+      "title": "Claridad sin fórmulas rígidas.",
+      "intro": "La metodología da estructura al proceso y deja espacio para la singularidad de cada trayectoria.",
+      "items": {
+        "personal": {
+          "title": "Personal",
+          "description": "Partimos de tu pregunta, tu historia y las condiciones que necesitás cuidar."
+        },
+        "rigorous": {
+          "title": "Rigurosa",
+          "description": "Usamos herramientas reconocidas como apoyo, nunca como respuestas automáticas."
+        },
+        "practical": {
+          "title": "Aplicable",
+          "description": "Traducimos lo explorado en criterios, conversaciones y pasos concretos."
+        }
+      }
+    },
+    "steps": {
+      "eyebrow": "La secuencia",
+      "title": "Cuatro movimientos que ordenan el recorrido.",
+      "intro": "La profundidad y las herramientas cambian según Brújula o Nueva Etapa Profesional, pero el hilo de trabajo se mantiene.",
+      "items": {
+        "listen": { "number": "01", "title": "Escuchar", "description": "Ponemos en palabras la pregunta, el contexto y lo que necesitás cuidar." },
+        "map": { "number": "02", "title": "Mapear", "description": "Reconocemos experiencias, motivaciones, fortalezas, límites y posibilidades." },
+        "define": { "number": "03", "title": "Definir", "description": "Construimos criterios y una dirección posible, conectada con tu realidad." },
+        "move": { "number": "04", "title": "Mover", "description": "Traducimos esa dirección en decisiones, conversaciones y próximos pasos." }
+      }
+    },
+    "tools": {
+      "eyebrow": "Herramientas al servicio del proceso",
+      "title": "Explorar con método, decidir con autonomía.",
+      "description": "Los ejercicios, mapas y evaluaciones amplían la conversación. Sus resultados son orientativos, no constituyen un diagnóstico clínico ni sustituyen el criterio profesional o la decisión personal."
+    },
+    "closing": {
+      "title": "Conocé el recorrido que mejor acompaña tu momento.",
+      "description": "Dos propuestas claras, con una metodología común y un trabajo profundamente personal.",
+      "cta": "Explorar los recorridos"
+    }
+  },
+  "Team": {
+    "meta": {
+      "title": "Equipo",
+      "description": "Conocé el enfoque profesional y humano del equipo de Senda."
+    },
+    "hero": {
+      "eyebrow": "Equipo",
+      "title": "Criterio profesional. Escucha humana.",
+      "description": "Acompañamos decisiones complejas con respeto por la autonomía, atención a cada trayectoria y una mirada conectada con el mundo real."
+    },
+    "introduction": {
+      "eyebrow": "Senda",
+      "title": "Un espacio para pensar acompañado.",
+      "description": "Reunimos miradas complementarias sobre estudio, trabajo, talento y estrategia profesional. No ofrecemos respuestas prefabricadas: construimos preguntas mejores, criterios propios y posibilidades sostenibles."
+    },
+    "principles": {
+      "multidisciplinary": { "number": "01", "title": "Mirada multidisciplinaria", "description": "Integramos orientación, talento, estrategia de carrera y lectura del contexto de trabajo." },
+      "human": { "number": "02", "title": "Acompañamiento humano", "description": "Cada recorrido incluye conversaciones reales y espacio para pensar sin presión." },
+      "rigor": { "number": "03", "title": "Método y rigor", "description": "Las herramientas aportan información; el criterio se construye con vos y nunca decide por vos." }
+    },
+    "closing": {
+      "title": "Podés contarnos qué está cambiando.",
+      "description": "El equipo te responderá para comprender tu situación y orientarte sobre un próximo paso posible.",
+      "cta": "Contactar al equipo"
+    }
+  },
+  "Faq": {
+    "meta": {
+      "title": "Preguntas frecuentes",
+      "description": "Respuestas sobre los recorridos, la metodología y el acompañamiento de Senda."
+    },
+    "hero": {
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Antes de empezar.",
+      "description": "Información clara para entender los recorridos y decidir tu próximo paso sin presión."
+    },
+    "intro": "Si tu pregunta no aparece acá, podés escribirnos. Una conversación breve puede ayudar a ubicar mejor tu situación.",
+    "items": {
+      "choose": { "question": "¿Cómo sé cuál de los dos recorridos necesito?", "answer": "Brújula parte de preguntas sobre estudio, intereses y primeras decisiones de trabajo. Nueva Etapa Profesional acompaña a personas con trayectoria que necesitan transformarla, reposicionarse o construir una estrategia para lo que sigue. Si todavía no lo tenés claro, el diagnóstico inicial ayuda a ubicar tu momento." },
+      "compass": { "question": "¿Brújula es un test que indica qué carrera elegir?", "answer": "No. Incluye herramientas de exploración, pero el centro del proceso está en conversar, investigar alternativas, construir criterios y reconocer una dirección propia. Ningún resultado decide por vos." },
+      "newStage": { "question": "¿Qué integra Nueva Etapa Profesional?", "answer": "Integra la revisión de tu trayectoria e identidad profesional con la definición de una dirección, un posicionamiento, una narrativa y una estrategia de movimiento." },
+      "format": { "question": "¿Los encuentros son virtuales o presenciales?", "answer": "Los encuentros se realizan de manera virtual para que puedas sostener el proceso desde donde estés. Cualquier alternativa presencial disponible se conversa antes de comenzar." },
+      "duration": { "question": "¿Cuánto dura cada recorrido?", "answer": "La duración depende del recorrido y se conversa antes de comenzar. Las fases tienen una secuencia clara, con espacio para adaptarlas al momento concreto de cada persona." },
+      "diagnostic": { "question": "¿Cómo funciona el diagnóstico inicial?", "answer": "Es un formulario breve y no clínico sobre tu situación, lo que necesitás y la urgencia del cambio. Ayuda al equipo a orientarte; no reemplaza una evaluación ni un diagnóstico profesional." },
+      "results": { "question": "¿Qué recibo al finalizar?", "answer": "Cerrás con una síntesis personalizada, criterios de decisión y una hoja de ruta. Los materiales concretos dependen del recorrido y de lo trabajado durante el proceso." }
+    },
+    "closing": {
+      "title": "¿Querés conversar sobre tu situación?",
+      "description": "Escribinos y el equipo te responderá personalmente.",
+      "cta": "Ir a contacto"
     }
   },
   "Processes": {

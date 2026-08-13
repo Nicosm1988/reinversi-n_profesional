@@ -14,7 +14,7 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
       <header className="senda-night border-b border-white/10 px-5 pb-20 pt-32 text-[#f4efe4] sm:px-8 sm:pb-24 sm:pt-36 lg:px-12 xl:px-20">
         <UniverseField className="left-[28%] text-[#89a9bd] opacity-20" />
         <div className="relative mx-auto max-w-[1120px]">
-          <Link href="/#procesos" className="inline-flex items-center gap-2 text-sm font-semibold text-[#d0d8dd] transition-colors hover:text-white">
+          <Link href="/recorridos" className="inline-flex items-center gap-2 text-sm font-semibold text-[#d0d8dd] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#101c2c]">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" /> {t("back")}
           </Link>
           <div className="mt-12 grid gap-9 lg:grid-cols-[1fr_0.72fr] lg:items-end lg:gap-16">

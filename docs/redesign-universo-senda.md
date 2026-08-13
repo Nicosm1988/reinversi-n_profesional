@@ -1,5 +1,89 @@
 # Rediseño Universo Senda
 
+## Intervención 3 · Arquitectura multipágina, marca viva y contacto
+
+- Fecha de inicio: 2026-08-12.
+- Proyecto: `original` (`v0-reinvention-web-platform`), sin intervenir `senda-cosmos`.
+- Objetivo: convertir la portada extensa en un sitio multipágina, incorporar navegación real, animación accesible de marca, contacto global por WhatsApp y envío de consultas por SMTP desde el servidor.
+- Rama de trabajo: `agent/senda-multipage-contact`.
+- Hash base: `d1312470bc980393da7ea6efa5312acc40bd19ab`.
+- Checkpoint local previo: `checkpoint/pre-multipage-contact-20260812`.
+- Estado inicial del árbol: limpio, sin cambios staged ni unstaged; la rama partió de `origin/main`.
+- El checkpoint es una referencia Git y no contiene `.env`, secretos, PDF, `node_modules` ni archivos generados.
+
+### Arquitectura anterior y nueva
+
+La arquitectura anterior concentraba en la portada el desarrollo completo de recorridos, metodología, equipo y preguntas frecuentes. Los detalles de los recorridos vivían bajo `/procesos/*` y la página institucional bajo `/quienes-somos`.
+
+La nueva arquitectura asigna un único lugar principal a cada tema:
+
+- `/` — portada breve.
+- `/recorridos` — presentación comparada de los dos recorridos.
+- `/recorridos/brujula` — detalle de Brújula.
+- `/recorridos/nueva-etapa-profesional` — detalle de Nueva Etapa Profesional.
+- `/como-trabajamos` — metodología y funcionamiento.
+- `/equipo` — equipo y criterios de acompañamiento.
+- `/preguntas-frecuentes` — preguntas frecuentes.
+- `/contacto` — formulario y canales directos.
+
+Todas las rutas se publican también con prefijo `/en` mediante el sistema `next-intl` existente. Las URLs anteriores de recorridos y `/quienes-somos` redirigen permanentemente a sus destinos canónicos equivalentes, preservando el idioma.
+
+### Marca y movimiento
+
+- La marca conserva el símbolo y la palabra `Senda` como enlace a Inicio.
+- Las órbitas se animan de forma lenta e independiente con SVG y CSS.
+- Un trazo fino dibuja un camino orgánico bajo la palabra, sin atravesar las letras.
+- Con `prefers-reduced-motion` la marca permanece completa y estática; su lectura no depende de JavaScript.
+
+### Contacto
+
+- WhatsApp se centraliza con el número público internacional `5491136736778` y el mensaje inicial aprobado, sin SDK, tracker ni apertura automática.
+- El formulario envía desde un endpoint server-side al buzón `hola@universosenda.com`, valida y limita el cuerpo, evita inyección de cabeceras, incluye honeypot y rate limiting, conserva los datos ante fallos y solo confirma éxito después de la aceptación SMTP.
+- Variables privadas necesarias: `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` y `CONTACT_TO_EMAIL`. La contraseña nunca se versiona, muestra ni registra.
+- La verificación de recepción real queda condicionada a que `SMTP_PASSWORD` esté configurada de forma segura en Vercel.
+
+### Recuperación previa a esta intervención
+
+Con el árbol limpio, volver exactamente al estado previo:
+
+```bash
+git switch checkpoint/pre-multipage-contact-20260812
+```
+
+Retomar la rama de trabajo:
+
+```bash
+git switch agent/senda-multipage-contact
+```
+
+No hace falta usar `git reset`, `git restore` ni `git checkout --`.
+
+### Archivos intervenidos en la intervención 3
+
+- Páginas y composición: `components/sections/senda-home.tsx`, `components/pages/{page-primitives,journeys-page,methodology-page,team-page,faq-page}.tsx`, `components/processes/process-detail.tsx`.
+- Rutas canónicas: `app/[locale]/{recorridos,como-trabajamos,equipo,preguntas-frecuentes,contacto}/`; redirecciones en `app/[locale]/{procesos,orientacion-vocacional,quienes-somos}/` y `next.config.ts`.
+- Navegación y marca: `components/layout/{header,footer,whatsapp-button}.tsx`, `components/brand/senda-logo.tsx`, `app/globals.css`, `lib/contact-config.ts`.
+- Contacto server-side: `app/api/contact/route.ts`, `lib/contact/{schema,request-security,email-content,mailer,smtp-result}.ts`, `app/api/health/route.ts`, `.env.example`.
+- Contenido y discovery: `messages/{es,en}.json`, `app/sitemap.ts`, `public/llms.txt`, `scripts/{verify-env,verify-deploy}.mjs`.
+- Dependencia estrictamente necesaria: `nodemailer` y sus tipos, registrados en `package.json` y `package-lock.json` sin actualizar otras dependencias.
+- Pruebas: `tests/unit/{contact-email-content,contact-mailer,contact-request-security,contact-route,contact-schema,contact-smtp-result,i18n}.test.ts` y `tests/e2e/{internal-pages,senda-experience,smoke}.spec.ts`.
+- Documentación adicional sincronizada: `docs/operations/brand-domain-migration.md`, `docs/senda/ARCHITECTURE.md` y este documento.
+
+No se modificaron los PDF académicos, secretos, `.env.local`, la lógica del test gratuito, autenticación, RLS ni el proyecto independiente `senda-cosmos`.
+
+### Validación de la intervención 3
+
+- `npm run release:check`: aprobado el 2026-08-13.
+  - ESLint: aprobado.
+  - TypeScript: aprobado.
+  - Unitarias: 77 aprobadas en 20 archivos.
+  - Playwright: 56 aprobadas y 2 autenticadas omitidas por no disponer de `E2E_AUTH_STORAGE_STATE`.
+  - Build de producción Next.js: aprobado.
+- La matriz nueva cubre las ocho rutas en español e inglés, desktop y móvil, metadata, página activa, menú desplegable por teclado, menú móvil, redirecciones 308, 6/8 fases, tema persistente, linterna, logo animado/estático, WhatsApp exacto y contacto con validación, éxito aceptado por API y fallo controlado que conserva datos.
+- `git diff --check`: aprobado; paridad exacta de claves ES/EN y búsqueda pública sin las denominaciones retiradas.
+- En Vercel Production quedaron configurados los cuatro valores SMTP no secretos y el número público de WhatsApp. `SMTP_PASSWORD` permanece pendiente de carga segura por el propietario; el health check y el endpoint fallan cerrados hasta entonces.
+- La recepción real de correo y la verificación final de producción se realizan únicamente después de completar esa credencial; no se declaran verificadas antes.
+
 ## Intervención 2 · Dos recorridos
 
 - Fecha de inicio: 2026-08-12.

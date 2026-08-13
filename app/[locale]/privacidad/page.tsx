@@ -41,7 +41,7 @@ export default async function PrivacidadPage({ params }: PageProps) {
                     {section === 7
                       ? t.rich("section7Text", {
                           email: (chunks) => (
-                            <a href="mailto:contacto@senda.com" className="font-medium text-foreground underline decoration-2 decoration-secondary underline-offset-4">
+                            <a href="mailto:hola@universosenda.com" className="font-medium text-foreground underline decoration-2 decoration-secondary underline-offset-4">
                               {chunks}
                             </a>
                           ),

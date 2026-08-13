@@ -24,4 +24,5 @@ La aplicación, la interfaz y los metadatos editoriales usan la marca **Senda**.
 ## Decisiones pendientes del propietario
 
 - Dominio definitivo y registrador.
-- Dirección pública de contacto: `contacto@senda.com`.
+
+La dirección pública de contacto vigente es `hola@universosenda.com`.

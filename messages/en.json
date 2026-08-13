@@ -6,8 +6,13 @@
     "mobileNavigation": "Mobile navigation",
     "navHome": "Home",
     "navProcesses": "Journeys",
-    "navHow": "How it works",
+    "navHow": "How we work",
+    "navTeam": "Team",
     "navFaq": "Frequently asked questions",
+    "navContact": "Contact",
+    "journeysMenuLabel": "Open journeys menu",
+    "journeyCompass": "Compass",
+    "journeyNewStage": "New Professional Stage",
     "closeMenu": "Close menu",
     "ctaDiagnostic": "Take the diagnostic",
     "ctaLogin": "Sign in",
@@ -28,8 +33,11 @@
     "colExplore": "Explore",
     "linkCompass": "Compass",
     "linkNewStage": "New Professional Stage",
+    "linkJourneys": "All journeys",
+    "linkTeam": "Team",
+    "linkContact": "Contact",
     "linkInitialDiagnostic": "Initial diagnostic",
-    "linkHow": "How it works",
+    "linkHow": "How we work",
     "linkFaq": "Frequently asked questions",
     "linkCareerAnchor": "Career Anchors test",
     "linkPrivacy": "Privacy Policy",
@@ -64,8 +72,7 @@
     "closeLabel": "Close invitation"
   },
   "WhatsApp": {
-    "ariaLabel": "Contact Senda on WhatsApp",
-    "message": "Hello, I was exploring Senda's website and would like more information."
+    "ariaLabel": "Contact Senda on WhatsApp"
   },
   "PreQuizForm": {
     "validationNameMin": "Name must be at least 2 characters",
@@ -99,65 +106,45 @@
     "loading": "Signing in with Google…"
   },
   "Contact": {
+    "meta": {
+      "title": "Contact",
+      "description": "Contact the Senda team through the form, email, or WhatsApp."
+    },
     "heroTitle": "Let's talk about your",
     "heroTitleAccent": "next step",
-    "heroDescription": "Tell us where you are and how we can help. We will reply within 24 hours.",
+    "heroDescription": "Tell us where you are and what you need to clarify. The team will read and answer your inquiry personally.",
     "formTitle": "Send us your inquiry",
     "labelName": "Full name",
     "placeholderName": "Your name",
+    "labelPhone": "Phone (optional)",
+    "placeholderPhone": "+54 9 11 0000-0000",
     "labelEmail": "Email",
-    "placeholderEmail": "tu@email.com",
-    "labelReason": "What would you like to ask about?",
-    "placeholderReason": "Select a reason",
-    "reasonDiagnostic": "I want to take my career assessment",
-    "reasonCompass": "Compass",
-    "reasonNewStage": "New Professional Stage",
-    "reasonGeneral": "General inquiry",
-    "reasonOther": "Other",
+    "placeholderEmail": "you@email.com",
     "labelMessage": "Your message",
     "placeholderMessage": "Tell us where you are and how we can help...",
     "submitButton": "Send inquiry",
     "submitting": "Sending...",
-    "consent": "I accept the <terms>Terms and Conditions</terms> and the <privacy>Privacy Policy</privacy>.",
-    "errorSubmit": "We could not send your inquiry.",
-    "errorUnexpected": "An unexpected error occurred while sending your inquiry.",
-    "captchaError": "We couldn't connect to the verification service. You can retry, or check whether a browser extension, VPN, or network setting is blocking challenges.cloudflare.com. Your data is still saved.",
-    "captchaRetry": "Retry verification",
+    "consent": "I agree that Senda may use this data only to respond to my inquiry.",
+    "errors": {
+      "name": "Enter a valid name between 2 and 100 characters.",
+      "email": "Enter a valid email address.",
+      "message": "Write a message between 10 and 4000 characters.",
+      "consent": "We need your consent to respond to the inquiry.",
+      "invalid": "Review the indicated fields and try again.",
+      "tooLarge": "The inquiry exceeds the allowed size. Shorten the message and try again.",
+      "rateLimit": "We received several attempts in a short period. Wait a few minutes before trying again.",
+      "origin": "We could not validate the source of the inquiry. Reload the page and try again.",
+      "config": "The form is temporarily unavailable. You can email us or use WhatsApp; your information remains on screen.",
+      "send": "The mail server did not accept the inquiry. Your information remains on screen so you can try again.",
+      "unexpected": "An unexpected error occurred. Your information remains on screen so you can try again."
+    },
     "successTitle": "Thank you for reaching out!",
-    "successDescription": "We received your inquiry. We will reply by email within 24 hours.",
+    "successDescription": "Your inquiry was sent successfully. The team will respond personally by email.",
     "successAnother": "Send another inquiry",
     "sidebarTitle": "Other ways to contact us",
     "sidebarEmailLabel": "Email",
     "sidebarWhatsappLabel": "WhatsApp",
-    "sidebarCtaTitle": "Would you rather begin now?",
-    "sidebarCtaDescription": "Tell us what is changing and receive guidance on the journey that may support you best.",
-    "sidebarCtaButton": "Take the initial diagnostic"
-  },
-  "About": {
-    "heroTitle": "About us",
-    "heroDescription": "A multidisciplinary team that believes in people and their capacity to redesign their path — at any age and at any point in life.",
-    "missionTitle": "Our mission",
-    "missionText": "Senda was created to offer a space where people can consider their professional future with calm, clarity, and specialized guidance. In a world where artificial intelligence has transformed the rules of the market, we believe that self-awareness and strategy can help each person find a place of their own.",
-    "whatWeDoTitle": "What we do",
-    "whatWeDoSubtitle": "We combine three pillars to support your professional transition.",
-    "pillarPsychometricTitle": "A clear methodology",
-    "pillarPsychometricDesc": "Guidance tools based on recognized models to explore interests, aptitudes, and values.",
-    "pillarHumanTitle": "Human support",
-    "pillarHumanDesc": "A team experienced in talent and career strategy that listens, guides, and helps you make informed decisions.",
-    "pillarAiTitle": "Artificial intelligence",
-    "pillarAiDesc": "We use AI as a supporting tool to analyze trends, personalize recommendations, and strengthen your process — always with human oversight.",
-    "valuesTitle": "Our values",
-    "valueWarmthTitle": "Human warmth",
-    "valueWarmthDesc": "Every person who comes to us brings a unique story. We listen with empathy, without judgment, and build from there.",
-    "valueRigorTitle": "Professional rigor",
-    "valueRigorDesc": "We use recognized models, a structured methodology, and artificial intelligence as a complement, never as a replacement for human judgment.",
-    "valueClarityTitle": "Clarity comes first",
-    "valueClarityDesc": "We do not sell illusions. We help you see your situation honestly so you can make informed, strategic decisions.",
-    "valueSupportTitle": "Genuine support",
-    "valueSupportDesc": "You are not a number. Every process is personal, unfolds at your pace, and includes a team that remains present throughout the transition.",
-    "ctaTitle": "Ready to begin finding your direction?",
-    "ctaDescription": "You can begin by putting into words what is changing. The initial diagnostic helps us guide you toward a possible journey.",
-    "ctaButton": "Take the initial diagnostic"
+    "directWhatsapp": "Contact Senda on WhatsApp"
   },
   "Privacy": {
     "title": "Privacy Policy",
@@ -175,7 +162,7 @@
     "section6Title": "6. Your rights",
     "section6Text": "You may request access to, correction of, or deletion of your data, withdraw consent, and ask how your information is handled. We retain information for as long as needed to provide the service and meet applicable obligations.",
     "section7Title": "7. Contact",
-    "section7Text": "For questions about this policy, email us at <email>contacto@senda.com</email>."
+    "section7Text": "For questions about this policy, email us at <email>hola@universosenda.com</email>."
   },
   "Terms": {
     "title": "Terms and Conditions",
@@ -195,7 +182,7 @@
     "section7Title": "7. Limitation of liability",
     "section7Text": "Senda does not guarantee specific results from using its services. Our role is to provide tools, information, and guidance for each transition. Career decisions remain the responsibility of each individual.",
     "section8Title": "8. Contact",
-    "section8Text": "For questions about these terms, email us at <email>contacto@senda.com</email>."
+    "section8Text": "For questions about these terms, email us at <email>hola@universosenda.com</email>."
   },
   "Panel": {
     "metadataTitle": "My journey | Senda",
@@ -368,11 +355,18 @@
       "primaryCta": "Take the diagnostic",
       "secondaryCta": "Explore the journeys"
     },
+    "introduction": {
+      "eyebrow": "A place to find direction",
+      "title": "Clarity to decide without losing sight of your story.",
+      "description": "Senda offers personalized guidance to explore possibilities, understand your present moment, and turn complex questions into a direction of your own.",
+      "cta": "See how we work"
+    },
     "journeys": {
       "eyebrow": "Two journeys",
       "title": "A different path for each moment.",
       "intro": "Not every professional question begins in the same place. Senda offers two clear, personal journeys grounded in the reality of each stage.",
       "cta": "Explore the journey",
+      "viewAll": "View both journeys",
       "items": {
         "compass": {
           "label": "Journey 01",
@@ -385,29 +379,6 @@
           "title": "New Professional Stage",
           "lead": "Transform your trajectory without losing sight of everything you have already built.",
           "description": "For experienced professionals, leaders, and managers who need to revisit their identity, change roles or industries, reposition themselves, or build a clear strategy for what comes next."
-        }
-      }
-    },
-    "situations": {
-      "eyebrow": "Starting points",
-      "title": "Two journeys, different situations.",
-      "intro": "Recognizing where you are helps you choose a process that fits your moment, without rigid labels or ready-made answers.",
-      "items": {
-        "compass": {
-          "title": "Compass may support you if…",
-          "description": "You are beginning to connect your interests with real study and work options.",
-          "point1": "You do not know what to study or want to revisit a recent choice.",
-          "point2": "You have several options and need criteria to compare them.",
-          "point3": "You want to better understand your interests, motivations, and ways of learning.",
-          "point4": "You need to move from uncertainty toward a possible first direction."
-        },
-        "newStage": {
-          "title": "New Professional Stage may support you if…",
-          "description": "You have experience and need to turn the desire for change into a direction and a strategy.",
-          "point1": "Your role, industry, or way of working no longer represents you.",
-          "point2": "You want to change without losing the value of your trajectory.",
-          "point3": "You need to organize your positioning, narrative, or search.",
-          "point4": "You are leading, building a venture, or navigating a concrete career change."
         }
       }
     },
@@ -436,68 +407,8 @@
           "title": "Move",
           "description": "We turn that direction into decisions, conversations, and next steps."
         }
-      }
-    },
-    "phases": {
-      "eyebrow": "The journey in detail",
-      "title": "Each process has its own stages.",
-      "intro": "See what Compass and New Professional Stage explore, from the initial question to a clear roadmap.",
-      "view": "View every stage"
-    },
-    "team": {
-      "eyebrow": "The team",
-      "title": "Professional judgment and human listening.",
-      "intro": "Senda brings together complementary perspectives to support complex decisions with clarity, respect, and attention to each trajectory.",
-      "cta": "Meet the team",
-      "items": {
-        "multidisciplinary": {
-          "title": "A multidisciplinary perspective",
-          "description": "We integrate guidance, talent, career strategy, and an understanding of the world of work."
-        },
-        "human": {
-          "title": "Human support",
-          "description": "Every process includes real conversations, professional judgment, and space to think without pressure."
-        },
-        "rigor": {
-          "title": "Method and rigor",
-          "description": "We use recognized tools as support and turn what we explore into well-grounded decisions."
-        }
-      }
-    },
-    "faq": {
-      "eyebrow": "Frequently asked questions",
-      "title": "Before you begin.",
-      "intro": "Clear answers to help you understand which journey may support you and what the process is like.",
-      "items": {
-        "choose": {
-          "question": "How do I know which of the two journeys I need?",
-          "answer": "Compass begins with questions about study, interests, and first work decisions. New Professional Stage supports people with an established trajectory who need to transform it, reposition themselves, or build a strategy for what comes next. If you are still unsure, the initial diagnostic helps locate your present moment."
-        },
-        "compass": {
-          "question": "Is Compass a test that tells me which degree to choose?",
-          "answer": "No. It includes exploration tools, but the process centers on conversation, researching alternatives, building criteria, and recognizing a direction of your own. No result decides for you."
-        },
-        "newStage": {
-          "question": "What does New Professional Stage include?",
-          "answer": "It combines a review of your trajectory and professional identity with the definition of a direction, positioning, narrative, and movement strategy."
-        },
-        "format": {
-          "question": "Are meetings virtual or in person?",
-          "answer": "Meetings take place online so you can sustain the process from wherever you are. Any available in-person alternative is discussed before you begin."
-        },
-        "duration": {
-          "question": "How long does each journey take?",
-          "answer": "The duration depends on the journey and is discussed before you begin. The stages follow a clear sequence, with room to adapt them to each person's particular moment."
-        },
-        "diagnostic": {
-          "question": "How does the initial diagnostic work?",
-          "answer": "It is a brief, non-clinical form about your situation, what you need, and how urgent the change feels. It helps the team guide you; it does not replace a professional assessment or diagnosis."
-        },
-        "results": {
-          "question": "What will I receive at the end?",
-          "answer": "You finish with a personalized synthesis, decision criteria, and a roadmap. The specific materials depend on the journey and the work completed during the process."
-        }
-      }
+      },
+      "cta": "See how we work"
     },
     "final": {
       "eyebrow": "The first step",
@@ -505,6 +416,145 @@
       "description": "You can begin by telling us what is changing. From there, we build a direction and possible next steps.",
       "primaryCta": "Take the initial diagnostic",
       "secondaryCta": "Talk with the team"
+    }
+  },
+  "Journeys": {
+    "meta": {
+      "title": "Journeys",
+      "description": "Discover Compass and New Professional Stage, Senda's two personalized journeys."
+    },
+    "hero": {
+      "eyebrow": "Journeys",
+      "title": "Two starting points. Two ways to build direction.",
+      "description": "Each journey responds to a different moment and adapts to each person's story, questions, and reality."
+    },
+    "intro": {
+      "title": "Choosing the right support begins with recognizing where you are.",
+      "description": "Compass opens possibilities when you are beginning to decide. New Professional Stage integrates accumulated experience to build what comes next."
+    },
+    "items": {
+      "compass": {
+        "eyebrow": "Journey 01",
+        "title": "Compass",
+        "lead": "It is not about choosing for life, but about beginning to recognize a direction of your own.",
+        "description": "For young people who need to explore interests, discover worlds of study and work, recognize signals, and build their own criteria for a first direction.",
+        "cta": "Explore Compass"
+      },
+      "newStage": {
+        "eyebrow": "Journey 02",
+        "title": "New Professional Stage",
+        "lead": "Transform your trajectory without losing sight of everything you have already built.",
+        "description": "For professionals, leaders, and managers who need to revisit experience, identity, and motivation, define positioning, and design a strategy for their next stage.",
+        "cta": "Explore New Professional Stage"
+      }
+    },
+    "closing": {
+      "title": "Still unsure which journey fits your moment?",
+      "description": "The initial diagnostic offers an orienting starting point for a conversation with the team.",
+      "cta": "Take the initial diagnostic"
+    }
+  },
+  "Methodology": {
+    "meta": {
+      "title": "How we work",
+      "description": "Discover Senda's methodology: listening, exploration, criteria, and personalized next steps."
+    },
+    "hero": {
+      "eyebrow": "How we work",
+      "title": "Direction is built, not imposed.",
+      "description": "We combine human conversations, rigorous tools, and decisions grounded in reality."
+    },
+    "principles": {
+      "eyebrow": "How we support you",
+      "title": "Clarity without rigid formulas.",
+      "intro": "The methodology gives the process structure while making room for every trajectory's singularity.",
+      "items": {
+        "personal": {
+          "title": "Personal",
+          "description": "We begin with your question, your story, and the conditions you need to protect."
+        },
+        "rigorous": {
+          "title": "Rigorous",
+          "description": "We use recognized tools as support, never as automatic answers."
+        },
+        "practical": {
+          "title": "Practical",
+          "description": "We turn what we explore into criteria, conversations, and concrete steps."
+        }
+      }
+    },
+    "steps": {
+      "eyebrow": "The sequence",
+      "title": "Four movements that organize the journey.",
+      "intro": "The depth and tools change between Compass and New Professional Stage, while the thread of the work remains consistent.",
+      "items": {
+        "listen": { "number": "01", "title": "Listen", "description": "We put the question, its context, and what you need to protect into words." },
+        "map": { "number": "02", "title": "Map", "description": "We recognize experiences, motivations, strengths, constraints, and possibilities." },
+        "define": { "number": "03", "title": "Define", "description": "We build criteria and a possible direction connected to your reality." },
+        "move": { "number": "04", "title": "Move", "description": "We turn that direction into decisions, conversations, and next steps." }
+      }
+    },
+    "tools": {
+      "eyebrow": "Tools in service of the process",
+      "title": "Explore with method, decide with autonomy.",
+      "description": "Exercises, maps, and assessments expand the conversation. Their results are orienting, do not constitute a clinical diagnosis, and do not replace professional judgment or personal choice."
+    },
+    "closing": {
+      "title": "Discover the journey that best supports your moment.",
+      "description": "Two clear proposals, with a shared methodology and deeply personal work.",
+      "cta": "Explore the journeys"
+    }
+  },
+  "Team": {
+    "meta": {
+      "title": "Team",
+      "description": "Discover the professional and human approach of the Senda team."
+    },
+    "hero": {
+      "eyebrow": "Team",
+      "title": "Professional judgment. Human listening.",
+      "description": "We support complex decisions with respect for autonomy, attention to each trajectory, and a view connected to the real world."
+    },
+    "introduction": {
+      "eyebrow": "Senda",
+      "title": "A place to think with support.",
+      "description": "We bring together complementary perspectives on study, work, talent, and professional strategy. We do not offer ready-made answers: we build better questions, personal criteria, and sustainable possibilities."
+    },
+    "principles": {
+      "multidisciplinary": { "number": "01", "title": "A multidisciplinary perspective", "description": "We integrate guidance, talent, career strategy, and an understanding of the world of work." },
+      "human": { "number": "02", "title": "Human support", "description": "Every journey includes real conversations and space to think without pressure." },
+      "rigor": { "number": "03", "title": "Method and rigor", "description": "Tools provide information; judgment is built with you and never decides for you." }
+    },
+    "closing": {
+      "title": "You can tell us what is changing.",
+      "description": "The team will reply to understand your situation and help identify a possible next step.",
+      "cta": "Contact the team"
+    }
+  },
+  "Faq": {
+    "meta": {
+      "title": "Frequently asked questions",
+      "description": "Answers about Senda's journeys, methodology, and professional support."
+    },
+    "hero": {
+      "eyebrow": "Frequently asked questions",
+      "title": "Before you begin.",
+      "description": "Clear information to understand the journeys and decide your next step without pressure."
+    },
+    "intro": "If your question is not here, write to us. A brief conversation can help locate your situation more clearly.",
+    "items": {
+      "choose": { "question": "How do I know which of the two journeys I need?", "answer": "Compass begins with questions about study, interests, and first work decisions. New Professional Stage supports people with an established trajectory who need to transform it, reposition themselves, or build a strategy for what comes next. If you are still unsure, the initial diagnostic helps locate your present moment." },
+      "compass": { "question": "Is Compass a test that tells me which degree to choose?", "answer": "No. It includes exploration tools, but the process centers on conversation, researching alternatives, building criteria, and recognizing a direction of your own. No result decides for you." },
+      "newStage": { "question": "What does New Professional Stage include?", "answer": "It combines a review of your trajectory and professional identity with the definition of a direction, positioning, narrative, and movement strategy." },
+      "format": { "question": "Are meetings virtual or in person?", "answer": "Meetings take place online so you can sustain the process from wherever you are. Any available in-person alternative is discussed before you begin." },
+      "duration": { "question": "How long does each journey take?", "answer": "The duration depends on the journey and is discussed before you begin. The stages follow a clear sequence, with room to adapt them to each person's particular moment." },
+      "diagnostic": { "question": "How does the initial diagnostic work?", "answer": "It is a brief, non-clinical form about your situation, what you need, and how urgent the change feels. It helps the team guide you; it does not replace a professional assessment or diagnosis." },
+      "results": { "question": "What will I receive at the end?", "answer": "You finish with a personalized synthesis, decision criteria, and a roadmap. The specific materials depend on the journey and the work completed during the process." }
+    },
+    "closing": {
+      "title": "Would you like to talk about your situation?",
+      "description": "Write to us and the team will respond personally.",
+      "cta": "Go to contact"
     }
   },
   "Processes": {

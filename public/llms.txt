@@ -5,9 +5,13 @@
 ## Sitio principal
 
 - [Inicio](https://reinvension-profesional.vercel.app/)
+- [Recorridos](https://reinvension-profesional.vercel.app/recorridos)
 - [Diagnóstico inicial](https://reinvension-profesional.vercel.app/diagnostico)
-- [Brújula](https://reinvension-profesional.vercel.app/procesos/brujula)
-- [Nueva Etapa Profesional](https://reinvension-profesional.vercel.app/procesos/nueva-etapa-profesional)
+- [Brújula](https://reinvension-profesional.vercel.app/recorridos/brujula)
+- [Nueva Etapa Profesional](https://reinvension-profesional.vercel.app/recorridos/nueva-etapa-profesional)
+- [Cómo trabajamos](https://reinvension-profesional.vercel.app/como-trabajamos)
+- [Equipo](https://reinvension-profesional.vercel.app/equipo)
+- [Preguntas frecuentes](https://reinvension-profesional.vercel.app/preguntas-frecuentes)
 - [Contacto](https://reinvension-profesional.vercel.app/contacto)
 
 ## Información importante

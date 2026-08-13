@@ -15,8 +15,8 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 - Notificaciones: Sonner. Analytics: `@vercel/speed-insights`.
 
 **Estructura de rutas** (`app/`):
-- `app/[locale]/` — páginas: home, `diagnostico/`, `orientacion-vocacional/`, `contacto/`, `login/`, `panel/`, `procesos/`, `privacidad/`, `terminos/`, `quienes-somos/`.
-- `app/api/` — `diagnostics/analyze` (POST, gpt-4o vía AI SDK), `diagnostics/save` (retirado, 410 Gone), `initial-diagnostic`, `leads`, `health`.
+- `app/[locale]/` — páginas canónicas: home, `recorridos/`, `como-trabajamos/`, `equipo/`, `preguntas-frecuentes/`, `contacto/`, `diagnostico/`, `login/`, `panel/`, `privacidad/` y `terminos/`; las rutas públicas anteriores permanecen solo como redirecciones permanentes.
+- `app/api/` — `contact` (SMTP), `diagnostics/analyze` (POST, gpt-4o vía AI SDK), `diagnostics/save` (retirado, 410 Gone), `initial-diagnostic`, `leads`, `health`.
 - `app/auth/` — callback OAuth.
 - `app/robots.ts`, `app/sitemap.ts`, `app/globals.css` (variables HSL del sistema de diseño).
 
@@ -28,7 +28,7 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 
 **Seguridad** (`next.config.ts`): headers (`x-content-type-options`, `x-frame-options: DENY`, HSTS, `permissions-policy`, CSP con `frame-ancestors 'none'` y soporte para Cloudflare Turnstile + origen de Supabase).
 
-**Variables de entorno referenciadas en código:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL`, `OPENAI_API_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, `TURNSTILE_ENFORCED`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `HEALTHCHECK_DIAGNOSTICS_TOKEN`, `BASE_URL`, `NODE_ENV`.
+**Variables de entorno referenciadas en código:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL`, `OPENAI_API_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, `TURNSTILE_ENFORCED`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `HEALTHCHECK_DIAGNOSTICS_TOKEN`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `CONTACT_TO_EMAIL`, `BASE_URL`, `NODE_ENV`.
 
 **Testing y CI:**
 - Vitest (`vitest.config.ts`, `test:unit` con coverage v8) — suites en `tests/unit/`.
@@ -47,6 +47,5 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 
 ## Pendiente de verificar
 
-- Este checkout **no tiene `node_modules/` instalados** (ver `docs/senda/STATE.md`): no se pudo ejecutar lint/typecheck/tests/build reales todavía.
-- No hay `.env.local` ni `.env.example` en este checkout; los valores reales de las variables de entorno no son verificables localmente.
 - Versión exacta de Node.js requerida (no hay campo `engines` en `package.json`; CI usa Node 20).
+- La recepción real del formulario depende de completar `SMTP_PASSWORD` en Vercel y de verificar el mensaje en el buzón destinatario.

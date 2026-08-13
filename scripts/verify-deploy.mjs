@@ -89,7 +89,8 @@ async function checkHealth(baseUrl) {
   const criticalChecksOk = !hasChecks || (
     Boolean(checks.supabase) &&
     Boolean(checks.supabaseAdmin) &&
-    Boolean(checks.openai)
+    Boolean(checks.openai) &&
+    Boolean(checks.contactSmtp)
   );
   const hasRequestIdHeader = Boolean(response.headers.get("x-request-id"));
 
@@ -132,9 +133,17 @@ async function main() {
 
     const checks = [];
     checks.push(await checkEndpoint(baseUrl, "/", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/recorridos", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/recorridos/brujula", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/recorridos/nueva-etapa-profesional", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/como-trabajamos", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/equipo", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/preguntas-frecuentes", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/en/recorridos", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/en/como-trabajamos", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/en/equipo", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/en/preguntas-frecuentes", [200]));
     checks.push(await checkEndpoint(baseUrl, "/diagnostico", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/procesos/brujula", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/procesos/nueva-etapa-profesional", [200]));
     checks.push(await checkAuthRedirect(baseUrl, "/diagnostico/ancla-de-carrera"));
     checks.push(await checkEndpoint(baseUrl, "/contacto", [200]));
     checks.push(await checkEndpoint(baseUrl, "/login", [200]));

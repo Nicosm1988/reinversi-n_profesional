@@ -12,6 +12,10 @@ function validateUrl(name, value, errors) {
   }
 }
 
+function looksLikeRedactedValue(value) {
+  return /^\[(?:sensitive|redacted|hidden)\]$/i.test(value.trim());
+}
+
 function getMode() {
   const strict = process.argv.includes("--strict");
   return { strict };
@@ -29,7 +33,7 @@ function main() {
   ];
 
   for (const key of required) {
-    if (!isPresent(process.env[key])) {
+    if (!isPresent(process.env[key]) || looksLikeRedactedValue(process.env[key])) {
       errors.push(`Missing required env var: ${key}`);
     }
   }
@@ -42,7 +46,9 @@ function main() {
     validateUrl("NEXT_PUBLIC_SITE_URL", process.env.NEXT_PUBLIC_SITE_URL, errors);
   }
 
-  const hasSupabaseServiceRole = isPresent(process.env.SUPABASE_SERVICE_ROLE_KEY);
+  const hasSupabaseServiceRole =
+    isPresent(process.env.SUPABASE_SERVICE_ROLE_KEY)
+    && !looksLikeRedactedValue(process.env.SUPABASE_SERVICE_ROLE_KEY);
   if (!hasSupabaseServiceRole) {
     const message = "SUPABASE_SERVICE_ROLE_KEY missing: server-backed forms will return 503.";
     if (strict) {
@@ -70,7 +76,7 @@ function main() {
     errors.push("TURNSTILE_ENFORCED=true requires TURNSTILE_SECRET_KEY.");
   }
 
-  if (!isPresent(process.env.OPENAI_API_KEY)) {
+  if (!isPresent(process.env.OPENAI_API_KEY) || looksLikeRedactedValue(process.env.OPENAI_API_KEY)) {
     const message = "OPENAI_API_KEY missing: AI diagnostics endpoint will return 503.";
     if (strict) {
       errors.push(message);
@@ -85,6 +91,28 @@ function main() {
       errors.push(message);
     } else {
       warnings.push(message);
+    }
+  }
+
+  const smtpKeys = ["SMTP_HOST", "SMTP_PORT", "SMTP_USER", "SMTP_PASSWORD", "CONTACT_TO_EMAIL"];
+  const configuredSmtpKeys = smtpKeys.filter(
+    (key) => isPresent(process.env[key]) && !looksLikeRedactedValue(process.env[key]),
+  );
+  if (configuredSmtpKeys.length > 0 && configuredSmtpKeys.length < smtpKeys.length) {
+    errors.push("SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD and CONTACT_TO_EMAIL must be set together.");
+  } else if (configuredSmtpKeys.length === 0) {
+    const message = "SMTP contact delivery is not configured: the contact form will return 503.";
+    if (strict) {
+      errors.push(message);
+    } else {
+      warnings.push(message);
+    }
+  }
+
+  if (isPresent(process.env.SMTP_PORT)) {
+    const smtpPort = Number(process.env.SMTP_PORT);
+    if (!Number.isInteger(smtpPort) || smtpPort < 1 || smtpPort > 65_535) {
+      errors.push("SMTP_PORT must be an integer between 1 and 65535.");
     }
   }
 

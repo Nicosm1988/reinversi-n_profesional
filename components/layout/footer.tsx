@@ -1,7 +1,9 @@
 import { useTranslations } from "next-intl";
 import { ArrowUpRight } from "lucide-react";
+import { SendaLogo } from "@/components/brand/senda-logo";
 import { Link } from "@/navigation";
 import { UniverseField } from "@/components/visual/universe-field";
+import { CONTACT_EMAIL } from "@/lib/contact-config";
 
 export function Footer() {
   const t = useTranslations("Footer");
@@ -13,30 +15,30 @@ export function Footer() {
         <div className="grid gap-14 border-b border-white/12 pb-16 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:pb-20">
           <div className="max-w-xl">
             <Link href="/" className="inline-flex items-center gap-3" aria-label={t("homeLabel")}>
-              <span className="senda-orbit-mark h-10 w-10 text-white/60" aria-hidden="true" />
-              <span className="font-heading text-3xl">Senda</span>
+              <SendaLogo className="h-[3.4rem] text-[#f4efe4]" />
             </Link>
             <p className="mt-8 max-w-lg font-heading text-3xl leading-[1.15] text-[#f4efe4]/90 sm:text-4xl">{t("statement")}</p>
-            <a href="mailto:contacto@senda.com" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#f4efe4]/80 hover:text-white">
-              contacto@senda.com <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            <a href={`mailto:${CONTACT_EMAIL}`} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#f4efe4]/80 hover:text-white focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e4a285] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0d1929]">
+              {CONTACT_EMAIL} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
 
           <nav aria-label={t("processNavigation")}>
             <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-[#f4efe4]/80">{t("colProcesses")}</h2>
             <ul className="mt-7 space-y-4 text-sm font-semibold text-[#f4efe4]/85">
-              <li><Link href="/procesos/brujula" className="hover:text-white">{t("linkCompass")}</Link></li>
-              <li><Link href="/procesos/nueva-etapa-profesional" className="hover:text-white">{t("linkNewStage")}</Link></li>
-              <li><Link href="/diagnostico" className="text-[#e4a285] hover:text-white">{t("linkInitialDiagnostic")}</Link></li>
+              <li><Link href="/recorridos" className="hover:text-white">{t("linkJourneys")}</Link></li>
+              <li><Link href="/recorridos/brujula" className="hover:text-white">{t("linkCompass")}</Link></li>
+              <li><Link href="/recorridos/nueva-etapa-profesional" className="hover:text-white">{t("linkNewStage")}</Link></li>
             </ul>
           </nav>
 
           <nav aria-label={t("siteNavigation")}>
             <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-[#f4efe4]/80">{t("colExplore")}</h2>
             <ul className="mt-7 space-y-4 text-sm font-semibold text-[#f4efe4]/85">
-              <li><Link href="/#como-funciona" className="hover:text-white">{t("linkHow")}</Link></li>
-              <li><Link href="/#preguntas" className="hover:text-white">{t("linkFaq")}</Link></li>
-              <li><Link href="/diagnostico/ancla-de-carrera" className="hover:text-white">{t("linkCareerAnchor")}</Link></li>
+              <li><Link href="/como-trabajamos" className="hover:text-white">{t("linkHow")}</Link></li>
+              <li><Link href="/equipo" className="hover:text-white">{t("linkTeam")}</Link></li>
+              <li><Link href="/preguntas-frecuentes" className="hover:text-white">{t("linkFaq")}</Link></li>
+              <li><Link href="/contacto" className="hover:text-white">{t("linkContact")}</Link></li>
               <li><Link href="/privacidad" className="hover:text-white">{t("linkPrivacy")}</Link></li>
               <li><Link href="/terminos" className="hover:text-white">{t("linkTerms")}</Link></li>
             </ul>

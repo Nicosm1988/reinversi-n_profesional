@@ -39,19 +39,25 @@ describe("translation catalogs", () => {
     }
   });
 
-  it("publishes exactly two journeys and one split situations section", () => {
+  it("publishes exactly two journeys in the multipage architecture", () => {
     expect(Object.keys(spanishMessages.Home.journeys.items)).toEqual([
       "compass",
       "newStage",
     ]);
-    expect(Object.keys(spanishMessages.Home.situations.items)).toEqual([
+    expect(Object.keys(spanishMessages.Journeys.items)).toEqual([
       "compass",
       "newStage",
     ]);
+    expect(spanishMessages.Header.navProcesses).toBe("Recorridos");
+    expect(spanishMessages.Home.journeys.viewAll).toBeTruthy();
+    expect("situations" in spanishMessages.Home).toBe(false);
+    expect("phases" in spanishMessages.Home).toBe(false);
+    expect("team" in spanishMessages.Home).toBe(false);
+    expect("faq" in spanishMessages.Home).toBe(false);
     expect("territories" in spanishMessages.Home).toBe(false);
     expect("manifesto" in spanishMessages.Home).toBe(false);
-    expect(spanishMessages.Contact.reasonCompass).toBe("Brújula");
-    expect(spanishMessages.Contact.reasonNewStage).toBe("Nueva Etapa Profesional");
+    expect(spanishMessages.Contact.labelPhone).toContain("opcional");
+    expect(spanishMessages.Contact.directWhatsapp).toContain("WhatsApp");
     expect("reasonVocational" in spanishMessages.Contact).toBe(false);
 
     for (const legacyNamespace of [
@@ -81,6 +87,7 @@ describe("translation catalogs", () => {
     for (const catalog of [spanishMessages, englishMessages]) {
       const publicCopy = JSON.stringify({
         home: catalog.Home,
+        journeys: catalog.Journeys,
         processes: catalog.Processes,
         diagnostic: catalog.InitialDiagnostic,
       });

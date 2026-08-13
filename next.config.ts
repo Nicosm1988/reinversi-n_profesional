@@ -62,42 +62,72 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/orientacion-vocacional",
-        destination: "/procesos/brujula",
+        destination: "/recorridos/brujula",
         permanent: true,
       },
       {
         source: "/procesos/orientacion-vocacional",
-        destination: "/procesos/brujula",
+        destination: "/recorridos/brujula",
         permanent: true,
       },
       {
         source: "/procesos/reinvencion-profesional",
-        destination: "/procesos/nueva-etapa-profesional",
+        destination: "/recorridos/nueva-etapa-profesional",
         permanent: true,
       },
       {
         source: "/procesos/transicion-laboral",
-        destination: "/procesos/nueva-etapa-profesional",
+        destination: "/recorridos/nueva-etapa-profesional",
+        permanent: true,
+      },
+      {
+        source: "/procesos/brujula",
+        destination: "/recorridos/brujula",
+        permanent: true,
+      },
+      {
+        source: "/procesos/nueva-etapa-profesional",
+        destination: "/recorridos/nueva-etapa-profesional",
+        permanent: true,
+      },
+      {
+        source: "/quienes-somos",
+        destination: "/equipo",
         permanent: true,
       },
       {
         source: "/en/orientacion-vocacional",
-        destination: "/en/procesos/brujula",
+        destination: "/en/recorridos/brujula",
         permanent: true,
       },
       {
         source: "/en/procesos/orientacion-vocacional",
-        destination: "/en/procesos/brujula",
+        destination: "/en/recorridos/brujula",
         permanent: true,
       },
       {
         source: "/en/procesos/reinvencion-profesional",
-        destination: "/en/procesos/nueva-etapa-profesional",
+        destination: "/en/recorridos/nueva-etapa-profesional",
         permanent: true,
       },
       {
         source: "/en/procesos/transicion-laboral",
-        destination: "/en/procesos/nueva-etapa-profesional",
+        destination: "/en/recorridos/nueva-etapa-profesional",
+        permanent: true,
+      },
+      {
+        source: "/en/procesos/brujula",
+        destination: "/en/recorridos/brujula",
+        permanent: true,
+      },
+      {
+        source: "/en/procesos/nueva-etapa-profesional",
+        destination: "/en/recorridos/nueva-etapa-profesional",
+        permanent: true,
+      },
+      {
+        source: "/en/quienes-somos",
+        destination: "/en/equipo",
         permanent: true,
       },
     ];

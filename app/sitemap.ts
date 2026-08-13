@@ -3,13 +3,16 @@ import { getSiteUrl } from "@/lib/site-url";
 
 const routes = [
   "",
+  "/recorridos",
+  "/recorridos/brujula",
+  "/recorridos/nueva-etapa-profesional",
+  "/como-trabajamos",
+  "/equipo",
+  "/preguntas-frecuentes",
   "/contacto",
   "/diagnostico",
-  "/procesos/brujula",
-  "/procesos/nueva-etapa-profesional",
   "/privacidad",
   "/terminos",
-  "/quienes-somos",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

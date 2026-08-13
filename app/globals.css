@@ -478,34 +478,131 @@ body {
   background: var(--senda-paper);
 }
 
-.senda-orbit-mark {
+.senda-logo {
+  display: inline-flex;
+  height: 3rem;
+  align-items: center;
+  gap: 0.65rem;
+  color: inherit;
+  line-height: 1;
+}
+
+.senda-logo__mark {
+  width: auto;
+  height: 100%;
+  flex: none;
+  overflow: visible;
+}
+
+.senda-logo__boundary,
+.senda-logo__orbit ellipse {
+  stroke: currentColor;
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+.senda-logo__boundary {
+  opacity: 0.72;
+}
+
+.senda-logo__orbit {
+  transform-box: view-box;
+  transform-origin: center;
+}
+
+.senda-logo__orbit--one {
+  opacity: 0.5;
+  transform: rotate(-18deg);
+}
+
+.senda-logo__orbit--two {
+  opacity: 0.3;
+  transform: rotate(31deg);
+}
+
+.senda-logo__sun {
+  fill: var(--senda-terracotta);
+}
+
+.senda-logo__waypoint {
+  fill: currentColor;
+  stroke: none;
+}
+
+.senda-logo__waypoint--gold {
+  fill: var(--senda-gold);
+}
+
+.senda-logo__word-wrap {
   position: relative;
   display: inline-flex;
-  width: 2.75rem;
-  height: 2.75rem;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid currentColor;
-  border-radius: 999px;
+  padding-bottom: 0.32rem;
 }
 
-.senda-orbit-mark::before {
-  content: "";
-  width: 0.38rem;
-  height: 0.38rem;
-  border-radius: 999px;
-  background: var(--senda-terracotta);
-  box-shadow: 1rem -0.85rem 0 -0.12rem var(--senda-gold);
+.senda-logo__word {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
 }
 
-.senda-orbit-mark::after {
-  content: "";
+.senda-logo__trail {
   position: absolute;
-  inset: 0.38rem -0.2rem;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  opacity: 0.38;
-  transform: rotate(-28deg);
+  left: -0.08em;
+  bottom: -0.12rem;
+  width: calc(100% + 0.22rem);
+  height: 0.7rem;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.senda-logo__trail path {
+  stroke: currentColor;
+  stroke-width: 0.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.5;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .senda-logo__orbit--one {
+    animation: senda-orbit-clockwise 28s linear infinite;
+  }
+
+  .senda-logo__orbit--two {
+    animation: senda-orbit-counterclockwise 37s linear infinite;
+  }
+
+  .senda-logo__trail path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: senda-trail-draw 2.8s 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+
+@keyframes senda-orbit-clockwise {
+  from {
+    transform: rotate(-18deg);
+  }
+  to {
+    transform: rotate(342deg);
+  }
+}
+
+@keyframes senda-orbit-counterclockwise {
+  from {
+    transform: rotate(31deg);
+  }
+  to {
+    transform: rotate(-329deg);
+  }
+}
+
+@keyframes senda-trail-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 .senda-home {
