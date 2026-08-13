@@ -37,13 +37,27 @@ test("Senda remains readable on a narrow mobile viewport", async ({ page }) => {
 });
 
 test("theme control switches between light and dark modes", async ({ page }) => {
+  await page.addInitScript(() => window.localStorage.setItem("reinvencion_cookie_consent", "true"));
   await page.goto("/");
   await page.evaluate(() => window.localStorage.setItem("theme", "light"));
   await page.reload();
 
+  const readSurface = (selector: string) =>
+    page.locator(selector).first().evaluate((element) => {
+      const style = window.getComputedStyle(element);
+      return {
+        backgroundColor: style.backgroundColor,
+        backgroundImage: style.backgroundImage,
+        borderColor: style.borderColor,
+        color: style.color,
+      };
+    });
+
   const toggle = page.getByRole("button", { name: /Activar modo (oscuro|claro)/ }).first();
   await expect(toggle).toBeVisible();
 
+  const lightHero = await readSurface(".senda-home > .senda-night");
+  const lightFooter = await readSurface("footer.senda-night");
   const initialTheme = await page.locator("html").getAttribute("class");
   await toggle.click();
 
@@ -51,10 +65,41 @@ test("theme control switches between light and dark modes", async ({ page }) => 
     .poll(async () => page.locator("html").getAttribute("class"))
     .not.toBe(initialTheme);
 
+  const darkHero = await readSurface(".senda-home > .senda-night");
+  const darkFooter = await readSurface("footer.senda-night");
+  expect(darkHero.backgroundImage).not.toBe(lightHero.backgroundImage);
+  expect(darkHero.color).not.toBe(lightHero.color);
+  expect(darkFooter.backgroundImage).not.toBe(lightFooter.backgroundImage);
+  expect(darkFooter.color).not.toBe(lightFooter.color);
+
   await page.reload();
   await expect.poll(() => page.locator("html").getAttribute("class")).toContain("dark");
   await expect(toggle).toHaveAttribute("data-state", "dark");
   await expect(toggle).toHaveAccessibleName("Activar modo claro");
+
+  await page.goto("/contacto");
+  const darkContactHero = await readSurface(".wati-page-hero");
+  const darkContactCard = await readSurface("main .bg-background");
+  await page.getByRole("button", { name: "Activar modo claro" }).first().click();
+  await expect.poll(() => page.locator("html").getAttribute("class")).toContain("light");
+  const lightContactHero = await readSurface(".wati-page-hero");
+  const lightContactCard = await readSurface("main .bg-background");
+  expect(lightContactHero.backgroundImage).not.toBe(darkContactHero.backgroundImage);
+  expect(lightContactHero.color).not.toBe(darkContactHero.color);
+  expect(lightContactCard.backgroundColor).not.toBe(darkContactCard.backgroundColor);
+  expect(lightContactCard.color).not.toBe(darkContactCard.color);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/recorridos/brujula");
+  const lightJourneyHero = await readSurface("main header.senda-night");
+  const lightJourneyCard = await readSurface("main .senda-editorial-card");
+  await page.getByRole("button", { name: "Activar modo oscuro" }).first().click();
+  const darkJourneyHero = await readSurface("main header.senda-night");
+  const darkJourneyCard = await readSurface("main .senda-editorial-card");
+  expect(darkJourneyHero.backgroundImage).not.toBe(lightJourneyHero.backgroundImage);
+  expect(darkJourneyHero.color).not.toBe(lightJourneyHero.color);
+  expect(darkJourneyCard.backgroundColor).not.toBe(lightJourneyCard.backgroundColor);
+  expect(darkJourneyCard.color).not.toBe(lightJourneyCard.color);
 });
 
 test("career-anchor answers expose labeled radio groups", async ({ page }) => {

@@ -17,20 +17,20 @@ export default function CareerAnchorIntroPage() {
   return (
     <div className="wati-page-shell">
       <section className="wati-page-hero pb-24 pt-36 lg:pb-32 lg:pt-44">
-        <UniverseField className="left-[32%] text-[#89a9bd] opacity-25" />
+        <UniverseField className="left-[32%] text-[var(--senda-atmosphere-sky)] opacity-25" />
         <Container>
           <div className="relative z-10 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
             <div>
-              <Text variant="caption" className="senda-coordinate-label text-[#d2b879]">
+              <Text variant="caption" className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">
                 {t("label")}
               </Text>
-              <Heading level="h1" className="mt-7 max-w-[12ch] text-pretty text-[#f5f1e8]">
+              <Heading level="h1" className="mt-7 max-w-[12ch] text-pretty text-[var(--senda-atmosphere-ink)]">
                 {t("title")}
               </Heading>
             </div>
-            <div className="border-l border-white/20 pl-6 sm:pl-8">
-              <Text variant="lead" className="text-[#edf1f3]">{t("intro")}</Text>
-              <Text variant="body" className="mt-5 text-[#bdc8cf]">{t("introContinuation")}</Text>
+            <div className="border-l border-[var(--senda-atmosphere-border)] pl-6 sm:pl-8">
+              <Text variant="lead" className="text-[var(--senda-atmosphere-ink)]">{t("intro")}</Text>
+              <Text variant="body" className="mt-5 text-[var(--senda-atmosphere-muted)]">{t("introContinuation")}</Text>
             </div>
           </div>
         </Container>
@@ -77,14 +77,14 @@ export default function CareerAnchorIntroPage() {
 
       <Section spacing="lg" background="muted">
         <Container>
-          <Card className="senda-night overflow-hidden rounded-[1.4rem] border-white/10">
-            <UniverseField compact className="left-[40%] text-[#89a9bd] opacity-20" />
+          <Card className="senda-night overflow-hidden rounded-[1.4rem] border-[var(--senda-atmosphere-border)]">
+            <UniverseField compact className="left-[40%] text-[var(--senda-atmosphere-sky)] opacity-20" />
             <CardContent className="relative z-10 grid gap-8 p-8 md:p-12 lg:grid-cols-[1fr_0.65fr] lg:items-end lg:p-16">
               <div>
-                <Heading level="h3" className="text-pretty text-[#f5f1e8]">{t("accompanimentTitle")}</Heading>
-                <Text variant="body-lg" className="mt-5 max-w-2xl text-[#c3cdd3]">{t("accompanimentDescription")}</Text>
+                <Heading level="h3" className="text-pretty text-[var(--senda-atmosphere-ink)]">{t("accompanimentTitle")}</Heading>
+                <Text variant="body-lg" className="mt-5 max-w-2xl text-[var(--senda-atmosphere-muted)]">{t("accompanimentDescription")}</Text>
               </div>
-              <Button asChild variant="outline" size="lg" className="w-full whitespace-normal rounded-full border-white/25 bg-white/[0.05] px-5 text-center text-[#f5f1e8] hover:bg-white/10 hover:text-white lg:w-auto lg:justify-self-end">
+              <Button asChild variant="outline" size="lg" className="w-full whitespace-normal rounded-full border-[var(--senda-atmosphere-border)] bg-[var(--senda-atmosphere-control)] px-5 text-center text-[var(--senda-atmosphere-ink)] hover:bg-[var(--senda-atmosphere-control-hover)] hover:text-[var(--senda-atmosphere-ink)] lg:w-auto lg:justify-self-end">
                 <Link href="/contacto">{t("accompanimentCta")}</Link>
               </Button>
             </CardContent>

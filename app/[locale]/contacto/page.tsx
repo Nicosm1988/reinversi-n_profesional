@@ -170,13 +170,13 @@ export default function ContactoPage() {
   return (
     <div className="wati-page-shell flex flex-col">
       <section className="wati-page-hero pb-20 pt-32 sm:pb-24 sm:pt-36 lg:pb-28 lg:pt-44">
-        <UniverseField className="left-[35%] text-[#89a9bd] opacity-20" />
+        <UniverseField className="left-[35%] text-[var(--senda-atmosphere-sky)] opacity-20" />
         <Container>
           <FadeIn className="relative z-10 mx-auto max-w-2xl text-center">
-            <Heading level="h1" className="mb-6 text-4xl text-primary dark:text-[#f6efe7] sm:text-5xl lg:text-6xl">
-              {t("heroTitle")} <span className="italic text-secondary">{t("heroTitleAccent")}</span>
+            <Heading level="h1" className="mb-6 text-4xl text-[var(--senda-atmosphere-ink)] sm:text-5xl lg:text-6xl">
+              {t("heroTitle")} <span className="italic text-[var(--senda-atmosphere-accent)]">{t("heroTitleAccent")}</span>
             </Heading>
-            <Text variant="lead" className="mx-auto max-w-xl">{t("heroDescription")}</Text>
+            <Text variant="lead" className="mx-auto max-w-xl text-[var(--senda-atmosphere-muted)]">{t("heroDescription")}</Text>
           </FadeIn>
         </Container>
       </section>

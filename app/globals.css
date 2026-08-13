@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     --senda-bg: #f4f1ea;
     --senda-ink: #17263a;
     /* Fixed dark ink for light CTA labels that must stay dark in both themes. */
@@ -28,6 +29,25 @@
     --senda-charcoal: #17263a;
     --senda-gold: #c2a366;
     --senda-sky: #89a9bd;
+    --senda-atmosphere-ink: #17263a;
+    --senda-atmosphere-muted: #526272;
+    --senda-atmosphere-border: rgba(23, 38, 58, 0.16);
+    --senda-atmosphere-line: rgba(23, 38, 58, 0.2);
+    --senda-atmosphere-grid: rgba(23, 38, 58, 0.11);
+    --senda-atmosphere-gold: #765a23;
+    --senda-atmosphere-accent: #92513f;
+    --senda-atmosphere-sky: #56788c;
+    --senda-atmosphere-control: rgba(255, 255, 255, 0.5);
+    --senda-atmosphere-control-hover: rgba(255, 255, 255, 0.78);
+    --senda-atmosphere-action-bg: #17263a;
+    --senda-atmosphere-action-ink: #f7f3eb;
+    --senda-atmosphere-action-hover: #203650;
+    --senda-atmosphere-ring: #17263a;
+    --senda-atmosphere-ring-offset: #e9edef;
+    --senda-atmosphere-bg:
+      radial-gradient(circle at 78% 18%, rgba(86, 120, 140, 0.18), transparent 27%),
+      radial-gradient(circle at 16% 82%, rgba(146, 81, 63, 0.11), transparent 24%),
+      linear-gradient(145deg, #f4efe7 0%, #e7edef 54%, #f1f2ee 100%);
     --senda-on-olive: #ffffff;
     --quiz-bg: #eef0ed;
     --quiz-ink: #2f3647;
@@ -102,6 +122,25 @@
     --senda-charcoal: #0d1725;
     --senda-gold: #d0b77d;
     --senda-sky: #8eb3c9;
+    --senda-atmosphere-ink: #f5f1e8;
+    --senda-atmosphere-muted: #d0d8dd;
+    --senda-atmosphere-border: rgba(222, 231, 236, 0.14);
+    --senda-atmosphere-line: rgba(223, 232, 237, 0.18);
+    --senda-atmosphere-grid: rgba(223, 232, 237, 0.16);
+    --senda-atmosphere-gold: #d2b879;
+    --senda-atmosphere-accent: #cf8a70;
+    --senda-atmosphere-sky: #89a9bd;
+    --senda-atmosphere-control: rgba(255, 255, 255, 0.06);
+    --senda-atmosphere-control-hover: rgba(255, 255, 255, 0.12);
+    --senda-atmosphere-action-bg: #f5f1e8;
+    --senda-atmosphere-action-ink: #17263a;
+    --senda-atmosphere-action-hover: #ffffff;
+    --senda-atmosphere-ring: #f5f1e8;
+    --senda-atmosphere-ring-offset: #101c2c;
+    --senda-atmosphere-bg:
+      radial-gradient(circle at 78% 18%, rgba(137, 169, 189, 0.16), transparent 27%),
+      radial-gradient(circle at 16% 82%, rgba(184, 109, 84, 0.13), transparent 24%),
+      linear-gradient(145deg, #0a1422 0%, #13243a 54%, #0d1929 100%);
     --senda-on-olive: #09121f;
     --quiz-bg: #0d1725;
     --quiz-ink: #edf0f2;
@@ -316,7 +355,9 @@
 
   .wati-page-hero {
     @apply relative overflow-hidden border-b border-border;
-    background: linear-gradient(180deg, #fffaf4 0%, #f7eee4 100%);
+    color: var(--senda-atmosphere-ink);
+    border-color: var(--senda-atmosphere-border);
+    background: var(--senda-atmosphere-bg);
   }
 
   .wati-page-hero::before {
@@ -324,8 +365,8 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(circle at 12% 16%, rgba(180, 198, 173, 0.22), transparent 38%),
-      radial-gradient(circle at 92% 10%, rgba(228, 124, 86, 0.16), transparent 34%);
+      radial-gradient(circle at 12% 16%, color-mix(in srgb, var(--senda-atmosphere-sky) 22%, transparent), transparent 38%),
+      radial-gradient(circle at 92% 10%, color-mix(in srgb, var(--senda-atmosphere-accent) 18%, transparent), transparent 34%);
     pointer-events: none;
   }
 
@@ -336,12 +377,6 @@
   .wati-feature-card {
     @apply rounded-2xl border border-border bg-card;
     box-shadow: 0 12px 16px -4px rgba(10, 13, 18, 0.08);
-  }
-
-  .wati-dark-cta {
-    @apply rounded-2xl border border-primary/20 text-primary-foreground;
-    background: linear-gradient(140deg, #2f3647 0%, #374055 100%);
-    box-shadow: 0 14px 30px -16px rgba(10, 13, 18, 0.9);
   }
 
   .wati-soft-grid {
@@ -360,13 +395,13 @@
   }
 
   .dark .wati-page-hero {
-    background: linear-gradient(180deg, #292f3e 0%, #242a38 100%);
+    background: var(--senda-atmosphere-bg);
   }
 
   .dark .wati-page-hero::before {
     background:
-      radial-gradient(circle at 12% 16%, rgba(180, 198, 173, 0.12), transparent 38%),
-      radial-gradient(circle at 92% 10%, rgba(228, 124, 86, 0.12), transparent 34%);
+      radial-gradient(circle at 12% 16%, color-mix(in srgb, var(--senda-atmosphere-sky) 18%, transparent), transparent 38%),
+      radial-gradient(circle at 92% 10%, color-mix(in srgb, var(--senda-atmosphere-accent) 16%, transparent), transparent 34%);
   }
 
 .dark .wati-feature-card {
@@ -429,11 +464,8 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  color: #f5f1e8;
-  background:
-    radial-gradient(circle at 78% 18%, rgba(137, 169, 189, 0.16), transparent 27%),
-    radial-gradient(circle at 16% 82%, rgba(184, 109, 84, 0.13), transparent 24%),
-    linear-gradient(145deg, #0a1422 0%, #13243a 54%, #0d1929 100%);
+  color: var(--senda-atmosphere-ink);
+  background: var(--senda-atmosphere-bg);
 }
 
 .senda-night::after {
@@ -443,8 +475,8 @@ body {
   z-index: -1;
   opacity: 0.14;
   background-image:
-    linear-gradient(rgba(223, 232, 237, 0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(223, 232, 237, 0.16) 1px, transparent 1px);
+    linear-gradient(var(--senda-atmosphere-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--senda-atmosphere-grid) 1px, transparent 1px);
   background-size: clamp(4rem, 9vw, 8.5rem) clamp(4rem, 9vw, 8.5rem);
   mask-image: linear-gradient(to bottom, black, transparent 82%);
   pointer-events: none;
@@ -535,11 +567,14 @@ body {
 
 .senda-logo__word-wrap {
   position: relative;
+  isolation: isolate;
   display: inline-flex;
   padding-bottom: 0.32rem;
 }
 
 .senda-logo__word {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-instrument-serif), Georgia, serif;
   font-size: 1.8rem;
   font-weight: 500;
@@ -548,10 +583,11 @@ body {
 
 .senda-logo__trail {
   position: absolute;
-  left: 0;
-  bottom: 0.06rem;
-  width: calc(100% + 0.16rem);
-  height: 0.72rem;
+  z-index: 0;
+  left: -0.02em;
+  bottom: -0.02rem;
+  width: calc(100% + 0.22rem);
+  height: 0.7rem;
   overflow: visible;
   pointer-events: none;
 }
@@ -642,24 +678,17 @@ body {
 }
 
 .wati-page-hero {
-  --primary: 39 31% 95%;
-  --foreground: 39 31% 95%;
-  --muted-foreground: 207 15% 76%;
-  --secondary: 16 45% 63%;
-  --secondary-foreground: 216 47% 10%;
-  color: #f5f1e8;
-  border-color: rgba(222, 231, 236, 0.12);
-  background:
-    radial-gradient(circle at 78% 12%, rgba(137, 169, 189, 0.18), transparent 28%),
-    linear-gradient(145deg, #0a1422, #14263c 58%, #0d1929);
+  color: var(--senda-atmosphere-ink);
+  border-color: var(--senda-atmosphere-border);
+  background: var(--senda-atmosphere-bg);
 }
 
 .wati-page-hero::before {
   opacity: 0.25;
   background-image:
-    radial-gradient(circle at 22% 28%, rgba(237, 241, 242, 0.7) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 68% 72%, rgba(194, 163, 102, 0.7) 0 1.2px, transparent 1.7px),
-    linear-gradient(118deg, transparent 42%, rgba(137, 169, 189, 0.45) 42.1%, transparent 42.3%);
+    radial-gradient(circle at 22% 28%, var(--senda-atmosphere-ink) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 72%, var(--senda-atmosphere-gold) 0 1.2px, transparent 1.7px),
+    linear-gradient(118deg, transparent 42%, var(--senda-atmosphere-line) 42.1%, transparent 42.3%);
   background-size: 9rem 9rem, 13rem 13rem, 100% 100%;
 }
 
@@ -668,14 +697,6 @@ body {
   border-color: color-mix(in srgb, var(--senda-border) 82%, transparent);
   background: color-mix(in srgb, var(--senda-paper) 95%, transparent);
   box-shadow: 0 30px 74px -58px rgba(10, 20, 34, 0.72);
-}
-
-.wati-dark-cta {
-  border-color: rgba(222, 231, 236, 0.16);
-  background:
-    radial-gradient(circle at 86% 10%, rgba(137, 169, 189, 0.18), transparent 30%),
-    linear-gradient(145deg, #0b1625, #172b43);
-  box-shadow: 0 30px 70px -42px rgba(6, 14, 25, 0.86);
 }
 
 .initial-diagnostic-page,
@@ -736,12 +757,6 @@ body {
   background:
     radial-gradient(circle at 90% 12%, rgba(137, 169, 189, 0.1), transparent 28rem),
     linear-gradient(180deg, #0d1725, #101d2c 58%, #0d1725);
-}
-
-.dark .wati-page-hero {
-  background:
-    radial-gradient(circle at 78% 12%, rgba(137, 169, 189, 0.16), transparent 28%),
-    linear-gradient(145deg, #08121f, #13243a 58%, #0a1625);
 }
 
 @media (max-width: 767px) {

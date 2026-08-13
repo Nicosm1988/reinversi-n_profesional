@@ -197,7 +197,7 @@ export function Header() {
           }}
           className={cn(
             "group relative z-10 flex shrink-0 items-center gap-2 min-[360px]:gap-3 transition-colors",
-            transparent ? "text-[#f5f1e8]" : "text-[var(--senda-ink)] dark:text-[#f5f1e8]",
+            transparent ? "text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-ink)] dark:text-[#f5f1e8]",
           )}
           aria-label={t("homeLabel")}
         >
@@ -218,7 +218,7 @@ export function Header() {
                     "relative py-3 text-[11px] font-bold uppercase tracking-[0.075em] after:absolute after:inset-x-0 after:bottom-1.5 after:h-px after:origin-left after:bg-[var(--senda-terracotta)] after:transition-transform focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] focus-visible:ring-offset-2",
                     active ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100",
                     transparent
-                      ? active ? "text-white" : "text-[#f5f1e8]/72 hover:text-white"
+                      ? active ? "text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)]"
                       : active
                         ? "text-[var(--senda-ink)] dark:text-white"
                         : "text-[var(--senda-ink)]/68 hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:text-white",
@@ -258,7 +258,7 @@ export function Header() {
                     className={cn(
                       "ml-0.5 inline-flex h-8 w-7 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] focus-visible:ring-offset-2",
                       transparent
-                        ? "text-[#f5f1e8]/72 hover:bg-white/10 hover:text-white"
+                        ? "text-[var(--senda-atmosphere-muted)] hover:bg-[var(--senda-atmosphere-control)] hover:text-[var(--senda-atmosphere-ink)]"
                         : "text-[var(--senda-ink)]/65 hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:bg-white/10 dark:hover:text-white",
                     )}
                   >
@@ -337,11 +337,11 @@ export function Header() {
               ) : null}
             </div>
           ) : authState.status === "anonymous" ? (
-            <Link href="/login" className={cn("px-2 text-xs font-bold", transparent ? "text-[#f5f1e8]/70 hover:text-white" : "text-[var(--senda-ink)]/65 hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:text-white")}>{t("ctaLogin")}</Link>
+            <Link href="/login" className={cn("px-2 text-xs font-bold", transparent ? "text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-ink)]/65 hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:text-white")}>{t("ctaLogin")}</Link>
           ) : (
             <span className="h-3 w-14 animate-pulse rounded-full bg-[var(--senda-border)]" aria-label={t("authLoading")} />
           )}
-          <Link href="/diagnostico" className="ml-1 inline-flex min-h-11 items-center rounded-full border border-white/10 bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
+          <Link href="/diagnostico" className="ml-1 inline-flex min-h-11 items-center rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
             {t("ctaDiagnostic")}
           </Link>
         </div>
@@ -359,7 +359,7 @@ export function Header() {
             aria-label={mobileMenuOpen ? t("closeMenu") : t("mobileMenu")}
             aria-expanded={mobileMenuOpen}
             aria-controls="senda-mobile-menu"
-            className={cn("inline-flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)]", transparent ? "border-white/30 bg-white/10 text-white hover:bg-white/20" : "border-[var(--senda-ink)]/15 bg-white/60 text-[var(--senda-ink)] hover:bg-white/80 dark:border-white/15 dark:bg-white/10 dark:text-[#f4efe4]")}
+            className={cn("inline-flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)]", transparent ? "border-[var(--senda-atmosphere-border)] bg-[var(--senda-atmosphere-control)] text-[var(--senda-atmosphere-ink)] hover:bg-[var(--senda-atmosphere-control-hover)]" : "border-[var(--senda-ink)]/15 bg-white/60 text-[var(--senda-ink)] hover:bg-white/80 dark:border-white/15 dark:bg-white/10 dark:text-[#f4efe4]")}
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>

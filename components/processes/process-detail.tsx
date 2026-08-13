@@ -11,22 +11,22 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
 
   return (
     <article className={`senda-process-detail senda-process-detail--${process.accent} bg-[var(--senda-bg)] text-[var(--senda-ink)]`}>
-      <header className="senda-night border-b border-white/10 px-5 pb-20 pt-32 text-[#f4efe4] sm:px-8 sm:pb-24 sm:pt-36 lg:px-12 xl:px-20">
-        <UniverseField className="left-[28%] text-[#89a9bd] opacity-20" />
+      <header className="senda-night border-b border-[var(--senda-atmosphere-border)] px-5 pb-20 pt-32 text-[var(--senda-atmosphere-ink)] sm:px-8 sm:pb-24 sm:pt-36 lg:px-12 xl:px-20">
+        <UniverseField className="left-[28%] text-[var(--senda-atmosphere-sky)] opacity-20" />
         <div className="relative mx-auto max-w-[1120px]">
-          <Link href="/recorridos" className="inline-flex items-center gap-2 text-sm font-semibold text-[#d0d8dd] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-[#101c2c]">
+          <Link href="/recorridos" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--senda-atmosphere-muted)] transition-colors hover:text-[var(--senda-atmosphere-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" /> {t("back")}
           </Link>
           <div className="mt-12 grid gap-9 lg:grid-cols-[1fr_0.72fr] lg:items-end lg:gap-16">
             <div className="min-w-0">
-              <p className="senda-coordinate-label text-[#d2b879]">{t("eyebrow", { number: process.number })}</p>
+              <p className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">{t("eyebrow", { number: process.number })}</p>
               <h1 className="mt-6 max-w-[14ch] text-pretty font-heading text-[clamp(2.5rem,5vw,4rem)] leading-[1.02] tracking-[-0.045em]">
                 {t(`items.${process.key}.title`)}
               </h1>
             </div>
-            <div className="min-w-0 border-l border-white/20 pl-6 sm:pl-8">
-              <p className="text-lg font-semibold leading-8 text-white sm:text-xl">{t(`items.${process.key}.lead`)}</p>
-              <p className="mt-5 flex items-center gap-2 text-sm text-[#d0d8dd]">
+            <div className="min-w-0 border-l border-[var(--senda-atmosphere-border)] pl-6 sm:pl-8">
+              <p className="text-lg font-semibold leading-8 text-[var(--senda-atmosphere-ink)] sm:text-xl">{t(`items.${process.key}.lead`)}</p>
+              <p className="mt-5 flex items-center gap-2 text-sm text-[var(--senda-atmosphere-muted)]">
                 <Clock3 className="h-4 w-4" aria-hidden="true" /> {t(`items.${process.key}.duration`, { count: process.durationMeetings })}
               </p>
             </div>
@@ -90,13 +90,13 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
       </section>
 
       <section className="px-5 pb-10 sm:px-8 lg:px-12 xl:px-20">
-        <div className="senda-night relative mx-auto max-w-[1080px] overflow-hidden rounded-[1.4rem] border border-white/10 px-7 py-14 text-[#f4efe4] sm:px-12 sm:py-16 lg:px-16">
-          <UniverseField compact className="left-[35%] text-[#89a9bd] opacity-20" />
+        <div className="senda-night relative mx-auto max-w-[1080px] overflow-hidden rounded-[1.4rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16">
+          <UniverseField compact className="left-[35%] text-[var(--senda-atmosphere-sky)] opacity-20" />
           <div className="relative max-w-3xl">
-            <p className="senda-coordinate-label text-[#d9cfad]">{t("cta.eyebrow")}</p>
+            <p className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">{t("cta.eyebrow")}</p>
             <h2 className="mt-5 max-w-[18ch] text-pretty font-heading text-[clamp(2rem,4vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("cta.title")}</h2>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[#d0d8dd] sm:text-lg">{t("cta.description")}</p>
-            <Link href="/diagnostico" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-[#f4efe4] px-7 py-3 text-sm font-bold text-[var(--senda-ink-fixed)] transition-colors hover:bg-white">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--senda-atmosphere-muted)] sm:text-lg">{t("cta.description")}</p>
+            <Link href="/diagnostico" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]">
               {t("cta.button")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
