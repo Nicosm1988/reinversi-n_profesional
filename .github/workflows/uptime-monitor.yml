@@ -14,14 +14,43 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Verify public routes and health
+      - name: Verify public routes and application liveness
         env:
           SITE_URL: ${{ vars.PRODUCTION_SITE_URL || 'https://reinvension-profesional.vercel.app' }}
         shell: bash
         run: |
           set -euo pipefail
-          for path in / /contacto /diagnostico /api/health /robots.txt /sitemap.xml; do
-            curl --fail --silent --show-error --location \
+          failed=0
+          for path in / /contacto /diagnostico /api/health/live /robots.txt /sitemap.xml; do
+            if curl --fail --silent --show-error --location \
               --retry 3 --retry-delay 5 --max-time 20 \
-              "${SITE_URL}${path}" >/dev/null
+              "${SITE_URL}${path}" >/dev/null; then
+              echo "OK ${path}"
+            else
+              echo "::error title=Production route unavailable::${SITE_URL}${path} did not return a successful response"
+              failed=1
+            fi
           done
+          exit "${failed}"
+
+      - name: Report full-service readiness
+        env:
+          SITE_URL: ${{ vars.PRODUCTION_SITE_URL || 'https://reinvension-profesional.vercel.app' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! status="$(curl --silent --show-error --location \
+              --retry 3 --retry-delay 5 --max-time 20 \
+              --output /dev/null --write-out '%{http_code}' \
+              "${SITE_URL}/api/health")"; then
+            status="unreachable"
+          fi
+
+          if [[ "${status}" == "200" ]]; then
+            echo "Full-service readiness: OK"
+            echo "### Full-service readiness: OK" >> "${GITHUB_STEP_SUMMARY}"
+          else
+            echo "::warning title=Production readiness degraded::/api/health returned HTTP ${status}. Uptime remains available, but at least one required integration needs attention."
+            echo "### Full-service readiness: degraded (HTTP ${status})" >> "${GITHUB_STEP_SUMMARY}"
+            echo "The strict readiness endpoint remains degraded and deployment smoke checks must continue to treat it as a blocker." >> "${GITHUB_STEP_SUMMARY}"
+          fi

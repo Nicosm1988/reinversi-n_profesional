@@ -12,8 +12,11 @@
 
 ## Alerting thresholds
 
-- Health degradation:
-  - Trigger if `/api/health` is non-200 for 3 consecutive checks.
+- Full-service readiness degradation:
+  - Umbral recomendado: escalar si `/api/health` no responde 200 en 3 controles consecutivos.
+  - Estado actual: el workflow de uptime registra una advertencia en cada ejecución, pero no persiste el contador de fallos consecutivos.
+- Application liveness:
+  - Trigger if `/api/health/live` or a monitored public route is non-200 after retries.
 - API error rate:
   - Trigger if 5xx > 2% over 5 minutes.
 - Rate-limit saturation:
@@ -23,11 +26,14 @@
 
 ## Recommended monitors
 
-- GitHub Actions ejecuta `.github/workflows/uptime-monitor.yml` cada 30 minutos. Un fallo genera una ejecución fallida y las notificaciones configuradas en GitHub.
+- GitHub Actions ejecuta `.github/workflows/uptime-monitor.yml` cada 30 minutos. Las rutas públicas y `/api/health/live` determinan el estado de uptime; `/api/health` se informa por separado como readiness estricta.
+- `.github/workflows/deploy-smoke.yml` conserva la verificación estricta de readiness cuando se ejecuta manualmente; actualmente no es un gate automático de cada despliegue.
 - Vercel Speed Insights registra Core Web Vitals reales desde el layout principal.
 
 - Uptime monitor for:
   - `/`
+  - `/api/health/live`
+- Full-service readiness:
   - `/api/health`
 - Synthetic flow:
   - Contact form submit

@@ -86,16 +86,30 @@ test("logo links home and exposes both slow orbits and the live trail", async ({
     return {
       markHeight: mark.getBoundingClientRect().height,
       wordFontSize: Number.parseFloat(window.getComputedStyle(word).fontSize),
-      connectionGap: Math.abs(trailStart.x - sRect.right),
+      horizontalOverlap: sRect.right - trailStart.x,
+      trailStartY: trailStart.y,
+      sTop: sRect.top,
+      sBottom: sRect.bottom,
+      trailWidth: path.ownerSVGElement?.getBoundingClientRect().width ?? 0,
+      trailHeight: path.ownerSVGElement?.getBoundingClientRect().height ?? 0,
+      trailLeft: Number.parseFloat(window.getComputedStyle(path.ownerSVGElement!).left),
+      trailBottom: Number.parseFloat(window.getComputedStyle(path.ownerSVGElement!).bottom),
       initialThickness: thicknessAt(28),
       finalThickness: thicknessAt(126),
     };
   });
 
-  expect(logoGeometry.markHeight).toBeGreaterThanOrEqual(71);
-  expect(logoGeometry.markHeight).toBeLessThanOrEqual(73);
+  expect(logoGeometry.markHeight).toBeGreaterThanOrEqual(79);
+  expect(logoGeometry.markHeight).toBeLessThanOrEqual(81);
   expect(logoGeometry.wordFontSize).toBeCloseTo(52, 1);
-  expect(logoGeometry.connectionGap).toBeLessThanOrEqual(3);
+  expect(logoGeometry.horizontalOverlap).toBeGreaterThanOrEqual(1.5);
+  expect(logoGeometry.horizontalOverlap).toBeLessThanOrEqual(3.5);
+  expect(logoGeometry.trailStartY).toBeGreaterThan(logoGeometry.sTop);
+  expect(logoGeometry.trailStartY).toBeLessThan(logoGeometry.sBottom);
+  expect(logoGeometry.trailWidth).toBeCloseTo(149.3, 0);
+  expect(logoGeometry.trailHeight).toBeCloseTo(16, 0);
+  expect(logoGeometry.trailLeft).toBe(-1);
+  expect(logoGeometry.trailBottom).toBe(1);
   expect(logoGeometry.initialThickness).toBeGreaterThan(logoGeometry.finalThickness * 3);
 
   await homeLink.click();

@@ -269,8 +269,9 @@ for (const locale of locales) {
         const mark = document.querySelector<SVGElement>("header .senda-logo__mark");
         const wordWrap = document.querySelector<HTMLElement>("header .senda-logo__word-wrap");
         const word = document.querySelector<HTMLElement>("header .senda-logo__word");
+        const trail = document.querySelector<SVGElement>("header .senda-logo__trail");
 
-        if (!row || !desktopNavigation || !menuButton || !logo || !mark || !wordWrap || !word) {
+        if (!row || !desktopNavigation || !menuButton || !logo || !mark || !wordWrap || !word || !trail) {
           throw new Error("Header structure is incomplete");
         }
 
@@ -282,6 +283,7 @@ for (const locale of locales) {
         );
         const rowRect = row.getBoundingClientRect();
         const markRect = mark.getBoundingClientRect();
+        const trailRect = trail.getBoundingClientRect();
         const navigationLabels = Array.from(
           desktopNavigation.querySelectorAll<HTMLElement>(":scope > ul > li > a"),
         );
@@ -309,6 +311,8 @@ for (const locale of locales) {
           wordVisible: wordWrap.offsetParent !== null,
           markHeight: markRect.height,
           wordFontSize: Number.parseFloat(window.getComputedStyle(word).fontSize),
+          trailWidth: trailRect.width,
+          trailHeight: trailRect.height,
           headerHeight: rowRect.height,
           navigationTextDelta: navigationTextCenters.length === 0
             ? 0
@@ -322,9 +326,17 @@ for (const locale of locales) {
       expect(layout.desktopNavigationVisible).toBe(viewport.desktop);
       expect(layout.menuButtonVisible).toBe(!viewport.desktop);
       expect(layout.wordVisible).toBe(viewport.word);
-      expect(layout.markHeight).toBeGreaterThanOrEqual(viewport.largeLogo ? 71 : 56);
-      expect(layout.markHeight).toBeLessThanOrEqual(viewport.largeLogo ? 73 : 58);
+      expect(layout.markHeight).toBeGreaterThanOrEqual(viewport.largeLogo ? 79 : 63);
+      expect(layout.markHeight).toBeLessThanOrEqual(viewport.largeLogo ? 81 : 65);
       expect(layout.wordFontSize).toBeCloseTo(viewport.largeLogo ? 52 : 34.4, 1);
+      expect(layout.trailWidth).toBeCloseTo(
+        viewport.word ? (viewport.largeLogo ? 149.3 : 98.9) : 0,
+        0,
+      );
+      expect(layout.trailHeight).toBeCloseTo(
+        viewport.word ? (viewport.largeLogo ? 16 : 12.2) : 0,
+        0,
+      );
       expect(layout.headerHeight).toBe(88);
       expect(layout.navigationTextDelta).toBeLessThanOrEqual(1);
     }

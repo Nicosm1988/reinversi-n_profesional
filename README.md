@@ -64,7 +64,8 @@ npm run dev
 - `POST /api/diagnostics/save` (retirado; responde `410 Gone`)
 - `POST /api/initial-diagnostic`
 - `POST /api/leads`
-- `GET /api/health`
+- `GET /api/health/live` (liveness sin dependencias)
+- `GET /api/health` (readiness estricta del servicio completo)
 
 ## Base de datos (Supabase)
 

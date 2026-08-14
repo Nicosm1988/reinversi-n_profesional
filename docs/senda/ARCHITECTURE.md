@@ -16,7 +16,7 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 
 **Estructura de rutas** (`app/`):
 - `app/[locale]/` — páginas canónicas: home, `recorridos/`, `como-trabajamos/`, `equipo/`, `preguntas-frecuentes/`, `contacto/`, `diagnostico/`, `login/`, `panel/`, `privacidad/` y `terminos/`; las rutas públicas anteriores permanecen solo como redirecciones permanentes.
-- `app/api/` — `contact` (SMTP), `diagnostics/analyze` (POST, gpt-4o vía AI SDK), `diagnostics/save` (retirado, 410 Gone), `initial-diagnostic`, `leads`, `health`.
+- `app/api/` — `contact` (SMTP), `diagnostics/analyze` (POST, gpt-4o vía AI SDK), `diagnostics/save` (retirado, 410 Gone), `initial-diagnostic`, `leads`, `health` (readiness estricta) y `health/live` (liveness sin dependencias).
 - `app/auth/` — callback OAuth.
 - `app/robots.ts`, `app/sitemap.ts`, `app/globals.css` (variables HSL del sistema de diseño).
 

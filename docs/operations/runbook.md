@@ -6,19 +6,24 @@ Endpoint: `GET /api/health`
 
 Response includes:
 - `status`: `ok` or `degraded`
-- `checks`: raw dependency checks
-- `readiness`: checks required for full service
-- `requirements.turnstileEnforced`
+- `checks`: controles de dependencias, solo fuera de producción o con un `x-health-token` válido
+- `readiness`: requisitos del servicio completo, bajo la misma protección de diagnóstico
+- `requirements.turnstileEnforced`: bajo la misma protección de diagnóstico
+
+Este endpoint representa la readiness del servicio completo y devuelve `503` mientras falte una capacidad requerida. `GET /api/health/live` es la sonda de liveness sin dependencias que utiliza el monitor de uptime.
 
 ## Incident triage
 
 ## If `status=degraded`
 
+En producción, usar el `HEALTHCHECK_DIAGNOSTICS_TOKEN` configurado de forma segura para consultar los campos protegidos. No imprimir el token en logs.
+
 1. Check `checks.supabase`.
 2. Check `checks.supabaseAdmin`.
 3. Check `checks.openai`.
-4. If `turnstileEnforced=true`, check `checks.turnstile`.
-5. Validate environment variables with:
+4. Check `checks.contactSmtp`; validate all five SMTP variables, including the sensitive `SMTP_PASSWORD`.
+5. If `turnstileEnforced=true`, check `checks.turnstile`.
+6. Validate environment variables with:
 
 ```bash
 npm run verify:env:strict

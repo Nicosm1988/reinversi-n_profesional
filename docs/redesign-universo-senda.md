@@ -1,5 +1,57 @@
 # Rediseño Universo Senda
 
+## Intervención 6 · Uptime y escala del símbolo
+
+- Fecha de inicio: 2026-08-14.
+- Proyecto: `original` (`v0-reinvention-web-platform`), sin intervenir `senda-cosmos`.
+- Objetivo: separar liveness de readiness para que el monitor de uptime describa correctamente la disponibilidad pública, y ampliar solo el símbolo orbital del header conservando la palabra `Senda`.
+- Hash base: `b927e46c274be07a61966767f4d3c7e472ce6d64`.
+- Rama de trabajo: `agent/fix-uptime-logo-20260814`.
+- Checkpoint local previo: `checkpoint/pre-uptime-logo-20260814`.
+- Estado inicial: árbol limpio y sincronizado con `origin/main`.
+
+### Decisiones
+
+- `/api/health/live` es una sonda de proceso sin dependencias: responde 200 si Next puede ejecutar el handler y no expone diagnósticos.
+- `/api/health` conserva sin cambios su semántica estricta de readiness, incluido SMTP. La falta de `SMTP_PASSWORD` continúa degradando ese endpoint y bloqueando el smoke de despliegue; no se oculta ni se reemplaza con una credencial ficticia.
+- `Production Uptime` comprueba rutas públicas y liveness, e informa readiness degradada como una advertencia separada con la URL y el estado HTTP.
+- La palabra `Senda`, la cinta vectorial y el footer conservan su escala. Solo el símbolo orbital del header pasa a 64 px en la variante compacta y 80 px desde 768 px.
+- La cinta se desplaza un píxel hacia la izquierda y hacia arriba para solaparse realmente con el remate inferior de la `S`; no se modifica su silueta ni su afinado.
+
+### Recuperación previa a esta intervención
+
+```bash
+git switch checkpoint/pre-uptime-logo-20260814
+```
+
+Retomar la rama de trabajo:
+
+```bash
+git switch agent/fix-uptime-logo-20260814
+```
+
+No requiere `git reset`, `git restore` ni `git checkout --`.
+
+### Archivos intervenidos
+
+- Marca y validación responsive: `app/globals.css`, `tests/e2e/{smoke,internal-pages}.spec.ts`.
+- Liveness y monitoreo: `app/api/health/live/route.ts`, `.github/workflows/uptime-monitor.yml`, `tests/unit/health-live-route.test.ts`.
+- Operación y trazabilidad: `README.md`, `docs/senda/ARCHITECTURE.md`, `docs/operations/{slo-alerting,runbook}.md` y este documento.
+
+No se modifican dependencias, lockfiles, PDF, variables de entorno, secretos, formularios, autenticación, RLS ni el proyecto `senda-cosmos`.
+
+### Validación
+
+- `npm run release:check`: aprobado el 2026-08-14.
+  - ESLint y TypeScript: aprobados.
+  - Unitarias: 89 aprobadas en 21 archivos.
+  - Playwright: 67 aprobadas y 2 autenticadas omitidas por no disponer de `E2E_AUTH_STORAGE_STATE`.
+  - Build optimizado de Next.js: aprobado e incluye `/api/health/live`.
+- La matriz responsive dirigida de 51 pruebas aprobó rutas ES/EN y los anchos críticos del header, incluidos 320, 390, 768, 1366, 1599, 1600, 1720 y 1920 px, sin overflow ni solapamientos.
+- La inspección visual real se repitió a 390 y 1720 px en modo oscuro. Confirmó el símbolo ampliado, la palabra sin cambio de escala y la continuidad S→senda.
+- `git diff --check`: aprobado. No se incorporaron secretos, variables locales ni artefactos generados.
+- La publicación, el nuevo run manual de `Production Uptime` y la comprobación del alias productivo se registran al cerrar la intervención.
+
 ## Intervención 5 · Marca ampliada y estructura Sobre mí
 
 - Fecha de inicio: 2026-08-14.
