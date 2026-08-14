@@ -10,6 +10,7 @@ const explorationKeys = [
   "narrative",
   "decision",
   "change",
+  "meaning",
   "context",
   "future",
 ] as const;
@@ -134,15 +135,15 @@ export function NarrativesLabPage() {
               {t("explorations.description")}
             </p>
             <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-terracotta)]">
-              01—08 · SENDA / LAB
+              01—09 · SENDA / LAB
             </p>
           </div>
         </div>
-        <ol className="mt-10 grid overflow-hidden rounded-[1.4rem] border border-[var(--senda-border)] bg-[var(--senda-border)] sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-10 grid overflow-hidden rounded-[1.4rem] border border-[var(--senda-border)] bg-[var(--senda-border)] sm:grid-cols-2 lg:grid-cols-3">
           {explorationKeys.map((key, index) => (
             <li
               key={key}
-              className="min-h-44 bg-[var(--senda-paper)] p-6 sm:min-h-52 sm:p-7"
+              className="min-h-36 bg-[var(--senda-paper)] p-5 sm:min-h-52 sm:p-7"
             >
               <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">
                 {String(index + 1).padStart(2, "0")}

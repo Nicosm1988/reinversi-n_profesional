@@ -170,8 +170,10 @@ export function LaboratoryInterestForm() {
   if (status === "success") {
     return (
       <div
+        ref={(node) => node?.focus()}
         className="senda-editorial-card rounded-[1.4rem] p-7 text-center sm:p-10"
         role="status"
+        tabIndex={-1}
       >
         <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[var(--senda-border)] bg-[var(--senda-stone)] text-[var(--senda-accent)]">
           <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -316,7 +318,7 @@ export function LaboratoryInterestForm() {
           ) : null}
         </div>
 
-        <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" inert>
+        <div hidden aria-hidden="true" inert>
           <label htmlFor={fieldId("company-website")}>Website</label>
           <input
             id={fieldId("company-website")}

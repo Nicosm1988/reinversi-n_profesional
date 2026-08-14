@@ -201,6 +201,8 @@ test("laboratory interest preserves its data when the secure contact endpoint re
     "content",
     /Laboratorio de Nuevas Narrativas Laborales/,
   );
+  await expect(page.locator("main ol > li")).toHaveCount(9);
+  await expect(page.getByRole("textbox", { name: "Website" })).toHaveCount(0);
 
   const nameField = page.getByLabel("Nombre");
   const submitButton = page.getByRole("button", { name: "Quiero recibir novedades" });
@@ -275,7 +277,9 @@ test("laboratory interest confirms only an accepted English submission", async (
   await expect(page.getByLabel("Email address")).toHaveValue("grace@example.com");
 
   await submitButton.click();
-  await expect(page.getByRole("status")).toContainText("We have registered your interest");
+  const successStatus = page.getByRole("status");
+  await expect(successStatus).toContainText("We have registered your interest");
+  await expect(successStatus).toBeFocused();
   expect(attempts).toBe(2);
 });
 

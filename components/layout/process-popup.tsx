@@ -9,7 +9,11 @@ const DELAY_MS = 30_000;
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 const LAST_SHOWN_KEY = "reinvencion_career_anchor_popup_last_shown";
 const COMPLETED_KEY = "reinvencion_career_anchor_completed";
-const EXCLUDED_PATHS = ["/diagnostico/ancla-de-carrera", "/diagnostico/ancla-de-carrera/test"];
+const EXCLUDED_PATHS = [
+  "/diagnostico/ancla-de-carrera",
+  "/diagnostico/ancla-de-carrera/test",
+  "/laboratorio-nuevas-narrativas",
+];
 
 export function ProcessPopup() {
   const t = useTranslations("ProcessPopup");

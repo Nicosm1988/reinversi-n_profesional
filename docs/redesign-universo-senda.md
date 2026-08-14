@@ -1,5 +1,23 @@
 # Rediseño Universo Senda
 
+## Revisión final del Laboratorio para producción
+
+- Fecha: 2026-08-13.
+- Proyecto: `original` (`v0-reinvention-web-platform`), sin intervenir `senda-cosmos`.
+- Hash inicial: `6897ce15b0b68e261a7fba6b52fee89ce20befaf`.
+- Rama de trabajo: `agent/senda-laboratorio-final-production`.
+- Checkpoint recuperable previo: `checkpoint/pre-laboratorio-final-production-20260813`.
+- Estado inicial: árbol limpio, sin cambios staged ni unstaged, y `main` sincronizada con `origin/main`.
+- Recuperación exacta del estado previo: `git switch checkpoint/pre-laboratorio-final-production-20260813`. No requiere `git reset`, `git restore` ni `git checkout --`.
+- La revisión completa incorporó el noveno eje editorial solicitado, “construir sentido alrededor de las decisiones laborales”, en español e inglés; el Laboratorio continúa separado de los dos recorridos.
+- Se excluyó el honeypot del árbol accesible sin retirarlo del formulario ni modificar la protección del endpoint.
+- El popup de otras herramientas queda suprimido en esta ruta para no tapar ni interrumpir el formulario; al confirmarse un envío, el foco pasa al mensaje de éxito.
+- Archivos intervenidos: `components/pages/narratives-lab-page.tsx`, `components/forms/laboratory-interest-form.tsx`, `components/layout/process-popup.tsx`, `messages/{es,en}.json`, `tests/unit/i18n.test.ts`, `tests/e2e/senda-experience.spec.ts` y este documento.
+- `npm run release:check` aprobado: ESLint, TypeScript, 88 pruebas unitarias, 63 pruebas E2E, 2 pruebas autenticadas omitidas por falta de credenciales técnicas y build optimizado con la ruta ES/EN del Laboratorio.
+- La inspección visual dirigida cubrió escritorio claro a 1440 px y móvil oscuro a 390 px en español e inglés; la matriz E2E verificó además 320 px, ambos temas y ausencia de overflow.
+- El control de Vercel Production confirmó cuatro de las cinco variables SMTP. Falta `SMTP_PASSWORD`; por lo tanto no se intentó ni se afirma un envío o recepción real. El endpoint permanece en fallo cerrado con 503 `config` hasta incorporar ese secreto y generar un nuevo deployment.
+- El commit, el deployment y la URL pública se informan al cerrar esta revisión.
+
 ## Intervención 4 · Laboratorio de Nuevas Narrativas Laborales
 
 - Fecha de inicio: 2026-08-13.
@@ -68,7 +86,7 @@ No se modificaron dependencias, lockfiles, PDF, variables de entorno, secretos, 
   - Unitarias: 88 aprobadas en 20 archivos.
   - Playwright: 61 aprobadas y 2 autenticadas omitidas por no disponer de `E2E_AUTH_STORAGE_STATE`.
   - Build optimizado de Next.js: aprobado e incluye las rutas ES/EN del Laboratorio.
-- `git diff --check` y la paridad exacta de 632 claves ES/EN: aprobados. Los catálogos de recorridos conservan únicamente `compass` y `newStage`.
+- `git diff --check` y la paridad exacta de 633 claves ES/EN: aprobados. Los catálogos de recorridos conservan únicamente `compass` y `newStage`.
 - La comprobación limpia de producción se realiza después del push y deployment; su evidencia se informa junto al hash y URL pública, sin confundirla con la validación local.
 
 ## Intervención 3 · Arquitectura multipágina, marca viva y contacto

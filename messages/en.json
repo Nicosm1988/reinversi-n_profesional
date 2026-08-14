@@ -457,6 +457,7 @@
         "narrative": "Explore new ways of talking about your professional experience.",
         "decision": "Distinguish between a decision of your own and automatic adaptation to trends.",
         "change": "Understand what you want to preserve, transform, or begin.",
+        "meaning": "Build meaning around decisions about work.",
         "context": "Connect identity, experience, context, and real possibilities.",
         "future": "Think about your professional future without disregarding the market or being completely determined by it."
       }
@@ -485,7 +486,7 @@
       "consent": "I agree to receive information from Senda only about the New Narratives for Work Lab.",
       "privacyLink": "Read the privacy policy",
       "submit": "I want to receive updates",
-      "submitting": "Sending...",
+      "submitting": "Sending…",
       "successTitle": "We have registered your interest.",
       "successDescription": "Your request was sent successfully. We will write to you when there is news about the first edition.",
       "errors": {

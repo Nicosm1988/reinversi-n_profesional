@@ -457,6 +457,7 @@
         "narrative": "Explorar nuevas maneras de narrar la experiencia profesional.",
         "decision": "Distinguir entre una decisión propia y una adaptación automática a las tendencias.",
         "change": "Comprender qué se desea conservar, transformar o comenzar.",
+        "meaning": "Construir sentido alrededor de las decisiones laborales.",
         "context": "Poner en relación identidad, experiencia, contexto y posibilidades reales.",
         "future": "Pensar el futuro profesional sin desconocer el mercado, pero sin quedar completamente determinado por él."
       }
@@ -485,7 +486,7 @@
       "consent": "Acepto recibir información de Senda únicamente sobre el Laboratorio de Nuevas Narrativas Laborales.",
       "privacyLink": "Consultar la política de privacidad",
       "submit": "Quiero recibir novedades",
-      "submitting": "Enviando...",
+      "submitting": "Enviando…",
       "successTitle": "Registramos tu interés.",
       "successDescription": "Tu solicitud fue enviada correctamente. Te escribiremos cuando haya novedades sobre la primera edición.",
       "errors": {

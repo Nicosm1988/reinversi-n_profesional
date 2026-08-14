@@ -55,7 +55,7 @@ describe("translation catalogs", () => {
     expect(spanishMessages.NarrativesLab.hero.title).toBe(
       "Laboratorio de Nuevas Narrativas Laborales",
     );
-    expect(Object.keys(spanishMessages.NarrativesLab.explorations.items)).toHaveLength(8);
+    expect(Object.keys(spanishMessages.NarrativesLab.explorations.items)).toHaveLength(9);
     expect("situations" in spanishMessages.Home).toBe(false);
     expect("phases" in spanishMessages.Home).toBe(false);
     expect("team" in spanishMessages.Home).toBe(false);
