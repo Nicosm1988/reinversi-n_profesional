@@ -209,6 +209,80 @@ test("desktop journeys dropdown opens from the keyboard, focuses its first route
   await expect(toggle).toBeFocused();
 });
 
+for (const locale of locales) {
+  test(`${locale.id.toUpperCase()} header adapts across notebook and zoom-equivalent widths`, async ({ page }) => {
+    await page.goto(`${locale.prefix}/equipo` || "/equipo");
+
+    const viewports = [
+      { width: 320, desktop: false, word: false },
+      { width: 389, desktop: false, word: false },
+      { width: 390, desktop: false, word: true },
+      { width: 720, desktop: false, word: true },
+      { width: 960, desktop: false, word: true },
+      { width: 1152, desktop: false, word: true },
+      { width: 1366, desktop: false, word: true },
+      { width: 1439, desktop: false, word: true },
+      { width: 1440, desktop: true, word: true },
+      { width: 1536, desktop: true, word: true },
+      { width: 1920, desktop: true, word: true },
+    ] as const;
+
+    for (const viewport of viewports) {
+      await page.setViewportSize({ width: viewport.width, height: 844 });
+
+      const layout = await page.evaluate((primaryNavigation) => {
+        const row = document.querySelector<HTMLElement>("header > div");
+        const desktopNavigation = document.querySelector<HTMLElement>(
+          `header nav[aria-label="${primaryNavigation}"]`,
+        );
+        const menuButton = document.querySelector<HTMLElement>(
+          'header button[aria-controls="senda-mobile-menu"]',
+        );
+        const logo = document.querySelector<HTMLElement>("header .senda-logo");
+        const mark = document.querySelector<SVGElement>("header .senda-logo__mark");
+        const wordWrap = document.querySelector<HTMLElement>("header .senda-logo__word-wrap");
+        const word = document.querySelector<HTMLElement>("header .senda-logo__word");
+
+        if (!row || !desktopNavigation || !menuButton || !logo || !mark || !wordWrap || !word) {
+          throw new Error("Header structure is incomplete");
+        }
+
+        const visibleChildren = Array.from(row.children)
+          .filter((element): element is HTMLElement => (element as HTMLElement).offsetParent !== null)
+          .map((element) => element.getBoundingClientRect());
+        const orderedWithoutOverlap = visibleChildren.every(
+          (rect, index) => index === 0 || rect.left >= visibleChildren[index - 1].right - 1,
+        );
+        const rowRect = row.getBoundingClientRect();
+        const markRect = mark.getBoundingClientRect();
+
+        return {
+          documentOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          rowWithinViewport: rowRect.left >= -1 && rowRect.right <= window.innerWidth + 1,
+          orderedWithoutOverlap,
+          desktopNavigationVisible: desktopNavigation.offsetParent !== null,
+          menuButtonVisible: menuButton.offsetParent !== null,
+          wordVisible: wordWrap.offsetParent !== null,
+          markHeight: markRect.height,
+          wordFontSize: Number.parseFloat(window.getComputedStyle(word).fontSize),
+          headerHeight: rowRect.height,
+        };
+      }, locale.primaryNavigation);
+
+      expect(layout.documentOverflow, `${locale.id} ${viewport.width}px document overflow`).toBeLessThanOrEqual(1);
+      expect(layout.rowWithinViewport, `${locale.id} ${viewport.width}px header bounds`).toBe(true);
+      expect(layout.orderedWithoutOverlap, `${locale.id} ${viewport.width}px header overlap`).toBe(true);
+      expect(layout.desktopNavigationVisible).toBe(viewport.desktop);
+      expect(layout.menuButtonVisible).toBe(!viewport.desktop);
+      expect(layout.wordVisible).toBe(viewport.word);
+      expect(layout.markHeight).toBeGreaterThanOrEqual(56);
+      expect(layout.markHeight).toBeLessThanOrEqual(58);
+      expect(layout.wordFontSize).toBeCloseTo(34.4, 1);
+      expect(layout.headerHeight).toBe(88);
+    }
+  });
+}
+
 test("mobile menu is focus-managed, marks the current page and preserves locale on journey navigation", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/en/equipo");

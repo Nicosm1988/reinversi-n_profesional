@@ -188,7 +188,7 @@ export function Header() {
           : "border-[var(--senda-border)] bg-[rgba(247,244,237,.94)] shadow-[0_18px_48px_-40px_rgba(10,20,34,.75)] backdrop-blur-xl dark:border-white/10 dark:bg-[rgba(10,20,34,.92)]",
       )}
     >
-      <div className="mx-auto flex h-[82px] max-w-[1440px] items-center justify-between px-3 min-[360px]:px-5 sm:px-8 lg:px-12 xl:px-20">
+      <div className="mx-auto flex h-[88px] max-w-[1720px] items-center justify-between px-3 min-[360px]:px-5 sm:px-8 lg:px-10 min-[1600px]:px-8 min-[1760px]:px-12">
         <Link
           href="/"
           onClick={() => {
@@ -202,11 +202,11 @@ export function Header() {
           )}
           aria-label={t("homeLabel")}
         >
-          <SendaLogo className="h-[3.1rem]" wordWrapClassName="hidden min-[360px]:inline-flex" />
+          <SendaLogo className="senda-logo--header" />
         </Link>
 
-        <nav className="hidden min-[1400px]:block" aria-label={t("primaryNavigation")}>
-          <ul className="flex items-center gap-2 2xl:gap-4">
+        <nav className="hidden min-[1440px]:block" aria-label={t("primaryNavigation")}>
+          <ul className="flex items-center gap-4">
             {navLinks.map((link) => {
               const current = isCurrentPath(pathname, link.href);
               const active = isActiveSection(pathname, link.href);
@@ -298,13 +298,14 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-1.5 min-[1400px]:flex">
+        <div className="hidden items-center gap-1.5 min-[1440px]:flex">
           <LanguageSwitcher compact />
           <ThemeToggle />
           {authState.status === "authenticated" ? (
             <div ref={accountDropdownRef} className="relative">
               <button
                 type="button"
+                aria-label={t("ctaAccount")}
                 aria-expanded={accountOpen}
                 aria-haspopup="menu"
                 onClick={() => setAccountOpen((current) => !current)}
@@ -316,7 +317,8 @@ export function Header() {
                 ) : (
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--senda-ink)] text-[10px] text-white dark:bg-[#f4efe4] dark:text-[#252a22]">{userInitials(authState.fullName, authState.email)}</span>
                 )}
-                {t("ctaAccount")} <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", accountOpen && "rotate-180")} />
+                <span className="hidden min-[1536px]:inline">{t("ctaAccount")}</span>
+                <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", accountOpen && "rotate-180")} />
               </button>
               {accountOpen ? (
                 <div role="menu" className="absolute right-0 top-full mt-3 w-64 rounded-2xl border border-[var(--senda-border)] bg-[#faf7ef] p-2 shadow-[0_28px_65px_-30px_rgba(35,39,29,.55)] dark:border-white/15 dark:bg-[#30362d]">
@@ -347,7 +349,7 @@ export function Header() {
           </Link>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5 min-[1400px]:hidden">
+        <div className="flex shrink-0 items-center gap-1.5 min-[1440px]:hidden">
           <LanguageSwitcher compact />
           <ThemeToggle />
           <button
@@ -368,7 +370,7 @@ export function Header() {
       </div>
 
       {mobileMenuOpen ? (
-        <div id="senda-mobile-menu" className="h-[calc(100svh-82px)] overscroll-contain overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f4ed] dark:border-white/10 dark:bg-[#0d1725] min-[1400px]:hidden">
+        <div id="senda-mobile-menu" className="h-[calc(100svh-88px)] overscroll-contain overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f4ed] dark:border-white/10 dark:bg-[#0d1725] min-[1440px]:hidden">
           <div className="mx-auto flex min-h-full max-w-xl flex-col px-5 py-8 sm:px-8">
             <nav aria-label={t("mobileNavigation")}>
               <ul className="divide-y divide-[var(--senda-border)] border-y border-[var(--senda-border)] dark:divide-white/10 dark:border-white/10">

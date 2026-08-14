@@ -15,7 +15,7 @@ export function Footer() {
         <div className="grid gap-14 border-b border-[var(--senda-atmosphere-border)] pb-16 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:pb-20">
           <div className="max-w-xl">
             <Link href="/" className="inline-flex items-center gap-3" aria-label={t("homeLabel")}>
-              <SendaLogo className="h-[3.4rem] text-[var(--senda-atmosphere-ink)]" />
+              <SendaLogo className="senda-logo--footer text-[var(--senda-atmosphere-ink)]" />
             </Link>
             <p className="mt-8 max-w-lg font-heading text-3xl leading-[1.15] text-[var(--senda-atmosphere-ink)] sm:text-4xl">{t("statement")}</p>
             <a href={`mailto:${CONTACT_EMAIL}`} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">

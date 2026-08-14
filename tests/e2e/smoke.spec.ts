@@ -55,6 +55,49 @@ test("logo links home and exposes both slow orbits and the live trail", async ({
     "senda-trail-draw",
   );
 
+  const logoGeometry = await homeLink.locator(".senda-logo").evaluate(async (logo) => {
+    await document.fonts.ready;
+    const mark = logo.querySelector<SVGElement>(".senda-logo__mark");
+    const word = logo.querySelector<HTMLElement>(".senda-logo__word");
+    const path = logo.querySelector<SVGPathElement>(".senda-logo__trail path");
+    const firstCharacter = word?.firstChild;
+    if (!mark || !word || !path || !firstCharacter) throw new Error("Incomplete Senda logo");
+
+    const range = document.createRange();
+    range.setStart(firstCharacter, 0);
+    range.setEnd(firstCharacter, 1);
+    const sRect = range.getBoundingClientRect();
+    const matrix = path.getScreenCTM();
+    if (!matrix) throw new Error("The Senda trail has no screen transform");
+    const trailStart = new DOMPoint(path.getPointAtLength(0).x, path.getPointAtLength(0).y)
+      .matrixTransform(matrix);
+
+    function thicknessAt(x: number) {
+      let first: number | null = null;
+      let last: number | null = null;
+      for (let y = 0; y <= 18; y += 0.05) {
+        if (!path!.isPointInFill(new DOMPoint(x, y))) continue;
+        if (first === null) first = y;
+        last = y;
+      }
+      return first === null || last === null ? 0 : last - first;
+    }
+
+    return {
+      markHeight: mark.getBoundingClientRect().height,
+      wordFontSize: Number.parseFloat(window.getComputedStyle(word).fontSize),
+      connectionGap: Math.abs(trailStart.x - sRect.right),
+      initialThickness: thicknessAt(28),
+      finalThickness: thicknessAt(126),
+    };
+  });
+
+  expect(logoGeometry.markHeight).toBeGreaterThanOrEqual(56);
+  expect(logoGeometry.markHeight).toBeLessThanOrEqual(58);
+  expect(logoGeometry.wordFontSize).toBeCloseTo(34.4, 1);
+  expect(logoGeometry.connectionGap).toBeLessThanOrEqual(3);
+  expect(logoGeometry.initialThickness).toBeGreaterThan(logoGeometry.finalThickness * 3);
+
   await homeLink.click();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
