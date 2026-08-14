@@ -5,6 +5,7 @@ const retiredPublicTerms =
 
 const targetRoutes = [
   { path: "/", active: { es: "Inicio", en: "Home" } },
+  { path: "/sobre-mi", active: { es: "Sobre mí", en: "About me" }, aboutCards: 3 },
   {
     path: "/recorridos",
     active: { es: "Recorridos", en: "Journeys" },
@@ -96,7 +97,7 @@ for (const locale of locales) {
           failedSameOriginResources.push(request.url());
         }
       });
-      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.setViewportSize({ width: 1720, height: 900 });
       await page.goto(localizedRoute);
 
       await expect(page).toHaveTitle(/Senda/);
@@ -133,6 +134,10 @@ for (const locale of locales) {
       if ("teamCards" in route) {
         await expect(page.locator("main article")).toHaveCount(route.teamCards);
       }
+      if ("aboutCards" in route) {
+        await expect(page.locator("main ol > li")).toHaveCount(route.aboutCards);
+        await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+      }
       if ("questions" in route) {
         await expect(page.locator("main details")).toHaveCount(route.questions);
       }
@@ -152,7 +157,7 @@ for (const locale of locales) {
 }
 
 for (const locale of locales) {
-  test(`all nine ${locale.id.toUpperCase()} routes fit a narrow mobile viewport`, async ({ page }) => {
+  test(`all ten ${locale.id.toUpperCase()} routes fit a narrow mobile viewport`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
 
     for (const route of targetRoutes) {
@@ -189,7 +194,7 @@ for (const locale of locales) {
 }
 
 test("desktop journeys dropdown opens from the keyboard, focuses its first route and closes with Escape", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1720, height: 900 });
   await page.goto("/recorridos");
 
   const navigation = page.getByRole("navigation", { name: "Navegación principal" });
@@ -210,21 +215,43 @@ test("desktop journeys dropdown opens from the keyboard, focuses its first route
 });
 
 for (const locale of locales) {
+  test(`${locale.id.toUpperCase()} places About me between Home and Journeys`, async ({ page }) => {
+    await page.setViewportSize({ width: 1720, height: 900 });
+    await page.goto(locale.prefix || "/");
+
+    const labels = await page
+      .getByRole("navigation", { name: locale.primaryNavigation })
+      .locator(":scope > ul > li > a")
+      .allTextContents();
+
+    expect(labels.slice(0, 3).map((label) => label.trim())).toEqual(
+      locale.id === "es"
+        ? ["Inicio", "Sobre mí", "Recorridos"]
+        : ["Home", "About me", "Journeys"],
+    );
+  });
+}
+
+for (const locale of locales) {
   test(`${locale.id.toUpperCase()} header adapts across notebook and zoom-equivalent widths`, async ({ page }) => {
-    await page.goto(`${locale.prefix}/equipo` || "/equipo");
+    await page.goto(`${locale.prefix}/sobre-mi` || "/sobre-mi");
 
     const viewports = [
-      { width: 320, desktop: false, word: false },
-      { width: 389, desktop: false, word: false },
-      { width: 390, desktop: false, word: true },
-      { width: 720, desktop: false, word: true },
-      { width: 960, desktop: false, word: true },
-      { width: 1152, desktop: false, word: true },
-      { width: 1366, desktop: false, word: true },
-      { width: 1439, desktop: false, word: true },
-      { width: 1440, desktop: true, word: true },
-      { width: 1536, desktop: true, word: true },
-      { width: 1920, desktop: true, word: true },
+      { width: 320, desktop: false, word: false, largeLogo: false },
+      { width: 389, desktop: false, word: false, largeLogo: false },
+      { width: 390, desktop: false, word: true, largeLogo: false },
+      { width: 720, desktop: false, word: true, largeLogo: false },
+      { width: 767, desktop: false, word: true, largeLogo: false },
+      { width: 768, desktop: false, word: true, largeLogo: true },
+      { width: 960, desktop: false, word: true, largeLogo: true },
+      { width: 1152, desktop: false, word: true, largeLogo: true },
+      { width: 1366, desktop: false, word: true, largeLogo: true },
+      { width: 1440, desktop: false, word: true, largeLogo: true },
+      { width: 1536, desktop: false, word: true, largeLogo: true },
+      { width: 1599, desktop: false, word: true, largeLogo: true },
+      { width: 1600, desktop: true, word: true, largeLogo: true },
+      { width: 1720, desktop: true, word: true, largeLogo: true },
+      { width: 1920, desktop: true, word: true, largeLogo: true },
     ] as const;
 
     for (const viewport of viewports) {
@@ -295,9 +322,9 @@ for (const locale of locales) {
       expect(layout.desktopNavigationVisible).toBe(viewport.desktop);
       expect(layout.menuButtonVisible).toBe(!viewport.desktop);
       expect(layout.wordVisible).toBe(viewport.word);
-      expect(layout.markHeight).toBeGreaterThanOrEqual(56);
-      expect(layout.markHeight).toBeLessThanOrEqual(58);
-      expect(layout.wordFontSize).toBeCloseTo(34.4, 1);
+      expect(layout.markHeight).toBeGreaterThanOrEqual(viewport.largeLogo ? 71 : 56);
+      expect(layout.markHeight).toBeLessThanOrEqual(viewport.largeLogo ? 73 : 58);
+      expect(layout.wordFontSize).toBeCloseTo(viewport.largeLogo ? 52 : 34.4, 1);
       expect(layout.headerHeight).toBe(88);
       expect(layout.navigationTextDelta).toBeLessThanOrEqual(1);
     }
@@ -306,7 +333,7 @@ for (const locale of locales) {
 
 test("mobile menu is focus-managed, marks the current page and preserves locale on journey navigation", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/en/equipo");
+  await page.goto("/en/sobre-mi");
 
   await page.getByRole("button", { name: "Menu", exact: true }).click();
   await expect(page.getByRole("button", { name: "Close menu", exact: true })).toHaveAttribute(
@@ -316,7 +343,7 @@ test("mobile menu is focus-managed, marks the current page and preserves locale 
 
   const mobileNavigation = page.getByRole("navigation", { name: "Mobile navigation" });
   await expect(mobileNavigation.getByRole("link", { name: /Home$/ })).toBeFocused();
-  await expect(mobileNavigation.getByRole("link", { name: /Team$/ })).toHaveAttribute(
+  await expect(mobileNavigation.getByRole("link", { name: /About me$/ })).toHaveAttribute(
     "aria-current",
     "page",
   );

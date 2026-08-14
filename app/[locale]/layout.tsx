@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Raleway } from "next/font/google";
+import localFont from "next/font/local";
 import "../globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
@@ -15,22 +15,16 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { PointerIllumination } from "@/components/effects/pointer-illumination";
 import { getSiteUrl } from "@/lib/site-url";
 
-// Editorial maturity pass: Raleway replaces Manrope/Instrument Serif as the
-// single type family (body + display), matching it via weight contrast
-// instead of a separate serif — Loos Wide (seen on benchmark sites) isn't
-// licensed for use here.
-const manrope = Raleway({
-  subsets: ["latin"],
-  variable: "--font-manrope",
-  weight: ["400", "500", "600", "700"],
-  display: "swap"
-});
-
-const instrumentSerif = Raleway({
-  subsets: ["latin"],
-  variable: "--font-instrument-serif",
-  weight: ["300", "500", "700", "800"],
-  display: "swap"
+// One local variable font powers body and display text. Keeping the licensed
+// asset in the repository makes production builds independent from Google
+// Fonts availability while preserving the existing Raleway identity.
+const raleway = localFont({
+  src: "../fonts/raleway-variable.ttf",
+  variable: "--font-raleway",
+  weight: "100 900",
+  style: "normal",
+  display: "swap",
+  fallback: ["Arial", "sans-serif"],
 });
 
 export const viewport: Viewport = {
@@ -85,8 +79,7 @@ export default async function RootLayout(
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased flex flex-col",
-          manrope.variable,
-          instrumentSerif.variable
+          raleway.variable,
         )}
       >
         <ThemeProvider>

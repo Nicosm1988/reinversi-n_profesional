@@ -5,6 +5,7 @@
     "primaryNavigation": "Navegación principal",
     "mobileNavigation": "Navegación móvil",
     "navHome": "Inicio",
+    "navAbout": "Sobre mí",
     "navProcesses": "Recorridos",
     "navHow": "Cómo trabajamos",
     "navTeam": "Equipo",
@@ -35,6 +36,7 @@
     "linkCompass": "Brújula",
     "linkNewStage": "Nueva Etapa Profesional",
     "linkJourneys": "Todos los recorridos",
+    "linkAbout": "Sobre mí",
     "linkTeam": "Equipo",
     "linkLaboratory": "Laboratorio",
     "linkContact": "Contacto",
@@ -616,6 +618,50 @@
       "title": "Podés contarnos qué está cambiando.",
       "description": "El equipo te responderá para comprender tu situación y orientarte sobre un próximo paso posible.",
       "cta": "Contactar al equipo"
+    }
+  },
+  "AboutMe": {
+    "meta": {
+      "title": "Sobre mí",
+      "description": "Un espacio en preparación para compartir la trayectoria, el enfoque y las experiencias detrás de Senda."
+    },
+    "hero": {
+      "eyebrow": "Sobre mí",
+      "title": "El recorrido detrás de Senda.",
+      "description": "Este espacio está en construcción. Acá voy a compartir mi trayectoria, la mirada de trabajo y las experiencias que dieron forma a Senda."
+    },
+    "story": {
+      "eyebrow": "Mi recorrido",
+      "title": "Una historia que todavía estoy ordenando para contar.",
+      "paragraph1": "Esta sección queda preparada para presentar mi recorrido personal y profesional con claridad, sin reducirlo a una lista de credenciales.",
+      "paragraph2": "Próximamente voy a sumar los hitos, aprendizajes y decisiones que explican desde dónde acompaño cada proceso."
+    },
+    "structure": {
+      "eyebrow": "Lo que vas a encontrar",
+      "title": "Tres dimensiones para conocerme mejor.",
+      "description": "La página va a crecer sobre una estructura simple, para que cada parte pueda completarse sin perder claridad.",
+      "items": {
+        "experience": {
+          "number": "01",
+          "title": "Trayectoria",
+          "description": "Formación, experiencias y momentos que fueron dando forma a mi mirada profesional."
+        },
+        "practice": {
+          "number": "02",
+          "title": "Forma de acompañar",
+          "description": "Criterios, valores y una manera de trabajar que cuida la singularidad de cada recorrido."
+        },
+        "senda": {
+          "number": "03",
+          "title": "El origen de Senda",
+          "description": "La historia del proyecto y las preguntas que hicieron necesario crear este espacio."
+        }
+      }
+    },
+    "closing": {
+      "title": "Mientras termino de contar este recorrido, podemos conversar.",
+      "description": "Si querés conocer más sobre Senda o contarme el momento que estás atravesando, podés escribirme.",
+      "cta": "Escribirme"
     }
   },
   "Faq": {

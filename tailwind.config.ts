@@ -51,8 +51,8 @@ export default {
                 sm: 'calc(var(--radius) - 4px)'
             },
             fontFamily: {
-                sans: ['var(--font-manrope)', 'sans-serif'],
-                heading: ['var(--font-instrument-serif)', 'serif'],
+                sans: ['var(--font-raleway)', 'sans-serif'],
+                heading: ['var(--font-raleway)', 'sans-serif'],
             },
             fontSize: {
                 // Semantic Typography Scale

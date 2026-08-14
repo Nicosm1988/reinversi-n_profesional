@@ -49,6 +49,9 @@ describe("translation catalogs", () => {
       "newStage",
     ]);
     expect(spanishMessages.Header.navProcesses).toBe("Recorridos");
+    expect(spanishMessages.Header.navAbout).toBe("Sobre mí");
+    expect(spanishMessages.AboutMe.structure.items).toHaveProperty("experience");
+    expect(Object.keys(spanishMessages.AboutMe.structure.items)).toHaveLength(3);
     expect(spanishMessages.Home.journeys.viewAll).toBeTruthy();
     expect(spanishMessages.Header.navLaboratory).toBe("Laboratorio");
     expect(spanishMessages.Home.laboratory.status).toBe("Próximamente");

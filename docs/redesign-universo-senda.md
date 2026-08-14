@@ -1,5 +1,66 @@
 # Rediseño Universo Senda
 
+## Intervención 5 · Marca ampliada y estructura Sobre mí
+
+- Fecha de inicio: 2026-08-14.
+- Proyecto: `original` (`v0-reinvention-web-platform`), sin intervenir `senda-cosmos`.
+- Objetivo: ampliar de forma visible la marca del encabezado, convertir el remate inferior de la `S` en una senda continua bajo la palabra y agregar una estructura editable de `Sobre mí` entre Inicio y Recorridos.
+- Hash base: `62bc59b61a3ae79b6d104b95b06ae4a891647e82`.
+- Rama de trabajo: `agent/senda-logo-sobre-mi`.
+- Checkpoint local previo: `checkpoint/pre-logo-sobre-mi-20260814`.
+- Estado inicial: árbol limpio, sin cambios staged ni unstaged; el hash base coincidía con `origin/main`.
+
+### Decisiones de diseño y arquitectura
+
+- La ampliación se limita al logo del header desde `768 px`; en móvil angosto se conserva la escala compacta para no superponer la marca con idioma, tema y menú.
+- El camino inferior sigue siendo una silueta SVG propia, animada únicamente cuando el sistema permite movimiento. Su inicio se solapa con el remate inferior de la `S`, baja en una curva orgánica bajo `Senda` y se afina hacia el final.
+- El header completo pasa a mostrarse desde `1600 px`. Entre 320 y 1599 px usa la navegación compacta accesible, evitando que notebooks o zoom ampliado compriman los títulos.
+- `Sobre mí` se incorpora como destino independiente en español e inglés, inmediatamente después de Inicio y antes de Recorridos. Se conserva también la página Equipo: no se fusionan identidades ni se inventan datos personales.
+- La nueva página presenta una estructura real para trayectoria, forma de acompañar y origen de Senda, con texto explícito de que el contenido se completará. No incorpora retrato, credenciales ni biografía no confirmados.
+- Mientras la biografía esté incompleta, `/sobre-mi` y `/en/sobre-mi` publican `noindex,follow` y quedan fuera del sitemap y `llms.txt`; sí se verifican como rutas productivas accesibles.
+- Raleway se conserva como única familia visual, pero pasa de `next/font/google` a un archivo variable oficial autohospedado con licencia OFL. Esto elimina los 404 intermitentes de Google Fonts que bloqueaban builds locales y de Vercel, sin instalar paquetes ni cambiar la identidad tipográfica.
+
+### Recuperación previa a esta intervención
+
+Con el árbol limpio, volver exactamente al estado anterior:
+
+```bash
+git switch checkpoint/pre-logo-sobre-mi-20260814
+```
+
+Retomar la rama de trabajo:
+
+```bash
+git switch agent/senda-logo-sobre-mi
+```
+
+No hace falta usar `git reset`, `git restore` ni `git checkout --`.
+
+### Archivos intervenidos
+
+- Marca y layout responsive: `components/brand/senda-logo.tsx`, `app/globals.css` y `components/layout/header.tsx`.
+- Fuente autohospedada: `app/[locale]/layout.tsx`, `app/fonts/{raleway-variable.ttf,OFL.txt}` y `tailwind.config.ts`.
+- Nueva estructura: `app/[locale]/sobre-mi/page.tsx` y `components/pages/about-me-page.tsx`.
+- Navegación y contenido localizado: `components/layout/footer.tsx` y `messages/{es,en}.json`.
+- Verificación: `tests/unit/i18n.test.ts`, `tests/e2e/{internal-pages,smoke}.spec.ts` y `scripts/verify-deploy.mjs`.
+- Trazabilidad: este documento.
+
+No se modificaron dependencias, lockfiles, PDF, variables de entorno, secretos, autenticación, RLS, diagnósticos, formularios ni el proyecto independiente `senda-cosmos`.
+
+### Validación y publicación
+
+- `npm run release:check`: aprobado el 2026-08-14.
+  - ESLint y TypeScript: aprobados.
+  - Unitarias: 88 aprobadas en 20 archivos.
+  - Playwright: 67 aprobadas y 2 autenticadas omitidas por no disponer de `E2E_AUTH_STORAGE_STATE`.
+  - Build optimizado de Next.js: aprobado e incluye `/sobre-mi` y `/en/sobre-mi`; ya no realiza descargas de Google Fonts.
+- La matriz responsive cubrió 320, 389, 390, 720, 767, 768, 960, 1152, 1366, 1440, 1536, 1599, 1600, 1720 y 1920 px en español e inglés. Confirmó ausencia de overflow o solapes, palabra visible desde 390 px, marca ampliada desde 768 px y navegación completa únicamente desde 1600 px.
+- La prueba geométrica verifica una unión de hasta 3 px entre el remate inferior de la `S` y la senda, además de un grosor final inferior a un tercio del inicial. El modo de movimiento reducido mantiene el logo completo y estático.
+- La inspección visual en navegador real cubrió 390, 1366 y 1720 px, la página completa en modo oscuro y el orden `Inicio → Sobre mí → Recorridos` / `Home → About me → Journeys`.
+- Paridad exacta de 659 claves ES/EN y `git diff --check`: aprobados.
+- El archivo variable Raleway coincide byte por byte con la distribución oficial `google/fonts/main/ofl/raleway`; `OFL.txt` conserva íntegro el texto oficial, normalizado a finales de línea LF para el repositorio.
+- El commit, la publicación en `origin/main` y la comprobación de Vercel Production se informan al cerrar la intervención.
+
 ## Revisión final del Laboratorio para producción
 
 - Fecha: 2026-08-13.

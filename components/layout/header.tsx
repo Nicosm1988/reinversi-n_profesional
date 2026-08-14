@@ -68,6 +68,7 @@ export function Header() {
 
   const navLinks = [
     { name: t("navHome"), href: "/" },
+    { name: t("navAbout"), href: "/sobre-mi" },
     { name: t("navProcesses"), href: "/recorridos" },
     { name: t("navHow"), href: "/como-trabajamos" },
     { name: t("navTeam"), href: "/equipo" },
@@ -205,7 +206,7 @@ export function Header() {
           <SendaLogo className="senda-logo--header" />
         </Link>
 
-        <nav className="hidden min-[1440px]:block" aria-label={t("primaryNavigation")}>
+        <nav className="hidden min-[1600px]:block" aria-label={t("primaryNavigation")}>
           <ul className="flex items-center gap-4">
             {navLinks.map((link) => {
               const current = isCurrentPath(pathname, link.href);
@@ -298,7 +299,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-1.5 min-[1440px]:flex">
+        <div className="hidden items-center gap-1.5 min-[1600px]:flex">
           <LanguageSwitcher compact />
           <ThemeToggle />
           {authState.status === "authenticated" ? (
@@ -317,7 +318,7 @@ export function Header() {
                 ) : (
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--senda-ink)] text-[10px] text-white dark:bg-[#f4efe4] dark:text-[#252a22]">{userInitials(authState.fullName, authState.email)}</span>
                 )}
-                <span className="hidden min-[1536px]:inline">{t("ctaAccount")}</span>
+                <span className="hidden min-[1760px]:inline">{t("ctaAccount")}</span>
                 <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", accountOpen && "rotate-180")} />
               </button>
               {accountOpen ? (
@@ -349,7 +350,7 @@ export function Header() {
           </Link>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5 min-[1440px]:hidden">
+        <div className="flex shrink-0 items-center gap-1.5 min-[1600px]:hidden">
           <LanguageSwitcher compact />
           <ThemeToggle />
           <button
@@ -370,7 +371,7 @@ export function Header() {
       </div>
 
       {mobileMenuOpen ? (
-        <div id="senda-mobile-menu" className="h-[calc(100svh-88px)] overscroll-contain overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f4ed] dark:border-white/10 dark:bg-[#0d1725] min-[1440px]:hidden">
+        <div id="senda-mobile-menu" className="h-[calc(100svh-88px)] overscroll-contain overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f4ed] dark:border-white/10 dark:bg-[#0d1725] min-[1600px]:hidden">
           <div className="mx-auto flex min-h-full max-w-xl flex-col px-5 py-8 sm:px-8">
             <nav aria-label={t("mobileNavigation")}>
               <ul className="divide-y divide-[var(--senda-border)] border-y border-[var(--senda-border)] dark:divide-white/10 dark:border-white/10">

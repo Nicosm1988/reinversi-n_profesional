@@ -5,6 +5,7 @@
     "primaryNavigation": "Primary navigation",
     "mobileNavigation": "Mobile navigation",
     "navHome": "Home",
+    "navAbout": "About me",
     "navProcesses": "Journeys",
     "navHow": "How we work",
     "navTeam": "Team",
@@ -35,6 +36,7 @@
     "linkCompass": "Compass",
     "linkNewStage": "New Professional Stage",
     "linkJourneys": "All journeys",
+    "linkAbout": "About me",
     "linkTeam": "Team",
     "linkLaboratory": "Laboratory",
     "linkContact": "Contact",
@@ -616,6 +618,50 @@
       "title": "You can tell us what is changing.",
       "description": "The team will reply to understand your situation and help identify a possible next step.",
       "cta": "Contact the team"
+    }
+  },
+  "AboutMe": {
+    "meta": {
+      "title": "About me",
+      "description": "A space in preparation to share the trajectory, approach, and experiences behind Senda."
+    },
+    "hero": {
+      "eyebrow": "About me",
+      "title": "The journey behind Senda.",
+      "description": "This space is under construction. Here I will share my trajectory, working perspective, and the experiences that shaped Senda."
+    },
+    "story": {
+      "eyebrow": "My journey",
+      "title": "A story I am still putting in order to tell.",
+      "paragraph1": "This section is ready to present my personal and professional journey clearly, without reducing it to a list of credentials.",
+      "paragraph2": "I will soon add the milestones, lessons, and decisions that explain the perspective from which I support each process."
+    },
+    "structure": {
+      "eyebrow": "What you will find",
+      "title": "Three dimensions to get to know me better.",
+      "description": "The page will grow from a simple structure, so each part can be completed without losing clarity.",
+      "items": {
+        "experience": {
+          "number": "01",
+          "title": "Trajectory",
+          "description": "Education, experiences, and moments that gradually shaped my professional perspective."
+        },
+        "practice": {
+          "number": "02",
+          "title": "How I support people",
+          "description": "Criteria, values, and a way of working that respects the singular nature of every journey."
+        },
+        "senda": {
+          "number": "03",
+          "title": "The origin of Senda",
+          "description": "The story of the project and the questions that made it necessary to create this space."
+        }
+      }
+    },
+    "closing": {
+      "title": "While I finish telling this story, we can talk.",
+      "description": "If you would like to know more about Senda or tell me about the moment you are navigating, you can write to me.",
+      "cta": "Write to me"
     }
   },
   "Faq": {

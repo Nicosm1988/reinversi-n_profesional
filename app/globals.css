@@ -595,10 +595,23 @@ body {
   }
 }
 
+@media (min-width: 768px) {
+  .senda-logo--header {
+    --senda-logo-height: 4.5rem;
+    --senda-logo-word-size: 3.25rem;
+    gap: 0.9rem;
+  }
+
+  .senda-logo--header .senda-logo__trail {
+    width: calc(100% + 0.32rem);
+    height: 1rem;
+  }
+}
+
 .senda-logo__word {
   position: relative;
   z-index: 1;
-  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-family: var(--font-raleway), Arial, sans-serif;
   font-size: var(--senda-logo-word-size);
   font-weight: 500;
   letter-spacing: -0.04em;
@@ -632,7 +645,7 @@ body {
 
   .senda-logo__trail path {
     clip-path: inset(0 100% 0 0);
-    animation: senda-trail-draw 2.8s 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: senda-trail-draw 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 }
 

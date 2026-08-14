@@ -35,7 +35,7 @@ test("smoke: multipage gateway, public intake and protected account routes are a
 
 test("logo links home and exposes both slow orbits and the live trail", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/equipo");
+  await page.goto("/sobre-mi");
 
   const homeLink = page.getByRole("banner").getByRole("link", { name: "Ir al inicio de Senda" });
   await expect(homeLink).toHaveAttribute("href", "/");
@@ -92,9 +92,9 @@ test("logo links home and exposes both slow orbits and the live trail", async ({
     };
   });
 
-  expect(logoGeometry.markHeight).toBeGreaterThanOrEqual(56);
-  expect(logoGeometry.markHeight).toBeLessThanOrEqual(58);
-  expect(logoGeometry.wordFontSize).toBeCloseTo(34.4, 1);
+  expect(logoGeometry.markHeight).toBeGreaterThanOrEqual(71);
+  expect(logoGeometry.markHeight).toBeLessThanOrEqual(73);
+  expect(logoGeometry.wordFontSize).toBeCloseTo(52, 1);
   expect(logoGeometry.connectionGap).toBeLessThanOrEqual(3);
   expect(logoGeometry.initialThickness).toBeGreaterThan(logoGeometry.finalThickness * 3);
 

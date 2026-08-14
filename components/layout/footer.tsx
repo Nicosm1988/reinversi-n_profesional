@@ -35,6 +35,7 @@ export function Footer() {
           <nav aria-label={t("siteNavigation")}>
             <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-atmosphere-muted)]">{t("colExplore")}</h2>
             <ul className="mt-7 space-y-4 text-sm font-semibold text-[var(--senda-atmosphere-muted)]">
+              <li><Link href="/sobre-mi" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkAbout")}</Link></li>
               <li><Link href="/como-trabajamos" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkHow")}</Link></li>
               <li><Link href="/equipo" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkTeam")}</Link></li>
               <li><Link href="/laboratorio-nuevas-narrativas" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkLaboratory")}</Link></li>
