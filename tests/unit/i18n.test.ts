@@ -50,6 +50,12 @@ describe("translation catalogs", () => {
     ]);
     expect(spanishMessages.Header.navProcesses).toBe("Recorridos");
     expect(spanishMessages.Home.journeys.viewAll).toBeTruthy();
+    expect(spanishMessages.Header.navLaboratory).toBe("Laboratorio");
+    expect(spanishMessages.Home.laboratory.status).toBe("Próximamente");
+    expect(spanishMessages.NarrativesLab.hero.title).toBe(
+      "Laboratorio de Nuevas Narrativas Laborales",
+    );
+    expect(Object.keys(spanishMessages.NarrativesLab.explorations.items)).toHaveLength(8);
     expect("situations" in spanishMessages.Home).toBe(false);
     expect("phases" in spanishMessages.Home).toBe(false);
     expect("team" in spanishMessages.Home).toBe(false);

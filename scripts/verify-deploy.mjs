@@ -139,10 +139,12 @@ async function main() {
     checks.push(await checkEndpoint(baseUrl, "/como-trabajamos", [200]));
     checks.push(await checkEndpoint(baseUrl, "/equipo", [200]));
     checks.push(await checkEndpoint(baseUrl, "/preguntas-frecuentes", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/laboratorio-nuevas-narrativas", [200]));
     checks.push(await checkEndpoint(baseUrl, "/en/recorridos", [200]));
     checks.push(await checkEndpoint(baseUrl, "/en/como-trabajamos", [200]));
     checks.push(await checkEndpoint(baseUrl, "/en/equipo", [200]));
     checks.push(await checkEndpoint(baseUrl, "/en/preguntas-frecuentes", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/en/laboratorio-nuevas-narrativas", [200]));
     checks.push(await checkEndpoint(baseUrl, "/diagnostico", [200]));
     checks.push(await checkAuthRedirect(baseUrl, "/diagnostico/ancla-de-carrera"));
     checks.push(await checkEndpoint(baseUrl, "/contacto", [200]));

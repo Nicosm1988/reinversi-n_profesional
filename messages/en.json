@@ -8,6 +8,7 @@
     "navProcesses": "Journeys",
     "navHow": "How we work",
     "navTeam": "Team",
+    "navLaboratory": "Laboratory",
     "navFaq": "Frequently asked questions",
     "navContact": "Contact",
     "journeysMenuLabel": "Open journeys menu",
@@ -35,6 +36,7 @@
     "linkNewStage": "New Professional Stage",
     "linkJourneys": "All journeys",
     "linkTeam": "Team",
+    "linkLaboratory": "Laboratory",
     "linkContact": "Contact",
     "linkInitialDiagnostic": "Initial diagnostic",
     "linkHow": "How we work",
@@ -411,12 +413,95 @@
       },
       "cta": "See how we work"
     },
+    "laboratory": {
+      "eyebrow": "A group experience from Senda",
+      "status": "Coming soon",
+      "title": "New Narratives for Work Lab",
+      "description": "A group space to revisit your professional path, recognize genuine interests, and build new ways of thinking and talking about work.",
+      "cta": "Explore the Lab"
+    },
     "final": {
       "eyebrow": "The first step",
       "title": "You do not need to have everything figured out to begin.",
       "description": "You can begin by telling us what is changing. From there, we build a direction and possible next steps.",
       "primaryCta": "Take the initial diagnostic",
       "secondaryCta": "Talk with the team"
+    }
+  },
+  "NarrativesLab": {
+    "meta": {
+      "title": "New Narratives for Work Lab",
+      "description": "A group space to revisit your professional path, recognize genuine interests, and build new ways of thinking and talking about work."
+    },
+    "hero": {
+      "eyebrow": "Coming soon",
+      "title": "New Narratives for Work Lab",
+      "description": "A group space to revisit your professional path, recognize genuine interests, and build new ways of thinking and talking about work.",
+      "cta": "Get updates about the first edition"
+    },
+    "development": {
+      "eyebrow": "Another dimension of change",
+      "title": "Thinking about change through more than one voice.",
+      "paragraph1": "Professional change is often framed around what the market demands: which profiles it seeks, which skills it values, or how we should position ourselves. Those questions matter, but they are not enough.",
+      "paragraph2": "The New Narratives for Work Lab also pauses to explore another dimension: what appears when we look at our own path, which interests still feel alive, which experiences represent us, and which transformations can be built with greater coherence.",
+      "paragraph3": "This is not about ignoring the realities of work, but about keeping them from becoming the only voice in a decision. Through exchange, reflection, and the exploration of new narratives, the Lab creates space to recognize what is genuinely ours and connect it with concrete possibilities."
+    },
+    "explorations": {
+      "eyebrow": "A space to explore",
+      "title": "Connecting identity, experience, context, and real possibilities.",
+      "description": "Professional transformation should not be built only around what the market needs. It also requires recognizing which interests, experiences, questions, and ways of working have a genuine relationship with each person.",
+      "items": {
+        "path": "Revisit your professional path.",
+        "interest": "Recognize genuine interests.",
+        "coherence": "Identify which changes are coherent with your own story.",
+        "narrative": "Explore new ways of talking about your professional experience.",
+        "decision": "Distinguish between a decision of your own and automatic adaptation to trends.",
+        "change": "Understand what you want to preserve, transform, or begin.",
+        "context": "Connect identity, experience, context, and real possibilities.",
+        "future": "Think about your professional future without disregarding the market or being completely determined by it."
+      }
+    },
+    "closing": {
+      "eyebrow": "First edition",
+      "title": "The first edition is in preparation.",
+      "description": "Leave your details to receive information when the format, dates, and registration opening are announced.",
+      "cta": "Get updates about the first edition"
+    },
+    "form": {
+      "title": "Get updates about the first edition",
+      "description": "Leave your details so we can let you know when registration opens.",
+      "labels": {
+        "name": "Name",
+        "email": "Email address",
+        "phone": "Phone (optional)",
+        "explorationInterest": "What would you like to explore? (optional)"
+      },
+      "placeholders": {
+        "name": "Your name",
+        "email": "you@email.com",
+        "phone": "+54 9 11 0000-0000",
+        "explorationInterest": "Briefly tell us which questions or changes you would like to explore."
+      },
+      "consent": "I agree to receive information from Senda only about the New Narratives for Work Lab.",
+      "privacyLink": "Read the privacy policy",
+      "submit": "I want to receive updates",
+      "submitting": "Sending...",
+      "successTitle": "We have registered your interest.",
+      "successDescription": "Your request was sent successfully. We will write to you when there is news about the first edition.",
+      "errors": {
+        "name": "Enter a valid name between 2 and 100 characters.",
+        "email": "Enter a valid email address.",
+        "phone": "Enter a valid phone number or leave the field blank.",
+        "explorationInterest": "Review the content of this field and try again.",
+        "consent": "We need your consent to send you information about the Lab.",
+        "invalid": "Review the indicated fields and try again.",
+        "tooLarge": "The request exceeds the allowed size. Shorten the text and try again.",
+        "rateLimit": "We received several attempts in a short period. Wait a few minutes before trying again.",
+        "origin": "We could not validate the source of the request. Reload the page and try again.",
+        "config": "The form is temporarily unavailable. Your information remains on screen so you can try again.",
+        "send": "The mail server did not accept the request. Your information remains on screen so you can try again.",
+        "unexpected": "An unexpected error occurred. Your information remains on screen so you can try again."
+      }
     }
   },
   "Journeys": {

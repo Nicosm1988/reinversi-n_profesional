@@ -124,6 +124,22 @@ export function SendaHome() {
         </div>
       </section>
 
+      <section className="border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)] px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
+        <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+          <div>
+            <p className="senda-kicker">{t("laboratory.eyebrow")}</p>
+            <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-muted)]">{t("laboratory.status")}</p>
+          </div>
+          <div>
+            <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("laboratory.title")}</h2>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("laboratory.description")}</p>
+            <Link href="/laboratorio-nuevas-narrativas" className="mt-7 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
+              {t("laboratory.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="px-5 pb-10 sm:px-8 lg:px-12 xl:px-20">
         <div className="senda-night relative mx-auto max-w-[1180px] overflow-hidden rounded-[1.5rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16 lg:py-20">
           <UniverseField compact className="left-[38%] text-[var(--senda-atmosphere-sky)] opacity-20" />

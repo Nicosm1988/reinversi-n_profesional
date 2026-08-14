@@ -5,9 +5,17 @@ export const CONTACT_LIMITS = {
   phone: 40,
   email: 254,
   message: 4_000,
+  explorationInterest: 1_000,
   sourcePage: 80,
   honeypot: 200,
 } as const;
+
+export const CONTACT_FORM_ORIGINS = [
+  "contacto",
+  "laboratorio_nuevas_narrativas",
+] as const;
+
+export type ContactFormOrigin = (typeof CONTACT_FORM_ORIGINS)[number];
 
 const SINGLE_LINE_CONTROL_CHARACTERS = /[\u0000-\u001f\u007f-\u009f]/;
 const MULTILINE_CONTROL_CHARACTERS = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]/;
@@ -35,33 +43,74 @@ function safeSingleLine(maxLength: number) {
     .pipe(z.string().max(maxLength));
 }
 
+function safeMultiline(maxLength: number) {
+  return z
+    .string()
+    .max(maxLength + 128)
+    .refine((value) => !MULTILINE_CONTROL_CHARACTERS.test(value))
+    .transform(normalizeMultiline)
+    .pipe(z.string().max(maxLength));
+}
+
 const contactSourcePageSchema = z
   .string()
   .max(CONTACT_LIMITS.sourcePage)
   .regex(/^\/(?:en\/)?contacto\/?$/);
 
-export const contactSubmissionSchema = z
+const commonContactFields = {
+  name: safeSingleLine(CONTACT_LIMITS.name).pipe(z.string().min(2)),
+  phone: safeSingleLine(CONTACT_LIMITS.phone)
+    .refine((value) => value === "" || /^[+()\d .-]{6,40}$/.test(value))
+    .optional()
+    .transform((value) => value ?? ""),
+  email: safeSingleLine(CONTACT_LIMITS.email)
+    .transform((value) => value.toLowerCase())
+    .pipe(z.email().max(CONTACT_LIMITS.email)),
+  consent: z.literal(true),
+  companyWebsite: safeSingleLine(CONTACT_LIMITS.honeypot),
+  locale: z.enum(["es", "en"]),
+} as const;
+
+const standardContactSubmissionSchema = z
   .object({
-    name: safeSingleLine(CONTACT_LIMITS.name).pipe(z.string().min(2)),
-    phone: safeSingleLine(CONTACT_LIMITS.phone)
-      .refine((value) => value === "" || /^[+()\d .-]{6,40}$/.test(value)),
-    email: safeSingleLine(CONTACT_LIMITS.email)
-      .transform((value) => value.toLowerCase())
-      .pipe(z.email().max(CONTACT_LIMITS.email)),
-    message: z
-      .string()
-      .max(CONTACT_LIMITS.message + 128)
-      .refine((value) => !MULTILINE_CONTROL_CHARACTERS.test(value))
-      .transform(normalizeMultiline)
+    ...commonContactFields,
+    formOrigin: z.literal("contacto"),
+    message: safeMultiline(CONTACT_LIMITS.message)
       .pipe(z.string().min(10).max(CONTACT_LIMITS.message)),
-    consent: z.literal(true),
-    companyWebsite: safeSingleLine(CONTACT_LIMITS.honeypot),
     sourcePage: contactSourcePageSchema,
-    locale: z.enum(["es", "en"]),
   })
-  .strict()
+  .strict();
+
+const laboratorySourcePageSchema = z.enum([
+  "/laboratorio-nuevas-narrativas",
+  "/en/laboratorio-nuevas-narrativas",
+]);
+
+const laboratoryContactSubmissionSchema = z
+  .object({
+    ...commonContactFields,
+    formOrigin: z.literal("laboratorio_nuevas_narrativas"),
+    explorationInterest: safeMultiline(CONTACT_LIMITS.explorationInterest)
+      .optional()
+      .transform((value) => value ?? ""),
+    sourcePage: laboratorySourcePageSchema,
+  })
+  .strict();
+
+const submissionWithExplicitOriginSchema = z
+  .discriminatedUnion("formOrigin", [
+    standardContactSubmissionSchema,
+    laboratoryContactSubmissionSchema,
+  ])
   .superRefine((value, context) => {
-    const expectedSourcePage = value.locale === "en" ? "/en/contacto" : "/contacto";
+    const expectedSourcePage =
+      value.formOrigin === "laboratorio_nuevas_narrativas"
+        ? value.locale === "en"
+          ? "/en/laboratorio-nuevas-narrativas"
+          : "/laboratorio-nuevas-narrativas"
+        : value.locale === "en"
+          ? "/en/contacto"
+          : "/contacto";
     const normalizedSourcePage = value.sourcePage.replace(/\/$/, "");
 
     if (normalizedSourcePage !== expectedSourcePage) {
@@ -73,9 +122,22 @@ export const contactSubmissionSchema = z
     }
   });
 
+export const contactSubmissionSchema = z.preprocess((value) => {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
+  if (Object.prototype.hasOwnProperty.call(value, "formOrigin")) return value;
+
+  return { ...value, formOrigin: "contacto" };
+}, submissionWithExplicitOriginSchema);
+
 export type ContactSubmission = z.infer<typeof contactSubmissionSchema>;
 
-export type ContactField = "name" | "phone" | "email" | "message" | "consent";
+export type ContactField =
+  | "name"
+  | "phone"
+  | "email"
+  | "message"
+  | "explorationInterest"
+  | "consent";
 
 export function getContactFieldNames(error: z.ZodError): ContactField[] {
   const fields = new Set<ContactField>();
@@ -87,6 +149,7 @@ export function getContactFieldNames(error: z.ZodError): ContactField[] {
       field === "phone" ||
       field === "email" ||
       field === "message" ||
+      field === "explorationInterest" ||
       field === "consent"
     ) {
       fields.add(field);

@@ -8,6 +8,7 @@
     "navProcesses": "Recorridos",
     "navHow": "Cómo trabajamos",
     "navTeam": "Equipo",
+    "navLaboratory": "Laboratorio",
     "navFaq": "Preguntas frecuentes",
     "navContact": "Contacto",
     "journeysMenuLabel": "Abrir menú de recorridos",
@@ -35,6 +36,7 @@
     "linkNewStage": "Nueva Etapa Profesional",
     "linkJourneys": "Todos los recorridos",
     "linkTeam": "Equipo",
+    "linkLaboratory": "Laboratorio",
     "linkContact": "Contacto",
     "linkInitialDiagnostic": "Diagnóstico inicial",
     "linkHow": "Cómo trabajamos",
@@ -411,12 +413,95 @@
       },
       "cta": "Ver cómo trabajamos"
     },
+    "laboratory": {
+      "eyebrow": "Una experiencia grupal de Senda",
+      "status": "Próximamente",
+      "title": "Laboratorio de Nuevas Narrativas Laborales",
+      "description": "Un espacio grupal para revisar la propia trayectoria, reconocer intereses genuinos y construir nuevas formas de pensar y narrar el trabajo.",
+      "cta": "Conocer el Laboratorio"
+    },
     "final": {
       "eyebrow": "El primer paso",
       "title": "No necesitás tener todo resuelto para empezar.",
       "description": "Podés comenzar por contar qué está cambiando. A partir de ahí, construimos una dirección y próximos pasos posibles.",
       "primaryCta": "Realizá el diagnóstico inicial",
       "secondaryCta": "Hablar con el equipo"
+    }
+  },
+  "NarrativesLab": {
+    "meta": {
+      "title": "Laboratorio de Nuevas Narrativas Laborales",
+      "description": "Un espacio grupal para revisar la propia trayectoria, reconocer intereses genuinos y construir nuevas formas de pensar y narrar el trabajo."
+    },
+    "hero": {
+      "eyebrow": "Próximamente",
+      "title": "Laboratorio de Nuevas Narrativas Laborales",
+      "description": "Un espacio grupal para revisar la propia trayectoria, reconocer intereses genuinos y construir nuevas formas de pensar y narrar el trabajo.",
+      "cta": "Recibir información sobre la primera edición"
+    },
+    "development": {
+      "eyebrow": "Otra dimensión del cambio",
+      "title": "Pensar el cambio desde más de una voz.",
+      "paragraph1": "Los cambios profesionales suelen pensarse desde lo que el mercado demanda: qué perfiles busca, qué habilidades valora o cómo deberíamos posicionarnos. Esas preguntas importan, pero no alcanzan.",
+      "paragraph2": "El Laboratorio de Nuevas Narrativas Laborales propone detenerse también en otra dimensión: qué aparece cuando miramos la propia trayectoria, qué intereses siguen teniendo vitalidad, qué experiencias nos representan y qué transformaciones pueden construirse con mayor coherencia.",
+      "paragraph3": "No se trata de ignorar la realidad laboral, sino de evitar que sea la única voz que intervenga en una decisión. A través del intercambio, la reflexión y la exploración de nuevas narrativas, el laboratorio busca abrir un espacio para reconocer lo propio y relacionarlo con posibilidades concretas."
+    },
+    "explorations": {
+      "eyebrow": "Un espacio para explorar",
+      "title": "Poner en relación identidad, experiencia, contexto y posibilidades reales.",
+      "description": "Una transformación profesional no debería construirse solamente alrededor de lo que el mercado necesita. También requiere reconocer qué intereses, experiencias, preguntas y formas de trabajo tienen una relación genuina con cada persona.",
+      "items": {
+        "path": "Revisar la propia trayectoria.",
+        "interest": "Reconocer intereses genuinos.",
+        "coherence": "Identificar qué cambios tienen coherencia con la propia historia.",
+        "narrative": "Explorar nuevas maneras de narrar la experiencia profesional.",
+        "decision": "Distinguir entre una decisión propia y una adaptación automática a las tendencias.",
+        "change": "Comprender qué se desea conservar, transformar o comenzar.",
+        "context": "Poner en relación identidad, experiencia, contexto y posibilidades reales.",
+        "future": "Pensar el futuro profesional sin desconocer el mercado, pero sin quedar completamente determinado por él."
+      }
+    },
+    "closing": {
+      "eyebrow": "Primera edición",
+      "title": "La primera edición está en preparación.",
+      "description": "Podés dejar tus datos para recibir información cuando se anuncien la modalidad, las fechas y la apertura de inscripciones.",
+      "cta": "Recibir información sobre la primera edición"
+    },
+    "form": {
+      "title": "Recibí información sobre la primera edición",
+      "description": "Dejanos tus datos para que podamos avisarte cuando se anuncie la apertura de inscripciones.",
+      "labels": {
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "phone": "Teléfono (opcional)",
+        "explorationInterest": "¿Qué te interesa explorar? (opcional)"
+      },
+      "placeholders": {
+        "name": "Tu nombre",
+        "email": "tu@email.com",
+        "phone": "+54 9 11 0000-0000",
+        "explorationInterest": "Contanos brevemente qué preguntas o cambios te gustaría explorar."
+      },
+      "consent": "Acepto recibir información de Senda únicamente sobre el Laboratorio de Nuevas Narrativas Laborales.",
+      "privacyLink": "Consultar la política de privacidad",
+      "submit": "Quiero recibir novedades",
+      "submitting": "Enviando...",
+      "successTitle": "Registramos tu interés.",
+      "successDescription": "Tu solicitud fue enviada correctamente. Te escribiremos cuando haya novedades sobre la primera edición.",
+      "errors": {
+        "name": "Ingresá un nombre válido de entre 2 y 100 caracteres.",
+        "email": "Ingresá un correo electrónico válido.",
+        "phone": "Ingresá un teléfono válido o dejá el campo vacío.",
+        "explorationInterest": "Revisá el contenido de este campo y volvé a intentar.",
+        "consent": "Necesitamos tu consentimiento para enviarte información sobre el laboratorio.",
+        "invalid": "Revisá los campos indicados y volvé a intentar.",
+        "tooLarge": "La solicitud supera el tamaño permitido. Acortá el texto y volvé a intentar.",
+        "rateLimit": "Recibimos varios intentos seguidos. Esperá unos minutos antes de volver a enviar.",
+        "origin": "No pudimos validar el origen de la solicitud. Recargá la página y volvé a intentar.",
+        "config": "El formulario no está disponible temporalmente. Tus datos permanecen en pantalla para que puedas volver a intentar.",
+        "send": "El servidor de correo no aceptó la solicitud. Tus datos permanecen en pantalla para que puedas volver a intentar.",
+        "unexpected": "Ocurrió un error inesperado. Tus datos permanecen en pantalla para que puedas volver a intentar."
+      }
     }
   },
   "Journeys": {

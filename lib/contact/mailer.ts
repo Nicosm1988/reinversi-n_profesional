@@ -6,6 +6,9 @@ import { buildContactEmailText } from "@/lib/contact/email-content";
 import { type ContactSubmission } from "@/lib/contact/schema";
 import { smtpAcceptedDelivery } from "@/lib/contact/smtp-result";
 
+const LABORATORY_CONTACT_SUBJECT =
+  "Interés en el Laboratorio de Nuevas Narrativas Laborales";
+
 const smtpEnvironmentSchema = z
   .object({
     SMTP_HOST: z.string().trim().min(1).max(253).regex(/^(?=.{1,253}$)(?:[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?\.)*[a-z\d](?:[a-z\d-]{0,61}[a-z\d])?$/i),
@@ -46,6 +49,12 @@ function readSmtpConfig() {
   return parsed.data;
 }
 
+function contactEmailSubject(submission: ContactSubmission) {
+  return submission.formOrigin === "laboratorio_nuevas_narrativas"
+    ? LABORATORY_CONTACT_SUBJECT
+    : "Nueva consulta desde la web de Senda";
+}
+
 export async function sendContactEmail(
   submission: ContactSubmission,
   context: { date: Date; source: string },
@@ -69,7 +78,7 @@ export async function sendContactEmail(
     from: { name: "Senda web", address: config.SMTP_USER },
     to: config.CONTACT_TO_EMAIL,
     replyTo: { name: submission.name, address: submission.email },
-    subject: "Nueva consulta desde la web de Senda",
+    subject: contactEmailSubject(submission),
     text: buildContactEmailText(submission, context),
   });
 

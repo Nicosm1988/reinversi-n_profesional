@@ -14,13 +14,14 @@ test("home is a concise gateway to the two journeys and their supporting pages",
   await page.goto("/");
 
   const home = page.locator("main .senda-home");
-  await expect(home.locator(":scope > section")).toHaveCount(5);
+  await expect(home.locator(":scope > section")).toHaveCount(6);
   await expect(home.locator("article")).toHaveCount(2);
   await expect(home.locator("details")).toHaveCount(0);
 
   await expect(home.locator('a[href="/recorridos/brujula"]')).toBeVisible();
   await expect(home.locator('a[href="/recorridos/nueva-etapa-profesional"]')).toBeVisible();
   await expect(home.locator('a[href="/como-trabajamos"]').first()).toBeVisible();
+  await expect(home.locator('a[href="/laboratorio-nuevas-narrativas"]')).toBeVisible();
   await expect(home.locator('a[href="/contacto"]')).toHaveCount(1);
 
   const publicText = await home.innerText();
@@ -175,6 +176,107 @@ test("contact form confirms success only after the API accepts a valid submissio
 
   await expect(page.getByRole("status")).toContainText("Thank you for reaching out!");
   await expect(page.getByRole("button", { name: "Send another inquiry" })).toBeVisible();
+});
+
+test("laboratory interest preserves its data when the secure contact endpoint rejects delivery", async ({ page }) => {
+  let submission: Record<string, unknown> | null = null;
+  let requestHeader: string | null = null;
+
+  await page.route("**/api/contact", async (route) => {
+    submission = route.request().postDataJSON() as Record<string, unknown>;
+    requestHeader = route.request().headers()["x-senda-form"] ?? null;
+    await route.fulfill({
+      status: 502,
+      contentType: "application/json",
+      body: JSON.stringify({ ok: false, code: "send" }),
+    });
+  });
+
+  await page.goto("/laboratorio-nuevas-narrativas");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    /\/laboratorio-nuevas-narrativas$/,
+  );
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+    "content",
+    /Laboratorio de Nuevas Narrativas Laborales/,
+  );
+
+  const nameField = page.getByLabel("Nombre");
+  const submitButton = page.getByRole("button", { name: "Quiero recibir novedades" });
+  await submitButton.click();
+  await expect(nameField).toBeFocused();
+  await expect(nameField).toHaveAttribute("aria-invalid", "true");
+  expect(submission).toBeNull();
+
+  await nameField.fill("Ada Lovelace");
+  await page.getByLabel("Correo electrónico").fill("ada@example.com");
+  await page.getByLabel("Teléfono (opcional)").fill("+54 9 11 1234-5678");
+  await page
+    .getByLabel("¿Qué te interesa explorar? (opcional)")
+    .fill("Quiero revisar cómo narro mi trayectoria y qué deseo conservar.");
+  await page.getByRole("checkbox").check();
+  await submitButton.click();
+
+  await expect(page.locator("main [role=alert]")).toContainText(
+    "El servidor de correo no aceptó la solicitud",
+  );
+  await expect(page.getByLabel("Nombre")).toHaveValue("Ada Lovelace");
+  await expect(page.getByLabel("Correo electrónico")).toHaveValue("ada@example.com");
+  await expect(page.getByLabel("Teléfono (opcional)")).toHaveValue("+54 9 11 1234-5678");
+  await expect(page.getByLabel("¿Qué te interesa explorar? (opcional)")).toHaveValue(
+    "Quiero revisar cómo narro mi trayectoria y qué deseo conservar.",
+  );
+  await expect(page.getByRole("checkbox")).toBeChecked();
+  await expect(page.getByRole("status")).toHaveCount(0);
+
+  await expect.poll(() => submission).not.toBeNull();
+  expect(submission).toEqual({
+    formOrigin: "laboratorio_nuevas_narrativas",
+    name: "Ada Lovelace",
+    phone: "+54 9 11 1234-5678",
+    email: "ada@example.com",
+    explorationInterest: "Quiero revisar cómo narro mi trayectoria y qué deseo conservar.",
+    consent: true,
+    companyWebsite: "",
+    sourcePage: "/laboratorio-nuevas-narrativas",
+    locale: "es",
+  });
+  expect(requestHeader).toBe("contact");
+});
+
+test("laboratory interest confirms only an accepted English submission", async ({ page }) => {
+  let attempts = 0;
+  await page.route("**/api/contact", async (route) => {
+    attempts += 1;
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(attempts === 1 ? { ok: false, code: "send" } : { ok: true }),
+    });
+  });
+
+  await page.goto("/en/laboratorio-nuevas-narrativas");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    /\/en\/laboratorio-nuevas-narrativas$/,
+  );
+  await page.getByLabel("Name").fill("Grace Hopper");
+  await page.getByLabel("Email address").fill("grace@example.com");
+  await page.getByRole("checkbox").check();
+  const submitButton = page.getByRole("button", { name: "I want to receive updates" });
+  await submitButton.click();
+
+  await expect(page.getByRole("status")).toHaveCount(0);
+  await expect(page.locator("main [role=alert]")).toContainText(
+    "The mail server did not accept the request",
+  );
+  await expect(page.getByLabel("Name")).toHaveValue("Grace Hopper");
+  await expect(page.getByLabel("Email address")).toHaveValue("grace@example.com");
+
+  await submitButton.click();
+  await expect(page.getByRole("status")).toContainText("We have registered your interest");
+  expect(attempts).toBe(2);
 });
 
 test("the initial diagnostic validates each step and preserves navigation", async ({ page }) => {

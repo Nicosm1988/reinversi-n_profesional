@@ -53,6 +53,7 @@ const FIELD_ERROR_KEYS: Record<ContactField, string> = {
   phone: "errors.invalid",
   email: "errors.email",
   message: "errors.message",
+  explorationInterest: "errors.invalid",
   consent: "errors.consent",
 };
 

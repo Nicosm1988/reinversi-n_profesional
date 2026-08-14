@@ -71,6 +71,7 @@ export function Header() {
     { name: t("navProcesses"), href: "/recorridos" },
     { name: t("navHow"), href: "/como-trabajamos" },
     { name: t("navTeam"), href: "/equipo" },
+    { name: t("navLaboratory"), href: "/laboratorio-nuevas-narrativas" },
     { name: t("navFaq"), href: "/preguntas-frecuentes" },
     { name: t("navContact"), href: "/contacto" },
   ] as const;
@@ -204,8 +205,8 @@ export function Header() {
           <SendaLogo className="h-[3.1rem]" wordWrapClassName="hidden min-[360px]:inline-flex" />
         </Link>
 
-        <nav className="hidden xl:block" aria-label={t("primaryNavigation")}>
-          <ul className="flex items-center gap-3 2xl:gap-5">
+        <nav className="hidden min-[1400px]:block" aria-label={t("primaryNavigation")}>
+          <ul className="flex items-center gap-2 2xl:gap-4">
             {navLinks.map((link) => {
               const current = isCurrentPath(pathname, link.href);
               const active = isActiveSection(pathname, link.href);
@@ -215,7 +216,7 @@ export function Header() {
                   aria-current={current ? "page" : undefined}
                   onClick={() => setJourneysOpen(false)}
                   className={cn(
-                    "relative py-3 text-[11px] font-bold uppercase tracking-[0.075em] after:absolute after:inset-x-0 after:bottom-1.5 after:h-px after:origin-left after:bg-[var(--senda-terracotta)] after:transition-transform focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] focus-visible:ring-offset-2",
+                    "relative py-3 text-[11px] font-bold uppercase tracking-[0.06em] after:absolute after:inset-x-0 after:bottom-1.5 after:h-px after:origin-left after:bg-[var(--senda-terracotta)] after:transition-transform focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] focus-visible:ring-offset-2 2xl:tracking-[0.075em]",
                     active ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100",
                     transparent
                       ? active ? "text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)]"
@@ -297,7 +298,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-1.5 xl:flex">
+        <div className="hidden items-center gap-1.5 min-[1400px]:flex">
           <LanguageSwitcher compact />
           <ThemeToggle />
           {authState.status === "authenticated" ? (
@@ -346,7 +347,7 @@ export function Header() {
           </Link>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5 xl:hidden">
+        <div className="flex shrink-0 items-center gap-1.5 min-[1400px]:hidden">
           <LanguageSwitcher compact />
           <ThemeToggle />
           <button
@@ -367,7 +368,7 @@ export function Header() {
       </div>
 
       {mobileMenuOpen ? (
-        <div id="senda-mobile-menu" className="h-[calc(100svh-82px)] overscroll-contain overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f4ed] dark:border-white/10 dark:bg-[#0d1725] xl:hidden">
+        <div id="senda-mobile-menu" className="h-[calc(100svh-82px)] overscroll-contain overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f4ed] dark:border-white/10 dark:bg-[#0d1725] min-[1400px]:hidden">
           <div className="mx-auto flex min-h-full max-w-xl flex-col px-5 py-8 sm:px-8">
             <nav aria-label={t("mobileNavigation")}>
               <ul className="divide-y divide-[var(--senda-border)] border-y border-[var(--senda-border)] dark:divide-white/10 dark:border-white/10">

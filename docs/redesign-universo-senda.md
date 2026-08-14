@@ -1,5 +1,76 @@
 # Rediseño Universo Senda
 
+## Intervención 4 · Laboratorio de Nuevas Narrativas Laborales
+
+- Fecha de inicio: 2026-08-13.
+- Proyecto: `original` (`v0-reinvention-web-platform`), sin intervenir `senda-cosmos`.
+- Objetivo: incorporar una futura experiencia grupal de Senda con página propia y formulario de interés, sin convertirla en un tercer recorrido ni alterar la arquitectura de Brújula y Nueva Etapa Profesional.
+- Ruta canónica en español: `/laboratorio-nuevas-narrativas`.
+- Ruta canónica en inglés: `/en/laboratorio-nuevas-narrativas`.
+- Rama de trabajo: `agent/senda-laboratorio-narrativas`.
+- Hash base: `4e8d271e965b04d5482438f21de8d5bdab078bc4`.
+- Checkpoint local previo: `checkpoint/pre-laboratorio-narrativas-20260813`.
+- Estado inicial del árbol: limpio, sin cambios staged ni unstaged; el hash base coincidía con `origin/main` y con la versión productiva al comenzar.
+- El checkpoint es una referencia Git y no incorpora `.env`, secretos, PDF, `node_modules` ni archivos generados.
+
+### Decisiones de arquitectura y contenido
+
+- El Laboratorio es una experiencia grupal futura e independiente. No se agrega a `sendaProcesses`, a las tarjetas de Recorridos ni al enrutamiento del diagnóstico.
+- La Home conserva su función breve: incorpora un único acceso editorial secundario, separado visual y semánticamente de los dos recorridos.
+- La navegación lo presenta como `Laboratorio` dentro de la arquitectura general y el footer lo ubica bajo `Explorar`, nunca bajo `Recorridos`.
+- La página utiliza únicamente tipografía, color, nodos, conexiones y trayectorias vectoriales propias. No incorpora fotografías, recursos cósmicos literales, testimonios ni datos comerciales inventados.
+- El contenido mantiene `Próximamente` como estado real y no publica fechas, modalidad, duración, precio, cantidad de participantes o facilitadores no confirmados.
+- Español es la fuente editorial; la versión inglesa conserva el mismo alcance con traducción natural mediante el catálogo `next-intl` existente.
+
+### Formulario de interés
+
+- El formulario solicita nombre, correo, teléfono opcional, un campo opcional sobre qué interesa explorar y consentimiento específico para recibir información del Laboratorio.
+- Reutiliza el endpoint seguro `/api/contact`, el mismo destinatario `hola@universosenda.com`, el control de origen HTTP, el honeypot, la sanitización, el límite de solicitudes y el transporte SMTP existentes.
+- El origen permitido queda cerrado en servidor como `laboratorio_nuevas_narrativas`; la ruta y el idioma deben coincidir con ese origen.
+- El asunto se resuelve exclusivamente en el servidor como `Interés en el Laboratorio de Nuevas Narrativas Laborales`; el navegador no puede elegir asunto ni destinatario.
+- No se agrega a la persona a campañas, CRM, listas externas ni flujos automáticos. El éxito se muestra solamente después de que el servidor confirma aceptación SMTP; cualquier fallo conserva todos los datos en pantalla.
+- La recepción real seguirá condicionada a que las cinco variables SMTP, incluida `SMTP_PASSWORD`, sean válidas en Vercel Production. Nunca se versiona, muestra ni registra esa credencial.
+
+### Recuperación previa a esta intervención
+
+Con el árbol limpio, volver exactamente al estado anterior:
+
+```bash
+git switch checkpoint/pre-laboratorio-narrativas-20260813
+```
+
+Retomar la rama de trabajo:
+
+```bash
+git switch agent/senda-laboratorio-narrativas
+```
+
+No hace falta usar `git reset`, `git restore` ni `git checkout --`.
+
+### Archivos y validación de la intervención 4
+
+- Página y composición: `app/[locale]/laboratorio-nuevas-narrativas/page.tsx`, `components/pages/narratives-lab-page.tsx` y `components/forms/laboratory-interest-form.tsx`.
+- Navegación y acceso secundario: `components/layout/{header,footer}.tsx` y `components/sections/senda-home.tsx`.
+- Contenido y discovery: `messages/{es,en}.json`, `app/sitemap.ts`, `public/llms.txt` y `scripts/verify-deploy.mjs`.
+- Canal seguro compartido: `lib/contact/{schema,email-content,mailer}.ts`; `app/[locale]/contacto/page.tsx` incorpora únicamente el nuevo nombre de campo al mapa exhaustivo de errores compartido.
+- Pruebas: `tests/unit/{contact-schema,contact-email-content,contact-mailer,contact-route,i18n}.test.ts` y `tests/e2e/{internal-pages,senda-experience,smoke}.spec.ts`.
+- Trazabilidad y artefactos: este documento y `.gitignore`, que mantiene fuera de Git las capturas y salidas locales de Playwright.
+
+No se modificaron dependencias, lockfiles, PDF, variables de entorno, secretos, autenticación, RLS, el diagnóstico, el test gratuito ni el proyecto independiente `senda-cosmos`.
+
+### Validación de la intervención 4
+
+- La inspección local en navegador cubre español e inglés, tema claro y oscuro, desktop de 1440 px y móvil de 390/320 px. No se detectó overflow horizontal; la página no usa fotografías y el Laboratorio permanece separado de los dos recorridos.
+- El formulario se valida con el mismo esquema en cliente y servidor, conserva todos los datos ante fallos y solo muestra éxito después de HTTP 200 con `{ok: true}`. Las pruebas interceptadas no se presentan como evidencia de recepción de correo.
+- La recepción real depende de que Vercel Production tenga las cinco variables SMTP válidas. Al comenzar esta intervención faltaba `SMTP_PASSWORD`; por ello el estado productivo del correo no se considera verificado y debe seguir fallando de forma cerrada hasta completar esa credencial.
+- `npm run release:check`: aprobado el 2026-08-13.
+  - ESLint y TypeScript: aprobados.
+  - Unitarias: 88 aprobadas en 20 archivos.
+  - Playwright: 61 aprobadas y 2 autenticadas omitidas por no disponer de `E2E_AUTH_STORAGE_STATE`.
+  - Build optimizado de Next.js: aprobado e incluye las rutas ES/EN del Laboratorio.
+- `git diff --check` y la paridad exacta de 632 claves ES/EN: aprobados. Los catálogos de recorridos conservan únicamente `compass` y `newStage`.
+- La comprobación limpia de producción se realiza después del push y deployment; su evidencia se informa junto al hash y URL pública, sin confundirla con la validación local.
+
 ## Intervención 3 · Arquitectura multipágina, marca viva y contacto
 
 - Fecha de inicio: 2026-08-12.

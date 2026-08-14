@@ -14,6 +14,10 @@
 - [Preguntas frecuentes](https://reinvension-profesional.vercel.app/preguntas-frecuentes)
 - [Contacto](https://reinvension-profesional.vercel.app/contacto)
 
+## Próximamente
+
+- [Laboratorio de Nuevas Narrativas Laborales](https://reinvension-profesional.vercel.app/laboratorio-nuevas-narrativas): futura experiencia grupal de Senda para revisar la trayectoria y explorar nuevas formas de pensar y narrar el trabajo.
+
 ## Información importante
 
 El diagnóstico inicial y el test gratuito de Anclas de Carrera ofrecen orientaciones de partida. No constituyen diagnósticos clínicos ni sustituyen el acompañamiento de un profesional humano.

@@ -29,6 +29,11 @@ const targetRoutes = [
   },
   { path: "/equipo", active: { es: "Equipo", en: "Team" }, teamCards: 3 },
   {
+    path: "/laboratorio-nuevas-narrativas",
+    active: { es: "Laboratorio", en: "Laboratory" },
+    title: { es: "Laboratorio", en: "Lab" },
+  },
+  {
     path: "/preguntas-frecuentes",
     active: { es: "Preguntas frecuentes", en: "Frequently asked questions" },
     questions: 7,
@@ -96,7 +101,8 @@ for (const locale of locales) {
 
       await expect(page).toHaveTitle(/Senda/);
       if (route.path !== "/") {
-        expect(await page.title()).toContain(route.active[locale.id]);
+        const titleText = "title" in route ? route.title[locale.id] : route.active[locale.id];
+        expect(await page.title()).toContain(titleText);
       }
       await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.{20,}/);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -146,7 +152,7 @@ for (const locale of locales) {
 }
 
 for (const locale of locales) {
-  test(`all eight ${locale.id.toUpperCase()} routes fit a narrow mobile viewport`, async ({ page }) => {
+  test(`all nine ${locale.id.toUpperCase()} routes fit a narrow mobile viewport`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
 
     for (const route of targetRoutes) {
@@ -195,6 +201,8 @@ test("desktop journeys dropdown opens from the keyboard, focuses its first route
   const firstJourney = navigation.getByRole("link", { name: "Brújula", exact: true });
   await expect(firstJourney).toBeVisible();
   await expect(firstJourney).toBeFocused();
+  await expect(page.locator("#senda-journeys-menu a")).toHaveCount(2);
+  await expect(page.locator('#senda-journeys-menu a[href*="laboratorio"]')).toHaveCount(0);
 
   await page.keyboard.press("Escape");
   await expect(toggle).toHaveAttribute("aria-expanded", "false");

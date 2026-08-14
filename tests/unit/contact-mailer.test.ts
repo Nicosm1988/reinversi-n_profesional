@@ -17,6 +17,7 @@ import {
 } from "@/lib/contact/mailer";
 
 const SUBMISSION = {
+  formOrigin: "contacto" as const,
   name: "Ana Pérez",
   phone: "+54 9 11 1234-5678",
   email: "ana@example.com",
@@ -24,6 +25,18 @@ const SUBMISSION = {
   consent: true as const,
   companyWebsite: "",
   sourcePage: "/contacto",
+  locale: "es" as const,
+};
+
+const LABORATORY_SUBMISSION = {
+  formOrigin: "laboratorio_nuevas_narrativas" as const,
+  name: "Ana Pérez",
+  phone: "",
+  email: "ana@example.com",
+  explorationInterest: "Explorar nuevas formas de contar mi trayectoria.",
+  consent: true as const,
+  companyWebsite: "",
+  sourcePage: "/laboratorio-nuevas-narrativas" as const,
   locale: "es" as const,
 };
 
@@ -68,7 +81,27 @@ describe("sendContactEmail", () => {
       expect.objectContaining({
         to: "hola@universosenda.com",
         replyTo: { name: "Ana Pérez", address: "ana@example.com" },
+        subject: "Nueva consulta desde la web de Senda",
         text: expect.stringContaining("Origen: https://senda.example/contacto"),
+      }),
+    );
+  });
+
+  it("uses a server-owned laboratory subject with the same SMTP destination", async () => {
+    await sendContactEmail(LABORATORY_SUBMISSION, {
+      date: new Date("2026-08-13T01:30:00.000Z"),
+      source: "https://senda.example/laboratorio-nuevas-narrativas",
+    });
+
+    expect(mocks.sendMail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        from: { name: "Senda web", address: "hola@universosenda.com" },
+        to: "hola@universosenda.com",
+        replyTo: { name: "Ana Pérez", address: "ana@example.com" },
+        subject: "Interés en el Laboratorio de Nuevas Narrativas Laborales",
+        text: expect.stringContaining(
+          "Origen: laboratorio_nuevas_narrativas",
+        ),
       }),
     );
   });

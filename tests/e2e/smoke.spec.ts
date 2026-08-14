@@ -132,8 +132,12 @@ test("technical discovery files are valid and public", async ({ request }) => {
   expect(sitemapContent).toContain("<urlset");
   expect(sitemapContent).toContain("/recorridos/brujula");
   expect(sitemapContent).toContain("/recorridos/nueva-etapa-profesional");
+  expect(sitemapContent).toContain("/laboratorio-nuevas-narrativas");
+  expect(sitemapContent).toContain("/en/laboratorio-nuevas-narrativas");
 
   const llms = await request.get("/llms.txt");
   expect(llms.ok()).toBe(true);
-  expect(await llms.text()).toContain("Senda");
+  const llmsContent = await llms.text();
+  expect(llmsContent).toContain("Senda");
+  expect(llmsContent).toContain("/laboratorio-nuevas-narrativas");
 });

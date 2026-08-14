@@ -8,6 +8,7 @@ const routes = [
   "/recorridos/nueva-etapa-profesional",
   "/como-trabajamos",
   "/equipo",
+  "/laboratorio-nuevas-narrativas",
   "/preguntas-frecuentes",
   "/contacto",
   "/diagnostico",
