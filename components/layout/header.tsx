@@ -225,12 +225,12 @@ export function Header() {
                         : "text-[var(--senda-ink)]/68 hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:text-white",
                   )}
                 >
-                  {link.name}
+                  <span className="inline-block translate-y-0.5">{link.name}</span>
                 </Link>
               );
 
               if (link.href !== "/recorridos") {
-                return <li key={link.href}>{navLink}</li>;
+                return <li key={link.href} className="flex items-center">{navLink}</li>;
               }
 
               return (
@@ -263,7 +263,7 @@ export function Header() {
                         : "text-[var(--senda-ink)]/65 hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:bg-white/10 dark:hover:text-white",
                     )}
                   >
-                    <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", journeysOpen && "rotate-180")} aria-hidden="true" />
+                    <ChevronDown className={cn("h-3.5 w-3.5 translate-y-px transition-transform", journeysOpen && "rotate-180")} aria-hidden="true" />
                   </button>
                   {journeysOpen ? (
                     <div

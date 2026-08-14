@@ -255,6 +255,23 @@ for (const locale of locales) {
         );
         const rowRect = row.getBoundingClientRect();
         const markRect = mark.getBoundingClientRect();
+        const navigationLabels = Array.from(
+          desktopNavigation.querySelectorAll<HTMLElement>(":scope > ul > li > a"),
+        );
+        const navigationTextCenters = desktopNavigation.offsetParent === null
+          ? []
+          : navigationLabels.map((link) => {
+              const textNode = Array.from(link.childNodes)
+                .flatMap((node) =>
+                  node.nodeType === Node.TEXT_NODE ? [node] : Array.from(node.childNodes),
+                )
+                .find((node) => node.textContent?.trim());
+              if (!textNode) throw new Error("Navigation label is missing");
+              const range = document.createRange();
+              range.selectNodeContents(textNode);
+              const rect = range.getBoundingClientRect();
+              return (rect.top + rect.bottom) / 2;
+            });
 
         return {
           documentOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -266,6 +283,9 @@ for (const locale of locales) {
           markHeight: markRect.height,
           wordFontSize: Number.parseFloat(window.getComputedStyle(word).fontSize),
           headerHeight: rowRect.height,
+          navigationTextDelta: navigationTextCenters.length === 0
+            ? 0
+            : Math.max(...navigationTextCenters) - Math.min(...navigationTextCenters),
         };
       }, locale.primaryNavigation);
 
@@ -279,6 +299,7 @@ for (const locale of locales) {
       expect(layout.markHeight).toBeLessThanOrEqual(58);
       expect(layout.wordFontSize).toBeCloseTo(34.4, 1);
       expect(layout.headerHeight).toBe(88);
+      expect(layout.navigationTextDelta).toBeLessThanOrEqual(1);
     }
   });
 }
