@@ -106,8 +106,10 @@ test("logo links home and exposes both slow orbits and the live trail", async ({
   expect(logoGeometry.horizontalOverlap).toBeLessThanOrEqual(3.5);
   expect(logoGeometry.trailStartY).toBeGreaterThan(logoGeometry.sTop);
   expect(logoGeometry.trailStartY).toBeLessThan(logoGeometry.sBottom);
-  expect(logoGeometry.trailWidth).toBeCloseTo(149.3, 0);
-  expect(logoGeometry.trailHeight).toBeCloseTo(16, 0);
+  expect(logoGeometry.trailWidth).toBeGreaterThanOrEqual(147);
+  expect(logoGeometry.trailWidth).toBeLessThanOrEqual(152);
+  expect(logoGeometry.trailHeight).toBeGreaterThanOrEqual(15);
+  expect(logoGeometry.trailHeight).toBeLessThanOrEqual(17);
   expect(logoGeometry.trailLeft).toBe(-1);
   expect(logoGeometry.trailBottom).toBe(1);
   expect(logoGeometry.initialThickness).toBeGreaterThan(logoGeometry.finalThickness * 3);

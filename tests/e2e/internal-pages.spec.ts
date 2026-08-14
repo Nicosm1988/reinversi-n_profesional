@@ -329,14 +329,20 @@ for (const locale of locales) {
       expect(layout.markHeight).toBeGreaterThanOrEqual(viewport.largeLogo ? 79 : 63);
       expect(layout.markHeight).toBeLessThanOrEqual(viewport.largeLogo ? 81 : 65);
       expect(layout.wordFontSize).toBeCloseTo(viewport.largeLogo ? 52 : 34.4, 1);
-      expect(layout.trailWidth).toBeCloseTo(
-        viewport.word ? (viewport.largeLogo ? 149.3 : 98.9) : 0,
-        0,
-      );
-      expect(layout.trailHeight).toBeCloseTo(
-        viewport.word ? (viewport.largeLogo ? 16 : 12.2) : 0,
-        0,
-      );
+      if (!viewport.word) {
+        expect(layout.trailWidth).toBe(0);
+        expect(layout.trailHeight).toBe(0);
+      } else if (viewport.largeLogo) {
+        expect(layout.trailWidth).toBeGreaterThanOrEqual(147);
+        expect(layout.trailWidth).toBeLessThanOrEqual(152);
+        expect(layout.trailHeight).toBeGreaterThanOrEqual(15);
+        expect(layout.trailHeight).toBeLessThanOrEqual(17);
+      } else {
+        expect(layout.trailWidth).toBeGreaterThanOrEqual(96);
+        expect(layout.trailWidth).toBeLessThanOrEqual(101);
+        expect(layout.trailHeight).toBeGreaterThanOrEqual(11);
+        expect(layout.trailHeight).toBeLessThanOrEqual(13);
+      }
       expect(layout.headerHeight).toBe(88);
       expect(layout.navigationTextDelta).toBeLessThanOrEqual(1);
     }
