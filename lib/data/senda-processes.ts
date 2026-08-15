@@ -1,50 +1,113 @@
 import "server-only";
 
-export const processSlugs = [
-  "brujula",
-  "nueva-etapa-profesional",
+export const transitionServiceSlugs = [
+  "explorar-direccion",
+  "cambiar-empleo",
+  "proyecto-propio",
+  "liderazgo-empresa",
+  "desafio-puntual",
+  "elegir-formacion",
 ] as const;
 
-export type ProcessSlug = (typeof processSlugs)[number];
+export type TransitionServiceSlug = (typeof transitionServiceSlugs)[number];
 
-type ProcessDefinition = {
-  slug: ProcessSlug;
-  key: "compass" | "newStage";
-  number: "01" | "02";
-  durationMeetings: number;
-  internalPriceUsd: number | null;
+export const compassSlug = "brujulas" as const;
+export type SendaProcessSlug = TransitionServiceSlug | typeof compassSlug;
+
+export type SendaProcessKey =
+  | "direction"
+  | "jobChange"
+  | "project"
+  | "leadership"
+  | "focused"
+  | "education"
+  | "compass";
+
+export type SendaProcessDefinition = {
+  slug: SendaProcessSlug;
+  key: SendaProcessKey;
+  number: "01" | "02" | "03" | "04" | "05" | "06" | "B";
+  durationMeetings: number | null;
   stageKeys: readonly string[];
   takeawayKeys: readonly string[];
   accent: "olive" | "terracotta" | "charcoal";
+  secondary?: boolean;
 };
 
-/**
- * Public process structure and private commercial configuration.
- * `internalPriceUsd` is intentionally never consumed by a UI component.
- */
-export const sendaProcesses = [
+export const transitionServices = [
   {
-    slug: "brujula",
-    key: "compass",
+    slug: "explorar-direccion",
+    key: "direction",
     number: "01",
-    durationMeetings: 5,
-    internalPriceUsd: null,
+    durationMeetings: null,
     accent: "olive",
-    stageKeys: ["question", "signals", "worlds", "criteria", "alternatives", "direction"],
-    takeawayKeys: ["signals", "map", "criteria", "alternatives", "plan"],
+    stageKeys: ["identity", "interests", "experiences", "capital", "alternatives", "criteria", "direction"],
+    takeawayKeys: ["identity", "capital", "alternatives", "criteria", "plan"],
   },
   {
-    slug: "nueva-etapa-profesional",
-    key: "newStage",
+    slug: "cambiar-empleo",
+    key: "jobChange",
     number: "02",
-    durationMeetings: 7,
-    internalPriceUsd: null,
+    durationMeetings: null,
     accent: "terracotta",
-    stageKeys: ["moment", "trajectory", "identity", "criteria", "direction", "positioning", "strategy", "integrate"],
-    takeawayKeys: ["trajectory", "strengths", "direction", "narrative", "positioning", "roadmap"],
+    stageKeys: ["trajectory", "direction", "value", "narrative", "profile", "search", "conversations", "movement"],
+    takeawayKeys: ["trajectory", "direction", "value", "profile", "strategy", "plan"],
   },
-] as const satisfies readonly ProcessDefinition[];
+  {
+    slug: "proyecto-propio",
+    key: "project",
+    number: "03",
+    durationMeetings: null,
+    accent: "charcoal",
+    stageKeys: ["identity", "scope", "audience", "value", "priorities", "decisions", "structure", "reality", "nextSteps"],
+    takeawayKeys: ["coherence", "scope", "value", "priorities", "validation", "plan"],
+  },
+  {
+    slug: "liderazgo-empresa",
+    key: "leadership",
+    number: "04",
+    durationMeetings: null,
+    accent: "olive",
+    stageKeys: ["solitude", "role", "boundaries", "conversations", "organization", "context", "strategy", "continuity", "integration"],
+    takeawayKeys: ["role", "criteria", "conversations", "strategy", "continuity"],
+  },
+  {
+    slug: "desafio-puntual",
+    key: "focused",
+    number: "05",
+    durationMeetings: null,
+    accent: "terracotta",
+    stageKeys: ["problem", "information", "alternatives", "criteria", "decision", "action"],
+    takeawayKeys: ["problem", "criteria", "decision", "action"],
+  },
+  {
+    slug: "elegir-formacion",
+    key: "education",
+    number: "06",
+    durationMeetings: null,
+    accent: "charcoal",
+    stageKeys: ["trajectory", "interests", "direction", "options", "timeInvestment", "technology", "comparison", "decision", "plan"],
+    takeawayKeys: ["criteria", "options", "comparison", "decision", "plan"],
+  },
+] as const satisfies readonly SendaProcessDefinition[];
 
-export function getSendaProcess(slug: string) {
+export const compassProcess = {
+  slug: compassSlug,
+  key: "compass",
+  number: "B",
+  durationMeetings: 5,
+  accent: "olive",
+  secondary: true,
+  stageKeys: ["question", "signals", "worlds", "criteria", "alternatives", "direction"],
+  takeawayKeys: ["signals", "map", "criteria", "alternatives", "plan"],
+} as const satisfies SendaProcessDefinition;
+
+export const sendaProcesses = [...transitionServices, compassProcess] as const;
+
+export function getTransitionService(slug: string): SendaProcessDefinition | undefined {
+  return transitionServices.find((service) => service.slug === slug);
+}
+
+export function getSendaProcess(slug: string): SendaProcessDefinition | undefined {
   return sendaProcesses.find((process) => process.slug === slug);
 }

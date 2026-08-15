@@ -53,7 +53,7 @@ const API_ERROR_CODES = new Set<ApiError>([
   "unexpected",
 ]);
 
-const FORM_ORIGIN = "laboratorio_nuevas_narrativas";
+const FORM_ORIGIN = "laboratorio_narrativas_laborales_alternativas";
 const FIELD_ERROR_KEYS: Record<FieldName, string> = {
   name: "errors.name",
   email: "errors.email",
@@ -106,8 +106,8 @@ export function LaboratoryInterestForm() {
     if (status === "submitting") return;
 
     const sourcePage = locale === "en"
-      ? "/en/laboratorio-nuevas-narrativas"
-      : "/laboratorio-nuevas-narrativas";
+      ? "/en/laboratorio-narrativas-laborales-alternativas"
+      : "/laboratorio-narrativas-laborales-alternativas";
     const parsed = contactSubmissionSchema.safeParse({
       ...form,
       formOrigin: FORM_ORIGIN,

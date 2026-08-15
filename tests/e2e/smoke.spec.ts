@@ -13,19 +13,17 @@ test.beforeEach(async ({ page }) => {
 test("smoke: multipage gateway, public intake and protected account routes are accessible", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle(/Senda/i);
-  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Brújula", exact: true })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Nueva Etapa Profesional", exact: true })).toBeVisible();
-  await expect(page.locator('main a[href="/recorridos/brujula"]')).toBeVisible();
-  await expect(page.locator('main a[href="/recorridos/nueva-etapa-profesional"]')).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(/Acompañamos\s+transiciones laborales/);
+  await expect(page.locator('main a[href="/transiciones-laborales"]').first()).toBeVisible();
+  await expect(page.locator('main a[href="/encontrar-mi-recorrido"]').first()).toBeVisible();
 
-  await page.goto("/diagnostico");
-  await expect(page).toHaveURL(/\/diagnostico$/);
+  await page.goto("/encontrar-mi-recorrido");
+  await expect(page).toHaveURL(/\/encontrar-mi-recorrido$/);
   await expect(page.getByRole("group", { name: /situación describe mejor|situation best describes/i })).toBeVisible();
 
   // The career anchor test is public: no login, captcha, or backend call
   // should be required to take it and see a result.
-  await page.goto("/diagnostico/ancla-de-carrera/test");
+  await page.goto("/test-anclas-de-carrera");
   await expect(page).not.toHaveURL(/\/login/);
   await expect(page.getByText(/Preguntas 1 a 10|Questions 1 to 10/i)).toBeVisible();
 
@@ -189,14 +187,30 @@ test("technical discovery files are valid and public", async ({ request }) => {
   expect(sitemap.ok()).toBe(true);
   const sitemapContent = await sitemap.text();
   expect(sitemapContent).toContain("<urlset");
-  expect(sitemapContent).toContain("/recorridos/brujula");
-  expect(sitemapContent).toContain("/recorridos/nueva-etapa-profesional");
-  expect(sitemapContent).toContain("/laboratorio-nuevas-narrativas");
-  expect(sitemapContent).toContain("/en/laboratorio-nuevas-narrativas");
+  for (const route of [
+    "/transiciones-laborales",
+    "/transiciones-laborales/explorar-direccion",
+    "/transiciones-laborales/cambiar-empleo",
+    "/transiciones-laborales/proyecto-propio",
+    "/transiciones-laborales/liderazgo-empresa",
+    "/transiciones-laborales/desafio-puntual",
+    "/transiciones-laborales/elegir-formacion",
+    "/brujulas",
+    "/encontrar-mi-recorrido",
+    "/test-anclas-de-carrera",
+    "/laboratorio-narrativas-laborales-alternativas",
+  ]) {
+    expect(sitemapContent).toContain(route);
+    expect(sitemapContent).toContain(`/en${route}`);
+  }
+  expect(sitemapContent).not.toContain("/recorridos/brujula");
+  expect(sitemapContent).not.toContain("/laboratorio-nuevas-narrativas");
 
   const llms = await request.get("/llms.txt");
   expect(llms.ok()).toBe(true);
   const llmsContent = await llms.text();
   expect(llmsContent).toContain("Senda");
-  expect(llmsContent).toContain("/laboratorio-nuevas-narrativas");
+  expect(llmsContent).toContain("/transiciones-laborales");
+  expect(llmsContent).toContain("/laboratorio-narrativas-laborales-alternativas");
+  expect(llmsContent).not.toContain("/laboratorio-nuevas-narrativas");
 });

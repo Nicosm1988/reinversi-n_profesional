@@ -7,9 +7,9 @@ test.describe("authenticated career diagnostic", () => {
   test.use({ storageState: storageState || undefined });
 
   test("opens the diagnostic for an authenticated technical account", async ({ page }) => {
-    await page.goto("/diagnostico/ancla-de-carrera/test");
+    await page.goto("/test-anclas-de-carrera");
     await expect(page).not.toHaveURL(/\/login/);
-    await expect(page.getByRole("heading", { name: /ancla de carrera|career anchor/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /anclas? de carrera|career anchors?/i })).toBeVisible();
     const accountMenu = page.getByRole("button", { name: /mi recorrido|my journey/i });
     await expect(accountMenu).toBeVisible();
     await accountMenu.click();

@@ -3,15 +3,21 @@ import { getSiteUrl } from "@/lib/site-url";
 
 const routes = [
   "",
-  "/recorridos",
-  "/recorridos/brujula",
-  "/recorridos/nueva-etapa-profesional",
+  "/transiciones-laborales",
+  "/transiciones-laborales/explorar-direccion",
+  "/transiciones-laborales/cambiar-empleo",
+  "/transiciones-laborales/proyecto-propio",
+  "/transiciones-laborales/liderazgo-empresa",
+  "/transiciones-laborales/desafio-puntual",
+  "/transiciones-laborales/elegir-formacion",
+  "/brujulas",
   "/como-trabajamos",
   "/equipo",
-  "/laboratorio-nuevas-narrativas",
+  "/test-anclas-de-carrera",
+  "/encontrar-mi-recorrido",
+  "/laboratorio-narrativas-laborales-alternativas",
   "/preguntas-frecuentes",
   "/contacto",
-  "/diagnostico",
   "/privacidad",
   "/terminos",
 ];
@@ -34,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           languages: {
             es: spanishUrl,
             en: englishUrl,
+            "x-default": spanishUrl,
           },
         },
       };

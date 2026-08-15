@@ -39,7 +39,7 @@ function isCurrentPath(pathname: string, href: string) {
 }
 
 function isActiveSection(pathname: string, href: string) {
-  return href === "/recorridos"
+  return href === "/transiciones-laborales"
     ? pathname === href || pathname.startsWith(`${href}/`)
     : isCurrentPath(pathname, href);
 }
@@ -69,16 +69,20 @@ export function Header() {
   const navLinks = [
     { name: t("navHome"), href: "/" },
     { name: t("navAbout"), href: "/sobre-mi" },
-    { name: t("navProcesses"), href: "/recorridos" },
+    { name: t("navTransitions"), href: "/transiciones-laborales" },
     { name: t("navHow"), href: "/como-trabajamos" },
     { name: t("navTeam"), href: "/equipo" },
-    { name: t("navLaboratory"), href: "/laboratorio-nuevas-narrativas" },
+    { name: t("navLaboratory"), href: "/laboratorio-narrativas-laborales-alternativas" },
     { name: t("navFaq"), href: "/preguntas-frecuentes" },
     { name: t("navContact"), href: "/contacto" },
   ] as const;
-  const journeyLinks = [
-    { name: t("journeyCompass"), href: "/recorridos/brujula" },
-    { name: t("journeyNewStage"), href: "/recorridos/nueva-etapa-profesional" },
+  const serviceLinks = [
+    { name: t("serviceDirection"), href: "/transiciones-laborales/explorar-direccion" },
+    { name: t("serviceJobChange"), href: "/transiciones-laborales/cambiar-empleo" },
+    { name: t("serviceProject"), href: "/transiciones-laborales/proyecto-propio" },
+    { name: t("serviceLeadership"), href: "/transiciones-laborales/liderazgo-empresa" },
+    { name: t("serviceFocused"), href: "/transiciones-laborales/desafio-puntual" },
+    { name: t("serviceEducation"), href: "/transiciones-laborales/elegir-formacion" },
   ] as const;
 
   useEffect(() => {
@@ -230,7 +234,7 @@ export function Header() {
                 </Link>
               );
 
-              if (link.href !== "/recorridos") {
+              if (link.href !== "/transiciones-laborales") {
                 return <li key={link.href} className="flex items-center">{navLink}</li>;
               }
 
@@ -247,9 +251,9 @@ export function Header() {
                   <button
                     ref={journeysToggleRef}
                     type="button"
-                    aria-label={t("journeysMenuLabel")}
+                    aria-label={t("servicesMenuLabel")}
                     aria-expanded={journeysOpen}
-                    aria-controls="senda-journeys-menu"
+                    aria-controls="senda-services-menu"
                     onClick={() => setJourneysOpen((currentOpen) => !currentOpen)}
                     onKeyDown={(event) => {
                       if (event.key !== "ArrowDown") return;
@@ -268,29 +272,37 @@ export function Header() {
                   </button>
                   {journeysOpen ? (
                     <div
-                      id="senda-journeys-menu"
-                      className="absolute left-1/2 top-full mt-2 w-72 -translate-x-1/2 rounded-2xl border border-[var(--senda-border)] bg-[#faf7ef] p-2 shadow-[0_28px_65px_-30px_rgba(35,39,29,.55)] dark:border-white/15 dark:bg-[#172538]"
+                      id="senda-services-menu"
+                      className="absolute left-1/2 top-full mt-2 grid w-[36rem] -translate-x-1/2 grid-cols-2 gap-1 rounded-2xl border border-[var(--senda-border)] bg-[#faf7ef] p-2 shadow-[0_28px_65px_-30px_rgba(35,39,29,.55)] dark:border-white/15 dark:bg-[#172538]"
                     >
-                      {journeyLinks.map((journey, index) => {
-                        const journeyCurrent = isCurrentPath(pathname, journey.href);
+                      {serviceLinks.map((service, index) => {
+                        const serviceCurrent = isCurrentPath(pathname, service.href);
                         return (
                           <Link
-                            key={journey.href}
+                            key={service.href}
                             ref={index === 0 ? firstJourneyLinkRef : undefined}
-                            href={journey.href}
-                            aria-current={journeyCurrent ? "page" : undefined}
+                            href={service.href}
+                            aria-current={serviceCurrent ? "page" : undefined}
                             onClick={() => setJourneysOpen(false)}
                             className={cn(
                               "block rounded-xl px-4 py-3 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)]",
-                              journeyCurrent
+                              serviceCurrent
                                 ? "bg-[var(--senda-stone)] text-[var(--senda-ink)] dark:bg-white/10 dark:text-white"
                                 : "text-[var(--senda-ink)]/75 hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/80 dark:hover:bg-white/10 dark:hover:text-white",
                             )}
                           >
-                            {journey.name}
+                            {service.name}
                           </Link>
                         );
                       })}
+                      <Link
+                        href="/brujulas"
+                        aria-current={isCurrentPath(pathname, "/brujulas") ? "page" : undefined}
+                        onClick={() => setJourneysOpen(false)}
+                        className="col-span-2 mt-1 block rounded-xl border-t border-[var(--senda-border)] px-4 py-3 text-sm font-semibold text-[var(--senda-muted)] hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/10 dark:text-[#f4efe4]/70 dark:hover:bg-white/10 dark:hover:text-white"
+                      >
+                        {t("navCompass")}
+                      </Link>
                     </div>
                   ) : null}
                 </li>
@@ -345,7 +357,7 @@ export function Header() {
           ) : (
             <span className="h-3 w-14 animate-pulse rounded-full bg-[var(--senda-border)]" aria-label={t("authLoading")} />
           )}
-          <Link href="/diagnostico" className="ml-1 inline-flex min-h-11 items-center rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
+          <Link href="/encontrar-mi-recorrido" className="ml-1 inline-flex min-h-11 items-center rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
             {t("ctaDiagnostic")}
           </Link>
         </div>
@@ -399,12 +411,12 @@ export function Header() {
                           </span>
                           {link.name}
                         </Link>
-                        {link.href === "/recorridos" ? (
+                        {link.href === "/transiciones-laborales" ? (
                           <button
                             type="button"
-                            aria-label={t("journeysMenuLabel")}
+                            aria-label={t("servicesMenuLabel")}
                             aria-expanded={mobileJourneysOpen}
-                            aria-controls="senda-mobile-journeys-menu"
+                            aria-controls="senda-mobile-services-menu"
                             onClick={() => setMobileJourneysOpen((currentOpen) => !currentOpen)}
                             className="ml-3 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--senda-border)] text-[var(--senda-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/15 dark:text-[#f4efe4]"
                           >
@@ -412,28 +424,39 @@ export function Header() {
                           </button>
                         ) : null}
                       </div>
-                      {link.href === "/recorridos" && mobileJourneysOpen ? (
-                        <div id="senda-mobile-journeys-menu" className="mb-4 ml-10 grid gap-1 border-l border-[var(--senda-terracotta)]/35 pl-4">
-                          {journeyLinks.map((journey) => {
-                            const journeyCurrent = isCurrentPath(pathname, journey.href);
+                      {link.href === "/transiciones-laborales" && mobileJourneysOpen ? (
+                        <div id="senda-mobile-services-menu" className="mb-4 ml-10 grid gap-1 border-l border-[var(--senda-terracotta)]/35 pl-4">
+                          {serviceLinks.map((service) => {
+                            const serviceCurrent = isCurrentPath(pathname, service.href);
                             return (
                               <Link
-                                key={journey.href}
-                                href={journey.href}
-                                aria-current={journeyCurrent ? "page" : undefined}
+                                key={service.href}
+                                href={service.href}
+                                aria-current={serviceCurrent ? "page" : undefined}
                                 onClick={() => {
                                   setMobileMenuOpen(false);
                                   setMobileJourneysOpen(false);
                                 }}
                                 className={cn(
                                   "rounded-lg px-3 py-3 text-base font-semibold text-[var(--senda-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:text-[#f4efe4]/75",
-                                  journeyCurrent && "bg-[var(--senda-stone)] text-[var(--senda-ink)] dark:bg-white/10 dark:text-white",
+                                  serviceCurrent && "bg-[var(--senda-stone)] text-[var(--senda-ink)] dark:bg-white/10 dark:text-white",
                                 )}
                               >
-                                {journey.name}
+                                {service.name}
                               </Link>
                             );
                           })}
+                          <Link
+                            href="/brujulas"
+                            aria-current={isCurrentPath(pathname, "/brujulas") ? "page" : undefined}
+                            onClick={() => {
+                              setMobileMenuOpen(false);
+                              setMobileJourneysOpen(false);
+                            }}
+                            className="mt-1 rounded-lg border-t border-[var(--senda-border)] px-3 py-3 text-base font-semibold text-[var(--senda-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/10 dark:text-[#f4efe4]/75"
+                          >
+                            {t("navCompass")}
+                          </Link>
                         </div>
                       ) : null}
                     </li>
@@ -441,7 +464,7 @@ export function Header() {
                 })}
               </ul>
             </nav>
-            <Link href="/diagnostico" onClick={() => setMobileMenuOpen(false)} className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--senda-ink)] px-6 py-3.5 text-sm font-bold text-white dark:bg-[#f4efe4] dark:text-[#252a22]">
+            <Link href="/encontrar-mi-recorrido" onClick={() => setMobileMenuOpen(false)} className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--senda-ink)] px-6 py-3.5 text-sm font-bold text-white dark:bg-[#f4efe4] dark:text-[#252a22]">
               {t("ctaDiagnostic")}
             </Link>
             <div className="mt-auto pt-10">

@@ -12,7 +12,7 @@ test("Senda loads its visual identity, fonts and images", async ({ page }) => {
   await page.evaluate(() => document.fonts.ready);
 
   await expect(page).toHaveTitle(/Senda/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(/Encontrá una dirección|Find a direction/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(/Acompañamos\s+transiciones laborales/);
   await expect(page.locator('link[rel="icon"][href*="senda-mark.svg"]')).toHaveCount(1);
 
   const unloadedImages = await page.locator("img").evaluateAll((images) =>
@@ -30,7 +30,7 @@ test("Senda remains readable on a narrow mobile viewport", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Realizá el diagnóstico|Take the diagnostic/i }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /Reconocer en qué momento estoy/i }).first()).toBeVisible();
 
   const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   expect(hasHorizontalOverflow).toBe(false);
@@ -90,7 +90,7 @@ test("theme control switches between light and dark modes", async ({ page }) => 
   expect(lightContactCard.color).not.toBe(darkContactCard.color);
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/recorridos/brujula");
+  await page.goto("/transiciones-laborales/explorar-direccion");
   const lightJourneyHero = await readSurface("main header.senda-night");
   const lightJourneyCard = await readSurface("main .senda-editorial-card");
   await page.getByRole("button", { name: "Activar modo oscuro" }).first().click();
@@ -103,7 +103,7 @@ test("theme control switches between light and dark modes", async ({ page }) => 
 });
 
 test("career-anchor answers expose labeled radio groups", async ({ page }) => {
-  await page.goto("/diagnostico/ancla-de-carrera/test");
+  await page.goto("/test-anclas-de-carrera");
 
   const firstQuestion = page.locator("fieldset").first();
   await expect(firstQuestion).toBeVisible();
@@ -118,9 +118,101 @@ test("career-anchor answers expose labeled radio groups", async ({ page }) => {
 
 test("reduced motion disables ambient effects", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/diagnostico/ancla-de-carrera/test");
+  await page.goto("/test-anclas-de-carrera");
 
   await expect(page.locator(".pointer-illumination")).toHaveCSS("display", "none");
   await expect(page.locator(".universe-field").first()).toHaveCSS("animation-name", "none");
   await expect.poll(() => page.evaluate(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)).toBe(true);
+});
+
+test("light and dark themes change the central surfaces of every page template", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem("reinvencion_cookie_consent", "true");
+    if (!window.localStorage.getItem("theme")) window.localStorage.setItem("theme", "light");
+  });
+
+  const templates = [
+    { route: "/", selector: ".senda-home > section:nth-of-type(2)" },
+    { route: "/transiciones-laborales/explorar-direccion", selector: "main .senda-editorial-card" },
+    { route: "/brujulas", selector: "main .senda-editorial-card" },
+    { route: "/encontrar-mi-recorrido", selector: ".initial-diagnostic-page" },
+    { route: "/test-anclas-de-carrera", selector: ".career-quiz" },
+    { route: "/laboratorio-narrativas-laborales-alternativas", selector: "main .senda-editorial-card" },
+  ] as const;
+
+  const readSurface = (selector: string) =>
+    page.locator(selector).first().evaluate((element) => {
+      const style = window.getComputedStyle(element);
+      return [style.backgroundColor, style.backgroundImage, style.color, style.borderColor].join("|");
+    });
+
+  for (const template of templates) {
+    await page.goto(template.route);
+    await page.evaluate(() => window.localStorage.setItem("theme", "light"));
+    await page.reload();
+    await expect.poll(() => page.locator("html").getAttribute("class")).toContain("light");
+    const lightSurface = await readSurface(template.selector);
+
+    await page.getByRole("button", { name: "Activar modo oscuro" }).first().click();
+    await expect.poll(() => page.locator("html").getAttribute("class")).toContain("dark");
+    const darkSurface = await readSurface(template.selector);
+
+    expect(darkSurface, `${template.route} central surface did not change`).not.toBe(lightSurface);
+  }
+});
+
+test("core text and action colors keep WCAG AA contrast in both themes", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem("reinvencion_cookie_consent", "true");
+    if (!window.localStorage.getItem("theme")) window.localStorage.setItem("theme", "light");
+  });
+  await page.goto("/");
+
+  const readRatios = () =>
+    page.evaluate(() => {
+      function rgb(value: string) {
+        const channels = value.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+        if (!channels || channels.length !== 3) throw new Error(`Unsupported color: ${value}`);
+        return channels.map((channel) => channel / 255);
+      }
+
+      function luminance(value: string) {
+        return rgb(value)
+          .map((channel) => channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4)
+          .reduce((total, channel, index) => total + channel * [0.2126, 0.7152, 0.0722][index], 0);
+      }
+
+      function ratio(foreground: string, background: string) {
+        const lighter = Math.max(luminance(foreground), luminance(background));
+        const darker = Math.min(luminance(foreground), luminance(background));
+        return (lighter + 0.05) / (darker + 0.05);
+      }
+
+      function computedPair(color: string, backgroundColor: string) {
+        const probe = document.createElement("span");
+        probe.style.color = color;
+        probe.style.backgroundColor = backgroundColor;
+        document.body.append(probe);
+        const styles = window.getComputedStyle(probe);
+        const values = { foreground: styles.color, background: styles.backgroundColor };
+        probe.remove();
+        return ratio(values.foreground, values.background);
+      }
+
+      return {
+        primary: computedPair("var(--senda-ink)", "var(--senda-bg)"),
+        muted: computedPair("var(--senda-muted)", "var(--senda-bg)"),
+        action: computedPair("#ffffff", "var(--senda-action)"),
+      };
+    });
+
+  for (const theme of ["light", "dark"] as const) {
+    await page.evaluate((nextTheme) => window.localStorage.setItem("theme", nextTheme), theme);
+    await page.reload();
+    await expect.poll(() => page.locator("html").getAttribute("class")).toContain(theme);
+    const ratios = await readRatios();
+    expect(ratios.primary, `${theme} primary text`).toBeGreaterThanOrEqual(4.5);
+    expect(ratios.muted, `${theme} muted text`).toBeGreaterThanOrEqual(4.5);
+    expect(ratios.action, `${theme} action`).toBeGreaterThanOrEqual(4.5);
+  }
 });

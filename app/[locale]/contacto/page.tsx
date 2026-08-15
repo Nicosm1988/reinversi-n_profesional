@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { CheckCircle2, Mail, MessageCircle, Send } from "lucide-react";
 import { CONTACT_EMAIL, WHATSAPP_DISPLAY_NUMBER, getWhatsAppHref } from "@/lib/contact-config";
@@ -93,6 +93,11 @@ export default function ContactoPage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
   const formErrorRef = useRef<HTMLParagraphElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status === "success") successRef.current?.focus();
+  }, [status]);
 
   function focusFormError() {
     window.requestAnimationFrame(() => formErrorRef.current?.focus());
@@ -328,7 +333,12 @@ export default function ContactoPage() {
                   </form>
                 </Card>
               ) : (
-                <Card className="bg-background p-8 text-center md:p-12" role="status">
+                <Card
+                  ref={successRef}
+                  className="bg-background p-8 text-center outline-none md:p-12"
+                  role="status"
+                  tabIndex={-1}
+                >
                   <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
                     <CheckCircle2 aria-hidden="true" className="h-8 w-8 text-accent" />
                   </div>

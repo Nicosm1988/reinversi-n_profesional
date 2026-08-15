@@ -52,7 +52,12 @@ type ClosingCtaProps = {
   title: string;
   description: string;
   label: string;
-  href?: "/contacto" | "/diagnostico" | "/recorridos";
+  href?:
+    | "/contacto"
+    | "/encontrar-mi-recorrido"
+    | "/transiciones-laborales"
+    | "/brujulas"
+    | "/test-anclas-de-carrera";
 };
 
 export function ClosingCta({ title, description, label, href = "/contacto" }: ClosingCtaProps) {

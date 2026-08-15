@@ -1,5 +1,86 @@
 # Rediseño Universo Senda
 
+## Intervención 7 · Transiciones laborales, orientación de recorrido y Anclas públicas
+
+- Fecha de inicio: 2026-08-15.
+- Proyecto: `original` (`v0-reinvention-web-platform`), sin intervenir `senda-cosmos`.
+- Objetivo: centrar Senda en transiciones laborales, organizar seis propuestas adultas por situación, mantener Brújulas en segundo plano y reconstruir los dos cuestionarios como herramientas públicas con resultado inmediato.
+- Hash base: `80bb03d5733550ec4b1b29deeb6c477cdaaaf83d`.
+- Rama de publicación: `main`.
+- Checkpoint local previo: `checkpoint/pre-transitions-restructure-20260815`.
+- Estado inicial: árbol limpio y sincronizado con `origin/main`; no había cambios de usuario staged, unstaged ni sin seguimiento.
+- El checkpoint es una referencia Git al estado exacto previo y no incorpora secretos, `.env`, PDF, `node_modules` ni artefactos generados.
+
+### Recuperación previa a esta intervención
+
+Una vez guardado o publicado cualquier trabajo posterior, volver al estado previo con:
+
+```bash
+git switch checkpoint/pre-transitions-restructure-20260815
+```
+
+Retomar la versión publicada de esta intervención:
+
+```bash
+git switch main
+```
+
+No requiere `git reset`, `git restore`, `git checkout --` ni force push.
+
+### Benchmark interno Claudina / Glimar
+
+Esta tabla documenta la función de los elementos observados y la adaptación original adoptada para Senda. No forma parte del contenido público.
+
+| Elemento observado | Función que cumple | Adaptación original para Senda |
+| --- | --- | --- |
+| Hero breve que relaciona una tensión con una respuesta profesional | Aclara rápidamente posicionamiento y siguiente acción | Hero propio centrado en transiciones laborales y CTA a reconocer el momento actual, sin repetir fórmulas verbales ni composición visual. |
+| Oferta organizada por situaciones reconocibles | Permite identificarse sin conocer nombres de servicios | Hub multipágina con seis situaciones adultas y una página profunda para cada propuesta. |
+| Anatomía consistente por propuesta | Facilita comparar alcance, destinatarios y próximos pasos | Cada página explica para quién es, señales, qué puede trabajarse, límites y continuidad, sin inventar encuentros ni resultados. |
+| Desarrollo institucional de enfoque y equipo | Construye confianza antes de pedir contacto | Páginas propias de metodología y equipo con información real; sin testimonios, cifras ni credenciales no verificadas. |
+| Repetición de formularios como vía principal | Convierte interés en consultas | Senda invierte el orden: primero ofrece orientación pública y resultado; el contacto aparece después y siempre es voluntario y consentido. |
+| Página extensa que reúne toda la oferta | Permite revisar alternativas en continuidad | Senda conserva un hub sintético y páginas individuales; ni la home ni el hub se convierten en una página sábana. |
+| WhatsApp y CTA de conversación humana | Ofrece una salida de baja fricción | Se mantiene el botón global activado solo por clic y la conversación con Senda como alternativa, sin trackers ni apertura automática. |
+| Jerarquía editorial clara | Mejora lectura y escaneo | Se reutilizan tipografía, tokens, órbitas, coordenadas y trayectorias propias; no se copian fuentes, colores, imágenes, CSS ni composición. |
+
+Elementos deliberadamente no copiados: textos, preguntas, nombres comerciales, diseño, código, imágenes, testimonios, biografías, cifras, años de experiencia, metodología propietaria y tipografías. El Laboratorio permanece como experiencia grupal independiente y Brújulas como propuesta secundaria para primeras decisiones.
+
+### Decisiones iniciales
+
+- Las seis propuestas adultas pertenecen al territorio `Transiciones laborales`; Brújulas queda fuera de ese catálogo principal.
+- El cuestionario de situación calcula y muestra la orientación en el navegador antes de pedir datos. El nuevo recorrido no usa `/api/initial-diagnostic`, CAPTCHA ni Supabase.
+- El test de Anclas conserva las 40 preguntas, escala 1–6 y tres elecciones adicionales de la implementación propia. Los empates comparten rango y la IA nunca decide el ancla.
+- La explicación determinística es completa. La persona puede solicitar de forma explícita una interpretación ampliada por IA; se ejecuta en servidor y su ausencia o fallo no impide ver el resultado.
+- El uso anónimo de ambos cuestionarios no persiste respuestas. Si existe una sesión Google, Anclas conserva en Supabase el único intento gratuito para aplicar el límite server-side y permitir volver a consultarlo, de acuerdo con las reglas permanentes del proyecto.
+- Compartir un resultado con Senda es opcional, posterior y exige consentimiento explícito. Se reutiliza `/api/contact`; ese envío no guarda respuestas ni datos en Supabase o planillas.
+- Las rutas anteriores se conservan únicamente como redirecciones permanentes.
+
+### Archivos y validación
+
+Archivos realmente intervenidos:
+
+- Rutas, metadata y API: `app/[locale]/{page,layout}.tsx`, `app/[locale]/brujulas/page.tsx`, `app/[locale]/como-trabajamos/page.tsx`, `app/[locale]/contacto/{layout,page}.tsx`, `app/[locale]/diagnostico/{page,ancla-de-carrera/page,ancla-de-carrera/test/page}.tsx`, `app/[locale]/encontrar-mi-recorrido/page.tsx`, `app/[locale]/equipo/page.tsx`, `app/[locale]/laboratorio-{narrativas-laborales-alternativas,nuevas-narrativas}/page.tsx`, `app/[locale]/{login,panel,preguntas-frecuentes,privacidad,terminos}/page.tsx`, `app/[locale]/orientacion-vocacional/page.tsx`, `app/[locale]/procesos/[slug]/page.tsx`, `app/[locale]/recorridos/{page,[slug]/page}.tsx`, `app/[locale]/test-anclas-de-carrera/page.tsx`, `app/[locale]/transiciones-laborales/{page,[slug]/page}.tsx`, `app/api/diagnostics/{analyze,complete-public,interpret}/route.ts` y `app/sitemap.ts`.
+- Experiencia, navegación y formularios: `components/diagnostic/initial-diagnostic-form.tsx`, `components/forms/{diagnostic-result-share-form,laboratory-interest-form}.tsx`, `components/layout/{footer,header,process-popup}.tsx`, `components/pages/{journeys-page,methodology-page,page-primitives}.tsx`, `components/processes/process-detail.tsx` y `components/sections/{career-quiz,senda-home}.tsx`.
+- Dominio, contenido y configuración: `lib/contact/{email-content,mailer,schema}.ts`, `lib/data/{anchors.json,senda-processes.ts}`, `lib/diagnostics/{access,career-anchor,initial-diagnostic}.ts`, `lib/security/navigation.ts`, `messages/{es,en}.json`, `next.config.ts`, `public/llms.txt`, `scripts/{verify-deploy,verify-env}.mjs`, `supabase/migrations/20260815120000_enforce_single_career_anchor_attempt.sql` y `README.md`.
+- Documentación: `docs/operations/go-live-checklist.md`, `docs/redesign-universo-senda.md` y `docs/senda/{ARCHITECTURE,DECISIONS,PROJECT,STATE}.md`.
+- Pruebas de navegador: `tests/e2e/{authenticated-diagnostic,internal-pages,questionnaires,senda-experience,smoke,visual-assets}.spec.ts`.
+- Pruebas unitarias: `tests/unit/{career-anchor-interpret-route,career-anchor-public-completion-route,career-anchor,contact-email-content,contact-mailer,contact-route,contact-schema,diagnostic-access,i18n,initial-diagnostic,navigation}.test.ts`.
+
+No se modificaron dependencias, lockfiles, fuentes, PDF, migraciones históricas, secretos ni archivos `.env`. La nueva migración forward-only elimina la excepción de repetición para cuentas creadoras. La paridad localizada actual es de 951 valores terminales en español y 951 en inglés.
+
+Validación previa al cierre:
+
+- Instalación reproducible con `npm ci`: aprobada.
+- `npm run release:check`: aprobado el 2026-08-15 sobre el estado final previo al commit.
+  - ESLint y TypeScript: aprobados.
+  - Suite unitaria: 123 aprobadas en 22 archivos.
+  - Playwright: 81 aprobadas y 2 autenticadas omitidas por no disponer de `E2E_AUTH_STORAGE_STATE`.
+  - Build optimizado de Next.js: aprobado e incluye las rutas y APIs nuevas.
+- El rerun dirigido de cuestionarios y contacto aprobó además 21/21 después de incorporar la gestión de foco entre pasos y en las confirmaciones.
+- `git diff --check`: aprobado; sin secretos ni artefactos generados versionados.
+- El commit, el push, el deployment y el recorrido productivo se registran después de completar la publicación.
+- La migración `20260815120000_enforce_single_career_anchor_attempt.sql` fue aplicada y verificada en el proyecto Supabase productivo enlazado; el historial remoto coincide con las 13 migraciones locales.
+- Bloqueo operativo externo conocido: Vercel Production contiene cuatro de las cinco variables SMTP y falta `SMTP_PASSWORD`. Hasta cargar ese secreto y redesplegar, `/api/health` seguirá degradado y los formularios responderán 503 sin afirmar envío ni recepción.
+
 ## Intervención 6 · Uptime y escala del símbolo
 
 - Fecha de inicio: 2026-08-14.

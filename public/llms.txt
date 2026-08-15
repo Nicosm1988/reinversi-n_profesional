@@ -1,23 +1,29 @@
 # Senda
 
-> Senda acompaña dos recorridos personalizados para tomar decisiones de estudio, trabajo y trayectoria con claridad y criterio.
+> Senda acompaña transiciones laborales con propuestas vinculadas al momento, la trayectoria y el contexto de cada persona.
 
 ## Sitio principal
 
-- [Inicio](https://reinvension-profesional.vercel.app/)
-- [Recorridos](https://reinvension-profesional.vercel.app/recorridos)
-- [Diagnóstico inicial](https://reinvension-profesional.vercel.app/diagnostico)
-- [Brújula](https://reinvension-profesional.vercel.app/recorridos/brujula)
-- [Nueva Etapa Profesional](https://reinvension-profesional.vercel.app/recorridos/nueva-etapa-profesional)
-- [Cómo trabajamos](https://reinvension-profesional.vercel.app/como-trabajamos)
-- [Equipo](https://reinvension-profesional.vercel.app/equipo)
-- [Preguntas frecuentes](https://reinvension-profesional.vercel.app/preguntas-frecuentes)
-- [Contacto](https://reinvension-profesional.vercel.app/contacto)
+- [Inicio](/)
+- [Transiciones laborales](/transiciones-laborales)
+- [Explorar una nueva dirección profesional](/transiciones-laborales/explorar-direccion)
+- [Preparar un cambio de empleo](/transiciones-laborales/cambiar-empleo)
+- [Construir o reordenar un proyecto propio](/transiciones-laborales/proyecto-propio)
+- [Pensar el liderazgo y la continuidad de una empresa](/transiciones-laborales/liderazgo-empresa)
+- [Abordar un desafío profesional puntual](/transiciones-laborales/desafio-puntual)
+- [Elegir una formación para el próximo paso](/transiciones-laborales/elegir-formacion)
+- [Encontrar mi recorrido](/encontrar-mi-recorrido)
+- [Test de Anclas de Carrera](/test-anclas-de-carrera)
+- [Cómo trabajamos](/como-trabajamos)
+- [Equipo](/equipo)
+- [Preguntas frecuentes](/preguntas-frecuentes)
+- [Contacto](/contacto)
 
-## Próximamente
+## Propuestas complementarias
 
-- [Laboratorio de Nuevas Narrativas Laborales](https://reinvension-profesional.vercel.app/laboratorio-nuevas-narrativas): futura experiencia grupal de Senda para revisar la trayectoria y explorar nuevas formas de pensar y narrar el trabajo.
+- [Brújulas](/brujulas): una propuesta secundaria para jóvenes que comienzan a explorar opciones de estudio, formación y trabajo.
+- [Laboratorio de Narrativas Laborales Alternativas](/laboratorio-narrativas-laborales-alternativas): experiencia grupal para indagar la trayectoria, intercambiar miradas y construir nuevas narrativas sobre el trabajo.
 
 ## Información importante
 
-El diagnóstico inicial y el test gratuito de Anclas de Carrera ofrecen orientaciones de partida. No constituyen diagnósticos clínicos ni sustituyen el acompañamiento de un profesional humano.
+La orientación inicial y el test de Anclas de Carrera ofrecen puntos de partida. No constituyen diagnósticos clínicos ni sustituyen el acompañamiento de un profesional humano.

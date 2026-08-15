@@ -6,17 +6,22 @@
     "mobileNavigation": "Navegación móvil",
     "navHome": "Inicio",
     "navAbout": "Sobre mí",
-    "navProcesses": "Recorridos",
+    "navTransitions": "Transiciones laborales",
     "navHow": "Cómo trabajamos",
     "navTeam": "Equipo",
     "navLaboratory": "Laboratorio",
     "navFaq": "Preguntas frecuentes",
     "navContact": "Contacto",
-    "journeysMenuLabel": "Abrir menú de recorridos",
-    "journeyCompass": "Brújula",
-    "journeyNewStage": "Nueva Etapa Profesional",
+    "servicesMenuLabel": "Abrir menú de transiciones laborales",
+    "serviceDirection": "Explorar una nueva dirección profesional",
+    "serviceJobChange": "Preparar un cambio de empleo",
+    "serviceProject": "Construir o reordenar un proyecto propio",
+    "serviceLeadership": "Pensar el liderazgo y la continuidad de una empresa",
+    "serviceFocused": "Abordar un desafío profesional puntual",
+    "serviceEducation": "Elegir una formación para el próximo paso",
+    "navCompass": "Brújulas",
     "closeMenu": "Cerrar menú",
-    "ctaDiagnostic": "Realizá el diagnóstico",
+    "ctaDiagnostic": "Reconocer en qué momento estoy",
     "ctaLogin": "Ingresar",
     "ctaAccount": "Mi recorrido",
     "ctaLogout": "Salir",
@@ -28,19 +33,24 @@
   },
   "Footer": {
     "homeLabel": "Ir al inicio de Senda",
-    "statement": "Un lugar para comprender el cambio, encontrar una dirección y construir próximos pasos posibles.",
-    "processNavigation": "Recorridos de Senda",
+    "statement": "Un espacio para explorar transiciones laborales, reconocer alternativas y construir decisiones coherentes con tu trayectoria.",
+    "processNavigation": "Transiciones laborales",
     "siteNavigation": "Explorar Senda",
-    "colProcesses": "Recorridos",
+    "colProcesses": "Transiciones laborales",
     "colExplore": "Explorar",
-    "linkCompass": "Brújula",
-    "linkNewStage": "Nueva Etapa Profesional",
-    "linkJourneys": "Todos los recorridos",
+    "linkCompass": "Brújulas",
+    "linkTransitions": "Ver transiciones laborales",
+    "serviceDirection": "Explorar una nueva dirección profesional",
+    "serviceJobChange": "Preparar un cambio de empleo",
+    "serviceProject": "Proyecto propio",
+    "serviceLeadership": "Liderazgo y continuidad de empresa",
+    "serviceFocused": "Desafío profesional puntual",
+    "serviceEducation": "Elegir una formación",
     "linkAbout": "Sobre mí",
     "linkTeam": "Equipo",
     "linkLaboratory": "Laboratorio",
     "linkContact": "Contacto",
-    "linkInitialDiagnostic": "Diagnóstico inicial",
+    "linkInitialDiagnostic": "Encontrar mi recorrido",
     "linkHow": "Cómo trabajamos",
     "linkFaq": "Preguntas frecuentes",
     "linkCareerAnchor": "Test de Anclas de Carrera",
@@ -48,7 +58,7 @@
     "linkTerms": "Términos y condiciones",
     "copyright": "© {year} Senda — Todos los derechos reservados",
     "disclaimerTitle": "Sobre nuestras herramientas:",
-    "disclaimerText": "Senda ofrece recorridos y herramientas para ordenar decisiones de estudio y trabajo. Los resultados son puntos de partida para reflexionar: no definen a una persona ni determinan qué decisión debe tomar."
+    "disclaimerText": "Senda ofrece acompañamientos y herramientas orientativas para explorar decisiones de estudio y trabajo. Los resultados son puntos de partida: no definen a una persona, no constituyen un diagnóstico clínico ni determinan qué decisión debe tomar."
   },
   "CookieBanner": {
     "title": "Preferencia de Privacidad",
@@ -101,10 +111,10 @@
   },
   "Login": {
     "title": "Te damos la bienvenida",
-    "description": "Inicia sesión con Google para hacer el diagnóstico y guardar tus resultados en tu cuenta.",
+    "description": "Iniciá sesión con Google para consultar resultados guardados y administrar tu cuenta. Los cuestionarios públicos no requieren sesión.",
     "continueGoogle": "Continuar con Google",
     "continueLinkedin": "Continuar con LinkedIn",
-    "termsNotice": "Al continuar, aceptás nuestros términos de servicio y políticas de privacidad. Tus diagnósticos quedan asociados a tu cuenta.",
+    "termsNotice": "Al continuar, aceptás nuestros términos y la política de privacidad. Si completás Anclas con la sesión activa, tu único intento queda asociado a tu cuenta.",
     "unavailable": "El inicio de sesión no está disponible en este momento.",
     "oauthError": "No pudimos iniciar sesión con Google. Probá nuevamente.",
     "loading": "Iniciando sesión con Google…"
@@ -153,15 +163,15 @@
   },
   "Privacy": {
     "title": "Política de Privacidad",
-    "lastUpdated": "Última actualización: 18 de julio de 2026",
+    "lastUpdated": "Última actualización: 15 de agosto de 2026",
     "section1Title": "1. Información que recopilamos",
-    "section1Text": "En Senda recopilamos la información que proporcionás al utilizar nuestros servicios: nombre, correo electrónico, información profesional, respuestas y resultados de diagnósticos, consultas enviadas y datos técnicos esenciales para seguridad y funcionamiento.",
+    "section1Text": "En Senda recopilamos los datos que decidís proporcionar al enviar una consulta o solicitar contacto: nombre, correo electrónico, teléfono opcional, mensaje y el resumen orientativo que autorizás compartir. También procesamos datos técnicos esenciales para la seguridad y el funcionamiento.",
     "section2Title": "2. Uso de la información",
-    "section2Text": "Utilizamos esta información para brindar los servicios solicitados, guardar tu resultado, responder consultas, proteger la plataforma, mejorar su funcionamiento y cumplir obligaciones legales. Las comunicaciones informativas requieren tu consentimiento y podés dejar de recibirlas.",
+    "section2Text": "Utilizamos esta información para responder consultas, brindar los servicios solicitados, proteger la plataforma, mejorar su funcionamiento y cumplir obligaciones legales. Las comunicaciones requieren tu consentimiento y podés retirarlo. No usamos los cuestionarios públicos para enviar información sin tu autorización.",
     "section3Title": "3. Protección de datos",
     "section3Text": "Aplicamos controles de autenticación, permisos de base de datos, validación del lado del servidor, protección contra automatizaciones abusivas y comunicaciones cifradas. Ningún sistema ofrece seguridad absoluta, pero reducimos el acceso y la recopilación a lo necesario para operar el servicio.",
     "section4Title": "4. Confidencialidad de diagnósticos",
-    "section4Text": "El test gratuito produce una devolución orientativa. Para generarla y guardarla, las respuestas y los datos laborales necesarios pueden ser procesados por proveedores de infraestructura, base de datos, seguridad e inteligencia artificial bajo nuestras instrucciones. No enviamos al modelo nombre, correo, teléfono ni dirección. El acceso se limita al equipo que necesita esa información para prestar un servicio solicitado o atender una consulta.",
+    "section4Text": "Los cuestionarios públicos producen una devolución orientativa y calculan el resultado en tu navegador sin pedir datos personales. Si solicitás voluntariamente una interpretación con inteligencia artificial, se envían al servidor las respuestas, la etapa profesional elegida y el idioma, pero no tu nombre, correo, teléfono ni dirección. Cuando ya existe una sesión autenticada, las respuestas y el resultado del único intento gratuito se asocian a esa cuenta para aplicar el límite y permitir su consulta posterior; esto se informa antes de finalizar el test. El equipo de Senda recibe el resultado y los datos para contactarte únicamente cuando completás el formulario posterior y prestás consentimiento explícito.",
     "section5Title": "5. Cookies",
     "section5Text": "Usamos cookies esenciales para autenticación, seguridad y preferencias. Las tecnologías no esenciales, si se incorporan, deberán respetar la elección mostrada en el sitio.",
     "section6Title": "6. Tus derechos",
@@ -199,7 +209,6 @@
     "updatedAt": "Actualizado el {date}.",
     "emptyTitle": "Todavía no hay un resultado guardado",
     "emptyDescription": "Cuando completes el test de Anclas de Carrera, vas a encontrar acá tu última lectura.",
-    "repeatTest": "Repetir test",
     "viewFullResult": "Ver resultado completo",
     "startTest": "Comenzar test"
   },
@@ -322,15 +331,62 @@
     "bonusSelectedLabel": "Seleccionadas",
     "bonusPreviousBlock": "Bloque anterior",
     "bonusNextBlock": "Siguiente bloque",
-    "responsesSaved": "Tus respuestas se guardan de forma segura en tu cuenta para que puedas volver a consultarlas.",
+    "responsesSaved": "Como ya iniciaste sesión, este intento se guarda de forma segura en tu cuenta para que puedas volver a consultarlo.",
+    "responsesWillBeSaved": "Como ya iniciaste sesión, al finalizar este intento se guardará de forma segura en tu cuenta para que puedas volver a consultarlo.",
+    "responsesNotSaved": "El resultado se mantiene en este navegador, pero este intento no quedó guardado en tu cuenta.",
+    "recordingAttempt": "Guardando tu intento…",
+    "completionUnavailable": "Tu resultado está disponible, pero no pudimos guardar este intento en tu cuenta. Podés consultarlo ahora y volver a intentar más tarde.",
     "responsesLocalOnly": "Tus respuestas se calculan en este dispositivo y no se envían a ningún servidor.",
+    "responsesPrivate": "Podés ver el resultado completo sin iniciar sesión ni compartir datos personales. Solo se envían las respuestas al solicitar voluntariamente la lectura orientativa.",
     "prequizPrivacy": "Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta.",
     "prequizPrivacyWithEmail": "Tus datos se usan para personalizar y guardar el diagnóstico en tu cuenta ({email}).",
     "resultsRankingDescription": "Este orden refleja el peso relativo de cada ancla según tus respuestas y tus tres elecciones finales.",
     "resultsScore": "{score} puntos",
     "resultsSaved": "Guardado en tu cuenta",
     "occupationUnknown": "sin especificar",
-    "resultsDisclaimer": "Este resultado es orientativo y puede complementarse con una conversación individual con el equipo."
+    "resultsDisclaimer": "Este resultado es orientativo y no constituye un diagnóstico clínico ni una indicación definitiva. Puede complementarse con una conversación profesional.",
+    "resultsTiePrimary": "Ancla principal compartida",
+    "resultsTiePrimaryText": "Tus respuestas muestran un resultado principal compartido entre {names}. Leé esta combinación como una tensión fértil para explorar, no como un desempate que el test deba resolver por vos.",
+    "resultsTieSecondary": "Anclas secundarias con el mismo peso",
+    "contextTitle": "Relacioná el resultado con tu momento actual",
+    "contextDescription": "Este dato opcional ayuda a construir una lectura más situada. No cambia el cálculo de tus anclas.",
+    "contextLabel": "¿Qué situación profesional estás atravesando?",
+    "contextOptionExploringDirection": "Estoy explorando una nueva dirección profesional",
+    "contextOptionChangingEmployment": "Estoy preparando un cambio de empleo",
+    "contextOptionIndependentProject": "Estoy construyendo o reordenando un proyecto propio",
+    "contextOptionLeadershipCompany": "Estoy pensando mi liderazgo o la continuidad de una empresa",
+    "contextOptionSpecificChallenge": "Estoy abordando un desafío profesional puntual",
+    "contextOptionChoosingEducation": "Estoy eligiendo una formación para mi próximo paso",
+    "contextOptionOther": "Estoy atravesando otra situación profesional",
+    "contextOptionPreferNot": "Prefiero no indicarlo",
+    "contextCta": "Preparar mi lectura orientativa",
+    "interpretationLoadingTitle": "Estamos preparando tu lectura orientativa",
+    "interpretationLoadingText": "Primero preservamos el cálculo del test y luego relacionamos sus resultados con la situación que elegiste.",
+    "interpretationTitle": "Una lectura para seguir explorando",
+    "interpretationFallbackNotice": "La generación asistida no estuvo disponible. Esta devolución completa fue preparada con la lógica determinística de Senda.",
+    "interpretationTensionsTitle": "Tensiones posibles",
+    "interpretationQuestionsTitle": "Preguntas para seguir pensando",
+    "interpretationStageTitle": "Relación con tu momento actual",
+    "interpretationServicesTitle": "Recorridos de Senda que podrías explorar",
+    "interpretationNextStepsTitle": "Próximos pasos exploratorios"
+  },
+  "ResultShare": {
+    "title": "Quiero que Senda reciba mi resultado y se contacte conmigo",
+    "description": "El resultado ya es tuyo. Completá este formulario solo si querés compartirlo voluntariamente con Senda para continuar la conversación.",
+    "nameLabel": "Nombre",
+    "emailLabel": "Correo",
+    "phoneLabel": "Teléfono",
+    "preferredContactLabel": "Preferencia de contacto",
+    "preferredEmail": "Correo",
+    "preferredWhatsapp": "WhatsApp",
+    "preferredEither": "Cualquiera de los dos",
+    "messageLabel": "Mensaje",
+    "consentLabel": "Acepto que Senda reciba los datos y el resumen de este resultado únicamente para responderme.",
+    "submit": "Compartir mi resultado",
+    "submitting": "Enviando…",
+    "success": "El servidor aceptó el envío. Tu solicitud quedó enviada para que Senda pueda revisarla.",
+    "error": "No pudimos enviar el resultado. Tus datos permanecen en pantalla para que puedas revisarlos o intentar nuevamente.",
+    "optional": "opcional"
   },
   "CareerAnchorIntro": {
     "metadataTitle": "Test de Anclas de Carrera | Senda",
@@ -353,44 +409,81 @@
   },
   "Home": {
     "hero": {
-      "eyebrow": "Senda · Orientación y movimiento",
-      "title": "Encontrá una dirección para el momento que estás atravesando.",
-      "rhythm": "Elegir una primera dirección.\nReleer una trayectoria.\nConvertir el cambio en próximos pasos.",
-      "description": "Senda acompaña decisiones de estudio y trabajo, y nuevas etapas profesionales, con una metodología clara, conversaciones humanas y pasos posibles.",
-      "primaryCta": "Realizá el diagnóstico",
-      "secondaryCta": "Explorá los recorridos"
+      "eyebrow": "Senda · Transiciones laborales",
+      "title": "Acompañamos\ntransiciones laborales",
+      "rhythm": "Tu trayectoria no se desecha.\nLas alternativas se exploran.\nLos próximos pasos se construyen.",
+      "description": "Un espacio para explorar intereses, reconocer alternativas y construir decisiones coherentes con tu trayectoria, continuando la construcción de sentido en diálogo con el contexto actual.",
+      "primaryCta": "Reconocer en qué momento estoy",
+      "secondaryCta": "Explorar transiciones laborales"
     },
-    "introduction": {
-      "eyebrow": "Un espacio para orientarte",
-      "title": "Claridad para decidir sin desconocer tu historia.",
-      "description": "Senda ofrece acompañamiento personalizado para explorar posibilidades, comprender tu momento y transformar preguntas complejas en una dirección propia.",
-      "cta": "Conocé cómo trabajamos"
-    },
-    "journeys": {
-      "eyebrow": "Dos recorridos",
-      "title": "Una senda distinta para cada momento.",
-      "intro": "No todas las preguntas profesionales parten del mismo lugar. Por eso Senda propone dos recorridos claros, personales y conectados con la realidad de cada etapa.",
-      "cta": "Conocer el recorrido",
-      "viewAll": "Ver los dos recorridos",
+    "signals": {
+      "eyebrow": "Señales para reconocerte",
+      "title": "No hace falta tener todo resuelto para empezar.",
+      "description": "Una transición puede comenzar como una incomodidad, una idea todavía imprecisa o una decisión concreta. Nombrar el momento ayuda a construir criterios sin desconocer tu historia.",
       "items": {
-        "compass": {
-          "label": "Recorrido 01",
-          "title": "Brújula",
-          "lead": "No se trata de elegir para toda la vida, sino de empezar a reconocer una dirección propia.",
-          "description": "Para jóvenes que están definiendo qué estudiar, cómo acercarse al mundo del trabajo o qué alternativas vale la pena explorar. No es un test tradicional: es un proceso de conversación, investigación y decisión."
+        "misalignment": "Tu trabajo actual dejó de representarte, pero todavía no reconocés otra dirección.",
+        "jobChange": "Querés cambiar de empleo, función u organización y necesitás ordenar el movimiento.",
+        "project": "Tenés una idea o proyecto propio y necesitás darle forma o revisar cómo continuar.",
+        "leadership": "Sostenés decisiones de liderazgo o empresa que necesitan un espacio profesional de pensamiento.",
+        "decision": "Reconocés un desafío puntual y querés convertirlo en una decisión o plan concreto.",
+        "education": "Estás evaluando una formación y querés relacionarla con tu trayectoria y posibilidades reales."
+      }
+    },
+    "finder": {
+      "eyebrow": "Orientación inicial",
+      "title": "¿En qué momento de tu trayectoria estás?",
+      "description": "Un recorrido breve para reconocer qué tipo de acompañamiento puede resultar más adecuado para tu situación actual. El resultado aparece antes de pedirte datos.",
+      "cta": "Reconocer en qué momento estoy"
+    },
+    "situations": {
+      "eyebrow": "Transiciones laborales",
+      "title": "Distintos momentos requieren preguntas distintas.",
+      "intro": "Las propuestas comparten una mirada sobre identidad, experiencia y contexto, pero cada una se concentra en una situación concreta.",
+      "cta": "Conocer la propuesta",
+      "viewAll": "Ver todas las transiciones laborales",
+      "items": {
+        "direction": {
+          "label": "Situación 01",
+          "title": "Explorar una nueva dirección profesional",
+          "lead": "Cuando lo actual dejó de representar, pero el próximo rumbo todavía no aparece.",
+          "description": "Una lectura de identidad, intereses, experiencias y capital laboral para reconocer alternativas y construir criterios."
         },
-        "newStage": {
-          "label": "Recorrido 02",
-          "title": "Nueva Etapa Profesional",
-          "lead": "Transformar tu trayectoria sin desconocer todo lo que ya construiste.",
-          "description": "Para profesionales con experiencia, líderes y gerentes que necesitan revisar su identidad, cambiar de rol o industria, reposicionarse o construir una estrategia concreta para lo que sigue."
+        "jobChange": {
+          "label": "Situación 02",
+          "title": "Preparar un cambio de empleo",
+          "lead": "Cuando existe deseo de movimiento y hace falta ordenar dirección, narrativa y búsqueda.",
+          "description": "Trayectoria, propuesta de valor, perfil, conversaciones y una estrategia realista para moverte sin promesas de contratación."
+        },
+        "project": {
+          "label": "Situación 03",
+          "title": "Construir o reordenar un proyecto propio",
+          "lead": "Cuando una idea, actividad independiente o emprendimiento necesita forma y contraste.",
+          "description": "Relación con tu identidad, alcance, destinatarios, propuesta de valor, prioridades y próximos pasos posibles."
+        },
+        "leadership": {
+          "label": "Situación 04",
+          "title": "Pensar el liderazgo y la continuidad de una empresa",
+          "lead": "Cuando decidir en soledad ya no alcanza para ordenar tensiones, rol y continuidad.",
+          "description": "Un espacio profesional para pensar límites, conversaciones, organización, coyuntura y estrategia."
+        },
+        "focused": {
+          "label": "Situación 05",
+          "title": "Abordar un desafío profesional puntual",
+          "lead": "Cuando el problema está delimitado y necesitás construir una decisión o plan focalizado.",
+          "description": "Definición del problema, información, alternativas, criterios, decisión y plan de acción."
+        },
+        "education": {
+          "label": "Situación 06",
+          "title": "Elegir una formación para el próximo paso",
+          "lead": "Cuando una carrera, posgrado o certificación necesita evaluarse dentro de una dirección mayor.",
+          "description": "Trayectoria, intereses, tiempo, inversión, tecnología, contexto laboral y posibilidades reales."
         }
       }
     },
     "method": {
       "eyebrow": "Cómo funciona Senda",
       "title": "Una dirección se construye por etapas.",
-      "intro": "Cada recorrido combina escucha, exploración y estrategia. La secuencia orienta el trabajo, pero se adapta a la historia y al momento de cada persona.",
+      "intro": "Cada acompañamiento combina escucha, exploración, contraste y estrategia. La secuencia orienta el trabajo, pero se adapta a la historia y al momento de cada persona.",
       "steps": {
         "listen": {
           "number": "01",
@@ -418,26 +511,32 @@
     "laboratory": {
       "eyebrow": "Una experiencia grupal de Senda",
       "status": "Próximamente",
-      "title": "Laboratorio de Nuevas Narrativas Laborales",
-      "description": "Un espacio grupal para revisar la propia trayectoria, reconocer intereses genuinos y construir nuevas formas de pensar y narrar el trabajo.",
+      "title": "Laboratorio de Narrativas Laborales Alternativas",
+      "description": "Encuentros grupales para indagar la trayectoria, intercambiar miradas, construir narrativas alternativas y orientar próximos pasos.",
       "cta": "Conocer el Laboratorio"
     },
+    "compass": {
+      "eyebrow": "Primeras decisiones",
+      "title": "Brújulas",
+      "description": "Una propuesta secundaria para adolescentes y jóvenes que están comenzando a explorar opciones de estudio, formación y trabajo.",
+      "cta": "Explorar Brújulas"
+    },
     "final": {
-      "eyebrow": "El primer paso",
-      "title": "No necesitás tener todo resuelto para empezar.",
-      "description": "Podés comenzar por contar qué está cambiando. A partir de ahí, construimos una dirección y próximos pasos posibles.",
-      "primaryCta": "Realizá el diagnóstico inicial",
-      "secondaryCta": "Hablar con el equipo"
+      "eyebrow": "Contacto",
+      "title": "Una conversación puede ser el próximo paso.",
+      "description": "Si preferís contar tu situación directamente, podés escribirnos. La lectura y la respuesta son personales.",
+      "primaryCta": "Reconocer mi momento",
+      "secondaryCta": "Conversar con Senda"
     }
   },
   "NarrativesLab": {
     "meta": {
-      "title": "Laboratorio de Nuevas Narrativas Laborales",
+      "title": "Laboratorio de Narrativas Laborales Alternativas",
       "description": "Un espacio grupal para revisar la propia trayectoria, reconocer intereses genuinos y construir nuevas formas de pensar y narrar el trabajo."
     },
     "hero": {
       "eyebrow": "Próximamente",
-      "title": "Laboratorio de Nuevas Narrativas Laborales",
+      "title": "Laboratorio de Narrativas Laborales Alternativas",
       "description": "Un espacio grupal para revisar la propia trayectoria, reconocer intereses genuinos y construir nuevas formas de pensar y narrar el trabajo.",
       "cta": "Recibir información sobre la primera edición"
     },
@@ -445,7 +544,7 @@
       "eyebrow": "Otra dimensión del cambio",
       "title": "Pensar el cambio desde más de una voz.",
       "paragraph1": "Los cambios profesionales suelen pensarse desde lo que el mercado demanda: qué perfiles busca, qué habilidades valora o cómo deberíamos posicionarnos. Esas preguntas importan, pero no alcanzan.",
-      "paragraph2": "El Laboratorio de Nuevas Narrativas Laborales propone detenerse también en otra dimensión: qué aparece cuando miramos la propia trayectoria, qué intereses siguen teniendo vitalidad, qué experiencias nos representan y qué transformaciones pueden construirse con mayor coherencia.",
+      "paragraph2": "El Laboratorio de Narrativas Laborales Alternativas propone detenerse también en otra dimensión: qué aparece cuando miramos la propia trayectoria, qué intereses siguen teniendo vitalidad, qué experiencias nos representan y qué transformaciones pueden construirse con mayor coherencia.",
       "paragraph3": "No se trata de ignorar la realidad laboral, sino de evitar que sea la única voz que intervenga en una decisión. A través del intercambio, la reflexión y la exploración de nuevas narrativas, el laboratorio busca abrir un espacio para reconocer lo propio y relacionarlo con posibilidades concretas."
     },
     "explorations": {
@@ -485,7 +584,7 @@
         "phone": "+54 9 11 0000-0000",
         "explorationInterest": "Contanos brevemente qué preguntas o cambios te gustaría explorar."
       },
-      "consent": "Acepto recibir información de Senda únicamente sobre el Laboratorio de Nuevas Narrativas Laborales.",
+      "consent": "Acepto recibir información de Senda únicamente sobre el Laboratorio de Narrativas Laborales Alternativas.",
       "privacyLink": "Consultar la política de privacidad",
       "submit": "Quiero recibir novedades",
       "submitting": "Enviando…",
@@ -509,38 +608,73 @@
   },
   "Journeys": {
     "meta": {
-      "title": "Recorridos",
-      "description": "Conocé Brújula y Nueva Etapa Profesional, los dos recorridos personalizados de Senda."
+      "title": "Transiciones laborales",
+      "description": "Seis propuestas de Senda para explorar una dirección, cambiar de empleo, construir un proyecto, pensar el liderazgo, abordar un desafío o elegir una formación."
     },
     "hero": {
-      "eyebrow": "Recorridos",
-      "title": "Dos puntos de partida. Dos formas de construir dirección.",
-      "description": "Cada recorrido responde a un momento distinto y se adapta a la historia, las preguntas y la realidad de cada persona."
+      "eyebrow": "Transiciones laborales",
+      "title": "Una trayectoria puede abrir más de una dirección.",
+      "description": "Senda organiza sus propuestas según la situación que atraviesa cada persona, integrando identidad, experiencia, posibilidades y contexto."
     },
     "intro": {
-      "title": "Elegir el acompañamiento adecuado empieza por reconocer dónde estás.",
-      "description": "Brújula abre posibilidades cuando comenzás a decidir. Nueva Etapa Profesional integra la experiencia acumulada para construir lo que sigue."
+      "title": "Reconocer el momento permite formular mejores preguntas.",
+      "description": "Las propuestas no son fórmulas cerradas. Funcionan como puntos de partida para trabajar una transición con profundidad, criterios y próximos pasos posibles."
     },
     "items": {
-      "compass": {
-        "eyebrow": "Recorrido 01",
-        "title": "Brújula",
-        "lead": "No se trata de elegir para toda la vida, sino de empezar a reconocer una dirección propia.",
-        "description": "Para jóvenes que necesitan explorar intereses, conocer mundos de estudio y trabajo, reconocer señales y construir criterios propios para comenzar una dirección.",
-        "cta": "Conocer Brújula"
+      "direction": {
+        "eyebrow": "Propuesta 01",
+        "title": "Explorar una nueva dirección profesional",
+        "lead": "Tu trabajo dejó de representarte, pero todavía no reconocés hacia dónde moverte.",
+        "description": "Exploramos identidad, intereses, experiencias significativas, capital laboral y alternativas para construir criterios y una dirección posible.",
+        "cta": "Explorar esta dirección"
       },
-      "newStage": {
-        "eyebrow": "Recorrido 02",
-        "title": "Nueva Etapa Profesional",
-        "lead": "Transformar tu trayectoria sin desconocer todo lo que ya construiste.",
-        "description": "Para profesionales, líderes y gerentes que necesitan releer su experiencia, revisar identidad y motivaciones, definir posicionamiento y diseñar una estrategia para su próxima etapa.",
-        "cta": "Conocer Nueva Etapa Profesional"
+      "jobChange": {
+        "eyebrow": "Propuesta 02",
+        "title": "Preparar un cambio de empleo",
+        "lead": "Querés cambiar de puesto, organización, función o industria y necesitás ordenar la transición.",
+        "description": "Trabajamos trayectoria, dirección, propuesta de valor, narrativa, perfil, búsqueda, conversaciones y plan de movimiento.",
+        "cta": "Preparar el cambio"
+      },
+      "project": {
+        "eyebrow": "Propuesta 03",
+        "title": "Construir o reordenar un proyecto propio",
+        "lead": "Una idea, emprendimiento o actividad independiente necesita forma, prioridades y contraste con la realidad.",
+        "description": "Revisamos relación con tu identidad, alcance, destinatarios, propuesta de valor, estructura, decisiones pendientes y próximos pasos.",
+        "cta": "Pensar el proyecto"
+      },
+      "leadership": {
+        "eyebrow": "Propuesta 04",
+        "title": "Pensar el liderazgo y la continuidad de una empresa",
+        "lead": "Necesitás un espacio profesional para pensar decisiones, tensiones o próximos movimientos.",
+        "description": "Abordamos rol, límites, conversaciones, organización, coyuntura, estrategia, continuidad y la relación entre persona, liderazgo y empresa.",
+        "cta": "Abrir este espacio"
+      },
+      "focused": {
+        "eyebrow": "Propuesta 05",
+        "title": "Abordar un desafío profesional puntual",
+        "lead": "Reconocés un problema delimitado y necesitás ordenar una decisión o construir un plan focalizado.",
+        "description": "Definimos el problema, reunimos información, evaluamos alternativas y criterios, y traducimos la decisión en acción.",
+        "cta": "Abordar el desafío"
+      },
+      "education": {
+        "eyebrow": "Propuesta 06",
+        "title": "Elegir una formación para el próximo paso",
+        "lead": "Estás evaluando una carrera, posgrado, certificación o especialización dentro de una transición mayor.",
+        "description": "Relacionamos la decisión educativa con trayectoria, intereses, tiempo, inversión, tecnología, dirección profesional y contexto laboral.",
+        "cta": "Evaluar la formación"
+      },
+      "compass": {
+        "eyebrow": "Primeras decisiones",
+        "title": "Brújulas",
+        "lead": "No se trata de elegir para toda la vida, sino de empezar a reconocer una dirección propia.",
+        "description": "Una propuesta secundaria para adolescentes y jóvenes que comienzan a explorar opciones de estudio, formación y trabajo.",
+        "cta": "Explorar Brújulas"
       }
     },
     "closing": {
-      "title": "¿Todavía no sabés qué recorrido corresponde a tu momento?",
-      "description": "El diagnóstico inicial ofrece un punto de partida orientativo para conversar con el equipo.",
-      "cta": "Realizá el diagnóstico inicial"
+      "title": "¿Todavía no sabés qué propuesta corresponde a tu momento?",
+      "description": "La orientación inicial ofrece un mapa breve y no clínico antes de pedirte datos personales.",
+      "cta": "Reconocer en qué momento estoy"
     }
   },
   "Methodology": {
@@ -575,7 +709,7 @@
     "steps": {
       "eyebrow": "La secuencia",
       "title": "Cuatro movimientos que ordenan el recorrido.",
-      "intro": "La profundidad y las herramientas cambian según Brújula o Nueva Etapa Profesional, pero el hilo de trabajo se mantiene.",
+      "intro": "La profundidad y las herramientas cambian según la situación y la propuesta elegida, pero el hilo de trabajo se mantiene.",
       "items": {
         "listen": { "number": "01", "title": "Escuchar", "description": "Ponemos en palabras la pregunta, el contexto y lo que necesitás cuidar." },
         "map": { "number": "02", "title": "Mapear", "description": "Reconocemos experiencias, motivaciones, fortalezas, límites y posibilidades." },
@@ -590,8 +724,8 @@
     },
     "closing": {
       "title": "Conocé el recorrido que mejor acompaña tu momento.",
-      "description": "Dos propuestas claras, con una metodología común y un trabajo profundamente personal.",
-      "cta": "Explorar los recorridos"
+      "description": "Propuestas diferentes para momentos distintos, con una metodología común y un trabajo profundamente personal.",
+      "cta": "Explorar transiciones laborales"
     }
   },
   "Team": {
@@ -676,12 +810,12 @@
     },
     "intro": "Si tu pregunta no aparece acá, podés escribirnos. Una conversación breve puede ayudar a ubicar mejor tu situación.",
     "items": {
-      "choose": { "question": "¿Cómo sé cuál de los dos recorridos necesito?", "answer": "Brújula parte de preguntas sobre estudio, intereses y primeras decisiones de trabajo. Nueva Etapa Profesional acompaña a personas con trayectoria que necesitan transformarla, reposicionarse o construir una estrategia para lo que sigue. Si todavía no lo tenés claro, el diagnóstico inicial ayuda a ubicar tu momento." },
-      "compass": { "question": "¿Brújula es un test que indica qué carrera elegir?", "answer": "No. Incluye herramientas de exploración, pero el centro del proceso está en conversar, investigar alternativas, construir criterios y reconocer una dirección propia. Ningún resultado decide por vos." },
-      "newStage": { "question": "¿Qué integra Nueva Etapa Profesional?", "answer": "Integra la revisión de tu trayectoria e identidad profesional con la definición de una dirección, un posicionamiento, una narrativa y una estrategia de movimiento." },
+      "choose": { "question": "¿Cómo sé qué propuesta puede acompañar mi momento?", "answer": "Las seis propuestas adultas parten de situaciones diferentes: explorar una dirección, cambiar de empleo, desarrollar un proyecto, pensar el liderazgo, resolver un desafío puntual o elegir una formación. Si todavía no lo tenés claro, la orientación inicial te ayuda a reconocer un punto de partida sin pedirte datos personales." },
+      "compass": { "question": "¿Brújulas es un test que indica qué carrera elegir?", "answer": "No. Brújulas incluye herramientas de exploración, pero el centro del proceso está en conversar, investigar alternativas, construir criterios y reconocer una dirección propia. Ningún resultado decide por vos." },
+      "newStage": { "question": "¿Qué tienen en común las propuestas para adultos?", "answer": "Todas relacionan la situación actual con la trayectoria, la identidad, los criterios personales y el contexto. La profundidad y las herramientas cambian según la pregunta que necesites trabajar." },
       "format": { "question": "¿Los encuentros son virtuales o presenciales?", "answer": "Los encuentros se realizan de manera virtual para que puedas sostener el proceso desde donde estés. Cualquier alternativa presencial disponible se conversa antes de comenzar." },
       "duration": { "question": "¿Cuánto dura cada recorrido?", "answer": "La duración depende del recorrido y se conversa antes de comenzar. Las fases tienen una secuencia clara, con espacio para adaptarlas al momento concreto de cada persona." },
-      "diagnostic": { "question": "¿Cómo funciona el diagnóstico inicial?", "answer": "Es un formulario breve y no clínico sobre tu situación, lo que necesitás y la urgencia del cambio. Ayuda al equipo a orientarte; no reemplaza una evaluación ni un diagnóstico profesional." },
+      "diagnostic": { "question": "¿Cómo funciona la orientación inicial?", "answer": "Es un cuestionario breve y no clínico sobre tu situación, lo que necesitás y la urgencia del cambio. El resultado aparece de inmediato, sin login ni datos personales, y no reemplaza una conversación profesional." },
       "results": { "question": "¿Qué recibo al finalizar?", "answer": "Cerrás con una síntesis personalizada, criterios de decisión y una hoja de ruta. Los materiales concretos dependen del recorrido y de lo trabajado durante el proceso." }
     },
     "closing": {
@@ -691,13 +825,13 @@
     }
   },
   "Processes": {
-    "back": "Volver a los recorridos",
-    "eyebrow": "Recorrido {number}",
+    "back": "Volver a transiciones laborales",
+    "eyebrow": "Propuesta {number}",
     "introduction": "El punto de partida",
     "objectiveLabel": "Qué vamos a construir",
     "forWhomLabel": "Para quién es",
     "journey": {
-      "eyebrow": "El recorrido",
+      "eyebrow": "El proceso",
       "title": "Paso a paso.",
       "note": "Cada etapa se adapta al momento concreto de la persona; la secuencia orienta el trabajo, no funciona como una fórmula rígida."
     },
@@ -706,17 +840,168 @@
       "title": "Lo que te llevás."
     },
     "cta": {
-      "eyebrow": "Encontrar tu recorrido",
+      "eyebrow": "Encontrar tu propuesta",
       "title": "Podés empezar sin tener la respuesta.",
-      "description": "El diagnóstico inicial nos ayuda a comprender tu momento y a orientarte con claridad, cuidado y sin presión.",
-      "button": "Realizá el diagnóstico"
+      "description": "La orientación inicial ayuda a reconocer tu momento y posibles formas de acompañarlo con claridad, cuidado y sin presión.",
+      "button": "Reconocer en qué momento estoy"
     },
     "items": {
+      "direction": {
+        "title": "Explorar una nueva dirección profesional",
+        "lead": "Cuando tu trabajo dejó de representarte y todavía no aparece otra dirección.",
+        "cardDescription": "Releé identidad, experiencia e intereses para construir alternativas y criterios propios.",
+        "metaDescription": "Acompañamiento de Senda para explorar identidad, trayectoria, intereses y alternativas y construir una nueva dirección profesional.",
+        "objective": "Construir una dirección posible sin desechar tu trayectoria, integrando identidad, experiencia, intereses, contexto y alternativas reales.",
+        "forWhom": "Para personas adultas que sienten que su trabajo actual dejó de representarlas, pero todavía no pueden reconocer hacia dónde moverse.",
+        "stages": {
+          "identity": { "title": "Revisar la identidad profesional", "description": "Exploramos cómo te definís, qué necesitás conservar y qué parte de tu identidad pide movimiento." },
+          "interests": { "title": "Reconocer intereses", "description": "Identificamos actividades, temas y problemas que sostienen curiosidad y energía." },
+          "experiences": { "title": "Recuperar experiencias significativas", "description": "Leemos momentos de aprendizaje, disfrute, aporte y tensión sin reducir la trayectoria a cargos." },
+          "capital": { "title": "Mapear el capital laboral", "description": "Hacemos visible el conocimiento, las capacidades, vínculos y recursos construidos." },
+          "alternatives": { "title": "Abrir alternativas", "description": "Formulamos escenarios posibles y preguntas para investigarlos sin apresurar una elección." },
+          "criteria": { "title": "Construir criterios", "description": "Integramos deseos, responsabilidades, límites, contexto y condiciones reales de decisión." },
+          "direction": { "title": "Priorizar una dirección", "description": "Traducimos lo explorado en una hipótesis de dirección y próximos pasos de contraste." }
+        },
+        "takeaways": {
+          "identity": "Una lectura más amplia de tu identidad profesional.",
+          "capital": "Un mapa de experiencia y capital laboral transferible.",
+          "alternatives": "Alternativas relevantes para investigar.",
+          "criteria": "Criterios propios para compararlas.",
+          "plan": "Próximos pasos de exploración y contraste."
+        }
+      },
+      "jobChange": {
+        "title": "Preparar un cambio de empleo",
+        "lead": "Ordenar un movimiento de puesto, organización, función o industria.",
+        "cardDescription": "Convertí tu trayectoria en dirección, narrativa, perfil y estrategia de búsqueda.",
+        "metaDescription": "Acompañamiento de Senda para preparar un cambio de empleo con dirección, propuesta de valor, narrativa y estrategia.",
+        "objective": "Construir una transición laboral ordenada, con una dirección clara, un posicionamiento coherente y acciones sostenibles.",
+        "forWhom": "Para personas que desean cambiar de empleo, función, organización o industria y necesitan preparar ese movimiento sin garantías artificiales.",
+        "stages": {
+          "trajectory": { "title": "Leer la trayectoria", "description": "Reconocemos experiencias, logros, aprendizajes y patrones relevantes para el cambio." },
+          "direction": { "title": "Definir dirección", "description": "Precisamos qué tipo de rol, problemas, entornos o industrias vale la pena explorar." },
+          "value": { "title": "Construir propuesta de valor", "description": "Traducimos experiencia y capacidades en aportes claros y pertinentes." },
+          "narrative": { "title": "Ordenar la narrativa", "description": "Articulamos continuidad y cambio sin negar la historia ni sobreactuar una versión nueva." },
+          "profile": { "title": "Alinear CV y perfil", "description": "Revisamos materiales para que expresen dirección, evidencia y criterio." },
+          "search": { "title": "Diseñar la búsqueda", "description": "Elegimos canales, organizaciones, redes y acciones acordes al objetivo." },
+          "conversations": { "title": "Preparar conversaciones", "description": "Trabajamos acercamientos, entrevistas y preguntas para evaluar oportunidades." },
+          "movement": { "title": "Planificar el movimiento", "description": "Organizamos prioridades, tiempos, seguimiento y ajustes posibles." }
+        },
+        "takeaways": {
+          "trajectory": "Una lectura estratégica de tu trayectoria.",
+          "direction": "Una dirección de búsqueda priorizada.",
+          "value": "Una propuesta de valor con evidencia.",
+          "profile": "CV, perfil y narrativa alineados.",
+          "strategy": "Una estrategia de búsqueda y conversaciones.",
+          "plan": "Un plan de movimiento revisable."
+        }
+      },
+      "project": {
+        "title": "Construir o reordenar un proyecto propio",
+        "lead": "Dar forma, revisar o decidir cómo continuar una actividad independiente.",
+        "cardDescription": "Relacioná el proyecto con tu identidad y contrastá alcance, valor y próximos pasos.",
+        "metaDescription": "Acompañamiento de Senda para construir o reordenar un proyecto propio y contrastarlo con la realidad.",
+        "objective": "Convertir una idea o proyecto en decisiones más claras sobre alcance, destinatarios, propuesta de valor, prioridades y pruebas posibles.",
+        "forWhom": "Para personas con una idea, emprendimiento, práctica independiente o proyecto profesional que necesitan darle forma, revisar su viabilidad o decidir cómo continuar.",
+        "stages": {
+          "identity": { "title": "Relacionar proyecto e identidad", "description": "Exploramos qué expresa el proyecto y qué lugar querés que ocupe en tu vida profesional." },
+          "scope": { "title": "Delimitar el alcance", "description": "Precisamos qué incluye, qué no y qué versión resulta posible ahora." },
+          "audience": { "title": "Comprender destinatarios", "description": "Identificamos personas, necesidades y contextos concretos sin inventar demanda." },
+          "value": { "title": "Formular la propuesta de valor", "description": "Aclaramos qué aporta el proyecto y por qué podría ser relevante." },
+          "priorities": { "title": "Ordenar prioridades", "description": "Separamos lo importante de lo accesorio y lo inmediato de lo posterior." },
+          "decisions": { "title": "Nombrar decisiones pendientes", "description": "Hacemos visibles opciones, dependencias, riesgos y criterios." },
+          "structure": { "title": "Construir estructura", "description": "Organizamos recursos, actividades y condiciones mínimas para avanzar." },
+          "reality": { "title": "Contrastar con la realidad", "description": "Diseñamos pruebas pequeñas para aprender antes de comprometer más recursos." },
+          "nextSteps": { "title": "Definir próximos pasos", "description": "Cerramos con acciones acotadas, preguntas abiertas y puntos de revisión." }
+        },
+        "takeaways": {
+          "coherence": "Una lectura de la coherencia entre proyecto e identidad.",
+          "scope": "Un alcance inicial más claro.",
+          "value": "Una propuesta de valor para contrastar.",
+          "priorities": "Prioridades y decisiones visibles.",
+          "validation": "Pruebas pequeñas para aprender de la realidad.",
+          "plan": "Próximos pasos y puntos de revisión."
+        }
+      },
+      "leadership": {
+        "title": "Pensar el liderazgo y la continuidad de una empresa",
+        "lead": "Un espacio profesional para decisiones que no conviene sostener en soledad.",
+        "cardDescription": "Pensá rol, límites, conversaciones, organización, estrategia y continuidad.",
+        "metaDescription": "Espacio profesional de Senda para pensar liderazgo, decisiones y continuidad de una empresa sin reducirlo a terapia o consultoría genérica.",
+        "objective": "Construir una lectura integrada de la persona, el rol de liderazgo y la empresa para tomar decisiones más claras y sostenibles.",
+        "forWhom": "Para dueños, socios, gerentes, líderes o responsables de equipos que necesitan pensar tensiones, decisiones o próximos movimientos.",
+        "stages": {
+          "solitude": { "title": "Nombrar la soledad de decisión", "description": "Abrimos un espacio confidencial para ordenar lo que cuesta pensar dentro de la estructura cotidiana." },
+          "role": { "title": "Revisar el rol", "description": "Clarificamos responsabilidades, expectativas y la posición que hoy ocupás." },
+          "boundaries": { "title": "Trabajar límites", "description": "Diferenciamos lo propio, lo delegable y aquello que necesita una conversación." },
+          "conversations": { "title": "Preparar conversaciones", "description": "Diseñamos intercambios difíciles con claridad de propósito y contexto." },
+          "organization": { "title": "Leer la organización", "description": "Observamos dinámicas, capacidades, tensiones y dependencias que inciden en la decisión." },
+          "context": { "title": "Integrar la coyuntura", "description": "Ponemos en relación mercado, restricciones, tiempos y escenarios posibles." },
+          "strategy": { "title": "Construir estrategia", "description": "Ordenamos prioridades y decisiones sin separar la estrategia de quienes deben sostenerla." },
+          "continuity": { "title": "Pensar la continuidad", "description": "Exploramos sucesión, cambios de rol, crecimiento o cierre de etapas según corresponda." },
+          "integration": { "title": "Integrar persona y empresa", "description": "Cerramos con criterios y próximos movimientos coherentes entre ambas dimensiones." }
+        },
+        "takeaways": {
+          "role": "Una lectura más clara de tu rol.",
+          "criteria": "Criterios para decisiones complejas.",
+          "conversations": "Conversaciones prioritarias preparadas.",
+          "strategy": "Prioridades estratégicas ordenadas.",
+          "continuity": "Escenarios y próximos movimientos posibles."
+        }
+      },
+      "focused": {
+        "title": "Abordar un desafío profesional puntual",
+        "lead": "Un proceso focalizado para ordenar un problema delimitado.",
+        "cardDescription": "Definí el problema, evaluá alternativas y construí una decisión con plan de acción.",
+        "metaDescription": "Propuesta focalizada de Senda para abordar un desafío profesional puntual y construir una decisión o plan de acción.",
+        "objective": "Transformar un problema profesional concreto en una decisión fundada y un plan de acción realista.",
+        "forWhom": "Para personas que reconocen un desafío delimitado y no necesitan recorrer todas las dimensiones de una transición más amplia.",
+        "stages": {
+          "problem": { "title": "Definir el problema", "description": "Acordamos qué necesita resolverse, qué queda fuera y por qué importa ahora." },
+          "information": { "title": "Reunir información", "description": "Identificamos datos, voces y restricciones relevantes para decidir." },
+          "alternatives": { "title": "Construir alternativas", "description": "Evitamos la falsa disyuntiva y formulamos opciones posibles." },
+          "criteria": { "title": "Establecer criterios", "description": "Ordenamos qué debe cuidar la decisión y qué compromisos implica." },
+          "decision": { "title": "Tomar posición", "description": "Priorizamos una alternativa con conciencia de límites e incertidumbre." },
+          "action": { "title": "Diseñar el plan", "description": "Traducimos la decisión en acciones, responsables, tiempos y revisión." }
+        },
+        "takeaways": {
+          "problem": "Un problema claramente delimitado.",
+          "criteria": "Criterios explícitos para decidir.",
+          "decision": "Una posición argumentada.",
+          "action": "Un plan focalizado y revisable."
+        }
+      },
+      "education": {
+        "title": "Elegir una formación para el próximo paso",
+        "lead": "Evaluar una decisión educativa dentro de una dirección profesional más amplia.",
+        "cardDescription": "Relacioná carrera, posgrado o certificación con trayectoria, tiempo, inversión y contexto.",
+        "metaDescription": "Acompañamiento de Senda para elegir una formación conectándola con trayectoria, intereses, inversión, tecnología y contexto laboral.",
+        "objective": "Construir una decisión educativa informada y coherente con tu trayectoria, tus posibilidades reales y la dirección profesional que querés explorar.",
+        "forWhom": "Para personas adultas que evalúan una carrera, maestría, posgrado, certificación, formación técnica, especialización o reconversión de saberes.",
+        "stages": {
+          "trajectory": { "title": "Leer la trayectoria", "description": "Reconocemos saberes, experiencias y preguntas que inciden en la decisión educativa." },
+          "interests": { "title": "Precisar intereses", "description": "Diferenciamos curiosidad, necesidad profesional, deseo de cambio y presión externa." },
+          "direction": { "title": "Relacionar con una dirección", "description": "Preguntamos qué movimiento profesional debería habilitar o acompañar la formación." },
+          "options": { "title": "Explorar opciones", "description": "Comparamos formatos, contenidos, instituciones y alternativas de aprendizaje." },
+          "timeInvestment": { "title": "Revisar tiempo e inversión", "description": "Integramos disponibilidad, costo, esfuerzo y condiciones de sostenimiento." },
+          "technology": { "title": "Considerar cambios tecnológicos", "description": "Leemos cómo pueden cambiar los saberes, roles y formas de trabajo relevantes." },
+          "comparison": { "title": "Construir criterios de comparación", "description": "Ordenamos evidencia, pertinencia, calidad y encaje con tu realidad." },
+          "decision": { "title": "Decidir con perspectiva", "description": "Priorizamos una opción o reconocemos qué falta investigar antes de hacerlo." },
+          "plan": { "title": "Planificar el próximo paso", "description": "Definimos acciones, conversaciones y puntos de revisión sin cargar a la formación con promesas que no puede cumplir." }
+        },
+        "takeaways": {
+          "criteria": "Criterios propios para evaluar formaciones.",
+          "options": "Opciones relevantes comparadas.",
+          "comparison": "Una lectura de tiempo, inversión y contexto.",
+          "decision": "Una decisión o pregunta de investigación más clara.",
+          "plan": "Próximos pasos realistas."
+        }
+      },
       "compass": {
-        "title": "Brújula",
+        "title": "Brújulas",
         "lead": "No se trata de elegir para toda la vida, sino de empezar a reconocer una dirección propia.",
         "cardDescription": "Explorá intereses, experiencias y posibilidades para construir criterios y una primera dirección propia.",
-        "metaDescription": "Brújula es el recorrido de Senda para explorar opciones de estudio y trabajo, construir criterios y reconocer una dirección propia.",
+        "metaDescription": "Brújulas es la propuesta secundaria de Senda para que adolescentes y jóvenes exploren estudio, formación y trabajo y construyan criterios propios.",
         "duration": "{count} encuentros individuales",
         "objective": "Convertir una pregunta amplia sobre qué estudiar o cómo acercarte al trabajo en alternativas investigadas, criterios personales y próximos pasos posibles.",
         "forWhom": "Para jóvenes que están terminando la escuela, comenzando una formación, revisando una elección reciente o buscando una primera dirección de estudio y trabajo.",
@@ -753,99 +1038,52 @@
           "alternatives": "Alternativas priorizadas y preguntas para validarlas.",
           "plan": "Un plan de exploración y próximos pasos."
         }
-      },
-      "newStage": {
-        "title": "Nueva Etapa Profesional",
-        "lead": "Transformar tu trayectoria sin desconocer todo lo que ya construiste.",
-        "cardDescription": "Releé tu experiencia, definí una dirección y convertí el cambio en posicionamiento, estrategia y movimiento.",
-        "metaDescription": "Nueva Etapa Profesional acompaña a personas con experiencia a transformar su trayectoria, definir su posicionamiento y construir una estrategia.",
-        "duration": "{count} encuentros individuales",
-        "objective": "Integrar identidad, experiencia, motivaciones y contexto para definir una dirección profesional, una narrativa propia y una estrategia de movimiento sostenible.",
-        "forWhom": "Para profesionales con experiencia, líderes y gerentes que quieren cambiar de rol o industria, reposicionarse, emprender, regresar al mercado o darle forma a una nueva etapa.",
-        "stages": {
-          "moment": {
-            "title": "Leer el momento",
-            "description": "Ordenamos qué está cambiando, qué se agotó, qué necesitás cuidar y qué condiciones concretas inciden en la decisión."
-          },
-          "trajectory": {
-            "title": "Releer la trayectoria",
-            "description": "Recuperamos experiencias, logros, aprendizajes y patrones para reconocer el valor acumulado y aquello que ya no querés repetir."
-          },
-          "identity": {
-            "title": "Revisar la identidad profesional",
-            "description": "Exploramos cómo te definís más allá del cargo, qué motivaciones siguen vigentes y qué nueva versión profesional querés construir."
-          },
-          "criteria": {
-            "title": "Definir criterios",
-            "description": "Integramos deseos, responsabilidades, límites y posibilidades reales para evaluar escenarios con claridad."
-          },
-          "direction": {
-            "title": "Elegir una dirección",
-            "description": "Priorizamos un escenario: redefinir tu rol, cambiar de industria, asumir otra función, emprender o combinar caminos."
-          },
-          "positioning": {
-            "title": "Construir posicionamiento",
-            "description": "Traducimos tu experiencia en una propuesta de valor clara y relevante para las personas y espacios con los que querés conversar."
-          },
-          "strategy": {
-            "title": "Diseñar la estrategia",
-            "description": "Ordenamos narrativa, perfil, red, conversaciones, búsqueda y acciones concretas para hacer visible la dirección elegida."
-          },
-          "integrate": {
-            "title": "Integrar y mover",
-            "description": "Cerramos con prioridades, decisiones y una hoja de ruta para sostener los próximos pasos sin desconocer tu historia."
-          }
-        },
-        "takeaways": {
-          "trajectory": "Un mapa integrado de tu trayectoria.",
-          "strengths": "Una lectura de fortalezas, motivaciones y recursos.",
-          "direction": "Una dirección profesional priorizada.",
-          "narrative": "Una narrativa profesional clara y propia.",
-          "positioning": "Un posicionamiento coherente con la etapa que buscás.",
-          "roadmap": "Una hoja de ruta con acciones y prioridades."
-        }
       }
     }
   },
   "InitialDiagnostic": {
     "meta": {
-      "title": "Diagnóstico inicial",
-      "description": "Un primer paso breve para comprender el cambio que estás atravesando y reconocer qué recorrido puede acompañarte."
+      "title": "Encontrar mi recorrido",
+      "description": "Un cuestionario breve para reconocer tu situación actual y explorar qué propuesta de Senda puede acompañarte."
     },
-    "eyebrow": "Diagnóstico inicial",
-    "title": "Pongamos en palabras lo que está cambiando.",
-    "description": "No hace falta que sepas cuál es tu proceso. Estas preguntas nos ayudan a comprender tu momento y a orientarte con más claridad.",
-    "disclaimer": "Es una herramienta orientativa y no clínica. No reemplaza una evaluación ni un diagnóstico profesional.",
+    "eyebrow": "Orientación inicial",
+    "title": "¿En qué momento de tu trayectoria estás?",
+    "description": "Un recorrido breve para reconocer qué tipo de acompañamiento puede resultar más adecuado para tu situación actual.",
+    "disclaimer": "Este resultado es orientativo y no reemplaza una conversación profesional.",
     "progress": "Paso {current} de {total}",
     "questions": {
       "situation": "¿Qué situación describe mejor tu momento actual?",
       "need": "¿Qué necesitás hoy?",
       "stage": "¿En qué etapa estás?",
-      "urgency": "¿Qué nivel de urgencia tiene este cambio?",
-      "contact": "¿Cómo podemos contactarte?"
+      "urgency": "¿Qué nivel de urgencia tiene este cambio?"
     },
     "options": {
       "situation": {
-        "choosing": "Estoy eligiendo qué estudiar o hacia dónde orientarme.",
-        "reinvention": "Quiero releer mi trayectoria y definir una nueva etapa.",
-        "transition": "Necesito ordenar un cambio profesional concreto.",
-        "clarity": "No sé exactamente qué me pasa, pero necesito claridad."
+        "direction": "Necesito explorar una nueva dirección laboral.",
+        "jobChange": "Quiero cambiar de empleo.",
+        "project": "Estoy pensando o desarrollando un proyecto propio.",
+        "leadership": "Necesito revisar mi rol de liderazgo o la organización de mi empresa.",
+        "focused": "Tengo un desafío laboral puntual que necesito resolver.",
+        "education": "Necesito elegir una formación o capacitación.",
+        "compass": "Estoy dando mis primeras decisiones de estudio y trabajo."
       },
       "need": {
-        "selfKnowledge": "Conocerme mejor.",
-        "choose": "Elegir entre alternativas.",
-        "redefine": "Redefinir mi dirección.",
-        "organize": "Ordenar el cambio.",
-        "reposition": "Reposicionarme profesionalmente.",
-        "move": "Volver a moverme."
+        "identity": "Comprender qué quiero conservar y qué necesito cambiar.",
+        "search": "Ordenar una búsqueda laboral y comunicar mejor mi valor.",
+        "validate": "Dar forma y poner a prueba una idea propia.",
+        "lead": "Tomar decisiones y sostener conversaciones de liderazgo.",
+        "decide": "Analizar un problema y elegir con mejores criterios.",
+        "learn": "Comparar opciones de aprendizaje con sentido.",
+        "firstDecisions": "Reconocer intereses y explorar primeras alternativas."
       },
       "stage": {
-        "secondary": "Secundario.",
-        "education": "Universidad o formación.",
-        "early": "Primeros años laborales.",
-        "experienced": "Profesional con experiencia.",
-        "leadership": "Liderazgo o dirección.",
-        "life": "Cambio de etapa vital."
+        "secondary": "Estoy cursando o terminando el secundario.",
+        "higher": "Estoy estudiando una carrera o formación superior.",
+        "early": "Estoy en mis primeros años de experiencia laboral.",
+        "experienced": "Soy profesional con experiencia.",
+        "leadership": "Ocupo un rol de liderazgo o dirección.",
+        "owner": "Lidero una empresa o un proyecto propio.",
+        "life": "Estoy atravesando un cambio de etapa vital."
       },
       "urgency": {
         "exploring": "Estoy explorando.",
@@ -854,31 +1092,105 @@
         "urgent": "Estoy atravesando una situación urgente."
       }
     },
-    "contactNote": "Usaremos estos datos únicamente para responder a este diagnóstico y orientar la continuidad.",
-    "fields": {
-      "name": "Nombre",
-      "email": "Email",
-      "phone": "Teléfono (opcional)"
-    },
-    "consent": "Leí y acepto la <privacy>política de privacidad</privacy>.",
-    "privacyNote": "Tus respuestas se guardan de forma segura y no se usan para enviarte comunicaciones no solicitadas.",
     "back": "Volver",
     "next": "Continuar",
-    "submit": "Enviar diagnóstico",
-    "sending": "Enviando…",
+    "submit": "Ver mi orientación",
     "errors": {
-      "selection": "Elegí una opción para continuar.",
-      "name": "Ingresá tu nombre.",
-      "email": "Ingresá un email válido.",
-      "consent": "Necesitamos tu consentimiento para guardar la información.",
-      "captcha": "No pudimos conectar con el servicio de verificación. Podés reintentar, o comprobar si una extensión, VPN o configuración de red está bloqueando challenges.cloudflare.com. Tus respuestas quedan guardadas.",
-      "captchaRetry": "Reintentar verificación",
-      "submit": "No pudimos guardar tu diagnóstico en este momento. Intentá nuevamente en unos minutos."
+      "selection": "Elegí una opción para continuar."
     },
-    "success": {
-      "title": "Gracias por compartir tu momento.",
-      "description": "Recibimos tu información y vamos a orientarte sobre el recorrido Senda que mejor puede acompañarte.",
-      "cta": "Volver al inicio"
+    "results": {
+      "eyebrow": "Tu orientación inicial",
+      "title": "Un punto de partida para seguir avanzando.",
+      "situationLabel": "Situación predominante",
+      "primaryLabel": "Propuesta principal",
+      "secondaryLabel": "Alternativa para explorar",
+      "signalsTitle": "Las señales que orientaron este resultado",
+      "workOnTitle": "Qué podrías trabajar",
+      "exploreService": "Conocer esta propuesta",
+      "contactCta": "Conversar con Senda",
+      "disclaimer": "Este resultado es orientativo y no reemplaza una conversación profesional.",
+      "urgentTitle": "Tal vez sea importante conversar antes de elegir un recorrido",
+      "urgentDescription": "Por el nivel de urgencia que señalaste, una conversación humana puede ayudarte a ordenar el momento y definir el próximo paso con cuidado.",
+      "restart": "Volver a responder",
+      "routes": {
+        "exploreDirection": {
+          "title": "Explorar una nueva dirección profesional",
+          "description": "Para releer tu trayectoria, reconocer lo que hoy tiene valor y construir alternativas posibles sin empezar de cero.",
+          "workOn": {
+            "identity": "Identidad profesional y criterios personales.",
+            "significantExperience": "Experiencias significativas de tu recorrido.",
+            "capital": "Capacidades, recursos y capital profesional disponible.",
+            "alternatives": "Alternativas realistas de dirección.",
+            "criteria": "Criterios para priorizar y decidir."
+          }
+        },
+        "changeJob": {
+          "title": "Preparar un cambio de empleo",
+          "description": "Para ordenar una búsqueda laboral, construir un posicionamiento claro y avanzar con una estrategia coherente.",
+          "workOn": {
+            "trajectory": "Lectura estratégica de tu trayectoria.",
+            "direction": "Dirección y objetivo de búsqueda.",
+            "value": "Propuesta de valor profesional.",
+            "profile": "Perfil, narrativa y materiales de presentación.",
+            "search": "Estrategia de búsqueda y conversaciones."
+          }
+        },
+        "ownProject": {
+          "title": "Construir o reordenar un proyecto propio",
+          "description": "Para transformar una inquietud en una propuesta concreta, probar supuestos y decidir los próximos pasos con evidencia.",
+          "workOn": {
+            "identity": "Relación entre el proyecto y tu identidad profesional.",
+            "scope": "Alcance y foco de la propuesta.",
+            "audience": "Personas y contextos a los que busca servir.",
+            "viability": "Supuestos, viabilidad y pruebas pequeñas.",
+            "nextSteps": "Prioridades y próximos pasos."
+          }
+        },
+        "leadershipCompany": {
+          "title": "Pensar el liderazgo y la continuidad de una empresa",
+          "description": "Para revisar tu rol, ordenar decisiones y conversaciones, y construir una forma de liderazgo sostenible.",
+          "workOn": {
+            "role": "Rol, responsabilidades y prioridades.",
+            "limits": "Límites y criterios de decisión.",
+            "conversations": "Conversaciones necesarias con otras personas.",
+            "organization": "Organización, contexto y estrategia.",
+            "continuity": "Continuidad y sostenibilidad del liderazgo."
+          }
+        },
+        "focusedChallenge": {
+          "title": "Abordar un desafío profesional puntual",
+          "description": "Para delimitar un problema concreto, ordenar información y tomar una decisión accionable sin abrir un proceso más amplio.",
+          "workOn": {
+            "problem": "Definición precisa del problema.",
+            "information": "Información disponible y faltante.",
+            "alternatives": "Alternativas posibles.",
+            "criteria": "Criterios y consecuencias de la decisión.",
+            "plan": "Decisión y plan de acción."
+          }
+        },
+        "chooseEducation": {
+          "title": "Elegir una formación para el próximo paso",
+          "description": "Para comparar opciones de aprendizaje según tu trayectoria, tus objetivos y la inversión que cada alternativa requiere.",
+          "workOn": {
+            "trajectory": "Trayectoria y punto de partida.",
+            "interests": "Intereses y dirección buscada.",
+            "time": "Tiempo disponible y modalidad.",
+            "investment": "Inversión y retorno esperado.",
+            "context": "Contexto laboral y criterios de elección."
+          }
+        },
+        "compasses": {
+          "title": "Brújulas",
+          "description": "Una propuesta secundaria para jóvenes y personas en primeras decisiones de estudio y trabajo.",
+          "workOn": {
+            "interests": "Intereses, motivaciones y curiosidades.",
+            "options": "Alternativas de estudio y trabajo.",
+            "education": "Criterios para elegir una formación.",
+            "work": "Primeras aproximaciones al mundo laboral.",
+            "criteria": "Criterios propios para decidir."
+          }
+        }
+      }
     }
   }
 }

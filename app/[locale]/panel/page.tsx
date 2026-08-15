@@ -6,7 +6,6 @@ import { z } from "zod";
 import { Container } from "@/components/layout/container";
 import { ProfileForm, type PersonalProfile } from "@/components/profile/profile-form";
 import { getAuthenticatedUser } from "@/lib/supabase/auth";
-import { canRepeatCareerAnchorTest } from "@/lib/diagnostics/access";
 import { UniverseField } from "@/components/visual/universe-field";
 
 const savedResultSchema = z.object({
@@ -53,7 +52,6 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
     .maybeSingle();
   const parsedResult = savedResultSchema.safeParse(diagnosticData);
   const savedResult = parsedResult.success ? parsedResult.data : null;
-  const canRepeat = canRepeatCareerAnchorTest(auth.user.email);
 
   const metadata = auth.user.user_metadata ?? {};
   const profile: PersonalProfile = {
@@ -112,12 +110,8 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
                   </>
                 )}
               </div>
-              <Link href="/diagnostico/ancla-de-carrera/test" className="inline-flex flex-none items-center gap-2 rounded-full bg-[#bd5734] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a84729]">
-                {savedResult && canRepeat
-                  ? t("repeatTest")
-                  : savedResult
-                    ? t("viewFullResult")
-                    : t("startTest")}
+              <Link href="/test-anclas-de-carrera" className="inline-flex flex-none items-center gap-2 rounded-full bg-[#bd5734] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a84729]">
+                {savedResult ? t("viewFullResult") : t("startTest")}
                 <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </div>

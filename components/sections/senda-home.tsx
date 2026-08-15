@@ -1,10 +1,18 @@
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
-import { sendaProcesses } from "@/lib/data/senda-processes";
+import { transitionServices } from "@/lib/data/senda-processes";
 import { UniverseField } from "@/components/visual/universe-field";
 
 const methodSteps = ["listen", "map", "define", "move"] as const;
+const signalKeys = [
+  "misalignment",
+  "jobChange",
+  "project",
+  "leadership",
+  "decision",
+  "education",
+] as const;
 
 function RouteMap() {
   return (
@@ -34,18 +42,17 @@ export function SendaHome() {
         <div className="relative mx-auto grid w-full max-w-[1240px] gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
           <div className="max-w-3xl">
             <p className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">{t("hero.eyebrow")}</p>
-            <h1 className="mt-7 max-w-[14ch] text-pretty font-heading text-[clamp(2.5rem,5vw,4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[var(--senda-atmosphere-ink)]">
+            <h1 className="mt-7 max-w-[17ch] whitespace-pre-line text-pretty font-heading text-[clamp(2.5rem,5vw,4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[var(--senda-atmosphere-ink)]">
               {t("hero.title")}
             </h1>
             <div className="mt-7 max-w-2xl border-l border-[var(--senda-atmosphere-accent)] pl-5 sm:pl-7">
-              <p className="whitespace-pre-line text-base leading-7 text-[var(--senda-atmosphere-ink)] sm:text-lg sm:leading-8">{t("hero.rhythm")}</p>
-              <p className="mt-4 text-base leading-7 text-[var(--senda-atmosphere-muted)] sm:text-lg">{t("hero.description")}</p>
+              <p className="text-base leading-7 text-[var(--senda-atmosphere-muted)] sm:text-lg sm:leading-8">{t("hero.description")}</p>
             </div>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/diagnostico" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] shadow-[0_20px_50px_-28px_rgba(0,0,0,.55)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
+              <Link href="/encontrar-mi-recorrido" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] shadow-[0_20px_50px_-28px_rgba(0,0,0,.55)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
                 {t("hero.primaryCta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
-              <Link href="/recorridos" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-atmosphere-control)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-ink)] backdrop-blur-sm transition-colors hover:bg-[var(--senda-atmosphere-control-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]">
+              <Link href="/transiciones-laborales" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-atmosphere-control)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-ink)] backdrop-blur-sm transition-colors hover:bg-[var(--senda-atmosphere-control-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]">
                 {t("hero.secondaryCta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
@@ -55,48 +62,68 @@ export function SendaHome() {
       </section>
 
       <section className="px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
-        <div className="mx-auto grid max-w-[1120px] gap-7 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
-          <p className="senda-kicker">{t("introduction.eyebrow")}</p>
+        <div className="mx-auto max-w-[1180px]">
+          <div className="grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+            <div>
+              <p className="senda-kicker">{t("signals.eyebrow")}</p>
+              <h2 className="mt-4 max-w-[17ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("signals.title")}</h2>
+            </div>
+            <p className="max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg lg:justify-self-end">{t("signals.description")}</p>
+          </div>
+          <ul className="mt-10 grid overflow-hidden rounded-[1.35rem] border border-[var(--senda-border)] bg-[var(--senda-border)] sm:grid-cols-2 lg:grid-cols-3">
+            {signalKeys.map((signal, index) => (
+              <li key={signal} className="min-h-40 bg-[var(--senda-paper)] p-6 sm:min-h-48 sm:p-7">
+                <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">{String(index + 1).padStart(2, "0")}</span>
+                <p className="mt-7 text-pretty font-heading text-xl leading-7 sm:text-2xl">{t(`signals.items.${signal}`)}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)] px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
+        <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+          <p className="senda-kicker">{t("finder.eyebrow")}</p>
           <div>
-            <h2 className="max-w-[18ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("introduction.title")}</h2>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("introduction.description")}</p>
-            <Link href="/como-trabajamos" className="mt-6 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
-              {t("introduction.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("finder.title")}</h2>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("finder.description")}</p>
+            <Link href="/encontrar-mi-recorrido" className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-action)] px-7 py-3 text-sm font-bold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)]">
+              {t("finder.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-[var(--senda-border)] bg-[var(--senda-section)] px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
+      <section className="px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
         <div className="mx-auto max-w-[1180px]">
           <div className="grid gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="senda-kicker">{t("journeys.eyebrow")}</p>
-              <h2 className="mt-4 max-w-[14ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("journeys.title")}</h2>
+              <p className="senda-kicker">{t("situations.eyebrow")}</p>
+              <h2 className="mt-4 max-w-[14ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("situations.title")}</h2>
             </div>
-            <p className="max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg lg:justify-self-end">{t("journeys.intro")}</p>
+            <p className="max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg lg:justify-self-end">{t("situations.intro")}</p>
           </div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            {sendaProcesses.map((process) => (
-              <article key={process.slug} data-cursor-glow className="senda-process-card senda-editorial-card group relative flex min-h-[19rem] flex-col overflow-hidden rounded-[1.35rem] p-7 sm:p-9">
+          <div className="mt-10 grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
+            {transitionServices.map((process) => (
+              <article key={process.slug} data-cursor-glow className="senda-process-card senda-editorial-card group relative flex min-h-[21rem] flex-col overflow-hidden rounded-[1.35rem] p-7 sm:p-8">
                 <div className="relative z-10 flex items-center justify-between gap-4 border-b border-[var(--senda-border)] pb-5 text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-muted)]">
                   <span>{process.number}</span>
-                  <span>{t(`journeys.items.${process.key}.label`)}</span>
+                  <span>{t(`situations.items.${process.key}.label`)}</span>
                 </div>
                 <div className="relative z-10 mt-auto pt-9">
-                  <h3 className="max-w-[16ch] text-pretty font-heading text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.08] tracking-[-0.03em]">{t(`journeys.items.${process.key}.title`)}</h3>
-                  <p className="mt-4 max-w-[36rem] text-lg font-semibold leading-7">{t(`journeys.items.${process.key}.lead`)}</p>
-                  <p className="mt-3 max-w-[38rem] text-base leading-7 text-[var(--senda-muted)]">{t(`journeys.items.${process.key}.description`)}</p>
-                  <Link href={`/recorridos/${process.slug}`} className="mt-6 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 transition-colors hover:text-[var(--senda-accent)]">
-                    {t("journeys.cta")} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" aria-hidden="true" />
+                  <h3 className="max-w-[16ch] text-pretty font-heading text-[clamp(1.65rem,2.5vw,2.25rem)] leading-[1.08] tracking-[-0.03em]">{t(`situations.items.${process.key}.title`)}</h3>
+                  <p className="mt-4 max-w-[36rem] text-base font-semibold leading-7">{t(`situations.items.${process.key}.lead`)}</p>
+                  <p className="mt-3 max-w-[38rem] text-sm leading-6 text-[var(--senda-muted)]">{t(`situations.items.${process.key}.description`)}</p>
+                  <Link href={`/transiciones-laborales/${process.slug}`} className="mt-6 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 transition-colors hover:text-[var(--senda-accent)]">
+                    {t("situations.cta")} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" aria-hidden="true" />
                   </Link>
                 </div>
               </article>
             ))}
           </div>
-          <Link href="/recorridos" className="mt-8 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
-            {t("journeys.viewAll")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          <Link href="/transiciones-laborales" className="mt-8 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
+            {t("situations.viewAll")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
       </section>
@@ -133,8 +160,21 @@ export function SendaHome() {
           <div>
             <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("laboratory.title")}</h2>
             <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("laboratory.description")}</p>
-            <Link href="/laboratorio-nuevas-narrativas" className="mt-7 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
+            <Link href="/laboratorio-narrativas-laborales-alternativas" className="mt-7 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
               {t("laboratory.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
+        <div className="mx-auto grid max-w-[1180px] gap-8 border-l-2 border-[var(--senda-olive)]/45 pl-6 sm:pl-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+          <p className="senda-kicker">{t("compass.eyebrow")}</p>
+          <div>
+            <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("compass.title")}</h2>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("compass.description")}</p>
+            <Link href="/brujulas" className="mt-7 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-olive)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
+              {t("compass.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
         </div>

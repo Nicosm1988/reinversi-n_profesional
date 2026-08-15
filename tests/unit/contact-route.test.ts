@@ -36,14 +36,33 @@ const VALID_BODY = {
 };
 
 const VALID_LABORATORY_BODY = {
-  formOrigin: "laboratorio_nuevas_narrativas",
+  formOrigin: "laboratorio_narrativas_laborales_alternativas",
   name: "Ana Pérez",
   email: "ana@example.com",
   explorationInterest: "Explorar nuevas formas de contar mi trayectoria.",
   consent: true,
   companyWebsite: "",
-  sourcePage: "/laboratorio-nuevas-narrativas",
+  sourcePage: "/laboratorio-narrativas-laborales-alternativas",
   locale: "es",
+};
+
+const VALID_DIAGNOSTIC_RESULT_BODY = {
+  formOrigin: "diagnostic_result",
+  name: "Ana Pérez",
+  email: "ana@example.com",
+  phone: "",
+  preferredContact: "email",
+  message: "Quisiera conversar sobre el resultado.",
+  consent: true,
+  companyWebsite: "",
+  sourcePage: "/test-anclas-de-carrera",
+  locale: "es",
+  result: {
+    questionnaire: "career_anchors",
+    primaryAnchors: ["Autonomía/Independencia"],
+    secondaryAnchors: ["Creatividad Emprendedora"],
+    summary: "Una lectura orientativa de las motivaciones vinculadas con el trabajo.",
+  },
 };
 
 function contactRequest(body: unknown, overrides: Record<string, string> = {}) {
@@ -91,18 +110,39 @@ describe("POST /api/contact", () => {
     await expect(response.json()).resolves.toEqual({ ok: true });
     expect(mocks.sendContactEmail).toHaveBeenCalledWith(
       expect.objectContaining({
-        formOrigin: "laboratorio_nuevas_narrativas",
+        formOrigin: "laboratorio_narrativas_laborales_alternativas",
         phone: "",
         explorationInterest:
           "Explorar nuevas formas de contar mi trayectoria.",
       }),
       expect.objectContaining({
-        source: "https://senda.example/laboratorio-nuevas-narrativas",
+        source: "https://senda.example/laboratorio-narrativas-laborales-alternativas",
       }),
     );
 
     const parsedSubmission = mocks.sendContactEmail.mock.calls[0]?.[0];
     expect(parsedSubmission).not.toHaveProperty("message");
+  });
+
+  it("sends a consented diagnostic summary through the same fail-closed mailer", async () => {
+    const response = await POST(contactRequest(VALID_DIAGNOSTIC_RESULT_BODY));
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true });
+    expect(mocks.sendContactEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        formOrigin: "diagnostic_result",
+        preferredContact: "email",
+        result: expect.objectContaining({
+          questionnaire: "career_anchors",
+          primaryAnchors: ["Autonomía/Independencia"],
+        }),
+      }),
+      expect.objectContaining({
+        source: "https://senda.example/test-anclas-de-carrera",
+      }),
+    );
+    expect(JSON.stringify(mocks.logEvent.mock.calls)).not.toContain("ana@example.com");
   });
 
   it("does not send email when the honeypot is populated", async () => {
@@ -147,7 +187,7 @@ describe("POST /api/contact", () => {
     const mismatchedSource = await POST(
       contactRequest({
         ...VALID_LABORATORY_BODY,
-        sourcePage: "/en/laboratorio-nuevas-narrativas",
+        sourcePage: "/en/laboratorio-narrativas-laborales-alternativas",
       }),
     );
     const clientSubject = await POST(

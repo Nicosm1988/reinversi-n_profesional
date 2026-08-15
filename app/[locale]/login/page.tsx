@@ -20,8 +20,8 @@ export default function LoginPage() {
 
   function getNextPath() {
     const fallback = window.location.pathname.startsWith("/en")
-      ? "/en/diagnostico/ancla-de-carrera"
-      : "/diagnostico/ancla-de-carrera";
+      ? "/en/test-anclas-de-carrera"
+      : "/test-anclas-de-carrera";
     const params = new URLSearchParams(window.location.search);
     return sanitizeNextPath(params.get("next"), fallback);
   }

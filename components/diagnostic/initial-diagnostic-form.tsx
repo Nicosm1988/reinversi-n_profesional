@@ -1,324 +1,436 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { useForm, useWatch, type FieldPath, type UseFormRegister } from "react-hook-form";
-import { ArrowLeft, ArrowRight, Check, LockKeyhole } from "lucide-react";
-import { TurnstileWidget } from "@/components/security/turnstile-widget";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  MessageCircle,
+  RotateCcw,
+  Sparkles,
+} from "lucide-react";
 import { Link } from "@/navigation";
+import { DiagnosticResultShareForm } from "@/components/forms/diagnostic-result-share-form";
+import {
+  calculateRouteFinderResult,
+  diagnosticUrgencies,
+  routeFinderNeeds,
+  routeFinderSituations,
+  routeFinderStages,
+  toShareableDiagnosticResult,
+  type RouteFinderAnswers,
+  type RouteFinderDimension,
+  type RouteFinderResult,
+  type ShareableDiagnosticResult,
+} from "@/lib/diagnostics/initial-diagnostic";
 import { cn } from "@/lib/utils";
 
-type DiagnosticFormData = {
-  situation: string;
-  need: string;
-  careerStage: string;
-  urgency: string;
-  fullName: string;
-  email: string;
-  phone: string;
-  consentAccepted: boolean;
-};
+const SESSION_STORAGE_KEY = "senda_route_finder_result_v1";
 
-type Option = { value: string; label: string };
+const situationOptions = routeFinderSituations.map((value) => ({
+  value,
+  messageKey: `options.situation.${value}` as const,
+}));
 
-function OptionFieldset({
-  legend,
-  name,
-  options,
-  register,
-  selected,
-  error,
-}: {
-  legend: string;
-  name: "situation" | "need" | "careerStage" | "urgency";
-  options: Option[];
-  register: UseFormRegister<DiagnosticFormData>;
-  selected: string | undefined;
-  error?: string;
-}) {
-  return (
-    <fieldset aria-describedby={error ? `${name}-error` : undefined}>
-      <legend className="font-heading text-3xl leading-tight text-[var(--senda-ink)] sm:text-4xl">
-        {legend}
-      </legend>
-      <div className="mt-8 grid gap-3 sm:grid-cols-2">
-        {options.map((option) => {
-          const checked = selected === option.value;
-          return (
-            <label
-              key={option.value}
-              className={cn(
-                "group flex min-h-24 cursor-pointer items-start gap-4 rounded-[1.4rem] border p-5 text-left transition-[background-color,border-color,box-shadow,transform] focus-within:ring-2 focus-within:ring-[var(--senda-olive)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--senda-bg)]",
-                checked
-                  ? "border-[var(--senda-olive)] bg-[color-mix(in_srgb,var(--senda-olive)_14%,var(--senda-paper))] shadow-[0_18px_38px_-30px_rgba(10,20,34,.5)]"
-                  : "border-[var(--senda-border)] bg-[var(--senda-paper)] hover:-translate-y-0.5 hover:border-[var(--senda-olive)]/55",
-              )}
-            >
-              <input
-                type="radio"
-                value={option.value}
-                className="peer sr-only"
-                {...register(name, { required: true })}
-              />
-              <span
-                aria-hidden="true"
-                className={cn(
-                  "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-colors",
-                  checked
-                    ? "border-[var(--senda-olive)] bg-[var(--senda-olive)] text-[var(--senda-on-olive)]"
-                    : "border-[var(--senda-border)] bg-[var(--senda-card)] text-transparent",
-                )}
-              >
-                <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
-              </span>
-              <span className="text-base font-medium leading-6 text-[var(--senda-ink)]">{option.label}</span>
-            </label>
-          );
-        })}
-      </div>
-      {error ? <p id={`${name}-error`} className="mt-4 text-sm font-semibold text-[var(--quiz-danger)]" role="alert">{error}</p> : null}
-    </fieldset>
-  );
+const needOptions = routeFinderNeeds.map((value) => ({
+  value,
+  messageKey: `options.need.${value}` as const,
+}));
+
+const stageOptions = routeFinderStages.map((value) => ({
+  value,
+  messageKey: `options.stage.${value}` as const,
+}));
+
+const urgencyMessageKeys = {
+  exploring: "options.urgency.exploring",
+  "move-soon": "options.urgency.soon",
+  "short-term-decision": "options.urgency.decision",
+  urgent: "options.urgency.urgent",
+} as const;
+
+const urgencyOptions = diagnosticUrgencies.map((value) => ({
+  value,
+  messageKey: urgencyMessageKeys[value],
+}));
+
+const steps = [
+  {
+    field: "situation",
+    questionKey: "questions.situation",
+    options: situationOptions,
+  },
+  {
+    field: "need",
+    questionKey: "questions.need",
+    options: needOptions,
+  },
+  {
+    field: "careerStage",
+    questionKey: "questions.stage",
+    options: stageOptions,
+  },
+  {
+    field: "urgency",
+    questionKey: "questions.urgency",
+    options: urgencyOptions,
+  },
+] as const;
+
+type RouteFinderDraft = Partial<Record<RouteFinderDimension, string>>;
+
+function toCompleteAnswers(draft: RouteFinderDraft): RouteFinderAnswers | null {
+  const { situation, need, careerStage, urgency } = draft;
+  if (
+    !routeFinderSituations.includes(situation as RouteFinderAnswers["situation"])
+    || !routeFinderNeeds.includes(need as RouteFinderAnswers["need"])
+    || !routeFinderStages.includes(careerStage as RouteFinderAnswers["careerStage"])
+    || !diagnosticUrgencies.includes(urgency as RouteFinderAnswers["urgency"])
+  ) {
+    return null;
+  }
+
+  return {
+    situation: situation as RouteFinderAnswers["situation"],
+    need: need as RouteFinderAnswers["need"],
+    careerStage: careerStage as RouteFinderAnswers["careerStage"],
+    urgency: urgency as RouteFinderAnswers["urgency"],
+  };
 }
 
-const stepFields: FieldPath<DiagnosticFormData>[][] = [
-  ["situation"],
-  ["need"],
-  ["careerStage"],
-  ["urgency"],
-  ["fullName", "email", "consentAccepted"],
-];
+function signalMessageKey(dimension: RouteFinderDimension, value: string) {
+  const step = steps.find((candidate) => candidate.field === dimension);
+  return step?.options.find((option) => option.value === value)?.messageKey;
+}
 
-export function InitialDiagnosticForm() {
+export type InitialDiagnosticFormProps = {
+  /** Optional integration point for a future consent-based result form. */
+  renderResultShare?: (result: ShareableDiagnosticResult) => React.ReactNode;
+};
+
+export function InitialDiagnosticForm({ renderResultShare }: InitialDiagnosticFormProps = {}) {
   const t = useTranslations("InitialDiagnostic");
-  const locale = useLocale();
-  const [step, setStep] = useState(0);
-  const [captchaToken, setCaptchaToken] = useState<string | undefined>();
-  const [captchaError, setCaptchaError] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [completed, setCompleted] = useState(false);
-  const captchaEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+  const locale = useLocale() === "en" ? "en" : "es";
+  const [stepIndex, setStepIndex] = useState(0);
+  const [answers, setAnswers] = useState<RouteFinderDraft>({});
+  const [selectionError, setSelectionError] = useState(false);
+  const [result, setResult] = useState<RouteFinderResult | null>(null);
+  const [shareableResult, setShareableResult] = useState<ShareableDiagnosticResult | null>(null);
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const questionLegendRef = useRef<HTMLLegendElement>(null);
 
-  const {
-    register,
-    control,
-    trigger,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<DiagnosticFormData>({
-    mode: "onTouched",
-    defaultValues: {
-      situation: "",
-      need: "",
-      careerStage: "",
-      urgency: "",
-      fullName: "",
-      email: "",
-      phone: "",
-      consentAccepted: false,
-    },
-  });
+  useEffect(() => {
+    if (result) resultHeadingRef.current?.focus();
+  }, [result]);
 
-  const values = useWatch({ control });
+  useEffect(() => {
+    if (!result) questionLegendRef.current?.focus();
+  }, [result, stepIndex]);
 
-  const optionSets: Record<"situation" | "need" | "careerStage" | "urgency", Option[]> = {
-    situation: [
-      { value: "choosing-direction", label: t("options.situation.choosing") },
-      { value: "trajectory-no-longer-represents-me", label: t("options.situation.reinvention") },
-      { value: "concrete-work-change", label: t("options.situation.transition") },
-      { value: "need-clarity", label: t("options.situation.clarity") },
-    ],
-    need: [
-      { value: "know-myself", label: t("options.need.selfKnowledge") },
-      { value: "choose-alternatives", label: t("options.need.choose") },
-      { value: "redefine-direction", label: t("options.need.redefine") },
-      { value: "organize-transition", label: t("options.need.organize") },
-      { value: "reposition-professionally", label: t("options.need.reposition") },
-      { value: "move-again", label: t("options.need.move") },
-    ],
-    careerStage: [
-      { value: "secondary-school", label: t("options.stage.secondary") },
-      { value: "higher-education", label: t("options.stage.education") },
-      { value: "early-career", label: t("options.stage.early") },
-      { value: "experienced-professional", label: t("options.stage.experienced") },
-      { value: "leadership", label: t("options.stage.leadership") },
-      { value: "life-stage-change", label: t("options.stage.life") },
-    ],
-    urgency: [
-      { value: "exploring", label: t("options.urgency.exploring") },
-      { value: "move-soon", label: t("options.urgency.soon") },
-      { value: "short-term-decision", label: t("options.urgency.decision") },
-      { value: "urgent", label: t("options.urgency.urgent") },
-    ],
-  };
+  if (result) {
+    const primaryRouteKey = `results.routes.${result.primary.messageKey}` as const;
+    const secondaryRouteKey = result.secondary
+      ? (`results.routes.${result.secondary.messageKey}` as const)
+      : null;
+    const situationKey = signalMessageKey("situation", result.answers.situation);
+    const resultForSharing = {
+      questionnaire: "route_finder" as const,
+      situation: situationKey ? t(situationKey) : undefined,
+      recommendedService: t(`${primaryRouteKey}.title`),
+      alternativeService: secondaryRouteKey ? t(`${secondaryRouteKey}.title`) : undefined,
+      summary: `${t(`${primaryRouteKey}.description`)} ${t("results.disclaimer")}`,
+    };
 
-  async function goForward() {
-    const valid = await trigger(stepFields[step], { shouldFocus: true });
-    if (valid) setStep((current) => Math.min(current + 1, stepFields.length - 1));
-  }
-
-  async function submit(data: DiagnosticFormData) {
-    if (captchaEnabled && !captchaToken) {
-      setCaptchaError(true);
-      return;
-    }
-
-    setSubmitError(null);
-    try {
-      const response = await fetch("/api/initial-diagnostic", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...data,
-          phone: data.phone || undefined,
-          consentAccepted: true,
-          sourcePage: window.location.pathname,
-          locale,
-          captchaToken,
-        }),
-      });
-
-      if (!response.ok) {
-        setSubmitError(t("errors.submit"));
-        return;
-      }
-
-      setCompleted(true);
-    } catch {
-      setSubmitError(t("errors.submit"));
-    }
-  }
-
-  if (completed) {
     return (
-      <div className="rounded-[2rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-8 shadow-[0_28px_70px_-52px_rgba(37,42,32,.55)] sm:p-12" role="status">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--senda-olive)] text-[var(--senda-on-olive)]">
-          <Check className="h-6 w-6" />
-        </span>
-        <p className="mt-8 font-heading text-3xl leading-tight text-[var(--senda-ink)] sm:text-4xl">{t("success.title")}</p>
-        <p className="mt-5 max-w-xl text-lg leading-8 text-[var(--senda-muted)]">{t("success.description")}</p>
-        <Link href="/" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 font-semibold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-bg)]">
-          {t("success.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
+      <div className="space-y-8" aria-live="polite">
+        <div>
+          <p className="senda-kicker">{t("results.eyebrow")}</p>
+          <h2
+            ref={resultHeadingRef}
+            tabIndex={-1}
+            className="mt-5 max-w-[15ch] text-pretty font-heading text-4xl leading-[1.04] tracking-[-0.035em] text-[var(--senda-ink)] outline-none sm:text-5xl"
+          >
+            {t("results.title")}
+          </h2>
+        </div>
+
+        {situationKey ? (
+          <p className="rounded-[1.25rem] border border-[var(--senda-border)] bg-[var(--senda-section)] px-5 py-4 text-base leading-7 text-[var(--senda-muted)]">
+            <span className="mr-2 font-bold text-[var(--senda-ink)]">{t("results.situationLabel")}:</span>
+            {t(situationKey)}
+          </p>
+        ) : null}
+
+        <section className="rounded-[1.7rem] border border-[var(--senda-olive)]/45 bg-[color-mix(in_srgb,var(--senda-olive)_12%,var(--senda-paper))] p-6 sm:p-8" aria-labelledby="primary-route-title">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-terracotta)]">
+            {t("results.primaryLabel")}
+          </p>
+          <h3 id="primary-route-title" className="mt-4 font-heading text-3xl leading-tight text-[var(--senda-ink)]">
+            {t(`${primaryRouteKey}.title`)}
+          </h3>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--senda-muted)]">
+            {t(`${primaryRouteKey}.description`)}
+          </p>
+          <Link
+            href={result.primary.href}
+            className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-paper)]"
+          >
+            {t("results.exploreService")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </section>
+
+        {secondaryRouteKey && result.secondary ? (
+          <section className="rounded-[1.5rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-6 sm:p-7" aria-labelledby="secondary-route-title">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-muted)]">
+              {t("results.secondaryLabel")}
+            </p>
+            <h3 id="secondary-route-title" className="mt-3 font-heading text-2xl leading-tight text-[var(--senda-ink)]">
+              {t(`${secondaryRouteKey}.title`)}
+            </h3>
+            <p className="mt-3 text-base leading-7 text-[var(--senda-muted)]">
+              {t(`${secondaryRouteKey}.description`)}
+            </p>
+            <Link href={result.secondary.href} className="mt-5 inline-flex min-h-11 items-center gap-2 font-bold text-[var(--senda-action)] underline decoration-[var(--senda-terracotta)]/50 underline-offset-4">
+              {t("results.exploreService")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </section>
+        ) : null}
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <section className="rounded-[1.5rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-6 sm:p-7" aria-labelledby="signals-title">
+            <h3 id="signals-title" className="font-heading text-2xl text-[var(--senda-ink)]">
+              {t("results.signalsTitle")}
+            </h3>
+            <ul className="mt-5 space-y-4">
+              {result.signals.map((signal) => {
+                const messageKey = signalMessageKey(signal.dimension, signal.value);
+                if (!messageKey) return null;
+                return (
+                  <li key={`${signal.dimension}-${signal.value}`} className="flex items-start gap-3 text-sm leading-6 text-[var(--senda-muted)]">
+                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--senda-olive)] text-[var(--senda-on-olive)]" aria-hidden="true">
+                      <Check className="h-3 w-3" strokeWidth={2.5} />
+                    </span>
+                    <span>{t(messageKey)}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
+          <section className="rounded-[1.5rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-6 sm:p-7" aria-labelledby="work-on-title">
+            <h3 id="work-on-title" className="font-heading text-2xl text-[var(--senda-ink)]">
+              {t("results.workOnTitle")}
+            </h3>
+            <ul className="mt-5 space-y-3">
+              {result.primary.workOnKeys.map((workOnKey) => (
+                <li key={workOnKey} className="flex items-start gap-3 text-sm leading-6 text-[var(--senda-muted)]">
+                  <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[var(--senda-terracotta)]" aria-hidden="true" />
+                  <span>{t(`${primaryRouteKey}.workOn.${workOnKey}`)}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+
+        {result.urgentHumanContact ? (
+          <aside className="rounded-[1.5rem] border border-[var(--senda-terracotta)]/45 bg-[color-mix(in_srgb,var(--senda-terracotta)_10%,var(--senda-paper))] p-6 sm:p-7">
+            <div className="flex items-start gap-4">
+              <MessageCircle className="mt-1 h-5 w-5 shrink-0 text-[var(--senda-terracotta)]" aria-hidden="true" />
+              <div>
+                <h3 className="font-heading text-xl text-[var(--senda-ink)]">{t("results.urgentTitle")}</h3>
+                <p className="mt-2 text-sm leading-6 text-[var(--senda-muted)]">{t("results.urgentDescription")}</p>
+                <Link href="/contacto" className="mt-4 inline-flex min-h-11 items-center font-bold text-[var(--senda-action)] underline underline-offset-4">
+                  {t("results.contactCta")}
+                </Link>
+              </div>
+            </div>
+          </aside>
+        ) : null}
+
+        <p className="border-l border-[var(--senda-terracotta)]/55 pl-4 text-sm leading-6 text-[var(--senda-muted)]">
+          {t("results.disclaimer")}
+        </p>
+
+        {shareableResult
+          ? renderResultShare
+            ? renderResultShare(shareableResult)
+            : <DiagnosticResultShareForm result={resultForSharing} />
+          : null}
+
+        <div className="flex flex-col gap-3 border-t border-[var(--senda-border)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <button
+            type="button"
+            onClick={() => {
+              setAnswers({});
+              setStepIndex(0);
+              setSelectionError(false);
+              setResult(null);
+              setShareableResult(null);
+              try {
+                window.sessionStorage.removeItem(SESSION_STORAGE_KEY);
+              } catch {
+                // Storage is optional; the questionnaire remains fully usable.
+              }
+            }}
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[var(--senda-border)] bg-[var(--senda-paper)] px-6 py-3 text-sm font-bold text-[var(--senda-ink)] hover:border-[var(--senda-olive)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
+          >
+            <RotateCcw className="h-4 w-4" aria-hidden="true" /> {t("results.restart")}
+          </button>
+          {!result.urgentHumanContact ? (
+            <Link href="/contacto" className="inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-[var(--senda-action)] underline underline-offset-4">
+              {t("results.contactCta")}
+            </Link>
+          ) : null}
+        </div>
       </div>
     );
   }
 
-  const fieldError = t("errors.selection");
+  const currentStep = steps[stepIndex];
+  const selectedValue = answers[currentStep.field];
+
+  function continueQuestionnaire() {
+    if (!selectedValue) {
+      setSelectionError(true);
+      return;
+    }
+
+    if (stepIndex < steps.length - 1) {
+      setSelectionError(false);
+      setStepIndex((current) => current + 1);
+      return;
+    }
+
+    const completeAnswers = toCompleteAnswers(answers);
+    if (!completeAnswers) {
+      setSelectionError(true);
+      return;
+    }
+
+    const nextResult = calculateRouteFinderResult(completeAnswers);
+    const nextShareableResult = toShareableDiagnosticResult(nextResult, locale);
+    setSelectionError(false);
+    setResult(nextResult);
+    setShareableResult(nextShareableResult);
+
+    try {
+      window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(nextShareableResult));
+    } catch {
+      // Storage is optional; calculation and rendering do not depend on it.
+    }
+  }
 
   return (
-    <form onSubmit={handleSubmit(submit)} noValidate>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        continueQuestionnaire();
+      }}
+      noValidate
+    >
       <div className="mb-8 flex items-center justify-between gap-5">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-muted)]">
-          {t("progress", { current: step + 1, total: stepFields.length })}
+          {t("progress", { current: stepIndex + 1, total: steps.length })}
         </p>
-        <div className="flex flex-1 gap-1.5" aria-hidden="true">
-          {stepFields.map((_, index) => (
-            <span key={index} className={cn("h-1 flex-1 rounded-full", index <= step ? "bg-[var(--senda-terracotta)]" : "bg-[var(--senda-border)]")} />
+        <div
+          className="flex flex-1 gap-1.5"
+          role="progressbar"
+          aria-label={t("progress", { current: stepIndex + 1, total: steps.length })}
+          aria-valuemin={1}
+          aria-valuemax={steps.length}
+          aria-valuenow={stepIndex + 1}
+        >
+          {steps.map((step, index) => (
+            <span
+              key={step.field}
+              className={cn(
+                "h-1 flex-1 rounded-full",
+                index <= stepIndex ? "bg-[var(--senda-terracotta)]" : "bg-[var(--senda-border)]",
+              )}
+              aria-hidden="true"
+            />
           ))}
         </div>
       </div>
 
-      <div className="min-h-[23rem]">
-        {step === 0 ? (
-          <OptionFieldset legend={t("questions.situation")} name="situation" options={optionSets.situation} register={register} selected={values.situation} error={errors.situation ? fieldError : undefined} />
-        ) : null}
-        {step === 1 ? (
-          <OptionFieldset legend={t("questions.need")} name="need" options={optionSets.need} register={register} selected={values.need} error={errors.need ? fieldError : undefined} />
-        ) : null}
-        {step === 2 ? (
-          <OptionFieldset legend={t("questions.stage")} name="careerStage" options={optionSets.careerStage} register={register} selected={values.careerStage} error={errors.careerStage ? fieldError : undefined} />
-        ) : null}
-        {step === 3 ? (
-          <OptionFieldset legend={t("questions.urgency")} name="urgency" options={optionSets.urgency} register={register} selected={values.urgency} error={errors.urgency ? fieldError : undefined} />
-        ) : null}
-        {step === 4 ? (
-          <fieldset>
-            <legend className="font-heading text-3xl leading-tight text-[var(--senda-ink)] sm:text-4xl">{t("questions.contact")}</legend>
-            <p className="mt-3 text-sm leading-6 text-[var(--senda-muted)]">{t("contactNote")}</p>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2">
-              <label className="grid gap-2 text-sm font-semibold text-[var(--senda-ink)]">
-                {t("fields.name")}
+      <fieldset aria-describedby={selectionError ? `${currentStep.field}-error` : undefined}>
+        <legend
+          ref={questionLegendRef}
+          tabIndex={-1}
+          className="max-w-[19ch] text-pretty font-heading text-3xl leading-tight text-[var(--senda-ink)] outline-none sm:text-4xl"
+        >
+          {t(currentStep.questionKey)}
+        </legend>
+        <div className="mt-8 grid gap-3 sm:grid-cols-2">
+          {currentStep.options.map((option) => {
+            const checked = selectedValue === option.value;
+            return (
+              <label
+                key={option.value}
+                className={cn(
+                  "group flex min-h-24 cursor-pointer items-start gap-4 rounded-[1.4rem] border p-5 text-left transition-[background-color,border-color,box-shadow,transform] focus-within:ring-2 focus-within:ring-[var(--senda-olive)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--senda-bg)] motion-reduce:transition-none",
+                  checked
+                    ? "border-[var(--senda-olive)] bg-[color-mix(in_srgb,var(--senda-olive)_14%,var(--senda-paper))] shadow-[0_18px_38px_-30px_rgba(10,20,34,.5)]"
+                    : "border-[var(--senda-border)] bg-[var(--senda-paper)] hover:-translate-y-0.5 hover:border-[var(--senda-olive)]/55 motion-reduce:hover:transform-none",
+                )}
+              >
                 <input
-                  autoComplete="name"
-                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-card)] px-4 text-base text-[var(--senda-ink)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
-                  {...register("fullName", { required: t("errors.name"), minLength: { value: 2, message: t("errors.name") } })}
-                  aria-invalid={Boolean(errors.fullName)}
+                  type="radio"
+                  name={currentStep.field}
+                  value={option.value}
+                  checked={checked}
+                  onChange={() => {
+                    setAnswers((current) => ({ ...current, [currentStep.field]: option.value }));
+                    setSelectionError(false);
+                  }}
+                  className="peer sr-only"
                 />
-                {errors.fullName ? <span className="text-xs text-[var(--quiz-danger)]" role="alert">{errors.fullName.message}</span> : null}
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-colors",
+                    checked
+                      ? "border-[var(--senda-olive)] bg-[var(--senda-olive)] text-[var(--senda-on-olive)]"
+                      : "border-[var(--senda-border)] bg-[var(--senda-card)] text-transparent",
+                  )}
+                >
+                  <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
+                </span>
+                <span className="text-base font-medium leading-6 text-[var(--senda-ink)]">
+                  {t(option.messageKey)}
+                </span>
               </label>
-              <label className="grid gap-2 text-sm font-semibold text-[var(--senda-ink)]">
-                {t("fields.email")}
-                <input
-                  type="email"
-                  autoComplete="email"
-                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-card)] px-4 text-base text-[var(--senda-ink)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
-                  {...register("email", { required: t("errors.email"), pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: t("errors.email") } })}
-                  aria-invalid={Boolean(errors.email)}
-                />
-                {errors.email ? <span className="text-xs text-[var(--quiz-danger)]" role="alert">{errors.email.message}</span> : null}
-              </label>
-              <label className="grid gap-2 text-sm font-semibold text-[var(--senda-ink)] sm:col-span-2">
-                {t("fields.phone")}
-                <input
-                  type="tel"
-                  autoComplete="tel"
-                  className="h-12 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-card)] px-4 text-base text-[var(--senda-ink)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
-                  {...register("phone")}
-                />
-              </label>
-            </div>
-
-            <label className="mt-6 flex items-start gap-3 text-sm leading-6 text-[var(--senda-muted)]">
-              <input type="checkbox" className="mt-1 h-4 w-4 accent-[var(--senda-olive)]" {...register("consentAccepted", { required: t("errors.consent") })} />
-              <span>{t.rich("consent", { privacy: (chunks) => <Link href="/privacidad" className="font-semibold underline underline-offset-2">{chunks}</Link> })}</span>
-            </label>
-            {errors.consentAccepted ? <p className="mt-2 text-xs text-[var(--quiz-danger)]" role="alert">{errors.consentAccepted.message}</p> : null}
-
-            <TurnstileWidget
-              onTokenChange={setCaptchaToken}
-              onErrorChange={setCaptchaError}
-              action="initial_diagnostic"
-              language={locale}
-              className="mt-6 min-h-[65px]"
-              retryLabel={t("errors.captchaRetry")}
-            />
-            {captchaError ? <p className="mt-2 text-sm text-[var(--quiz-danger)]" role="alert">{t("errors.captcha")}</p> : null}
-          </fieldset>
+            );
+          })}
+        </div>
+        {selectionError ? (
+          <p id={`${currentStep.field}-error`} className="mt-4 text-sm font-semibold text-[var(--quiz-danger)]" role="alert">
+            {t("errors.selection")}
+          </p>
         ) : null}
-      </div>
-
-      {submitError ? <p className="mb-5 rounded-xl bg-[var(--quiz-danger-soft)] p-4 text-sm font-semibold text-[var(--quiz-danger)]" role="alert">{submitError}</p> : null}
+      </fieldset>
 
       <div className="mt-8 flex items-center justify-between gap-4 border-t border-[var(--senda-border)] pt-6">
         <button
           type="button"
-          onClick={() => setStep((current) => Math.max(0, current - 1))}
-          disabled={step === 0 || isSubmitting}
+          onClick={() => {
+            setSelectionError(false);
+            setStepIndex((current) => Math.max(0, current - 1));
+          }}
+          disabled={stepIndex === 0}
           className="inline-flex min-h-12 items-center gap-2 rounded-full px-3 font-semibold text-[var(--senda-muted)] hover:text-[var(--senda-ink)] disabled:invisible"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" /> {t("back")}
         </button>
-        {step < stepFields.length - 1 ? (
-          <button
-            type="button"
-            onClick={(event) => {
-              event.preventDefault();
-              void goForward();
-            }}
-            className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 font-semibold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-bg)]"
-          >
-            {t("next")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </button>
-        ) : (
-          <button type="submit" disabled={isSubmitting || (captchaEnabled && !captchaToken)} className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 font-semibold text-white hover:bg-[var(--senda-action-hover)] disabled:cursor-not-allowed disabled:opacity-55">
-            {isSubmitting ? t("sending") : t("submit")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </button>
-        )}
+        <button
+          type="submit"
+          className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 py-3 font-semibold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-bg)]"
+        >
+          {stepIndex === steps.length - 1 ? t("submit") : t("next")}
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </button>
       </div>
-      <p className="mt-5 flex items-center gap-2 text-xs leading-5 text-[var(--senda-muted)]">
-        <LockKeyhole className="h-3.5 w-3.5" aria-hidden="true" /> {t("privacyNote")}
-      </p>
     </form>
   );
 }

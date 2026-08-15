@@ -10,8 +10,11 @@ const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 const LAST_SHOWN_KEY = "reinvencion_career_anchor_popup_last_shown";
 const COMPLETED_KEY = "reinvencion_career_anchor_completed";
 const EXCLUDED_PATHS = [
+  "/encontrar-mi-recorrido",
+  "/test-anclas-de-carrera",
   "/diagnostico/ancla-de-carrera",
   "/diagnostico/ancla-de-carrera/test",
+  "/laboratorio-narrativas-laborales-alternativas",
   "/laboratorio-nuevas-narrativas",
 ];
 
@@ -80,7 +83,7 @@ export function ProcessPopup() {
         <p className="mt-3 text-[15px] leading-7 text-[var(--senda-muted)]">{t("description")}</p>
         <div className="mt-6">
           <Link
-            href="/diagnostico/ancla-de-carrera"
+            href="/test-anclas-de-carrera"
             onClick={() => setVisible(false)}
             className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--senda-ink)] px-6 py-2.5 text-sm font-bold text-white hover:bg-[var(--senda-olive)] dark:bg-[#f4efe4] dark:text-[#272b23] dark:hover:bg-white"
           >

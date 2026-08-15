@@ -57,7 +57,7 @@ export function MethodologyPage() {
         </div>
       </PageSection>
 
-      <ClosingCta title={t("closing.title")} description={t("closing.description")} label={t("closing.cta")} href="/recorridos" />
+      <ClosingCta title={t("closing.title")} description={t("closing.description")} label={t("closing.cta")} href="/transiciones-laborales" />
     </div>
   );
 }

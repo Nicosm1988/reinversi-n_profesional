@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const retiredPublicTerms =
-  /orientación vocacional|vocational guidance|reinvención profesional|professional reinvention|transición laboral|career transition/i;
+  /orientación vocacional|vocational guidance|reinvenci[oó]n|reinventarse|professional reinvention|reinvent yourself/i;
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -10,19 +10,34 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("home is a concise gateway to the two journeys and their supporting pages", async ({ page }) => {
+test("home is a concise gateway to six adult services, the finder and secondary proposals", async ({ page }) => {
   await page.goto("/");
 
   const home = page.locator("main .senda-home");
-  await expect(home.locator(":scope > section")).toHaveCount(6);
-  await expect(home.locator("article")).toHaveCount(2);
+  await expect(home.locator(":scope > section")).toHaveCount(8);
+  await expect(home.locator("article")).toHaveCount(6);
   await expect(home.locator("details")).toHaveCount(0);
 
-  await expect(home.locator('a[href="/recorridos/brujula"]')).toBeVisible();
-  await expect(home.locator('a[href="/recorridos/nueva-etapa-profesional"]')).toBeVisible();
+  await expect(home.getByRole("heading", { level: 1 })).toContainText(/Acompañamos\s+transiciones laborales/);
+  for (const slug of [
+    "explorar-direccion",
+    "cambiar-empleo",
+    "proyecto-propio",
+    "liderazgo-empresa",
+    "desafio-puntual",
+    "elegir-formacion",
+  ]) {
+    await expect(home.locator(`a[href="/transiciones-laborales/${slug}"]`)).toBeVisible();
+  }
+  await expect(home.locator('a[href="/encontrar-mi-recorrido"]').first()).toBeVisible();
+  await expect(home.locator('a[href="/transiciones-laborales"]').first()).toBeVisible();
   await expect(home.locator('a[href="/como-trabajamos"]').first()).toBeVisible();
-  await expect(home.locator('a[href="/laboratorio-nuevas-narrativas"]')).toBeVisible();
+  await expect(home.locator('a[href="/laboratorio-narrativas-laborales-alternativas"]')).toBeVisible();
+  await expect(home.locator('a[href="/brujulas"]')).toBeVisible();
   await expect(home.locator('a[href="/contacto"]')).toHaveCount(1);
+
+  const hero = home.locator(":scope > section").first();
+  await expect(hero).not.toContainText(/Brújulas|Compass/);
 
   const publicText = await home.innerText();
   expect(publicText).not.toMatch(/Nuestra forma de acompañar|Herramientas al servicio/i);
@@ -33,26 +48,31 @@ test("home is a concise gateway to the two journeys and their supporting pages",
 });
 
 for (const locale of [
-  { prefix: "", diagnosticHref: "/diagnostico" },
-  { prefix: "/en", diagnosticHref: "/en/diagnostico" },
+  { prefix: "", finderHref: "/encontrar-mi-recorrido" },
+  { prefix: "/en", finderHref: "/en/encontrar-mi-recorrido" },
 ] as const) {
-  for (const journey of [
-    { slug: "brujula", stages: 6 },
-    { slug: "nueva-etapa-profesional", stages: 8 },
-  ] as const) {
-    test(`${locale.prefix || "/es"}/recorridos/${journey.slug} presents its complete journey`, async ({ page }) => {
-      await page.goto(`${locale.prefix}/recorridos/${journey.slug}`);
+  test(`${locale.prefix || "/es"} presents every complete service`, async ({ page }) => {
+    for (const service of [
+      { path: "/transiciones-laborales/explorar-direccion", stages: 7 },
+      { path: "/transiciones-laborales/cambiar-empleo", stages: 8 },
+      { path: "/transiciones-laborales/proyecto-propio", stages: 9 },
+      { path: "/transiciones-laborales/liderazgo-empresa", stages: 9 },
+      { path: "/transiciones-laborales/desafio-puntual", stages: 6 },
+      { path: "/transiciones-laborales/elegir-formacion", stages: 9 },
+      { path: "/brujulas", stages: 6 },
+    ] as const) {
+      await page.goto(`${locale.prefix}${service.path}`);
 
-      await expect(page.locator("main article ol > li")).toHaveCount(journey.stages);
+      await expect(page.locator("main article ol > li")).toHaveCount(service.stages);
       await expect(
-        page.locator("main").getByRole("link", { name: /diagnóstico|diagnostic/i }).last(),
-      ).toHaveAttribute("href", locale.diagnosticHref);
+        page.locator(`main a[href="${locale.finderHref}"]`).last(),
+      ).toBeVisible();
 
       const publicText = await page.locator("main").innerText();
       expect(publicText).not.toMatch(/\b(?:1500|1800|USD)\b|US\$/i);
       expect(publicText).not.toMatch(retiredPublicTerms);
-    });
-  }
+    }
+  });
 }
 
 test("contact form validates locally and preserves every value after a controlled server failure", async ({ page }) => {
@@ -174,7 +194,9 @@ test("contact form confirms success only after the API accepts a valid submissio
   await page.getByRole("checkbox").check();
   await page.getByRole("button", { name: "Send inquiry" }).click();
 
-  await expect(page.getByRole("status")).toContainText("Thank you for reaching out!");
+  const successStatus = page.getByRole("status");
+  await expect(successStatus).toContainText("Thank you for reaching out!");
+  await expect(successStatus).toBeFocused();
   await expect(page.getByRole("button", { name: "Send another inquiry" })).toBeVisible();
 });
 
@@ -192,14 +214,14 @@ test("laboratory interest preserves its data when the secure contact endpoint re
     });
   });
 
-  await page.goto("/laboratorio-nuevas-narrativas");
+  await page.goto("/laboratorio-narrativas-laborales-alternativas");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    /\/laboratorio-nuevas-narrativas$/,
+    /\/laboratorio-narrativas-laborales-alternativas$/,
   );
   await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
     "content",
-    /Laboratorio de Nuevas Narrativas Laborales/,
+    /Laboratorio de Narrativas Laborales Alternativas/,
   );
   await expect(page.locator("main ol > li")).toHaveCount(9);
   await expect(page.getByRole("textbox", { name: "Website" })).toHaveCount(0);
@@ -234,14 +256,14 @@ test("laboratory interest preserves its data when the secure contact endpoint re
 
   await expect.poll(() => submission).not.toBeNull();
   expect(submission).toEqual({
-    formOrigin: "laboratorio_nuevas_narrativas",
+    formOrigin: "laboratorio_narrativas_laborales_alternativas",
     name: "Ada Lovelace",
     phone: "+54 9 11 1234-5678",
     email: "ada@example.com",
     explorationInterest: "Quiero revisar cómo narro mi trayectoria y qué deseo conservar.",
     consent: true,
     companyWebsite: "",
-    sourcePage: "/laboratorio-nuevas-narrativas",
+    sourcePage: "/laboratorio-narrativas-laborales-alternativas",
     locale: "es",
   });
   expect(requestHeader).toBe("contact");
@@ -258,10 +280,10 @@ test("laboratory interest confirms only an accepted English submission", async (
     });
   });
 
-  await page.goto("/en/laboratorio-nuevas-narrativas");
+  await page.goto("/en/laboratorio-narrativas-laborales-alternativas");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    /\/en\/laboratorio-nuevas-narrativas$/,
+    /\/en\/laboratorio-narrativas-laborales-alternativas$/,
   );
   await page.getByLabel("Name").fill("Grace Hopper");
   await page.getByLabel("Email address").fill("grace@example.com");
@@ -281,32 +303,4 @@ test("laboratory interest confirms only an accepted English submission", async (
   await expect(successStatus).toContainText("We have registered your interest");
   await expect(successStatus).toBeFocused();
   expect(attempts).toBe(2);
-});
-
-test("the initial diagnostic validates each step and preserves navigation", async ({ page }) => {
-  await page.goto("/diagnostico");
-
-  const continueButton = page.getByRole("button", { name: /Continuar|Continue/ });
-  await continueButton.click();
-  await expect(page.locator("#situation-error")).toContainText(/Elegí una opción|Choose an option/);
-
-  await page
-    .getByRole("radio", { name: "Quiero releer mi trayectoria y definir una nueva etapa." })
-    .check({ force: true });
-  await continueButton.click();
-  await expect(page.getByRole("group", { name: "¿Qué necesitás hoy?" })).toBeVisible();
-
-  await page.getByRole("radio", { name: "Redefinir mi dirección." }).check({ force: true });
-  await continueButton.click();
-  await page.getByRole("radio", { name: "Profesional con experiencia." }).check({ force: true });
-  await continueButton.click();
-  await page
-    .getByRole("radio", { name: "Quiero empezar a moverme pronto." })
-    .check({ force: true });
-  await continueButton.click();
-
-  await expect(page.getByRole("group", { name: "¿Cómo podemos contactarte?" })).toBeVisible();
-  await expect(page.getByText("Ingresá tu nombre.")).toHaveCount(0);
-  await page.getByRole("button", { name: "Volver" }).click();
-  await expect(page.getByRole("radio", { name: "Quiero empezar a moverme pronto." })).toBeChecked();
 });

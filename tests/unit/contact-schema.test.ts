@@ -17,14 +17,33 @@ const VALID_SUBMISSION = {
 };
 
 const VALID_LABORATORY_SUBMISSION = {
-  formOrigin: "laboratorio_nuevas_narrativas",
+  formOrigin: "laboratorio_narrativas_laborales_alternativas",
   name: "  Ana   Pérez  ",
   email: " ANA@EXAMPLE.COM ",
   explorationInterest: "Explorar nuevos relatos sobre mi trabajo.  \r\nCon otras personas.  ",
   consent: true,
   companyWebsite: "",
-  sourcePage: "/laboratorio-nuevas-narrativas",
+  sourcePage: "/laboratorio-narrativas-laborales-alternativas",
   locale: "es",
+};
+
+const VALID_DIAGNOSTIC_RESULT_SUBMISSION = {
+  formOrigin: "diagnostic_result",
+  name: "  Ana   Pérez  ",
+  email: " ANA@EXAMPLE.COM ",
+  phone: "",
+  preferredContact: "email",
+  message: "Me gustaría conversar sobre este resultado.",
+  consent: true,
+  companyWebsite: "",
+  sourcePage: "/test-anclas-de-carrera",
+  locale: "es",
+  result: {
+    questionnaire: "career_anchors",
+    primaryAnchors: ["Autonomía/Independencia"],
+    secondaryAnchors: ["Creatividad Emprendedora"],
+    summary: "Una lectura orientativa de las motivaciones vinculadas con el trabajo.",
+  },
 };
 
 describe("contactSubmissionSchema", () => {
@@ -84,7 +103,7 @@ describe("contactSubmissionSchema", () => {
     const parsed = contactSubmissionSchema.parse(VALID_LABORATORY_SUBMISSION);
 
     expect(parsed).toEqual({
-      formOrigin: "laboratorio_nuevas_narrativas",
+      formOrigin: "laboratorio_narrativas_laborales_alternativas",
       name: "Ana Pérez",
       phone: "",
       email: "ana@example.com",
@@ -92,7 +111,7 @@ describe("contactSubmissionSchema", () => {
         "Explorar nuevos relatos sobre mi trabajo.\nCon otras personas.",
       consent: true,
       companyWebsite: "",
-      sourcePage: "/laboratorio-nuevas-narrativas",
+      sourcePage: "/laboratorio-narrativas-laborales-alternativas",
       locale: "es",
     });
     expect("message" in parsed).toBe(false);
@@ -100,17 +119,17 @@ describe("contactSubmissionSchema", () => {
 
   it("allows the laboratory exploration field to be omitted", () => {
     const parsed = contactSubmissionSchema.parse({
-      formOrigin: "laboratorio_nuevas_narrativas",
+      formOrigin: "laboratorio_narrativas_laborales_alternativas",
       name: "Ana Pérez",
       email: "ana@example.com",
       consent: true,
       companyWebsite: "",
-      sourcePage: "/laboratorio-nuevas-narrativas",
+      sourcePage: "/laboratorio-narrativas-laborales-alternativas",
       locale: "es",
     });
 
-    expect(parsed.formOrigin).toBe("laboratorio_nuevas_narrativas");
-    if (parsed.formOrigin === "laboratorio_nuevas_narrativas") {
+    expect(parsed.formOrigin).toBe("laboratorio_narrativas_laborales_alternativas");
+    if (parsed.formOrigin === "laboratorio_narrativas_laborales_alternativas") {
       expect(parsed.explorationInterest).toBe("");
     }
   });
@@ -118,7 +137,7 @@ describe("contactSubmissionSchema", () => {
   it("rejects laboratory source mismatches, unknown origins and client subjects", () => {
     const wrongLocaleSource = contactSubmissionSchema.safeParse({
       ...VALID_LABORATORY_SUBMISSION,
-      sourcePage: "/en/laboratorio-nuevas-narrativas",
+      sourcePage: "/en/laboratorio-narrativas-laborales-alternativas",
     });
     const unknownOrigin = contactSubmissionSchema.safeParse({
       ...VALID_LABORATORY_SUBMISSION,
@@ -163,5 +182,52 @@ describe("contactSubmissionSchema", () => {
         "explorationInterest",
       );
     }
+  });
+
+  it("accepts a consented diagnostic result without raw answers", () => {
+    const parsed = contactSubmissionSchema.parse(VALID_DIAGNOSTIC_RESULT_SUBMISSION);
+
+    expect(parsed).toMatchObject({
+      formOrigin: "diagnostic_result",
+      name: "Ana Pérez",
+      email: "ana@example.com",
+      preferredContact: "email",
+      sourcePage: "/test-anclas-de-carrera",
+      result: {
+        questionnaire: "career_anchors",
+        primaryAnchors: ["Autonomía/Independencia"],
+      },
+    });
+    expect(JSON.stringify(parsed)).not.toContain("rawAnswers");
+  });
+
+  it("rejects diagnostic source mismatches, missing consent and raw answer injection", () => {
+    expect(
+      contactSubmissionSchema.safeParse({
+        ...VALID_DIAGNOSTIC_RESULT_SUBMISSION,
+        locale: "en",
+      }).success,
+    ).toBe(false);
+    expect(
+      contactSubmissionSchema.safeParse({
+        ...VALID_DIAGNOSTIC_RESULT_SUBMISSION,
+        consent: false,
+      }).success,
+    ).toBe(false);
+    expect(
+      contactSubmissionSchema.safeParse({
+        ...VALID_DIAGNOSTIC_RESULT_SUBMISSION,
+        result: {
+          ...VALID_DIAGNOSTIC_RESULT_SUBMISSION.result,
+          rawAnswers: { answers: { "1": 6 } },
+        },
+      }).success,
+    ).toBe(false);
+    expect(
+      contactSubmissionSchema.safeParse({
+        ...VALID_DIAGNOSTIC_RESULT_SUBMISSION,
+        sourcePage: "/encontrar-mi-recorrido",
+      }).success,
+    ).toBe(false);
   });
 });

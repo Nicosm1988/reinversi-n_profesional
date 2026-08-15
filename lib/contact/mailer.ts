@@ -7,7 +7,8 @@ import { type ContactSubmission } from "@/lib/contact/schema";
 import { smtpAcceptedDelivery } from "@/lib/contact/smtp-result";
 
 const LABORATORY_CONTACT_SUBJECT =
-  "Interés en el Laboratorio de Nuevas Narrativas Laborales";
+  "Interés en el Laboratorio de Narrativas Laborales Alternativas";
+const DIAGNOSTIC_RESULT_SUBJECT = "Resultado orientativo compartido desde Senda";
 
 const smtpEnvironmentSchema = z
   .object({
@@ -50,9 +51,15 @@ function readSmtpConfig() {
 }
 
 function contactEmailSubject(submission: ContactSubmission) {
-  return submission.formOrigin === "laboratorio_nuevas_narrativas"
-    ? LABORATORY_CONTACT_SUBJECT
-    : "Nueva consulta desde la web de Senda";
+  if (submission.formOrigin === "laboratorio_narrativas_laborales_alternativas") {
+    return LABORATORY_CONTACT_SUBJECT;
+  }
+
+  if (submission.formOrigin === "diagnostic_result") {
+    return DIAGNOSTIC_RESULT_SUBJECT;
+  }
+
+  return "Nueva consulta desde la web de Senda";
 }
 
 export async function sendContactEmail(

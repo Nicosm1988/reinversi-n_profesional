@@ -12,7 +12,7 @@ Mapa digital en Next.js 16 para explorar trabajo, identidad, aprendizaje y prop�
 1. Instalar dependencias:
 
 ```bash
-npm install
+npm ci
 ```
 
 2. Crear `.env.local` desde `.env.example` y completar claves.
@@ -61,8 +61,10 @@ npm run dev
 ## Endpoints operativos
 
 - `POST /api/diagnostics/analyze`
+- `POST /api/diagnostics/interpret`
+- `POST /api/contact`
 - `POST /api/diagnostics/save` (retirado; responde `410 Gone`)
-- `POST /api/initial-diagnostic`
+- `POST /api/initial-diagnostic` (legado; el orientador público no lo utiliza)
 - `POST /api/leads`
 - `GET /api/health/live` (liveness sin dependencias)
 - `GET /api/health` (readiness estricta del servicio completo)
@@ -77,7 +79,7 @@ Migraciones relevantes:
 - `supabase/migrations/20260531183000_require_auth_for_diagnostics.sql`
 - `supabase/migrations/20260802150000_initial_diagnostics.sql`
 
-El diagnóstico inicial se persiste en `public.initial_diagnostics`. La tabla tiene RLS activa, no concede acceso a `anon` ni `authenticated`, y recibe escrituras únicamente a través del backend con `service_role`.
+El endpoint histórico de diagnóstico inicial persiste en `public.initial_diagnostics`. La tabla tiene RLS activa, no concede acceso a `anon` ni `authenticated`, y recibe escrituras únicamente a través del backend con `service_role`. El orientador público `/encontrar-mi-recorrido` calcula el resultado localmente y no escribe en esa tabla.
 
 Comandos recomendados:
 
@@ -87,11 +89,12 @@ supabase link --project-ref <PROJECT_REF>
 supabase db push
 ```
 
-## Auth requerida para diagnosticos
+## Acceso a los cuestionarios
 
-- El test de Ancla de Carrera requiere sesion activa de Supabase Auth.
-- El login disponible para diagnosticos es Google OAuth.
-- La API `POST /api/diagnostics/analyze` requiere autenticacion y guarda el resultado en el mismo flujo seguro.
+- `/encontrar-mi-recorrido` y `/test-anclas-de-carrera` son públicos y muestran resultados sin pedir datos personales, login ni CAPTCHA.
+- La interpretación opcional de Anclas usa `POST /api/diagnostics/interpret`, recalcula el ranking en servidor, no recibe PII y conserva un fallback determinístico.
+- Si ya existe una sesión Google, `POST /api/diagnostics/complete-public` registra atómicamente el único intento gratuito y permite volver a consultar el resultado guardado, sin exigir el preformulario ni CAPTCHA. La API histórica `POST /api/diagnostics/analyze` se conserva para compatibilidad.
+- Compartir un resultado con Senda es posterior, voluntario y consentido; usa `POST /api/contact` y no Supabase.
 - El antiguo endpoint `POST /api/diagnostics/save` esta retirado para impedir escrituras separadas o manipuladas.
 - Los resultados se guardan en `public.user_diagnostics` con `user_id` obligatorio y RLS por usuario.
 
@@ -99,7 +102,7 @@ Configurar en produccion:
 
 1. Habilitar Google en Supabase Auth Providers.
 2. Registrar `https://reinvension-profesional.vercel.app/auth/callback` como redirect/callback URL.
-3. Cargar en Vercel `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL` y `OPENAI_API_KEY`.
+3. Cargar en Vercel las variables de Supabase, `NEXT_PUBLIC_SITE_URL`, `OPENAI_API_KEY`, Upstash y las cinco variables SMTP documentadas en `.env.example`.
 
 ## Deploy y operaciones
 

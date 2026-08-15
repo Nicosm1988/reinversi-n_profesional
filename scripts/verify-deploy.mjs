@@ -57,15 +57,16 @@ async function checkEndpoint(baseUrl, path, expectedStatuses) {
   };
 }
 
-async function checkAuthRedirect(baseUrl, path) {
-  const check = await checkEndpoint(baseUrl, path, [307, 308]);
-  const location = check.headers.get("location") ?? "";
-  const redirectsToLogin = location.includes("/login") && location.includes("next=");
+async function checkRedirect(baseUrl, source, destination) {
+  const check = await checkEndpoint(baseUrl, source, [307, 308]);
+  const location = check.headers.get("location");
+  const actualPath = location ? new URL(location, baseUrl).pathname.replace(/\/+$/, "") || "/" : null;
+  const expectedPath = new URL(destination, baseUrl).pathname.replace(/\/+$/, "") || "/";
 
   return {
     ...check,
-    ok: check.ok && redirectsToLogin,
-    expected: "307/308 redirect to /login with next param",
+    ok: check.ok && actualPath === expectedPath,
+    expected: `307/308 redirect to ${expectedPath}`,
   };
 }
 
@@ -132,26 +133,50 @@ async function main() {
     }
 
     const checks = [];
-    checks.push(await checkEndpoint(baseUrl, "/", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/sobre-mi", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/recorridos", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/recorridos/brujula", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/recorridos/nueva-etapa-profesional", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/como-trabajamos", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/equipo", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/preguntas-frecuentes", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/laboratorio-nuevas-narrativas", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/en/recorridos", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/en/sobre-mi", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/en/como-trabajamos", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/en/equipo", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/en/preguntas-frecuentes", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/en/laboratorio-nuevas-narrativas", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/diagnostico", [200]));
-    checks.push(await checkAuthRedirect(baseUrl, "/diagnostico/ancla-de-carrera"));
-    checks.push(await checkEndpoint(baseUrl, "/contacto", [200]));
+    const publicPaths = [
+      "",
+      "/sobre-mi",
+      "/transiciones-laborales",
+      "/transiciones-laborales/explorar-direccion",
+      "/transiciones-laborales/cambiar-empleo",
+      "/transiciones-laborales/proyecto-propio",
+      "/transiciones-laborales/liderazgo-empresa",
+      "/transiciones-laborales/desafio-puntual",
+      "/transiciones-laborales/elegir-formacion",
+      "/brujulas",
+      "/como-trabajamos",
+      "/equipo",
+      "/preguntas-frecuentes",
+      "/laboratorio-narrativas-laborales-alternativas",
+      "/encontrar-mi-recorrido",
+      "/test-anclas-de-carrera",
+      "/contacto",
+    ];
+
+    for (const localePrefix of ["", "/en"]) {
+      for (const path of publicPaths) {
+        checks.push(await checkEndpoint(baseUrl, `${localePrefix}${path}` || "/", [200]));
+      }
+    }
+
+    const legacyRedirects = [
+      ["/recorridos", "/transiciones-laborales"],
+      ["/recorridos/brujula", "/brujulas"],
+      ["/recorridos/nueva-etapa-profesional", "/transiciones-laborales"],
+      ["/orientacion-vocacional", "/brujulas"],
+      ["/diagnostico", "/encontrar-mi-recorrido"],
+      ["/diagnostico/ancla-de-carrera", "/test-anclas-de-carrera"],
+      ["/laboratorio-nuevas-narrativas", "/laboratorio-narrativas-laborales-alternativas"],
+    ];
+
+    for (const localePrefix of ["", "/en"]) {
+      for (const [source, destination] of legacyRedirects) {
+        checks.push(await checkRedirect(baseUrl, `${localePrefix}${source}`, `${localePrefix}${destination}`));
+      }
+    }
+
     checks.push(await checkEndpoint(baseUrl, "/login", [200]));
-    checks.push(await checkEndpoint(baseUrl, "/api/health", [200]));
+    checks.push(await checkEndpoint(baseUrl, "/api/health/live", [200]));
 
     const health = await checkHealth(baseUrl);
     checks.push({

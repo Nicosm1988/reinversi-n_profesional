@@ -2,12 +2,14 @@
 
 > Breve y desechable: refleja el momento actual, no un diario de conversación. Actualizar sólo cuando cambie algo duradero.
 
-**Última verificación:** 2026-08-06, desde este checkout (`.../reinversi-n_profesional-main actualizada6-8/reinversi-n_profesional-main`).
+**Última verificación:** 2026-08-15, desde el proyecto `original` (`v0-reinvention-web-platform`).
 
 ## Qué existe (confirmado)
 
-- App Next.js 16 funcional en código: landing, `diagnostico/ancla-de-carrera` (gate por Supabase Auth + Google), `orientacion-vocacional`, `contacto`, `login`, `panel`, páginas legales.
-- API de diagnóstico con generación de informe vía OpenAI (`generateObject`), persistencia atómica en Supabase con RLS, endpoint legado `save` retirado (410).
+- App Next.js 16 multipágina: home, seis propuestas bajo `/transiciones-laborales`, Brújulas secundaria, Laboratorio, metodología, equipo, contacto y páginas legales en español e inglés.
+- `/encontrar-mi-recorrido` es un orientador público, local y sin PII. `/test-anclas-de-carrera` recupera las 40 preguntas, la escala 1–6 y tres elecciones adicionales; calcula el resultado antes de cualquier dato o servicio externo.
+- La interpretación de Anclas por OpenAI es opcional, server-side y cuenta con fallback determinístico. El acceso anónimo no persiste; una sesión Google conserva un único intento por cuenta mediante validación server-side y Supabase/RLS.
+- Compartir un resultado con Senda es posterior y consentido mediante el mismo endpoint SMTP de contacto. El endpoint legado `diagnostics/save` permanece retirado (410).
 - Suite de tests unitarios (Vitest) y e2e (Playwright), CI en GitHub Actions (lint/typecheck/unit/build/e2e).
 - Documentación de producto ya madura: `docs/product/master-architecture.md` (Fase 1 = informe post-diagnóstico, es el foco actual), `docs/product-principles.md`, `AGENTS.md`.
 
@@ -15,20 +17,19 @@
 
 - Fase 2 (dashboard/auth base), Fase 3 (copiloto de carrera IA), Fase 4 (pagos Stripe + MercadoPago), Fase 5 (ejercicios y rutas de carrera con revisión humana) — ver `docs/product/master-architecture.md` §9. No hay evidencia en el código de este checkout de que estas fases estén implementadas más allá de lo descrito en Arquitectura.
 
-## Git y despliegue (actualizado 2026-08-06)
+## Git y despliegue (actualizado 2026-08-15)
 
 - Repositorio inicializado y conectado: `github.com/Nicosm1988/reinversi-n_profesional`, rama `main` con tracking a `origin/main`.
-- `origin/main` y este checkout habían divergido en 41 archivos con contenido real distinto (ver `docs/senda/DECISIONS.md` #007). Se resolvió publicando el contenido de este checkout como nuevo commit de `main` (fast-forward, sin force push) — decisión explícita del usuario.
-- Vercel: `vercel.com/nmarcosan-2648s-projects/reinvension-profesional`, producción en `reinvension-profesional.vercel.app`. No se verificó desde esta sesión si el deploy automático post-push se disparó ni si pasó el build en Vercel.
+- El trabajo actual parte de `80bb03d5733550ec4b1b29deeb6c477cdaaaf83d` en `main` y tiene el checkpoint recuperable `checkpoint/pre-transitions-restructure-20260815`.
+- Vercel: `vercel.com/nmarcosan-2648s-projects/reinvension-profesional`, producción en `reinvension-profesional.vercel.app`. La publicación de esta intervención se registra al completar `release:check`, push y smoke productivo.
 - Existen ramas remotas `v0/taniuskaynicolai-1559-*` no revisadas; puede ser generación previa de v0.dev — pendiente de decidir si se fusionan, descartan o se dejan como están.
 
 ## Riesgos y deuda conocidos
 
-- **No hay `node_modules/` instalado** en este checkout: no se ha podido ejecutar `npm run lint|typecheck|test:unit|test:e2e|build` para verificar que el código realmente compila/pasa en este momento.
-- **No hay `.env.local`/`.env.example`** en este checkout: las variables de entorno necesarias (ver `docs/senda/ARCHITECTURE.md`) están documentadas por nombre pero no verificadas con valores reales; `npm run verify:env` fallaría hasta configurarlas.
-- El push a `main` reemplazó el contenido previo de `origin/main` en 41 archivos (config, dependencias, componentes UI, `master-architecture.md`, migraciones); esa versión anterior sigue en el historial de Git si hace falta recuperar algo.
-- Posible discrepancia de nombre de directorio: `docs/architecture/project-naming.md` referencia `v0-reinvention-web-platform` como carpeta del proyecto "original", mientras este checkout vive en una carpeta distinta — no afecta el código, pero vale confirmar si es intencional.
+- Producción todavía no contiene `SMTP_PASSWORD`: `/api/health` permanece degradado y los formularios fallan cerrado con 503 hasta cargar el secreto y redesplegar. No debe afirmarse recepción de correo antes de una prueba real de buzón.
+- El dominio heredado de producción contiene `reinvension-profesional`; la comunicación y rutas visibles ya no usan “reinvención”, pero cambiar el hostname requiere un dominio/alias confirmado.
+- Sin Upstash válido, el rate limit degrada a memoria por instancia; verificar sus credenciales en cada entorno productivo.
 
 ## Siguiente paso verificable
 
-Ejecutar `npm install` + `npm run verify:env` para dejar el entorno local operativo y poder correr `lint`/`typecheck`/`test:unit` con resultados reales; y confirmar en el dashboard de Vercel que el deploy disparado por este push terminó exitosamente.
+Completar `SMTP_PASSWORD` en Vercel Production, redesplegar y confirmar una consulta real aceptada y recibida. Después de cada cambio, ejecutar `npm run release:check`, publicar con `push-and-deploy.sh` y recorrer la versión productiva en una sesión limpia.

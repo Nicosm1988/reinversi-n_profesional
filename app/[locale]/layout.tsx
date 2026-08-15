@@ -9,7 +9,7 @@ import { ProcessPopup } from "@/components/layout/process-popup";
 import { WhatsappButton } from "@/components/layout/whatsapp-button";
 import { CookieProvider } from "@/lib/cookie-context";
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { PointerIllumination } from "@/components/effects/pointer-illumination";
@@ -38,23 +38,22 @@ export const viewport: Viewport = {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const isEnglish = locale === "en";
+  const t = await getTranslations({ locale, namespace: "Home" });
+  const positioning = t("hero.title").replace(/\s+/g, " ").trim();
+  const title = `Senda | ${positioning}`;
+  const description = t("hero.description");
 
   return {
-    title: isEnglish
-      ? "Senda | A clearer direction for your professional path"
-      : "Senda | Una dirección para tu camino profesional",
-    description: isEnglish
-      ? "Explore work, identity and purpose with thoughtful tools and human support."
-      : "Procesos personalizados para comprender el cambio, encontrar una dirección y construir próximos pasos posibles.",
+    title,
+    description,
     metadataBase: new URL(getSiteUrl()),
     openGraph: {
       type: "website",
       locale: isEnglish ? "en_US" : "es_AR",
+      alternateLocale: isEnglish ? ["es_AR"] : ["en_US"],
       siteName: "Senda",
-      title: isEnglish ? "Senda | A clearer path through professional change" : "Senda | Una dirección para el cambio",
-      description: isEnglish
-        ? "Compass and New Professional Stage: two personalized journeys for decisions about study, work, and experienced careers."
-        : "Brújula y Nueva Etapa Profesional: dos recorridos personalizados para decisiones de estudio, trabajo y trayectoria.",
+      title,
+      description,
     },
     robots: { index: true, follow: true },
     icons: { icon: "/senda-mark.svg" },

@@ -12,7 +12,15 @@ const sections = [1, 2, 3, 4, 5, 6, 7] as const;
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Privacy" });
-  return { title: `${t("title")} | Senda` };
+  const path = "/privacidad";
+  const localizedPath = locale === "en" ? `/en${path}` : path;
+  return {
+    title: `${t("title")} | Senda`,
+    alternates: {
+      canonical: localizedPath,
+      languages: { es: path, en: `/en${path}`, "x-default": path },
+    },
+  };
 }
 
 export default async function PrivacidadPage({ params }: PageProps) {

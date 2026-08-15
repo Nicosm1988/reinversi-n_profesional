@@ -77,7 +77,8 @@ function main() {
   }
 
   if (!isPresent(process.env.OPENAI_API_KEY) || looksLikeRedactedValue(process.env.OPENAI_API_KEY)) {
-    const message = "OPENAI_API_KEY missing: AI diagnostics endpoint will return 503.";
+    const message =
+      "OPENAI_API_KEY missing: AI-enhanced interpretation will use the deterministic fallback.";
     if (strict) {
       errors.push(message);
     } else {

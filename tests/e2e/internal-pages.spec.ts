@@ -1,27 +1,57 @@
 import { expect, test } from "@playwright/test";
 
 const retiredPublicTerms =
-  /orientación vocacional|vocational guidance|reinvención profesional|professional reinvention|transición laboral|career transition/i;
+  /orientación vocacional|vocational guidance|reinvenci[oó]n|reinventarse|professional reinvention|reinvent yourself/i;
 
 const targetRoutes = [
   { path: "/", active: { es: "Inicio", en: "Home" } },
   { path: "/sobre-mi", active: { es: "Sobre mí", en: "About me" }, aboutCards: 3 },
   {
-    path: "/recorridos",
-    active: { es: "Recorridos", en: "Journeys" },
-    journeyCards: 2,
+    path: "/transiciones-laborales",
+    active: { es: "Transiciones laborales", en: "Career transitions" },
+    serviceCards: 6,
   },
   {
-    path: "/recorridos/brujula",
-    active: { es: "Brújula", en: "Compass" },
-    journeyMenu: true,
+    path: "/transiciones-laborales/explorar-direccion",
+    active: { es: "Explorar una nueva dirección profesional", en: "Explore a new professional direction" },
+    servicesMenu: true,
+    stages: 7,
+  },
+  {
+    path: "/transiciones-laborales/cambiar-empleo",
+    active: { es: "Preparar un cambio de empleo", en: "Prepare for a job change" },
+    servicesMenu: true,
+    stages: 8,
+  },
+  {
+    path: "/transiciones-laborales/proyecto-propio",
+    active: { es: "Construir o reordenar un proyecto propio", en: "Build or reorganize your own project" },
+    servicesMenu: true,
+    stages: 9,
+  },
+  {
+    path: "/transiciones-laborales/liderazgo-empresa",
+    active: { es: "Pensar el liderazgo y la continuidad de una empresa", en: "Think through leadership and business continuity" },
+    servicesMenu: true,
+    stages: 9,
+  },
+  {
+    path: "/transiciones-laborales/desafio-puntual",
+    active: { es: "Abordar un desafío profesional puntual", en: "Address a focused professional challenge" },
+    servicesMenu: true,
     stages: 6,
   },
   {
-    path: "/recorridos/nueva-etapa-profesional",
-    active: { es: "Nueva Etapa Profesional", en: "New Professional Stage" },
-    journeyMenu: true,
-    stages: 8,
+    path: "/transiciones-laborales/elegir-formacion",
+    active: { es: "Elegir una formación para el próximo paso", en: "Choose learning for your next step" },
+    servicesMenu: true,
+    stages: 9,
+  },
+  {
+    path: "/brujulas",
+    active: { es: "Brújulas", en: "Compass" },
+    servicesMenu: true,
+    stages: 6,
   },
   {
     path: "/como-trabajamos",
@@ -30,9 +60,17 @@ const targetRoutes = [
   },
   { path: "/equipo", active: { es: "Equipo", en: "Team" }, teamCards: 3 },
   {
-    path: "/laboratorio-nuevas-narrativas",
+    path: "/test-anclas-de-carrera",
+    title: { es: "Test de Anclas de Carrera", en: "Career Anchors Assessment" },
+  },
+  {
+    path: "/encontrar-mi-recorrido",
+    title: { es: "Encontrar mi recorrido", en: "Find my path" },
+  },
+  {
+    path: "/laboratorio-narrativas-laborales-alternativas",
     active: { es: "Laboratorio", en: "Laboratory" },
-    title: { es: "Laboratorio", en: "Lab" },
+    title: { es: "Laboratorio de Narrativas Laborales Alternativas", en: "Alternative Work Narratives Lab" },
   },
   {
     path: "/preguntas-frecuentes",
@@ -47,7 +85,7 @@ const locales = [
     id: "es",
     prefix: "",
     primaryNavigation: "Navegación principal",
-    journeysMenu: "Abrir menú de recorridos",
+    servicesMenu: "Abrir menú de transiciones laborales",
     themeToggle: /Activar modo (oscuro|claro)/,
     whatsappLabel: "Contactar a Senda por WhatsApp",
   },
@@ -55,19 +93,26 @@ const locales = [
     id: "en",
     prefix: "/en",
     primaryNavigation: "Primary navigation",
-    journeysMenu: "Open journeys menu",
+    servicesMenu: "Open career transitions menu",
     themeToggle: /Switch to (dark|light) mode/,
     whatsappLabel: "Contact Senda on WhatsApp",
   },
 ] as const;
 
-const legacyJourneyRedirects = [
-  { source: "/orientacion-vocacional", destination: "/recorridos/brujula" },
-  { source: "/procesos/orientacion-vocacional", destination: "/recorridos/brujula" },
-  { source: "/procesos/reinvencion-profesional", destination: "/recorridos/nueva-etapa-profesional" },
-  { source: "/procesos/transicion-laboral", destination: "/recorridos/nueva-etapa-profesional" },
-  { source: "/procesos/brujula", destination: "/recorridos/brujula" },
-  { source: "/procesos/nueva-etapa-profesional", destination: "/recorridos/nueva-etapa-profesional" },
+const legacyRedirects = [
+  { source: "/orientacion-vocacional", destination: "/brujulas" },
+  { source: "/procesos/orientacion-vocacional", destination: "/brujulas" },
+  { source: "/procesos/brujula", destination: "/brujulas" },
+  { source: "/recorridos/brujula", destination: "/brujulas" },
+  { source: "/procesos/reinvencion-profesional", destination: "/transiciones-laborales" },
+  { source: "/procesos/transicion-laboral", destination: "/transiciones-laborales" },
+  { source: "/procesos/nueva-etapa-profesional", destination: "/transiciones-laborales" },
+  { source: "/recorridos/nueva-etapa-profesional", destination: "/transiciones-laborales" },
+  { source: "/recorridos", destination: "/transiciones-laborales" },
+  { source: "/diagnostico", destination: "/encontrar-mi-recorrido" },
+  { source: "/diagnostico/ancla-de-carrera", destination: "/test-anclas-de-carrera" },
+  { source: "/diagnostico/ancla-de-carrera/test", destination: "/test-anclas-de-carrera" },
+  { source: "/laboratorio-nuevas-narrativas", destination: "/laboratorio-narrativas-laborales-alternativas" },
   { source: "/quienes-somos", destination: "/equipo" },
 ] as const;
 
@@ -84,8 +129,15 @@ for (const locale of locales) {
 
     test(`${localizedRoute} has localized metadata, active navigation, theme support and no overflow`, async ({ page }) => {
       const pageErrors: string[] = [];
+      const consoleErrors: string[] = [];
       const failedSameOriginResources: string[] = [];
       page.on("pageerror", (error) => pageErrors.push(error.message));
+      page.on("console", (message) => {
+        const isLocalVercelTelemetry =
+          message.location().url.includes("/_vercel/speed-insights/")
+          || message.text().includes("/_vercel/speed-insights/");
+        if (message.type() === "error" && !isLocalVercelTelemetry) consoleErrors.push(message.text());
+      });
       page.on("requestfailed", (request) => {
         const isExpectedCancellation = request.failure()?.errorText === "net::ERR_ABORTED";
         const isLocalVercelTelemetry = request.url().includes("/_vercel/speed-insights/");
@@ -102,31 +154,47 @@ for (const locale of locales) {
 
       await expect(page).toHaveTitle(/Senda/);
       if (route.path !== "/") {
-        const titleText = "title" in route ? route.title[locale.id] : route.active[locale.id];
+        const titleText = "title" in route
+          ? route.title[locale.id]
+          : "active" in route
+            ? route.active[locale.id]
+            : "Senda";
         expect(await page.title()).toContain(titleText);
       }
       await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /.{20,}/);
+      const canonicalHref = await page.locator('link[rel="canonical"]').getAttribute("href");
+      expect(canonicalHref).not.toBeNull();
+      const canonicalPath = new URL(canonicalHref!, page.url()).pathname.replace(/\/$/, "") || "/";
+      const expectedPath = localizedRoute.replace(/\/$/, "") || "/";
+      expect(canonicalPath).toBe(expectedPath);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       await expect(page.getByRole("link", { name: locale.whatsappLabel, exact: true })).toBeVisible();
       await expect(page.locator("main img")).toHaveCount(0);
 
-      const publicText = await page.locator("main").innerText();
-      expect(publicText).not.toMatch(retiredPublicTerms);
-      expect(publicText).not.toMatch(/\b(?:1500|1800|USD)\b|US\$/i);
+      const publicSurface = [
+        await page.title(),
+        await page.locator('meta[name="description"]').getAttribute("content"),
+        await page.locator("main").innerText(),
+      ].join("\n");
+      expect(publicSurface).not.toMatch(retiredPublicTerms);
+      expect(publicSurface).not.toMatch(/\b(?:1500|1800|USD)\b|US\$/i);
 
       const navigation = page.getByRole("navigation", { name: locale.primaryNavigation });
-      if ("journeyMenu" in route) {
-        await navigation.getByRole("button", { name: locale.journeysMenu }).click();
+      if ("active" in route) {
+        if ("servicesMenu" in route) {
+          await navigation.getByRole("button", { name: locale.servicesMenu }).click();
+        }
+        await expect(
+          navigation.getByRole("link", { name: route.active[locale.id], exact: true }),
+        ).toHaveAttribute("aria-current", "page");
       }
-      await expect(
-        navigation.getByRole("link", { name: route.active[locale.id], exact: true }),
-      ).toHaveAttribute("aria-current", "page");
 
       if ("stages" in route) {
         await expect(page.locator("main article ol > li")).toHaveCount(route.stages);
       }
-      if ("journeyCards" in route) {
-        await expect(page.locator("main article")).toHaveCount(route.journeyCards);
+      if ("serviceCards" in route) {
+        await expect(page.locator("main article")).toHaveCount(route.serviceCards);
+        await expect(page.locator('main a[href$="/brujulas"]')).toBeVisible();
       }
       if ("methodSteps" in route) {
         await expect(page.locator("main ol > li")).toHaveCount(route.methodSteps);
@@ -151,13 +219,14 @@ for (const locale of locales) {
       );
       expect(hasHorizontalOverflow).toBe(false);
       expect(pageErrors).toEqual([]);
+      expect(consoleErrors).toEqual([]);
       expect(failedSameOriginResources).toEqual([]);
     });
   }
 }
 
 for (const locale of locales) {
-  test(`all ten ${locale.id.toUpperCase()} routes fit a narrow mobile viewport`, async ({ page }) => {
+  test(`all canonical ${locale.id.toUpperCase()} routes fit a narrow mobile viewport`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
 
     for (const route of targetRoutes) {
@@ -174,40 +243,43 @@ for (const locale of locales) {
 }
 
 for (const locale of locales) {
-  for (const redirect of legacyJourneyRedirects) {
-    const source = `${locale.prefix}${redirect.source}`;
-    const destination = `${locale.prefix}${redirect.destination}`;
-
-    test(`${source} permanently redirects to ${destination}`, async ({ page, request }) => {
+  test(`all ${locale.id.toUpperCase()} legacy routes permanently redirect to their canonical destinations`, async ({ page, request }) => {
+    for (const redirect of legacyRedirects) {
+      const source = `${locale.prefix}${redirect.source}`;
+      const destination = `${locale.prefix}${redirect.destination}`;
       const response = await request.get(source, { maxRedirects: 0 });
-      expect(response.status()).toBe(308);
+      expect(response.status(), `${source} redirect status`).toBe(308);
 
       const location = response.headers().location;
       expect(location).toBeTruthy();
-      expect(new URL(location, response.url()).pathname).toBe(destination);
+      expect(new URL(location!, response.url()).pathname, `${source} redirect target`).toBe(destination);
+    }
 
-      await page.goto(source);
-      expect(new URL(page.url()).pathname).toBe(destination);
-      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    });
-  }
+    const browserSource = `${locale.prefix}/diagnostico`;
+    const browserDestination = `${locale.prefix}/encontrar-mi-recorrido`;
+    await page.goto(browserSource);
+    expect(new URL(page.url()).pathname).toBe(browserDestination);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  });
 }
 
-test("desktop journeys dropdown opens from the keyboard, focuses its first route and closes with Escape", async ({ page }) => {
+test("desktop services dropdown opens from the keyboard, focuses its first route and closes with Escape", async ({ page }) => {
   await page.setViewportSize({ width: 1720, height: 900 });
-  await page.goto("/recorridos");
+  await page.goto("/transiciones-laborales");
 
   const navigation = page.getByRole("navigation", { name: "Navegación principal" });
-  const toggle = navigation.getByRole("button", { name: "Abrir menú de recorridos" });
+  const toggle = navigation.getByRole("button", { name: "Abrir menú de transiciones laborales" });
   await toggle.focus();
   await page.keyboard.press("ArrowDown");
 
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  const firstJourney = navigation.getByRole("link", { name: "Brújula", exact: true });
-  await expect(firstJourney).toBeVisible();
-  await expect(firstJourney).toBeFocused();
-  await expect(page.locator("#senda-journeys-menu a")).toHaveCount(2);
-  await expect(page.locator('#senda-journeys-menu a[href*="laboratorio"]')).toHaveCount(0);
+  const firstService = navigation.getByRole("link", { name: "Explorar una nueva dirección profesional", exact: true });
+  await expect(firstService).toBeVisible();
+  await expect(firstService).toBeFocused();
+  const menuLinks = page.locator("#senda-services-menu a");
+  await expect(menuLinks).toHaveCount(7);
+  await expect(menuLinks.last()).toHaveAttribute("href", "/brujulas");
+  await expect(page.locator('#senda-services-menu a[href*="laboratorio"]')).toHaveCount(0);
 
   await page.keyboard.press("Escape");
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
@@ -215,7 +287,7 @@ test("desktop journeys dropdown opens from the keyboard, focuses its first route
 });
 
 for (const locale of locales) {
-  test(`${locale.id.toUpperCase()} places About me between Home and Journeys`, async ({ page }) => {
+  test(`${locale.id.toUpperCase()} places About me between Home and Career transitions`, async ({ page }) => {
     await page.setViewportSize({ width: 1720, height: 900 });
     await page.goto(locale.prefix || "/");
 
@@ -226,8 +298,8 @@ for (const locale of locales) {
 
     expect(labels.slice(0, 3).map((label) => label.trim())).toEqual(
       locale.id === "es"
-        ? ["Inicio", "Sobre mí", "Recorridos"]
-        : ["Home", "About me", "Journeys"],
+        ? ["Inicio", "Sobre mí", "Transiciones laborales"]
+        : ["Home", "About me", "Career transitions"],
     );
   });
 }
@@ -349,7 +421,7 @@ for (const locale of locales) {
   });
 }
 
-test("mobile menu is focus-managed, marks the current page and preserves locale on journey navigation", async ({ page }) => {
+test("mobile menu is focus-managed, marks the current page and preserves locale on service navigation", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/en/sobre-mi");
 
@@ -370,10 +442,10 @@ test("mobile menu is focus-managed, marks the current page and preserves locale 
   await expect(page.getByRole("button", { name: "Menu", exact: true })).toBeFocused();
 
   await page.getByRole("button", { name: "Menu", exact: true }).click();
-  await mobileNavigation.getByRole("button", { name: "Open journeys menu" }).click();
+  await mobileNavigation.getByRole("button", { name: "Open career transitions menu" }).click();
   await mobileNavigation.getByRole("link", { name: "Compass", exact: true }).click();
 
-  await expect(page).toHaveURL(/\/en\/recorridos\/brujula$/);
+  await expect(page).toHaveURL(/\/en\/brujulas$/);
   await expect(page.getByRole("heading", { level: 1, name: "Compass" })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toHaveCount(0);
 });
@@ -399,10 +471,15 @@ test("English navigation keeps the selected locale", async ({ page }) => {
   ).toEqual([]);
 });
 
-test("initial diagnostic does not overflow on mobile", async ({ page }) => {
+test("public questionnaires do not overflow on mobile before answering", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
 
-  for (const route of ["/diagnostico", "/en/diagnostico"]) {
+  for (const route of [
+    "/encontrar-mi-recorrido",
+    "/en/encontrar-mi-recorrido",
+    "/test-anclas-de-carrera",
+    "/en/test-anclas-de-carrera",
+  ]) {
     await page.goto(route);
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,

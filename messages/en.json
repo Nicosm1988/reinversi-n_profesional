@@ -6,17 +6,22 @@
     "mobileNavigation": "Mobile navigation",
     "navHome": "Home",
     "navAbout": "About me",
-    "navProcesses": "Journeys",
+    "navTransitions": "Career transitions",
     "navHow": "How we work",
     "navTeam": "Team",
     "navLaboratory": "Laboratory",
     "navFaq": "Frequently asked questions",
     "navContact": "Contact",
-    "journeysMenuLabel": "Open journeys menu",
-    "journeyCompass": "Compass",
-    "journeyNewStage": "New Professional Stage",
+    "servicesMenuLabel": "Open career transitions menu",
+    "serviceDirection": "Explore a new professional direction",
+    "serviceJobChange": "Prepare for a job change",
+    "serviceProject": "Build or reorganize your own project",
+    "serviceLeadership": "Think through leadership and business continuity",
+    "serviceFocused": "Address a focused professional challenge",
+    "serviceEducation": "Choose learning for your next step",
+    "navCompass": "Compass",
     "closeMenu": "Close menu",
-    "ctaDiagnostic": "Take the diagnostic",
+    "ctaDiagnostic": "Recognize where I am now",
     "ctaLogin": "Sign in",
     "ctaAccount": "My journey",
     "ctaLogout": "Sign out",
@@ -28,19 +33,24 @@
   },
   "Footer": {
     "homeLabel": "Go to Senda home",
-    "statement": "A place to understand change, find direction, and build possible next steps.",
-    "processNavigation": "Senda journeys",
+    "statement": "A space to explore career transitions, recognize alternatives, and build decisions that make sense within your trajectory.",
+    "processNavigation": "Career transitions",
     "siteNavigation": "Explore Senda",
-    "colProcesses": "Journeys",
+    "colProcesses": "Career transitions",
     "colExplore": "Explore",
     "linkCompass": "Compass",
-    "linkNewStage": "New Professional Stage",
-    "linkJourneys": "All journeys",
+    "linkTransitions": "View career transitions",
+    "serviceDirection": "Explore a new professional direction",
+    "serviceJobChange": "Prepare for a job change",
+    "serviceProject": "Build your own project",
+    "serviceLeadership": "Leadership and business continuity",
+    "serviceFocused": "A focused professional challenge",
+    "serviceEducation": "Choose learning for your next step",
     "linkAbout": "About me",
     "linkTeam": "Team",
     "linkLaboratory": "Laboratory",
     "linkContact": "Contact",
-    "linkInitialDiagnostic": "Initial diagnostic",
+    "linkInitialDiagnostic": "Find my path",
     "linkHow": "How we work",
     "linkFaq": "Frequently asked questions",
     "linkCareerAnchor": "Career Anchors test",
@@ -48,7 +58,7 @@
     "linkTerms": "Terms and Conditions",
     "copyright": "© {year} Senda — All rights reserved",
     "disclaimerTitle": "About our tools:",
-    "disclaimerText": "Senda offers journeys and tools to help you make sense of study and career decisions. The results are starting points for reflection: they do not define who you are or determine which decision you should make."
+    "disclaimerText": "Senda offers professional support and orientation tools for exploring study and work decisions. Results are starting points: they do not define a person, constitute a clinical diagnosis, or determine what decision they should make."
   },
   "CookieBanner": {
     "title": "Privacy Preferences",
@@ -101,10 +111,10 @@
   },
   "Login": {
     "title": "Welcome",
-    "description": "Sign in with Google to take the assessment and save your results to your account.",
+    "description": "Sign in with Google to review saved results and manage your account. The public questionnaires do not require sign-in.",
     "continueGoogle": "Continue with Google",
     "continueLinkedin": "Continue with LinkedIn",
-    "termsNotice": "By continuing, you accept our terms of service and privacy policies. Your assessments will be linked to your account.",
+    "termsNotice": "By continuing, you accept our terms and privacy policy. If you complete Career Anchors while signed in, your single attempt is linked to your account.",
     "unavailable": "Sign-in isn't available right now.",
     "oauthError": "We couldn't sign you in with Google. Please try again.",
     "loading": "Signing in with Google…"
@@ -153,15 +163,15 @@
   },
   "Privacy": {
     "title": "Privacy Policy",
-    "lastUpdated": "Last updated: July 18, 2026",
+    "lastUpdated": "Last updated: August 15, 2026",
     "section1Title": "1. Information we collect",
-    "section1Text": "At Senda, we collect the information you provide when using our services: your name, email address, professional information, assessment answers and results, submitted inquiries, and technical data essential to security and operation.",
+    "section1Text": "At Senda, we collect the information you choose to provide when sending an inquiry or requesting contact: your name, email address, optional phone number, message, and the guidance summary you authorize us to receive. We also process technical data essential to security and operation.",
     "section2Title": "2. How we use information",
-    "section2Text": "We use this information to provide requested services, save your result, answer inquiries, protect and improve the platform, and comply with legal obligations. Informational communications require your consent, and you can unsubscribe from them.",
+    "section2Text": "We use this information to answer inquiries, provide requested services, protect and improve the platform, and comply with legal obligations. Communications require your consent, which you may withdraw. We do not use public questionnaires to send information without your authorization.",
     "section3Title": "3. Data protection",
     "section3Text": "We apply authentication controls, database permissions, server-side validation, protection against abusive automation, and encrypted communications. No system offers absolute security, but we limit access and collection to what is necessary to operate the service.",
     "section4Title": "4. Assessment confidentiality",
-    "section4Text": "The free assessment provides guidance rather than a clinical diagnosis. To generate and save it, the necessary answers and work-related details may be processed by infrastructure, database, security, and artificial-intelligence providers under our instructions. We do not send your name, email, phone number, or address to the model. Access is limited to team members who need the information to provide a requested service or respond to an inquiry.",
+    "section4Text": "The public questionnaires provide guidance and calculate results in your browser without asking for personal data. If you voluntarily request an artificial-intelligence interpretation, the answers, selected career stage, and language are sent to the server, but not your name, email address, phone number, or location. When an authenticated session already exists, the answers and result from the single free attempt are linked to that account to enforce the limit and allow later review; this is disclosed before the test is completed. The Senda team receives the result and contact details for follow-up only when you complete the subsequent form and give explicit consent.",
     "section5Title": "5. Cookies",
     "section5Text": "We use essential cookies for authentication, security, and preferences. If non-essential technologies are introduced, they must respect the choice presented on the site.",
     "section6Title": "6. Your rights",
@@ -199,7 +209,6 @@
     "updatedAt": "Updated on {date}.",
     "emptyTitle": "There isn't a saved result yet",
     "emptyDescription": "Once you complete the Career Anchors assessment, you'll find your latest reading here.",
-    "repeatTest": "Retake assessment",
     "viewFullResult": "View full result",
     "startTest": "Start assessment"
   },
@@ -322,15 +331,62 @@
     "bonusSelectedLabel": "Selected",
     "bonusPreviousBlock": "Previous block",
     "bonusNextBlock": "Next block",
-    "responsesSaved": "Your answers are stored securely in your account so you can review them later.",
+    "responsesSaved": "Because you are already signed in, this attempt is stored securely in your account so you can review it later.",
+    "responsesWillBeSaved": "Because you are already signed in, this attempt will be stored securely in your account when you finish so you can review it later.",
+    "responsesNotSaved": "The result remains in this browser, but this attempt was not saved to your account.",
+    "recordingAttempt": "Saving your attempt…",
+    "completionUnavailable": "Your result is available, but we couldn't save this attempt to your account. You can review it now and try again later.",
     "responsesLocalOnly": "Your answers are calculated on this device and are not sent to any server.",
+    "responsesPrivate": "You can see the complete result without signing in or sharing personal details. Answers are sent only when you voluntarily request the initial interpretation.",
     "prequizPrivacy": "Your information is used to personalize and save the diagnostic in your account.",
     "prequizPrivacyWithEmail": "Your information is used to personalize and save the diagnostic in your account ({email}).",
     "resultsRankingDescription": "This order reflects the relative weight of each anchor based on your answers and your three final selections.",
     "resultsScore": "{score} points",
     "resultsSaved": "Saved to your account",
     "occupationUnknown": "not specified",
-    "resultsDisclaimer": "This result is for guidance and can be complemented by an individual conversation with the team."
+    "resultsDisclaimer": "This result is for orientation only. It is not a clinical diagnosis or a definitive instruction and can be complemented by a professional conversation.",
+    "resultsTiePrimary": "Shared primary anchor",
+    "resultsTiePrimaryText": "Your answers show a shared primary result between {names}. Read this combination as a productive tension to explore, not as a tie the test should resolve for you.",
+    "resultsTieSecondary": "Secondary anchors with equal weight",
+    "contextTitle": "Connect the result with your current moment",
+    "contextDescription": "This optional context helps build a more situated interpretation. It does not change your anchor calculation.",
+    "contextLabel": "What professional situation are you navigating?",
+    "contextOptionExploringDirection": "I am exploring a new professional direction",
+    "contextOptionChangingEmployment": "I am preparing for a job change",
+    "contextOptionIndependentProject": "I am building or reorganizing an independent project",
+    "contextOptionLeadershipCompany": "I am thinking through leadership or company continuity",
+    "contextOptionSpecificChallenge": "I am addressing a specific professional challenge",
+    "contextOptionChoosingEducation": "I am choosing education or training for my next step",
+    "contextOptionOther": "I am navigating another professional situation",
+    "contextOptionPreferNot": "I prefer not to say",
+    "contextCta": "Prepare my initial interpretation",
+    "interpretationLoadingTitle": "We are preparing your initial interpretation",
+    "interpretationLoadingText": "We preserve the test calculation first and then connect its results with the situation you selected.",
+    "interpretationTitle": "An interpretation for further exploration",
+    "interpretationFallbackNotice": "Assisted generation was unavailable. This complete interpretation was prepared through Senda's deterministic logic.",
+    "interpretationTensionsTitle": "Possible tensions",
+    "interpretationQuestionsTitle": "Questions for further reflection",
+    "interpretationStageTitle": "Connection with your current moment",
+    "interpretationServicesTitle": "Senda paths you may want to explore",
+    "interpretationNextStepsTitle": "Exploratory next steps"
+  },
+  "ResultShare": {
+    "title": "I want Senda to receive my result and contact me",
+    "description": "The result is already yours. Complete this form only if you voluntarily want to share it with Senda and continue the conversation.",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "preferredContactLabel": "Preferred contact method",
+    "preferredEmail": "Email",
+    "preferredWhatsapp": "WhatsApp",
+    "preferredEither": "Either one",
+    "messageLabel": "Message",
+    "consentLabel": "I agree that Senda may receive these details and the result summary solely to respond to me.",
+    "submit": "Share my result",
+    "submitting": "Sending…",
+    "success": "The server accepted the submission. Your request was sent for Senda to review.",
+    "error": "We couldn't send the result. Your details remain on screen so you can review them or try again.",
+    "optional": "optional"
   },
   "CareerAnchorIntro": {
     "metadataTitle": "Career Anchors Test | Senda",
@@ -353,44 +409,81 @@
   },
   "Home": {
     "hero": {
-      "eyebrow": "Senda · Direction and movement",
-      "title": "Find direction for the moment you are navigating.",
-      "rhythm": "Choose a first direction.\nRead your trajectory anew.\nTurn change into next steps.",
-      "description": "Senda supports study and work decisions, and new professional stages, through a clear methodology, human conversations, and possible next steps.",
-      "primaryCta": "Take the diagnostic",
-      "secondaryCta": "Explore the journeys"
+      "eyebrow": "Senda · Career transitions",
+      "title": "We support\ncareer transitions",
+      "rhythm": "Your trajectory is not discarded.\nAlternatives can be explored.\nNext steps can be built.",
+      "description": "A space to explore interests, recognize alternatives, and build decisions that make sense within your trajectory, continuing to create meaning in dialogue with today's context.",
+      "primaryCta": "Recognize where I am now",
+      "secondaryCta": "Explore career transitions"
     },
-    "introduction": {
-      "eyebrow": "A place to find direction",
-      "title": "Clarity to decide without losing sight of your story.",
-      "description": "Senda offers personalized guidance to explore possibilities, understand your present moment, and turn complex questions into a direction of your own.",
-      "cta": "See how we work"
-    },
-    "journeys": {
-      "eyebrow": "Two journeys",
-      "title": "A different path for each moment.",
-      "intro": "Not every professional question begins in the same place. Senda offers two clear, personal journeys grounded in the reality of each stage.",
-      "cta": "Explore the journey",
-      "viewAll": "View both journeys",
+    "signals": {
+      "eyebrow": "Signals you may recognize",
+      "title": "You do not need to have everything figured out to begin.",
+      "description": "A transition may begin as discomfort, an idea that is still unclear, or a concrete decision. Naming the moment helps build criteria without losing sight of your story.",
       "items": {
-        "compass": {
-          "label": "Journey 01",
-          "title": "Compass",
-          "lead": "It is not about choosing for life, but about beginning to recognize a direction of your own.",
-          "description": "For young people deciding what to study, how to approach the world of work, or which alternatives are worth exploring. It is not a traditional test: it is a process of conversation, research, and decision-making."
+        "misalignment": "Your current work no longer represents you, but another direction is not yet clear.",
+        "jobChange": "You want to change roles, employers, or functions and need to organize the move.",
+        "project": "You have an idea or independent project and need to shape it or reconsider how to continue.",
+        "leadership": "You are carrying leadership or business decisions that need a professional thinking space.",
+        "decision": "You recognize a focused challenge and want to turn it into a decision or practical plan.",
+        "education": "You are considering further learning and want to connect it with your trajectory and real possibilities."
+      }
+    },
+    "finder": {
+      "eyebrow": "Initial orientation",
+      "title": "Where are you in your trajectory?",
+      "description": "A brief path to recognize what kind of professional support may be better suited to your current situation. You see the result before sharing any personal data.",
+      "cta": "Recognize where I am now"
+    },
+    "situations": {
+      "eyebrow": "Career transitions",
+      "title": "Different moments call for different questions.",
+      "intro": "The proposals share a view of identity, experience, and context, while each focuses on a specific situation.",
+      "cta": "Explore this proposal",
+      "viewAll": "View all career transitions",
+      "items": {
+        "direction": {
+          "label": "Situation 01",
+          "title": "Explore a new professional direction",
+          "lead": "When your current work no longer fits, but the next direction has not yet emerged.",
+          "description": "A reading of identity, interests, experience, and professional capital to recognize alternatives and build criteria."
         },
-        "newStage": {
-          "label": "Journey 02",
-          "title": "New Professional Stage",
-          "lead": "Transform your trajectory without losing sight of everything you have already built.",
-          "description": "For experienced professionals, leaders, and managers who need to revisit their identity, change roles or industries, reposition themselves, or build a clear strategy for what comes next."
+        "jobChange": {
+          "label": "Situation 02",
+          "title": "Prepare for a job change",
+          "lead": "When you want to move and need to organize direction, narrative, and search.",
+          "description": "Trajectory, value proposition, profile, conversations, and a realistic movement strategy without employment promises."
+        },
+        "project": {
+          "label": "Situation 03",
+          "title": "Build or reorganize your own project",
+          "lead": "When an idea, independent activity, or venture needs shape and reality testing.",
+          "description": "Its relationship with your identity, scope, audience, value proposition, priorities, and possible next steps."
+        },
+        "leadership": {
+          "label": "Situation 04",
+          "title": "Think through leadership and business continuity",
+          "lead": "When making decisions alone is no longer enough to organize tensions, role, and continuity.",
+          "description": "A professional space to think through boundaries, conversations, organization, current conditions, and strategy."
+        },
+        "focused": {
+          "label": "Situation 05",
+          "title": "Address a focused professional challenge",
+          "lead": "When the problem is defined and you need to build a decision or focused plan.",
+          "description": "Problem definition, relevant information, alternatives, criteria, decision, and action plan."
+        },
+        "education": {
+          "label": "Situation 06",
+          "title": "Choose learning for your next step",
+          "lead": "When a degree, graduate program, or certification needs to be assessed within a broader direction.",
+          "description": "Trajectory, interests, time, investment, technology, work context, and real possibilities."
         }
       }
     },
     "method": {
       "eyebrow": "How Senda works",
       "title": "Direction is built in stages.",
-      "intro": "Each journey combines listening, exploration, and strategy. The sequence guides the work while adapting to each person's story and present moment.",
+      "intro": "Each engagement combines listening, exploration, reality testing, and strategy. The sequence guides the work while adapting to each person's story and present moment.",
       "steps": {
         "listen": {
           "number": "01",
@@ -418,26 +511,32 @@
     "laboratory": {
       "eyebrow": "A group experience from Senda",
       "status": "Coming soon",
-      "title": "New Narratives for Work Lab",
-      "description": "A group space to revisit your professional path, recognize genuine interests, and build new ways of thinking and talking about work.",
+      "title": "Alternative Work Narratives Lab",
+      "description": "Group sessions to explore your trajectory, exchange perspectives, build alternative narratives, and orient possible next steps.",
       "cta": "Explore the Lab"
     },
+    "compass": {
+      "eyebrow": "First decisions",
+      "title": "Compass",
+      "description": "A secondary proposal for teenagers and young adults who are beginning to explore study, learning, and work options.",
+      "cta": "Explore Compass"
+    },
     "final": {
-      "eyebrow": "The first step",
-      "title": "You do not need to have everything figured out to begin.",
-      "description": "You can begin by telling us what is changing. From there, we build a direction and possible next steps.",
-      "primaryCta": "Take the initial diagnostic",
-      "secondaryCta": "Talk with the team"
+      "eyebrow": "Contact",
+      "title": "A conversation can be the next step.",
+      "description": "If you would rather describe your situation directly, you can write to us. Your message will be read and answered personally.",
+      "primaryCta": "Recognize my situation",
+      "secondaryCta": "Talk with Senda"
     }
   },
   "NarrativesLab": {
     "meta": {
-      "title": "New Narratives for Work Lab",
+      "title": "Alternative Work Narratives Lab",
       "description": "A group space to revisit your professional path, recognize genuine interests, and build new ways of thinking and talking about work."
     },
     "hero": {
       "eyebrow": "Coming soon",
-      "title": "New Narratives for Work Lab",
+      "title": "Alternative Work Narratives Lab",
       "description": "A group space to revisit your professional path, recognize genuine interests, and build new ways of thinking and talking about work.",
       "cta": "Get updates about the first edition"
     },
@@ -445,7 +544,7 @@
       "eyebrow": "Another dimension of change",
       "title": "Thinking about change through more than one voice.",
       "paragraph1": "Professional change is often framed around what the market demands: which profiles it seeks, which skills it values, or how we should position ourselves. Those questions matter, but they are not enough.",
-      "paragraph2": "The New Narratives for Work Lab also pauses to explore another dimension: what appears when we look at our own path, which interests still feel alive, which experiences represent us, and which transformations can be built with greater coherence.",
+      "paragraph2": "The Alternative Work Narratives Lab also pauses to explore another dimension: what appears when we look at our own path, which interests still feel alive, which experiences represent us, and which transformations can be built with greater coherence.",
       "paragraph3": "This is not about ignoring the realities of work, but about keeping them from becoming the only voice in a decision. Through exchange, reflection, and the exploration of new narratives, the Lab creates space to recognize what is genuinely ours and connect it with concrete possibilities."
     },
     "explorations": {
@@ -485,7 +584,7 @@
         "phone": "+54 9 11 0000-0000",
         "explorationInterest": "Briefly tell us which questions or changes you would like to explore."
       },
-      "consent": "I agree to receive information from Senda only about the New Narratives for Work Lab.",
+      "consent": "I agree to receive information from Senda only about the Alternative Work Narratives Lab.",
       "privacyLink": "Read the privacy policy",
       "submit": "I want to receive updates",
       "submitting": "Sending…",
@@ -509,38 +608,73 @@
   },
   "Journeys": {
     "meta": {
-      "title": "Journeys",
-      "description": "Discover Compass and New Professional Stage, Senda's two personalized journeys."
+      "title": "Career transitions",
+      "description": "Six Senda proposals for exploring direction, changing jobs, building a project, thinking through leadership, addressing a challenge, or choosing further learning."
     },
     "hero": {
-      "eyebrow": "Journeys",
-      "title": "Two starting points. Two ways to build direction.",
-      "description": "Each journey responds to a different moment and adapts to each person's story, questions, and reality."
+      "eyebrow": "Career transitions",
+      "title": "A trajectory can open more than one direction.",
+      "description": "Senda organizes its proposals around each person's situation, bringing together identity, experience, possibilities, and context."
     },
     "intro": {
-      "title": "Choosing the right support begins with recognizing where you are.",
-      "description": "Compass opens possibilities when you are beginning to decide. New Professional Stage integrates accumulated experience to build what comes next."
+      "title": "Recognizing the moment helps you ask better questions.",
+      "description": "These proposals are not fixed formulas. They are starting points for working through a transition with depth, criteria, and possible next steps."
     },
     "items": {
+      "direction": {
+        "eyebrow": "Proposal 01",
+        "title": "Explore a new professional direction",
+        "lead": "Your current work no longer represents you, but you cannot yet see where to move.",
+        "description": "We explore identity, interests, meaningful experience, professional capital, and alternatives to build criteria and a possible direction.",
+        "cta": "Explore this direction"
+      },
+      "jobChange": {
+        "eyebrow": "Proposal 02",
+        "title": "Prepare for a job change",
+        "lead": "You want to change roles, employers, functions, or industries and need to organize the transition.",
+        "description": "We work on trajectory, direction, value proposition, narrative, profile, search, conversations, and a movement plan.",
+        "cta": "Prepare the change"
+      },
+      "project": {
+        "eyebrow": "Proposal 03",
+        "title": "Build or reorganize your own project",
+        "lead": "An idea, venture, or independent activity needs shape, priorities, and reality testing.",
+        "description": "We revisit its relationship with your identity, scope, audience, value proposition, structure, pending decisions, and next steps.",
+        "cta": "Think through the project"
+      },
+      "leadership": {
+        "eyebrow": "Proposal 04",
+        "title": "Think through leadership and business continuity",
+        "lead": "You need a professional space to think through decisions, tensions, or next movements.",
+        "description": "We address role, boundaries, conversations, organization, current conditions, strategy, continuity, and the relationship between person, leadership, and business.",
+        "cta": "Open this space"
+      },
+      "focused": {
+        "eyebrow": "Proposal 05",
+        "title": "Address a focused professional challenge",
+        "lead": "You recognize a defined problem and need to organize a decision or build a focused plan.",
+        "description": "We define the problem, gather information, assess alternatives and criteria, and translate the decision into action.",
+        "cta": "Address the challenge"
+      },
+      "education": {
+        "eyebrow": "Proposal 06",
+        "title": "Choose learning for your next step",
+        "lead": "You are considering a degree, graduate program, certification, or specialization within a broader transition.",
+        "description": "We connect the learning decision with trajectory, interests, time, investment, technology, professional direction, and work context.",
+        "cta": "Assess the learning path"
+      },
       "compass": {
-        "eyebrow": "Journey 01",
+        "eyebrow": "First decisions",
         "title": "Compass",
         "lead": "It is not about choosing for life, but about beginning to recognize a direction of your own.",
-        "description": "For young people who need to explore interests, discover worlds of study and work, recognize signals, and build their own criteria for a first direction.",
+        "description": "A secondary proposal for teenagers and young adults beginning to explore study, learning, and work options.",
         "cta": "Explore Compass"
-      },
-      "newStage": {
-        "eyebrow": "Journey 02",
-        "title": "New Professional Stage",
-        "lead": "Transform your trajectory without losing sight of everything you have already built.",
-        "description": "For professionals, leaders, and managers who need to revisit experience, identity, and motivation, define positioning, and design a strategy for their next stage.",
-        "cta": "Explore New Professional Stage"
       }
     },
     "closing": {
-      "title": "Still unsure which journey fits your moment?",
-      "description": "The initial diagnostic offers an orienting starting point for a conversation with the team.",
-      "cta": "Take the initial diagnostic"
+      "title": "Still unsure which proposal fits your moment?",
+      "description": "The initial orientation offers a brief, non-clinical map before asking for personal information.",
+      "cta": "Recognize where I am now"
     }
   },
   "Methodology": {
@@ -575,7 +709,7 @@
     "steps": {
       "eyebrow": "The sequence",
       "title": "Four movements that organize the journey.",
-      "intro": "The depth and tools change between Compass and New Professional Stage, while the thread of the work remains consistent.",
+      "intro": "The depth and tools change with the situation and proposal you choose, while the thread of the work remains consistent.",
       "items": {
         "listen": { "number": "01", "title": "Listen", "description": "We put the question, its context, and what you need to protect into words." },
         "map": { "number": "02", "title": "Map", "description": "We recognize experiences, motivations, strengths, constraints, and possibilities." },
@@ -590,8 +724,8 @@
     },
     "closing": {
       "title": "Discover the journey that best supports your moment.",
-      "description": "Two clear proposals, with a shared methodology and deeply personal work.",
-      "cta": "Explore the journeys"
+      "description": "Different proposals for different moments, with a shared methodology and deeply personal work.",
+      "cta": "Explore career transitions"
     }
   },
   "Team": {
@@ -676,12 +810,12 @@
     },
     "intro": "If your question is not here, write to us. A brief conversation can help locate your situation more clearly.",
     "items": {
-      "choose": { "question": "How do I know which of the two journeys I need?", "answer": "Compass begins with questions about study, interests, and first work decisions. New Professional Stage supports people with an established trajectory who need to transform it, reposition themselves, or build a strategy for what comes next. If you are still unsure, the initial diagnostic helps locate your present moment." },
+      "choose": { "question": "How do I know which proposal may support my moment?", "answer": "The six adult proposals begin with different situations: exploring a direction, changing jobs, developing a project, thinking through leadership, resolving a focused challenge, or choosing education. If you are still unsure, the initial orientation helps identify a starting point without asking for personal data." },
       "compass": { "question": "Is Compass a test that tells me which degree to choose?", "answer": "No. It includes exploration tools, but the process centers on conversation, researching alternatives, building criteria, and recognizing a direction of your own. No result decides for you." },
-      "newStage": { "question": "What does New Professional Stage include?", "answer": "It combines a review of your trajectory and professional identity with the definition of a direction, positioning, narrative, and movement strategy." },
+      "newStage": { "question": "What do the adult proposals have in common?", "answer": "They all connect the current situation with trajectory, identity, personal criteria, and context. The depth and tools change according to the question you need to work on." },
       "format": { "question": "Are meetings virtual or in person?", "answer": "Meetings take place online so you can sustain the process from wherever you are. Any available in-person alternative is discussed before you begin." },
       "duration": { "question": "How long does each journey take?", "answer": "The duration depends on the journey and is discussed before you begin. The stages follow a clear sequence, with room to adapt them to each person's particular moment." },
-      "diagnostic": { "question": "How does the initial diagnostic work?", "answer": "It is a brief, non-clinical form about your situation, what you need, and how urgent the change feels. It helps the team guide you; it does not replace a professional assessment or diagnosis." },
+      "diagnostic": { "question": "How does the initial orientation work?", "answer": "It is a brief, non-clinical questionnaire about your situation, what you need, and how urgent the change feels. The result appears immediately, without login or personal data, and does not replace a professional conversation." },
       "results": { "question": "What will I receive at the end?", "answer": "You finish with a personalized synthesis, decision criteria, and a roadmap. The specific materials depend on the journey and the work completed during the process." }
     },
     "closing": {
@@ -691,13 +825,13 @@
     }
   },
   "Processes": {
-    "back": "Back to the journeys",
-    "eyebrow": "Journey {number}",
+    "back": "Back to career transitions",
+    "eyebrow": "Proposal {number}",
     "introduction": "The starting point",
     "objectiveLabel": "What we will build",
     "forWhomLabel": "Who it is for",
     "journey": {
-      "eyebrow": "The journey",
+      "eyebrow": "The process",
       "title": "Step by step.",
       "note": "Each stage adapts to the person's specific moment; the sequence guides the work rather than acting as a rigid formula."
     },
@@ -706,17 +840,168 @@
       "title": "What you take with you."
     },
     "cta": {
-      "eyebrow": "Find your journey",
+      "eyebrow": "Find your proposal",
       "title": "You can begin without having the answer.",
-      "description": "The initial diagnostic helps us understand your moment and guide you with clarity, care, and no pressure.",
-      "button": "Take the diagnostic"
+      "description": "The initial orientation helps you recognize your moment and possible forms of support with clarity, care, and no pressure.",
+      "button": "Recognize where I am now"
     },
     "items": {
+      "direction": {
+        "title": "Explore a new professional direction",
+        "lead": "When your work no longer represents you and another direction has not yet emerged.",
+        "cardDescription": "Revisit identity, experience, and interests to build alternatives and your own criteria.",
+        "metaDescription": "Senda guidance for exploring identity, trajectory, interests, and alternatives and building a new professional direction.",
+        "objective": "Build a possible direction without discarding your trajectory, bringing together identity, experience, interests, context, and real alternatives.",
+        "forWhom": "For adults who feel their current work no longer represents them but cannot yet recognize where to move.",
+        "stages": {
+          "identity": { "title": "Revisit professional identity", "description": "We explore how you define yourself, what you need to preserve, and which part of your identity is asking for movement." },
+          "interests": { "title": "Recognize interests", "description": "We identify activities, subjects, and problems that sustain curiosity and energy." },
+          "experiences": { "title": "Recover meaningful experiences", "description": "We read moments of learning, enjoyment, contribution, and tension beyond job titles." },
+          "capital": { "title": "Map professional capital", "description": "We make visible the knowledge, capabilities, relationships, and resources you have built." },
+          "alternatives": { "title": "Open alternatives", "description": "We formulate possible scenarios and questions for exploring them without rushing a choice." },
+          "criteria": { "title": "Build criteria", "description": "We bring together desires, responsibilities, boundaries, context, and real decision conditions." },
+          "direction": { "title": "Prioritize a direction", "description": "We turn the exploration into a direction hypothesis and next steps for reality testing." }
+        },
+        "takeaways": {
+          "identity": "A broader reading of your professional identity.",
+          "capital": "A map of transferable experience and professional capital.",
+          "alternatives": "Relevant alternatives to investigate.",
+          "criteria": "Your own criteria for comparing them.",
+          "plan": "Next steps for exploration and reality testing."
+        }
+      },
+      "jobChange": {
+        "title": "Prepare for a job change",
+        "lead": "Organize a move across roles, employers, functions, or industries.",
+        "cardDescription": "Turn your trajectory into direction, narrative, profile, and search strategy.",
+        "metaDescription": "Senda guidance for preparing a job change with direction, value proposition, narrative, and strategy.",
+        "objective": "Build an organized career transition with clear direction, coherent positioning, and sustainable actions.",
+        "forWhom": "For people who want to change jobs, functions, employers, or industries and need to prepare that movement without artificial guarantees.",
+        "stages": {
+          "trajectory": { "title": "Read the trajectory", "description": "We recognize experiences, achievements, learning, and patterns relevant to the change." },
+          "direction": { "title": "Define direction", "description": "We clarify which roles, problems, environments, or industries are worth exploring." },
+          "value": { "title": "Build a value proposition", "description": "We translate experience and capabilities into clear, relevant contributions." },
+          "narrative": { "title": "Organize the narrative", "description": "We articulate continuity and change without denying your history or performing a false new identity." },
+          "profile": { "title": "Align résumé and profile", "description": "We review materials so they express direction, evidence, and judgment." },
+          "search": { "title": "Design the search", "description": "We choose channels, organizations, networks, and actions that fit the objective." },
+          "conversations": { "title": "Prepare conversations", "description": "We work on outreach, interviews, and questions for assessing opportunities." },
+          "movement": { "title": "Plan the movement", "description": "We organize priorities, timing, follow-up, and possible adjustments." }
+        },
+        "takeaways": {
+          "trajectory": "A strategic reading of your trajectory.",
+          "direction": "A prioritized search direction.",
+          "value": "An evidence-based value proposition.",
+          "profile": "Aligned résumé, profile, and narrative.",
+          "strategy": "A search and conversation strategy.",
+          "plan": "A reviewable movement plan."
+        }
+      },
+      "project": {
+        "title": "Build or reorganize your own project",
+        "lead": "Shape, revisit, or decide how to continue an independent activity.",
+        "cardDescription": "Connect the project with your identity and test its scope, value, and next steps.",
+        "metaDescription": "Senda guidance for building or reorganizing your own project and testing it against reality.",
+        "objective": "Turn an idea or project into clearer decisions about scope, audience, value proposition, priorities, and possible tests.",
+        "forWhom": "For people with an idea, venture, independent practice, or professional project who need to shape it, revisit its viability, or decide how to continue.",
+        "stages": {
+          "identity": { "title": "Connect project and identity", "description": "We explore what the project expresses and the place you want it to hold in your professional life." },
+          "scope": { "title": "Define scope", "description": "We clarify what is included, what is not, and which version is possible now." },
+          "audience": { "title": "Understand audiences", "description": "We identify concrete people, needs, and contexts without inventing demand." },
+          "value": { "title": "Formulate the value proposition", "description": "We clarify what the project contributes and why it may matter." },
+          "priorities": { "title": "Organize priorities", "description": "We separate what is important from what is optional and what comes now from what comes later." },
+          "decisions": { "title": "Name pending decisions", "description": "We make options, dependencies, risks, and criteria visible." },
+          "structure": { "title": "Build structure", "description": "We organize resources, activities, and minimum conditions for moving forward." },
+          "reality": { "title": "Test against reality", "description": "We design small tests to learn before committing more resources." },
+          "nextSteps": { "title": "Define next steps", "description": "We close with bounded actions, open questions, and review points." }
+        },
+        "takeaways": {
+          "coherence": "A reading of coherence between project and identity.",
+          "scope": "A clearer initial scope.",
+          "value": "A value proposition to test.",
+          "priorities": "Visible priorities and decisions.",
+          "validation": "Small tests for learning from reality.",
+          "plan": "Next steps and review points."
+        }
+      },
+      "leadership": {
+        "title": "Think through leadership and business continuity",
+        "lead": "A professional space for decisions that should not be carried alone.",
+        "cardDescription": "Think through role, boundaries, conversations, organization, strategy, and continuity.",
+        "metaDescription": "A Senda professional space for thinking through leadership, decisions, and business continuity without reducing it to therapy or generic consulting.",
+        "objective": "Build an integrated reading of person, leadership role, and business to make clearer, more sustainable decisions.",
+        "forWhom": "For owners, partners, managers, leaders, or team heads who need to think through tensions, decisions, or next movements.",
+        "stages": {
+          "solitude": { "title": "Name decision-making solitude", "description": "We open a confidential space for organizing what is difficult to think through inside daily structures." },
+          "role": { "title": "Revisit the role", "description": "We clarify responsibilities, expectations, and the position you currently hold." },
+          "boundaries": { "title": "Work on boundaries", "description": "We distinguish what is yours, what can be delegated, and what needs a conversation." },
+          "conversations": { "title": "Prepare conversations", "description": "We design difficult conversations with clarity of purpose and context." },
+          "organization": { "title": "Read the organization", "description": "We observe dynamics, capabilities, tensions, and dependencies that shape the decision." },
+          "context": { "title": "Integrate current conditions", "description": "We connect market, constraints, timing, and possible scenarios." },
+          "strategy": { "title": "Build strategy", "description": "We organize priorities and decisions without separating strategy from those who must sustain it." },
+          "continuity": { "title": "Think through continuity", "description": "We explore succession, role changes, growth, or closure of stages as appropriate." },
+          "integration": { "title": "Integrate person and business", "description": "We close with criteria and next movements that make sense across both dimensions." }
+        },
+        "takeaways": {
+          "role": "A clearer reading of your role.",
+          "criteria": "Criteria for complex decisions.",
+          "conversations": "Priority conversations prepared.",
+          "strategy": "Strategic priorities organized.",
+          "continuity": "Possible scenarios and next movements."
+        }
+      },
+      "focused": {
+        "title": "Address a focused professional challenge",
+        "lead": "A focused process for organizing a defined problem.",
+        "cardDescription": "Define the problem, assess alternatives, and build a decision with an action plan.",
+        "metaDescription": "A focused Senda proposal for addressing a specific professional challenge and building a decision or action plan.",
+        "objective": "Turn a concrete professional problem into a grounded decision and realistic action plan.",
+        "forWhom": "For people who recognize a defined challenge and do not need to work through every dimension of a broader transition.",
+        "stages": {
+          "problem": { "title": "Define the problem", "description": "We agree on what needs to be resolved, what stays outside, and why it matters now." },
+          "information": { "title": "Gather information", "description": "We identify data, voices, and constraints relevant to the decision." },
+          "alternatives": { "title": "Build alternatives", "description": "We avoid a false binary and formulate possible options." },
+          "criteria": { "title": "Establish criteria", "description": "We organize what the decision must protect and the commitments it involves." },
+          "decision": { "title": "Take a position", "description": "We prioritize an alternative while recognizing limits and uncertainty." },
+          "action": { "title": "Design the plan", "description": "We translate the decision into actions, responsibilities, timing, and review." }
+        },
+        "takeaways": {
+          "problem": "A clearly defined problem.",
+          "criteria": "Explicit decision criteria.",
+          "decision": "A reasoned position.",
+          "action": "A focused, reviewable plan."
+        }
+      },
+      "education": {
+        "title": "Choose learning for your next step",
+        "lead": "Assess an educational decision within a broader professional direction.",
+        "cardDescription": "Connect a degree, graduate program, or certification with trajectory, time, investment, and context.",
+        "metaDescription": "Senda guidance for choosing further learning in connection with trajectory, interests, investment, technology, and work context.",
+        "objective": "Build an informed learning decision that makes sense within your trajectory, real possibilities, and the professional direction you want to explore.",
+        "forWhom": "For adults considering a new degree, master's, postgraduate program, certification, technical course, specialization, or conversion of existing knowledge.",
+        "stages": {
+          "trajectory": { "title": "Read the trajectory", "description": "We recognize knowledge, experience, and questions shaping the learning decision." },
+          "interests": { "title": "Clarify interests", "description": "We distinguish curiosity, professional need, desire for change, and external pressure." },
+          "direction": { "title": "Connect with direction", "description": "We ask which professional movement the learning should enable or support." },
+          "options": { "title": "Explore options", "description": "We compare formats, content, institutions, and learning alternatives." },
+          "timeInvestment": { "title": "Review time and investment", "description": "We integrate availability, cost, effort, and conditions for sustaining it." },
+          "technology": { "title": "Consider technological change", "description": "We read how relevant knowledge, roles, and forms of work may change." },
+          "comparison": { "title": "Build comparison criteria", "description": "We organize evidence, relevance, quality, and fit with your reality." },
+          "decision": { "title": "Decide with perspective", "description": "We prioritize an option or recognize what remains to investigate." },
+          "plan": { "title": "Plan the next step", "description": "We define actions, conversations, and review points without asking learning to promise what it cannot deliver." }
+        },
+        "takeaways": {
+          "criteria": "Your own criteria for assessing learning options.",
+          "options": "Relevant options compared.",
+          "comparison": "A reading of time, investment, and context.",
+          "decision": "A clearer decision or research question.",
+          "plan": "Realistic next steps."
+        }
+      },
       "compass": {
         "title": "Compass",
         "lead": "It is not about choosing for life, but about beginning to recognize a direction of your own.",
         "cardDescription": "Explore interests, experiences, and possibilities to build criteria and a first direction of your own.",
-        "metaDescription": "Compass is Senda's journey for exploring study and work options, building criteria, and recognizing a direction of your own.",
+        "metaDescription": "Compass is Senda's secondary proposal for teenagers and young adults exploring study, learning, and work and building their own criteria.",
         "duration": "{count} individual meetings",
         "objective": "Turn a broad question about what to study or how to approach work into researched alternatives, personal criteria, and possible next steps.",
         "forWhom": "For young people finishing school, starting a course of study, revisiting a recent choice, or looking for a first direction in study and work.",
@@ -753,99 +1038,52 @@
           "alternatives": "Prioritized alternatives and questions to validate them.",
           "plan": "A plan for exploration and next steps."
         }
-      },
-      "newStage": {
-        "title": "New Professional Stage",
-        "lead": "Transform your trajectory without losing sight of everything you have already built.",
-        "cardDescription": "Read your experience anew, define a direction, and turn change into positioning, strategy, and movement.",
-        "metaDescription": "New Professional Stage supports experienced people as they transform their trajectory, define their positioning, and build a strategy.",
-        "duration": "{count} individual meetings",
-        "objective": "Integrate identity, experience, motivations, and context to define a professional direction, a narrative of your own, and a sustainable movement strategy.",
-        "forWhom": "For experienced professionals, leaders, and managers who want to change roles or industries, reposition themselves, build a venture, return to the market, or shape a new stage.",
-        "stages": {
-          "moment": {
-            "title": "Read the moment",
-            "description": "We organize what is changing, what has run its course, what you need to protect, and which concrete conditions affect the decision."
-          },
-          "trajectory": {
-            "title": "Read your trajectory anew",
-            "description": "We recover experiences, achievements, lessons, and patterns to recognize accumulated value and what you do not want to repeat."
-          },
-          "identity": {
-            "title": "Revisit your professional identity",
-            "description": "We explore how you define yourself beyond a job title, which motivations remain active, and which new professional version you want to build."
-          },
-          "criteria": {
-            "title": "Define criteria",
-            "description": "We integrate aspirations, responsibilities, constraints, and real possibilities to assess scenarios with clarity."
-          },
-          "direction": {
-            "title": "Choose a direction",
-            "description": "We prioritize one scenario: redefine your role, change industries, take on another function, build a venture, or combine paths."
-          },
-          "positioning": {
-            "title": "Build positioning",
-            "description": "We translate your experience into a clear, relevant value proposition for the people and spaces you want to reach."
-          },
-          "strategy": {
-            "title": "Design the strategy",
-            "description": "We organize narrative, profile, network, conversations, search, and concrete actions to make the chosen direction visible."
-          },
-          "integrate": {
-            "title": "Integrate and move",
-            "description": "We close with priorities, decisions, and a roadmap for sustaining next steps without disregarding your history."
-          }
-        },
-        "takeaways": {
-          "trajectory": "An integrated map of your trajectory.",
-          "strengths": "An understanding of your strengths, motivations, and resources.",
-          "direction": "A prioritized professional direction.",
-          "narrative": "A clear professional narrative of your own.",
-          "positioning": "Positioning that fits the stage you are seeking.",
-          "roadmap": "A roadmap with actions and priorities."
-        }
       }
     }
   },
   "InitialDiagnostic": {
     "meta": {
-      "title": "Initial diagnostic",
-      "description": "A brief first step to understand the change you are going through and identify which journey may support you."
+      "title": "Find my path",
+      "description": "A brief questionnaire to recognize your current situation and explore which Senda proposal may support you."
     },
-    "eyebrow": "Initial diagnostic",
-    "title": "Let's put into words what is changing.",
-    "description": "You don't need to know which process you need. These questions help us understand your moment and guide you more clearly.",
-    "disclaimer": "This is a non-clinical guidance tool. It does not replace a professional assessment or diagnosis.",
+    "eyebrow": "Initial orientation",
+    "title": "Where are you in your professional journey?",
+    "description": "A brief path to recognize what kind of professional support may be better suited to your current situation.",
+    "disclaimer": "This result is for orientation only and does not replace a professional conversation.",
     "progress": "Step {current} of {total}",
     "questions": {
       "situation": "Which situation best describes your current moment?",
       "need": "What do you need today?",
       "stage": "What stage are you in?",
-      "urgency": "How urgent is this change?",
-      "contact": "How can we contact you?"
+      "urgency": "How urgent is this change?"
     },
     "options": {
       "situation": {
-        "choosing": "I am choosing what to study or where to direct myself.",
-        "reinvention": "I want to read my trajectory anew and define a new stage.",
-        "transition": "I need to organize a concrete professional change.",
-        "clarity": "I don't know exactly what is happening, but I need clarity."
+        "direction": "I need to explore a new professional direction.",
+        "jobChange": "I want to change jobs.",
+        "project": "I am considering or developing an independent project.",
+        "leadership": "I need to review my leadership role or how my company is organized.",
+        "focused": "I have a specific work challenge that I need to resolve.",
+        "education": "I need to choose education or training.",
+        "compass": "I am making my first study and work decisions."
       },
       "need": {
-        "selfKnowledge": "Understand myself better.",
-        "choose": "Choose between alternatives.",
-        "redefine": "Redefine my direction.",
-        "organize": "Organize the change.",
-        "reposition": "Reposition myself professionally.",
-        "move": "Start moving again."
+        "identity": "Understand what I want to preserve and what I need to change.",
+        "search": "Organize a job search and communicate my value more clearly.",
+        "validate": "Shape and test an independent idea.",
+        "lead": "Make decisions and sustain leadership conversations.",
+        "decide": "Analyze a problem and choose with better criteria.",
+        "learn": "Compare learning options with purpose.",
+        "firstDecisions": "Recognize interests and explore initial alternatives."
       },
       "stage": {
-        "secondary": "Secondary school.",
-        "education": "University or training.",
-        "early": "Early career.",
-        "experienced": "Experienced professional.",
-        "leadership": "Leadership or direction.",
-        "life": "A new stage of life."
+        "secondary": "I am attending or finishing secondary school.",
+        "higher": "I am pursuing higher education or training.",
+        "early": "I am in the first years of my career.",
+        "experienced": "I am an experienced professional.",
+        "leadership": "I hold a leadership or management role.",
+        "owner": "I lead a company or independent project.",
+        "life": "I am going through a new stage of life."
       },
       "urgency": {
         "exploring": "I am exploring.",
@@ -854,31 +1092,105 @@
         "urgent": "I am going through an urgent situation."
       }
     },
-    "contactNote": "We will use this information only to respond to this diagnostic and guide the next step.",
-    "fields": {
-      "name": "Name",
-      "email": "Email",
-      "phone": "Phone (optional)"
-    },
-    "consent": "I have read and accept the <privacy>privacy policy</privacy>.",
-    "privacyNote": "Your answers are stored securely and are not used for unsolicited communications.",
     "back": "Back",
     "next": "Continue",
-    "submit": "Send diagnostic",
-    "sending": "Sending…",
+    "submit": "See my orientation",
     "errors": {
-      "selection": "Choose an option to continue.",
-      "name": "Enter your name.",
-      "email": "Enter a valid email.",
-      "consent": "We need your consent to save this information.",
-      "captcha": "We couldn't connect to the verification service. You can retry, or check whether a browser extension, VPN, or network setting is blocking challenges.cloudflare.com. Your answers are still saved.",
-      "captchaRetry": "Retry verification",
-      "submit": "We couldn't save your diagnostic right now. Please try again in a few minutes."
+      "selection": "Choose an option to continue."
     },
-    "success": {
-      "title": "Thank you for sharing your moment.",
-      "description": "We received your information and will guide you toward the Senda journey that may support you best.",
-      "cta": "Back to the home page"
+    "results": {
+      "eyebrow": "Your initial orientation",
+      "title": "A starting point for moving forward.",
+      "situationLabel": "Predominant situation",
+      "primaryLabel": "Primary proposal",
+      "secondaryLabel": "Alternative to explore",
+      "signalsTitle": "Signals that shaped this result",
+      "workOnTitle": "What you could work on",
+      "exploreService": "Explore this proposal",
+      "contactCta": "Talk with Senda",
+      "disclaimer": "This result is for orientation only and does not replace a professional conversation.",
+      "urgentTitle": "It may be important to talk before choosing a path",
+      "urgentDescription": "Given the urgency you indicated, a human conversation may help you organize the moment and define the next step with care.",
+      "restart": "Answer again",
+      "routes": {
+        "exploreDirection": {
+          "title": "Explore a new professional direction",
+          "description": "To reread your trajectory, recognize what matters now, and build possible alternatives without starting from scratch.",
+          "workOn": {
+            "identity": "Professional identity and personal criteria.",
+            "significantExperience": "Significant experiences from your journey.",
+            "capital": "Available capabilities, resources, and professional capital.",
+            "alternatives": "Realistic alternatives for direction.",
+            "criteria": "Criteria for prioritizing and deciding."
+          }
+        },
+        "changeJob": {
+          "title": "Prepare for a job change",
+          "description": "To organize a job search, build clear positioning, and move forward with a coherent strategy.",
+          "workOn": {
+            "trajectory": "Strategic reading of your trajectory.",
+            "direction": "Search direction and objective.",
+            "value": "Professional value proposition.",
+            "profile": "Profile, narrative, and presentation materials.",
+            "search": "Search strategy and conversations."
+          }
+        },
+        "ownProject": {
+          "title": "Build or reorganize an independent project",
+          "description": "To turn a concern into a concrete proposal, test assumptions, and decide next steps through evidence.",
+          "workOn": {
+            "identity": "The relationship between the project and your professional identity.",
+            "scope": "Scope and focus of the proposal.",
+            "audience": "People and contexts it aims to serve.",
+            "viability": "Assumptions, viability, and small tests.",
+            "nextSteps": "Priorities and next steps."
+          }
+        },
+        "leadershipCompany": {
+          "title": "Think through leadership and company continuity",
+          "description": "To review your role, organize decisions and conversations, and build a sustainable way of leading.",
+          "workOn": {
+            "role": "Role, responsibilities, and priorities.",
+            "limits": "Boundaries and decision criteria.",
+            "conversations": "Necessary conversations with others.",
+            "organization": "Organization, context, and strategy.",
+            "continuity": "Leadership continuity and sustainability."
+          }
+        },
+        "focusedChallenge": {
+          "title": "Address a specific professional challenge",
+          "description": "To define a concrete problem, organize information, and make an actionable decision without opening a broader process.",
+          "workOn": {
+            "problem": "Precise definition of the problem.",
+            "information": "Available and missing information.",
+            "alternatives": "Possible alternatives.",
+            "criteria": "Decision criteria and consequences.",
+            "plan": "Decision and action plan."
+          }
+        },
+        "chooseEducation": {
+          "title": "Choose training for your next step",
+          "description": "To compare learning options based on your trajectory, objectives, and the investment each alternative requires.",
+          "workOn": {
+            "trajectory": "Trajectory and starting point.",
+            "interests": "Interests and desired direction.",
+            "time": "Available time and learning format.",
+            "investment": "Investment and expected return.",
+            "context": "Work context and selection criteria."
+          }
+        },
+        "compasses": {
+          "title": "Compasses",
+          "description": "A secondary proposal for young people and those making their first study and work decisions.",
+          "workOn": {
+            "interests": "Interests, motivations, and curiosities.",
+            "options": "Study and work alternatives.",
+            "education": "Criteria for choosing education.",
+            "work": "First approaches to the world of work.",
+            "criteria": "Personal criteria for deciding."
+          }
+        }
+      }
     }
   }
 }

@@ -39,27 +39,37 @@ describe("translation catalogs", () => {
     }
   });
 
-  it("publishes exactly two journeys in the multipage architecture", () => {
-    expect(Object.keys(spanishMessages.Home.journeys.items)).toEqual([
-      "compass",
-      "newStage",
-    ]);
+  it("publishes six adult transition proposals and keeps Brújulas secondary", () => {
+    const adultProposalKeys = [
+      "direction",
+      "jobChange",
+      "project",
+      "leadership",
+      "focused",
+      "education",
+    ];
+
     expect(Object.keys(spanishMessages.Journeys.items)).toEqual([
+      ...adultProposalKeys,
       "compass",
-      "newStage",
     ]);
-    expect(spanishMessages.Header.navProcesses).toBe("Recorridos");
+    expect(Object.keys(spanishMessages.Home.situations.items)).toEqual(
+      adultProposalKeys,
+    );
+    expect(Object.keys(spanishMessages.Home.signals.items)).toHaveLength(6);
+    expect(spanishMessages.Home.compass.title).toBe("Brújulas");
+    expect(spanishMessages.Header.navTransitions).toBe("Transiciones laborales");
+    expect(spanishMessages.Header.navCompass).toBe("Brújulas");
     expect(spanishMessages.Header.navAbout).toBe("Sobre mí");
     expect(spanishMessages.AboutMe.structure.items).toHaveProperty("experience");
     expect(Object.keys(spanishMessages.AboutMe.structure.items)).toHaveLength(3);
-    expect(spanishMessages.Home.journeys.viewAll).toBeTruthy();
     expect(spanishMessages.Header.navLaboratory).toBe("Laboratorio");
     expect(spanishMessages.Home.laboratory.status).toBe("Próximamente");
     expect(spanishMessages.NarrativesLab.hero.title).toBe(
-      "Laboratorio de Nuevas Narrativas Laborales",
+      "Laboratorio de Narrativas Laborales Alternativas",
     );
     expect(Object.keys(spanishMessages.NarrativesLab.explorations.items)).toHaveLength(9);
-    expect("situations" in spanishMessages.Home).toBe(false);
+    expect("journeys" in spanishMessages.Home).toBe(false);
     expect("phases" in spanishMessages.Home).toBe(false);
     expect("team" in spanishMessages.Home).toBe(false);
     expect("faq" in spanishMessages.Home).toBe(false);
@@ -85,13 +95,23 @@ describe("translation catalogs", () => {
     }
   });
 
-  it("publishes the complete 6/8 journeys without public prices", () => {
+  it("publishes complete service structures without invented public prices", () => {
     expect(Object.keys(spanishMessages.Processes.items)).toEqual([
+      "direction",
+      "jobChange",
+      "project",
+      "leadership",
+      "focused",
+      "education",
       "compass",
-      "newStage",
     ]);
     expect(Object.keys(spanishMessages.Processes.items.compass.stages)).toHaveLength(6);
-    expect(Object.keys(spanishMessages.Processes.items.newStage.stages)).toHaveLength(8);
+    expect(Object.keys(spanishMessages.Processes.items.direction.stages)).toHaveLength(7);
+    expect(Object.keys(spanishMessages.Processes.items.jobChange.stages)).toHaveLength(8);
+    expect(Object.keys(spanishMessages.Processes.items.project.stages)).toHaveLength(9);
+    expect(Object.keys(spanishMessages.Processes.items.leadership.stages)).toHaveLength(9);
+    expect(Object.keys(spanishMessages.Processes.items.focused.stages)).toHaveLength(6);
+    expect(Object.keys(spanishMessages.Processes.items.education.stages)).toHaveLength(9);
 
     for (const catalog of [spanishMessages, englishMessages]) {
       const publicCopy = JSON.stringify({
@@ -104,10 +124,10 @@ describe("translation catalogs", () => {
     }
   });
 
-  it("does not publish the retired journey names", () => {
+  it("does not publish retired positioning or service names", () => {
     for (const catalog of [spanishMessages, englishMessages]) {
       expect(JSON.stringify(catalog)).not.toMatch(
-        /orientaci[oó]n vocacional|vocational guidance|reinvenci[oó]n profesional|professional reinvention|transici[oó]n laboral|career transition/i,
+        /orientaci[oó]n vocacional|vocational guidance|reinvenci[oó]n|reinventarse|reinvention|nueva etapa profesional|new professional stage/i,
       );
     }
   });

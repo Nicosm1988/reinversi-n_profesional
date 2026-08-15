@@ -15,8 +15,8 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 - Notificaciones: Sonner. Analytics: `@vercel/speed-insights`.
 
 **Estructura de rutas** (`app/`):
-- `app/[locale]/` — páginas canónicas: home, `recorridos/`, `como-trabajamos/`, `equipo/`, `preguntas-frecuentes/`, `contacto/`, `diagnostico/`, `login/`, `panel/`, `privacidad/` y `terminos/`; las rutas públicas anteriores permanecen solo como redirecciones permanentes.
-- `app/api/` — `contact` (SMTP), `diagnostics/analyze` (POST, gpt-4o vía AI SDK), `diagnostics/save` (retirado, 410 Gone), `initial-diagnostic`, `leads`, `health` (readiness estricta) y `health/live` (liveness sin dependencias).
+- `app/[locale]/` — páginas canónicas: home, `transiciones-laborales/` con seis propuestas, `brujulas/`, `encontrar-mi-recorrido/`, `test-anclas-de-carrera/`, `laboratorio-narrativas-laborales-alternativas/`, `como-trabajamos/`, `equipo/`, `preguntas-frecuentes/`, `contacto/`, `login/`, `panel/`, `privacidad/` y `terminos/`; las rutas públicas anteriores permanecen solo como redirecciones permanentes.
+- `app/api/` — `contact` (SMTP y tres orígenes tipados), `diagnostics/interpret` (explicación pública sin PII, gpt-4o + fallback), `diagnostics/complete-public` (registro atómico del único intento autenticado de Anclas), `diagnostics/analyze` (flujo autenticado histórico), `diagnostics/save` (retirado, 410 Gone), `initial-diagnostic` (legado), `leads`, `health` (readiness estricta) y `health/live` (liveness sin dependencias).
 - `app/auth/` — callback OAuth.
 - `app/robots.ts`, `app/sitemap.ts`, `app/globals.css` (variables HSL del sistema de diseño).
 
@@ -24,7 +24,7 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 
 **Dominio** (`lib/`): `data/`, `diagnostics/`, `http/`, `leads/`, `observability/`, `security/`, `supabase/`, más `cookie-context.tsx` (Context de consentimiento GDPR, localStorage), `rate-limit.ts`, `site-url.ts`, `utils.ts` (`cn()` = clsx + tailwind-merge).
 
-**Base de datos** (`supabase/migrations/`, 11 migraciones): tablas con RLS incluyen `initial_diagnostics` y `user_diagnostics` (sin acceso `anon`/`authenticated` directo; escritura sólo vía backend con `service_role`); esquema base (`core_platform_schema`), `lead_requests` (con hardening y lockdown posteriores), avatares de perfil, límite de diagnóstico gratuito único (`single_free_career_anchor`).
+**Base de datos** (`supabase/migrations/`, 13 migraciones): tablas con RLS incluyen `initial_diagnostics` y `user_diagnostics` (sin acceso `anon`/`authenticated` directo; escritura sólo vía backend con `service_role`); esquema base (`core_platform_schema`), `lead_requests` (con hardening y lockdown posteriores), avatares de perfil y límite de Anclas gratuito único (`single_free_career_anchor`, reforzado sin excepciones por `enforce_single_career_anchor_attempt`). El orientador calcula siempre en el navegador y no persiste. Anclas tampoco persiste en uso anónimo; con una sesión Google registra atómicamente el único intento gratuito para aplicar el límite server-side y permitir volver a consultar el resultado.
 
 **Seguridad** (`next.config.ts`): headers (`x-content-type-options`, `x-frame-options: DENY`, HSTS, `permissions-policy`, CSP con `frame-ancestors 'none'` y soporte para Cloudflare Turnstile + origen de Supabase).
 

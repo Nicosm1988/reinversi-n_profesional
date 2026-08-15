@@ -4,9 +4,39 @@ export function buildContactEmailText(
   submission: ContactSubmission,
   context: { date: Date; source: string },
 ) {
-  if (submission.formOrigin === "laboratorio_nuevas_narrativas") {
+  if (submission.formOrigin === "diagnostic_result") {
     return [
-      "Interés en el Laboratorio de Nuevas Narrativas Laborales",
+      "Resultado compartido voluntariamente desde Senda",
+      "",
+      `Nombre: ${submission.name}`,
+      `Teléfono: ${submission.phone || "No informado"}`,
+      `Correo: ${submission.email}`,
+      `Preferencia de contacto: ${submission.preferredContact}`,
+      `Fecha: ${context.date.toISOString()}`,
+      `Idioma: ${submission.locale}`,
+      `Consentimiento explícito: ${submission.consent ? "Sí" : "No"}`,
+      `Origen: ${submission.formOrigin}`,
+      `Página de origen: ${context.source}`,
+      "",
+      "Resultado orientativo:",
+      `Cuestionario: ${submission.result.questionnaire}`,
+      `Situación: ${submission.result.situation || "No informada"}`,
+      `Recorrido recomendado: ${submission.result.recommendedService || "No informado"}`,
+      `Alternativa secundaria: ${submission.result.alternativeService || "No informada"}`,
+      `Anclas principales: ${submission.result.primaryAnchors?.join(", ") || "No informadas"}`,
+      `Anclas secundarias: ${submission.result.secondaryAnchors?.join(", ") || "No informadas"}`,
+      "",
+      "Resumen:",
+      submission.result.summary,
+      "",
+      "Mensaje opcional:",
+      submission.message || "No informado",
+    ].join("\n");
+  }
+
+  if (submission.formOrigin === "laboratorio_narrativas_laborales_alternativas") {
+    return [
+      "Interés en el Laboratorio de Narrativas Laborales Alternativas",
       "",
       `Nombre: ${submission.name}`,
       `Teléfono: ${submission.phone || "No informado"}`,

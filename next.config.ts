@@ -59,78 +59,27 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   allowedDevOrigins: ["127.0.0.1", "localhost"],
   async redirects() {
-    return [
-      {
-        source: "/orientacion-vocacional",
-        destination: "/recorridos/brujula",
-        permanent: true,
-      },
-      {
-        source: "/procesos/orientacion-vocacional",
-        destination: "/recorridos/brujula",
-        permanent: true,
-      },
-      {
-        source: "/procesos/reinvencion-profesional",
-        destination: "/recorridos/nueva-etapa-profesional",
-        permanent: true,
-      },
-      {
-        source: "/procesos/transicion-laboral",
-        destination: "/recorridos/nueva-etapa-profesional",
-        permanent: true,
-      },
-      {
-        source: "/procesos/brujula",
-        destination: "/recorridos/brujula",
-        permanent: true,
-      },
-      {
-        source: "/procesos/nueva-etapa-profesional",
-        destination: "/recorridos/nueva-etapa-profesional",
-        permanent: true,
-      },
-      {
-        source: "/quienes-somos",
-        destination: "/equipo",
-        permanent: true,
-      },
-      {
-        source: "/en/orientacion-vocacional",
-        destination: "/en/recorridos/brujula",
-        permanent: true,
-      },
-      {
-        source: "/en/procesos/orientacion-vocacional",
-        destination: "/en/recorridos/brujula",
-        permanent: true,
-      },
-      {
-        source: "/en/procesos/reinvencion-profesional",
-        destination: "/en/recorridos/nueva-etapa-profesional",
-        permanent: true,
-      },
-      {
-        source: "/en/procesos/transicion-laboral",
-        destination: "/en/recorridos/nueva-etapa-profesional",
-        permanent: true,
-      },
-      {
-        source: "/en/procesos/brujula",
-        destination: "/en/recorridos/brujula",
-        permanent: true,
-      },
-      {
-        source: "/en/procesos/nueva-etapa-profesional",
-        destination: "/en/recorridos/nueva-etapa-profesional",
-        permanent: true,
-      },
-      {
-        source: "/en/quienes-somos",
-        destination: "/en/equipo",
-        permanent: true,
-      },
-    ];
+    const legacyRoutes = [
+      ["/orientacion-vocacional", "/brujulas"],
+      ["/procesos/orientacion-vocacional", "/brujulas"],
+      ["/procesos/brujula", "/brujulas"],
+      ["/recorridos/brujula", "/brujulas"],
+      ["/procesos/reinvencion-profesional", "/transiciones-laborales"],
+      ["/procesos/transicion-laboral", "/transiciones-laborales"],
+      ["/procesos/nueva-etapa-profesional", "/transiciones-laborales"],
+      ["/recorridos/nueva-etapa-profesional", "/transiciones-laborales"],
+      ["/recorridos", "/transiciones-laborales"],
+      ["/diagnostico/ancla-de-carrera/test", "/test-anclas-de-carrera"],
+      ["/diagnostico/ancla-de-carrera", "/test-anclas-de-carrera"],
+      ["/diagnostico", "/encontrar-mi-recorrido"],
+      ["/laboratorio-nuevas-narrativas", "/laboratorio-narrativas-laborales-alternativas"],
+      ["/quienes-somos", "/equipo"],
+    ] as const;
+
+    return legacyRoutes.flatMap(([source, destination]) => [
+      { source, destination, permanent: true },
+      { source: `/en${source}`, destination: `/en${destination}`, permanent: true },
+    ]);
   },
   async headers() {
     return [

@@ -29,15 +29,33 @@ const SUBMISSION = {
 };
 
 const LABORATORY_SUBMISSION = {
-  formOrigin: "laboratorio_nuevas_narrativas" as const,
+  formOrigin: "laboratorio_narrativas_laborales_alternativas" as const,
   name: "Ana Pérez",
   phone: "",
   email: "ana@example.com",
   explorationInterest: "Explorar nuevas formas de contar mi trayectoria.",
   consent: true as const,
   companyWebsite: "",
-  sourcePage: "/laboratorio-nuevas-narrativas" as const,
+  sourcePage: "/laboratorio-narrativas-laborales-alternativas" as const,
   locale: "es" as const,
+};
+
+const DIAGNOSTIC_RESULT_SUBMISSION = {
+  formOrigin: "diagnostic_result" as const,
+  name: "Ana Pérez",
+  phone: "",
+  email: "ana@example.com",
+  preferredContact: "email" as const,
+  message: "Quisiera conversar.",
+  consent: true as const,
+  companyWebsite: "",
+  sourcePage: "/test-anclas-de-carrera" as const,
+  locale: "es" as const,
+  result: {
+    questionnaire: "career_anchors" as const,
+    primaryAnchors: ["Autonomía/Independencia"],
+    summary: "Una lectura orientativa.",
+  },
 };
 
 describe("sendContactEmail", () => {
@@ -90,7 +108,7 @@ describe("sendContactEmail", () => {
   it("uses a server-owned laboratory subject with the same SMTP destination", async () => {
     await sendContactEmail(LABORATORY_SUBMISSION, {
       date: new Date("2026-08-13T01:30:00.000Z"),
-      source: "https://senda.example/laboratorio-nuevas-narrativas",
+      source: "https://senda.example/laboratorio-narrativas-laborales-alternativas",
     });
 
     expect(mocks.sendMail).toHaveBeenCalledWith(
@@ -98,10 +116,24 @@ describe("sendContactEmail", () => {
         from: { name: "Senda web", address: "hola@universosenda.com" },
         to: "hola@universosenda.com",
         replyTo: { name: "Ana Pérez", address: "ana@example.com" },
-        subject: "Interés en el Laboratorio de Nuevas Narrativas Laborales",
+        subject: "Interés en el Laboratorio de Narrativas Laborales Alternativas",
         text: expect.stringContaining(
-          "Origen: laboratorio_nuevas_narrativas",
+          "Origen: laboratorio_narrativas_laborales_alternativas",
         ),
+      }),
+    );
+  });
+
+  it("uses a server-owned subject for a consented diagnostic result", async () => {
+    await sendContactEmail(DIAGNOSTIC_RESULT_SUBMISSION, {
+      date: new Date("2026-08-15T12:00:00.000Z"),
+      source: "https://senda.example/test-anclas-de-carrera",
+    });
+
+    expect(mocks.sendMail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        subject: "Resultado orientativo compartido desde Senda",
+        text: expect.stringContaining("Cuestionario: career_anchors"),
       }),
     );
   });

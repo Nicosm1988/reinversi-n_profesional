@@ -187,6 +187,39 @@ export async function POST(req: Request) {
       );
     }
 
+    const { data: existingAttempt, error: existingAttemptError } = await auth.supabase
+      .from("user_diagnostics")
+      .select("id")
+      .eq("diagnostic_type", "career_anchor")
+      .eq("status", "completed")
+      .maybeSingle();
+
+    if (existingAttemptError) {
+      logEvent("error", "diagnostics.analyze.lookup_failed", {
+        requestId,
+        userId: auth.user.id,
+        code: existingAttemptError.code,
+      });
+      return NextResponse.json(
+        { error: getLocalizedApiError(locale, "claim") },
+        { status: 503, headers: rateHeaders },
+      );
+    }
+
+    if (existingAttempt) {
+      logEvent("info", "diagnostics.analyze.already_completed", {
+        requestId,
+        userId: auth.user.id,
+      });
+      return NextResponse.json(
+        {
+          code: "DIAGNOSTIC_ALREADY_COMPLETED",
+          error: getLocalizedApiError(locale, "completed"),
+        },
+        { status: 409, headers: rateHeaders },
+      );
+    }
+
     const { data: diagnosticId, error: claimError } = await auth.supabase.rpc(
       "claim_free_career_anchor_diagnostic",
       {

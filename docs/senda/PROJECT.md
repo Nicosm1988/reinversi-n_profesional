@@ -4,7 +4,7 @@
 
 ## Propósito
 
-Senda acompaña a personas que necesitan explorar su identidad, talentos, vocación, propósito y próximos caminos profesionales en un mundo atravesado por la IA, el cambio tecnológico y la incertidumbre laboral. Es una plataforma para el mundo, no un portfolio personal de sus fundadores (Nicolás y Tania), y antes se llamó "Reinvención Pro" / "Reinvención Profesional".
+Senda acompaña principalmente transiciones laborales: ayuda a explorar intereses, reconocer alternativas y construir decisiones coherentes con la trayectoria y el contexto actual. Es una plataforma para el mundo, no un portfolio personal de sus fundadores (Nicolás y Tania); los nombres históricos quedan documentados únicamente para continuidad técnica.
 
 ## Público
 
@@ -24,7 +24,7 @@ El mundo del trabajo cambia más rápido que la capacidad de las personas para r
 3. Continuidad humana: quien quiera profundizar puede conversar con el equipo o un profesional recomendado.
 4. Límites honestos: un resultado automatizado es orientativo, nunca un diagnóstico clínico o profesional completo.
 5. Sin automatización invasiva: entregado el test gratuito, no se reemplaza el acompañamiento humano con IA ilimitada.
-6. Supervisión humana siempre: toda salida de IA que impacte al usuario pasa por revisión del equipo antes de mostrarse.
+6. IA acotada y transparente: la IA puede enriquecer una devolución ya calculada, nunca decidir el resultado; si no está disponible, se muestra un fallback determinístico completo y se ofrece continuidad humana.
 7. Datos sagrados: RLS habilitado en todas las tablas; cada usuario ve sólo lo suyo.
 
 ## Rol de la IA
@@ -41,7 +41,7 @@ La IA es copiloto, no el núcleo del servicio (el núcleo es el acompañamiento 
 
 ## Tono e identidad
 
-- Español neutro ("tú", ni voseo ni "usted"), inglés como segundo idioma simultáneo.
+- Español rioplatense claro y respetuoso, con voseo consistente; inglés como segundo idioma simultáneo.
 - Estilo editorial: humano, cálido, sereno, profundo, elegante, contemporáneo — alta cultura sin elitismo, tecnología sin espectáculo vacío.
 - Metáforas válidas: umbral, punto de partida, caminos, mapa, brújula, cuaderno, pausa, conversación, exploración, integración, regreso al mundo con una dirección posible.
 - Paleta conceptual: hueso cálido, carbón suave, verde musgo, bronce envejecido, ámbar, madera, piedra, lino, vegetación sobria.

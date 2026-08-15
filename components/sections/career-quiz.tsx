@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, MotionConfig, useReducedMotion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import {
@@ -15,6 +15,7 @@ import { Link, useRouter } from "@/navigation";
 import englishQuizData from "@/lib/data/anchors.en.json";
 import spanishQuizData from "@/lib/data/anchors.json";
 import { PreQuizForm, type PreQuizData } from "@/components/forms/pre-quiz-form";
+import { DiagnosticResultShareForm } from "@/components/forms/diagnostic-result-share-form";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,6 +28,15 @@ import {
 } from "@/components/ui/card";
 import { Heading, Text } from "@/components/ui/typography";
 import { UniverseField } from "@/components/visual/universe-field";
+import {
+  buildCareerAnchorFallbackInterpretation,
+  calculateCareerAnchorRanking,
+  careerAnchorInterpretationSchema,
+  getCareerAnchorResultGroups,
+  type CareerAnchorInterpretation,
+  type CareerAnchorRankingItem,
+  type CareerStage,
+} from "@/lib/diagnostics/career-anchor";
 
 type Step = "intro" | "questions" | "transition" | "bonus" | "pre-quiz" | "results";
 
@@ -39,12 +49,12 @@ type AiDiagnosticResult = {
 };
 
 export type ExistingCareerDiagnostic = {
-  userData: Omit<PreQuizData, "captchaToken">;
+  userData?: Omit<PreQuizData, "captchaToken">;
   rawAnswers: {
     answers: Record<string, number>;
     bonus: number[];
   };
-  aiFeedback: AiDiagnosticResult;
+  aiFeedback?: AiDiagnosticResult;
 };
 
 type QuizQuestion = {
@@ -52,18 +62,29 @@ type QuizQuestion = {
   text: string;
 };
 
-type QuizResult = {
-  id: string;
-  name: string;
-  article: string;
-  description: string;
-  longDescription: string;
-  questions: number[];
-  score: number;
-  mean: number;
-};
-
 const QUESTIONS_PER_PAGE = 10;
+
+const careerStageOptions: Array<{
+  value: CareerStage;
+  labelKey:
+    | "contextOptionExploringDirection"
+    | "contextOptionChangingEmployment"
+    | "contextOptionIndependentProject"
+    | "contextOptionLeadershipCompany"
+    | "contextOptionSpecificChallenge"
+    | "contextOptionChoosingEducation"
+    | "contextOptionOther"
+    | "contextOptionPreferNot";
+}> = [
+  { value: "exploring_direction", labelKey: "contextOptionExploringDirection" },
+  { value: "changing_employment", labelKey: "contextOptionChangingEmployment" },
+  { value: "independent_project", labelKey: "contextOptionIndependentProject" },
+  { value: "leadership_company", labelKey: "contextOptionLeadershipCompany" },
+  { value: "specific_challenge", labelKey: "contextOptionSpecificChallenge" },
+  { value: "choosing_education", labelKey: "contextOptionChoosingEducation" },
+  { value: "other", labelKey: "contextOptionOther" },
+  { value: "prefer_not_to_say", labelKey: "contextOptionPreferNot" },
+];
 
 function chunkQuestions<T>(items: T[], size: number) {
   const chunks: T[][] = [];
@@ -88,12 +109,16 @@ type CareerQuizProps = {
   existingDiagnostic?: ExistingCareerDiagnostic | null;
   startAtQuestions?: boolean;
   /**
-   * Public, backend-free mode: skips the contact form, Turnstile and the
-   * server-side AI analysis/persistence step. Only the locally computed
-   * ranking is shown. Used while login/captcha/Supabase stay out of the
-   * test's required path.
+   * Public mode skips login, CAPTCHA, Supabase and the identifying pre-quiz.
+   * The ranking is calculated locally; an optional server call may enrich it
+   * without persisting answers or receiving personal data.
    */
   publicMode?: boolean;
+  /**
+   * Authenticated visitors use the same no-PII experience while the existing
+   * server/Supabase one-attempt rule is recorded atomically.
+   */
+  persistAuthenticatedAttempt?: boolean;
 };
 
 const COMPLETED_STORAGE_KEY = "reinvencion_career_anchor_completed";
@@ -103,6 +128,7 @@ export function CareerQuiz({
   existingDiagnostic = null,
   startAtQuestions = false,
   publicMode = false,
+  persistAuthenticatedAttempt = false,
 }: CareerQuizProps) {
   const router = useRouter();
   const locale = useLocale();
@@ -123,8 +149,12 @@ export function CareerQuiz({
   );
   const [answers, setAnswers] = useState<Record<number, number>>(storedAnswers);
   const [bonusQuestions, setBonusQuestions] = useState<number[]>(existingDiagnostic?.rawAnswers.bonus ?? []);
-  const [userData, setUserData] = useState<PreQuizData | null>(existingDiagnostic?.userData ?? null);
-  const [aiResult, setAiResult] = useState<AiDiagnosticResult | null>(existingDiagnostic?.aiFeedback ?? null);
+  const [userData, setUserData] = useState<PreQuizData | null>(
+    publicMode ? null : existingDiagnostic?.userData ?? null,
+  );
+  const [aiResult, setAiResult] = useState<AiDiagnosticResult | null>(
+    publicMode ? null : existingDiagnostic?.aiFeedback ?? null,
+  );
   const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saved">(
     existingDiagnostic ? "saved" : "idle",
@@ -132,6 +162,12 @@ export function CareerQuiz({
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [questionPageIndex, setQuestionPageIndex] = useState(0);
   const [bonusPageIndex, setBonusPageIndex] = useState(0);
+  const [careerStage, setCareerStage] = useState<CareerStage>("prefer_not_to_say");
+  const [interpretation, setInterpretation] = useState<CareerAnchorInterpretation | null>(null);
+  const [isInterpreting, setIsInterpreting] = useState(false);
+  const [isRecordingAttempt, setIsRecordingAttempt] = useState(false);
+  const [completionError, setCompletionError] = useState<string | null>(null);
+  const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
@@ -142,6 +178,12 @@ export function CareerQuiz({
       window.localStorage.setItem(COMPLETED_STORAGE_KEY, "1");
     }
   }, [saveStatus]);
+
+  useEffect(() => {
+    if (step === "results") {
+      resultsHeadingRef.current?.focus();
+    }
+  }, [step]);
 
   const answeredCount = Object.keys(answers).length;
   const allAnswered = answeredCount >= quizData.questions.length;
@@ -154,34 +196,49 @@ export function CareerQuiz({
     (question) => answers[question.id] !== undefined,
   );
 
-  const calculateResults = useMemo<QuizResult[] | null>(() => {
-    if (!allAnswered) return null;
+  const calculateResults = useMemo<CareerAnchorRankingItem[] | null>(() => {
+    if (!allAnswered || bonusQuestions.length !== 3) return null;
 
-    const results = quizData.anchors.map((anchor) => {
-      let total = 0;
+    return calculateCareerAnchorRanking(
+      {
+        answers: Object.fromEntries(
+          Object.entries(answers).map(([questionId, value]) => [String(questionId), value]),
+        ),
+        bonus: bonusQuestions,
+      },
+      locale === "en" ? "en" : "es",
+    );
+  }, [allAnswered, answers, bonusQuestions, locale]);
 
-      anchor.questions.forEach((questionId) => {
-        total += answers[questionId] || 0;
-        if (bonusQuestions.includes(questionId)) {
-          total += 4;
-        }
-      });
+  const resultGroups = useMemo(
+    () => getCareerAnchorResultGroups(calculateResults ?? []),
+    [calculateResults],
+  );
 
-      return {
-        ...anchor,
-        score: total,
-        mean: total / 5,
-      };
-    });
+  const profileResults = useMemo(() => {
+    if (!calculateResults?.length) return [];
+    const thirdVisibleRank = calculateResults[Math.min(2, calculateResults.length - 1)]?.rank;
+    return calculateResults.filter((anchor) => anchor.rank <= thirdVisibleRank);
+  }, [calculateResults]);
 
-    return results.sort((a, b) => b.score - a.score);
-  }, [allAnswered, answers, bonusQuestions, quizData.anchors]);
+  const fallbackInterpretation = useMemo(
+    () =>
+      calculateResults
+        ? buildCareerAnchorFallbackInterpretation(
+            calculateResults,
+            careerStage,
+            locale === "en" ? "en" : "es",
+          )
+        : null,
+    [calculateResults, careerStage, locale],
+  );
 
   const handleAnswer = (questionId: number, value: number) => {
     setAnswers((previous) => ({ ...previous, [questionId]: value }));
   };
 
   const handleBonusToggle = (questionId: number) => {
+    setCompletionError(null);
     setBonusQuestions((previous) => {
       if (previous.includes(questionId)) {
         return previous.filter((id) => id !== questionId);
@@ -193,6 +250,94 @@ export function CareerQuiz({
 
       return previous;
     });
+  };
+
+  const finishBonusSelection = async () => {
+    if (!publicMode) {
+      setStep("pre-quiz");
+      return;
+    }
+
+    if (!persistAuthenticatedAttempt) {
+      setStep("results");
+      return;
+    }
+
+    setIsRecordingAttempt(true);
+    setCompletionError(null);
+    setStep("results");
+
+    try {
+      const response = await fetch("/api/diagnostics/complete-public", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          rawAnswers: { answers, bonus: bonusQuestions },
+          locale: locale === "en" ? "en" : "es",
+        }),
+      });
+      const responseBody: unknown = await response.json().catch(() => null);
+
+      if (
+        response.status === 409 &&
+        responseBody &&
+        typeof responseBody === "object" &&
+        "code" in responseBody &&
+        responseBody.code === "already_completed"
+      ) {
+        window.location.reload();
+        return;
+      }
+
+      if (!response.ok) {
+        setCompletionError(t("completionUnavailable"));
+        return;
+      }
+
+      setSaveStatus("saved");
+      setStep("results");
+    } catch {
+      setCompletionError(t("completionUnavailable"));
+    } finally {
+      setIsRecordingAttempt(false);
+    }
+  };
+
+  const requestPublicInterpretation = async () => {
+    if (!calculateResults || !fallbackInterpretation || isInterpreting) return;
+
+    setInterpretation(null);
+    setIsInterpreting(true);
+
+    try {
+      const response = await fetch("/api/diagnostics/interpret", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          rawAnswers: {
+            answers: Object.fromEntries(
+              Object.entries(answers).map(([questionId, value]) => [String(questionId), value]),
+            ),
+            bonus: bonusQuestions,
+          },
+          careerStage,
+          locale: locale === "en" ? "en" : "es",
+        }),
+      });
+      const responseBody: unknown = await response.json().catch(() => null);
+      const parsed = careerAnchorInterpretationSchema.safeParse(responseBody);
+
+      if (!response.ok || !parsed.success) {
+        setInterpretation(fallbackInterpretation);
+        return;
+      }
+
+      setInterpretation(parsed.data);
+    } catch {
+      setInterpretation(fallbackInterpretation);
+    } finally {
+      setIsInterpreting(false);
+    }
   };
 
   const submitAndAnalyze = async (data: PreQuizData) => {
@@ -260,6 +405,9 @@ export function CareerQuiz({
   const questionBlockEnd = Math.min(questionBlockStart + QUESTIONS_PER_PAGE - 1, quizData.questions.length);
   const bonusBlockStart = bonusPageIndex * QUESTIONS_PER_PAGE + 1;
   const bonusBlockEnd = Math.min(bonusBlockStart + QUESTIONS_PER_PAGE - 1, quizData.questions.length);
+  const focusStepHeading = () => {
+    document.getElementById("career-quiz-step-heading")?.focus({ preventScroll: true });
+  };
 
   return (
     <div className="career-quiz relative min-h-screen overflow-hidden bg-[var(--quiz-bg)] transition-colors">
@@ -280,6 +428,7 @@ export function CareerQuiz({
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -24 }}
+                onAnimationComplete={focusStepHeading}
                 className="space-y-8"
               >
                 <div className="space-y-6 text-center">
@@ -288,7 +437,12 @@ export function CareerQuiz({
                     {t("introBadge")}
                   </div>
 
-                  <Heading level="h2" className="text-4xl text-[var(--quiz-ink)] md:text-5xl">
+                  <Heading
+                    id="career-quiz-step-heading"
+                    level="h2"
+                    tabIndex={-1}
+                    className="text-4xl text-[var(--quiz-ink)] outline-none md:text-5xl"
+                  >
                     {t("introTitle")}
                   </Heading>
 
@@ -382,6 +536,7 @@ export function CareerQuiz({
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -24 }}
+                onAnimationComplete={focusStepHeading}
               >
                 <Card className={warmCardClass}>
                   <CardHeader className="space-y-4 border-b border-[var(--quiz-border-soft)] bg-gradient-to-r from-[var(--quiz-surface-soft)] via-[var(--quiz-surface-raised)] to-[var(--quiz-surface-warm)] pb-6">
@@ -393,7 +548,11 @@ export function CareerQuiz({
                             total: questionPages.length,
                           })}
                         </Text>
-                        <CardTitle className="text-2xl md:text-3xl">
+                        <CardTitle
+                          id="career-quiz-step-heading"
+                          tabIndex={-1}
+                          className="text-2xl outline-none md:text-3xl"
+                        >
                           {t("questionsRange", {
                             start: questionBlockStart,
                             end: questionBlockEnd,
@@ -482,7 +641,7 @@ export function CareerQuiz({
                         onClick={() => {
                           if (questionPageIndex === 0) {
                             if (startAtQuestions) {
-                              router.push("/diagnostico/ancla-de-carrera");
+                              router.push("/");
                               return;
                             }
                             setStep("intro");
@@ -533,6 +692,7 @@ export function CareerQuiz({
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.04 }}
+                onAnimationComplete={focusStepHeading}
                 className="space-y-8 py-12 text-center"
               >
                 <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[var(--quiz-surface-warm)] text-[var(--quiz-accent)] shadow-[0_18px_40px_-24px_var(--quiz-shadow)]">
@@ -540,7 +700,12 @@ export function CareerQuiz({
                 </div>
 
                 <div className="space-y-4">
-                  <Heading level="h2" className="text-3xl text-[var(--quiz-ink)] md:text-4xl">
+                  <Heading
+                    id="career-quiz-step-heading"
+                    level="h2"
+                    tabIndex={-1}
+                    className="text-3xl text-[var(--quiz-ink)] outline-none md:text-4xl"
+                  >
                     {t("transitionTitle")}
                   </Heading>
                   <Text variant="lead" className="mx-auto max-w-3xl text-[var(--quiz-muted)]">
@@ -583,6 +748,7 @@ export function CareerQuiz({
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -24 }}
+                onAnimationComplete={focusStepHeading}
               >
                 <Card className={warmCardClass}>
                   <CardHeader className="space-y-4 border-b border-[var(--quiz-border-soft)] bg-gradient-to-r from-[var(--quiz-surface-soft)] via-[var(--quiz-surface-raised)] to-[var(--quiz-surface-warm)] pb-6">
@@ -591,7 +757,11 @@ export function CareerQuiz({
                         <Text variant="small" className={warmSectionEyebrowClass}>
                           {t("bonusTitle")}
                         </Text>
-                        <CardTitle className="text-2xl md:text-3xl">
+                        <CardTitle
+                          id="career-quiz-step-heading"
+                          tabIndex={-1}
+                          className="text-2xl outline-none md:text-3xl"
+                        >
                           {t("bonusRange", {
                             start: bonusBlockStart,
                             end: bonusBlockEnd,
@@ -622,6 +792,7 @@ export function CareerQuiz({
                           type="button"
                           onClick={() => handleBonusToggle(question.id)}
                           disabled={disabled}
+                          aria-pressed={selected}
                           className={`flex w-full items-start gap-4 rounded-[24px] border p-5 text-left transition-[color,background-color,border-color,box-shadow,transform] ${
                             selected
                               ? "border-[var(--quiz-accent)] bg-[var(--quiz-surface-warm)] shadow-sm"
@@ -667,10 +838,10 @@ export function CareerQuiz({
                         <Button
                           variant="default"
                           className={`px-8 ${warmPrimaryButtonClass}`}
-                          disabled={bonusQuestions.length !== 3}
-                          onClick={() => setStep(publicMode ? "results" : "pre-quiz")}
+                          disabled={bonusQuestions.length !== 3 || isRecordingAttempt}
+                          onClick={() => void finishBonusSelection()}
                         >
-                          {t("bonusCta")}
+                          {isRecordingAttempt ? t("recordingAttempt") : t("bonusCta")}
                           <ChevronRight className="ml-2 h-4 w-4" />
                         </Button>
                       ) : (
@@ -686,7 +857,11 @@ export function CareerQuiz({
                     </div>
 
                     <Text variant="small" className="text-center text-muted-foreground">
-                      {publicMode ? t("responsesLocalOnly") : t("responsesSaved")}
+                      {existingDiagnostic
+                        ? t("responsesSaved")
+                        : persistAuthenticatedAttempt
+                          ? t("responsesWillBeSaved")
+                          : t("responsesPrivate")}
                     </Text>
                   </CardFooter>
                 </Card>
@@ -699,10 +874,16 @@ export function CareerQuiz({
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.04 }}
+                onAnimationComplete={focusStepHeading}
                 className="space-y-8"
               >
                 <div className="space-y-3 text-center">
-                  <Heading level="h2" className="text-[var(--quiz-ink)]">
+                  <Heading
+                    id="career-quiz-step-heading"
+                    level="h2"
+                    tabIndex={-1}
+                    className="text-[var(--quiz-ink)] outline-none"
+                  >
                     {t("prequizTitle")}
                   </Heading>
                   <Text className="mx-auto max-w-2xl text-[var(--quiz-muted)]">
@@ -724,19 +905,34 @@ export function CareerQuiz({
                 key="results"
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
+                onAnimationComplete={() => resultsHeadingRef.current?.focus()}
                 className="space-y-12"
               >
                 <div className="space-y-4 text-center">
                   <div className="inline-flex items-center rounded-full border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] px-4 py-1.5 text-sm font-bold text-[var(--quiz-accent)]">
                     {t("resultsBadge")}
                   </div>
-                  <Heading level="h2" className="text-[var(--quiz-ink)]">
+                  <h2
+                    ref={resultsHeadingRef}
+                    tabIndex={-1}
+                    className="scroll-m-20 font-heading text-3xl font-semibold leading-[1.1] tracking-tight text-[var(--quiz-ink)] outline-none md:text-4xl lg:text-h2"
+                  >
                     {t("resultsTitle")}
-                  </Heading>
+                  </h2>
                   <Text className="mx-auto max-w-2xl italic text-[var(--quiz-muted)]">
                     {t("resultsScheinQuote")}
                   </Text>
                 </div>
+
+                {completionError ? (
+                  <Card className="border-[var(--quiz-border)] bg-[var(--quiz-danger-soft)] shadow-sm">
+                    <CardContent className="py-5 text-center">
+                      <Text role="status" className="text-[var(--quiz-danger)]">
+                        {completionError}
+                      </Text>
+                    </CardContent>
+                  </Card>
+                ) : null}
 
                 <Card className="border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-soft)_95%,transparent)] shadow-[0_28px_80px_-42px_var(--quiz-shadow)]">
                   <CardHeader>
@@ -764,7 +960,7 @@ export function CareerQuiz({
                                 : "bg-[var(--quiz-accent-soft)] text-[var(--quiz-ink)]"
                           }`}
                         >
-                          {index + 1}
+                          {result.rank}
                         </div>
 
                         <div className="flex-1">
@@ -794,12 +990,67 @@ export function CareerQuiz({
                   </CardContent>
                 </Card>
 
+                <Card className="border-[var(--quiz-border)] bg-[var(--quiz-surface)] shadow-sm">
+                  <CardHeader>
+                    <CardTitle>{t("contextTitle")}</CardTitle>
+                    <CardDescription>{t("contextDescription")}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-5">
+                    <div>
+                      <label
+                        htmlFor="career-stage"
+                        className="mb-2 block text-sm font-semibold text-[var(--quiz-ink)]"
+                      >
+                        {t("contextLabel")}
+                      </label>
+                      <select
+                        id="career-stage"
+                        value={careerStage}
+                        disabled={isInterpreting}
+                        onChange={(event) => {
+                          setCareerStage(event.target.value as CareerStage);
+                          setInterpretation(null);
+                        }}
+                        className="w-full rounded-xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-raised)] px-4 py-3 text-base text-[var(--quiz-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--quiz-accent)]/55 disabled:opacity-70"
+                      >
+                        {careerStageOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {t(option.labelKey)}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <Text variant="small" className="max-w-2xl text-[var(--quiz-muted)]">
+                        {isRecordingAttempt
+                          ? t("recordingAttempt")
+                          : completionError
+                            ? t("responsesNotSaved")
+                            : saveStatus === "saved" || existingDiagnostic
+                              ? t("responsesSaved")
+                              : t("responsesPrivate")}
+                      </Text>
+                      <Button
+                        type="button"
+                        variant="default"
+                        disabled={isInterpreting}
+                        className={`shrink-0 px-7 ${warmPrimaryButtonClass}`}
+                        onClick={requestPublicInterpretation}
+                      >
+                        {t("contextCta")}
+                        <Sparkles className="ml-2 h-4 w-4" aria-hidden="true" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+
                 <div className="space-y-8">
                   <Heading level="h3" className="text-[var(--quiz-ink)]">
                     {t("resultsProfileTitle")}
                   </Heading>
 
-                  {calculateResults.slice(0, 3).map((result, index) => (
+                  {profileResults.map((result, index) => (
                     <Card
                       key={result.id}
                       className={`overflow-hidden ${
@@ -813,16 +1064,22 @@ export function CareerQuiz({
                       <CardHeader className={index === 0 ? "bg-[var(--quiz-surface-warm)]" : index === 1 ? "bg-[var(--quiz-surface-accent)]" : "bg-[var(--quiz-surface-soft)]"}>
                         <div className="flex items-center gap-4">
                           <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface)] text-2xl font-bold text-[var(--quiz-ink)] shadow-sm">
-                            #{index + 1}
+                            #{result.rank}
                           </div>
                           <div>
                             <CardTitle className="text-2xl">{result.name}</CardTitle>
                             <CardDescription>
-                              {index === 0
-                                ? t("resultsDominant")
-                                : index === 1
-                                  ? t("resultsSecondary")
-                                  : t("resultsThird")}
+                              {result.rank === 1
+                                ? resultGroups.primary.length > 1
+                                  ? t("resultsTiePrimary")
+                                  : t("resultsDominant")
+                                : resultGroups.secondary.filter(
+                                      (anchor) => anchor.rank === result.rank,
+                                    ).length > 1
+                                  ? t("resultsTieSecondary")
+                                  : index === 1
+                                    ? t("resultsSecondary")
+                                    : t("resultsThird")}
                             </CardDescription>
                           </div>
                         </div>
@@ -834,14 +1091,18 @@ export function CareerQuiz({
                           </Text>
                         ))}
 
-                        {index === 0 && (
+                        {result.rank === 1 && (resultGroups.primary.length === 1 || index === 0) && (
                           <div className="rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] p-6">
                             <Text className="leading-relaxed">
-                              {t.rich("resultsDominantText", {
-                                article: result.article,
-                                name: result.name,
-                                strong: (chunks) => <strong>{chunks}</strong>,
-                              })}
+                              {resultGroups.primary.length > 1
+                                ? t("resultsTiePrimaryText", {
+                                    names: resultGroups.primary.map((anchor) => anchor.name).join(" · "),
+                                  })
+                                : t.rich("resultsDominantText", {
+                                    article: result.article,
+                                    name: result.name,
+                                    strong: (chunks) => <strong>{chunks}</strong>,
+                                  })}
                             </Text>
                             <div className="mt-6">
                               <Button asChild variant="default" className={`px-8 ${warmPrimaryButtonClass}`}>
@@ -854,6 +1115,122 @@ export function CareerQuiz({
                     </Card>
                   ))}
                 </div>
+
+                {isInterpreting && (
+                  <Card className="border-[var(--quiz-accent)] bg-[var(--quiz-surface-accent)] shadow-lg">
+                    <CardContent className="space-y-4 py-8 text-center">
+                      <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-[var(--quiz-accent-soft)] border-t-[var(--quiz-accent)] motion-reduce:animate-none" />
+                      <Heading level="h4" className="text-[var(--quiz-ink)]">
+                        {t("interpretationLoadingTitle")}
+                      </Heading>
+                      <Text className="text-[var(--quiz-muted)]">
+                        {t("interpretationLoadingText")}
+                      </Text>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {interpretation && !isInterpreting && (
+                  <div className="space-y-6">
+                    <div>
+                      <Heading level="h3" className="text-[var(--quiz-ink)]">
+                        {t("interpretationTitle")}
+                      </Heading>
+                      {interpretation.mode === "fallback" ? (
+                        <Text variant="small" className="mt-2 text-[var(--quiz-muted)]">
+                          {t("interpretationFallbackNotice")}
+                        </Text>
+                      ) : null}
+                    </div>
+
+                    <Card className="overflow-hidden border-[var(--quiz-border)] bg-[var(--quiz-surface-soft)] shadow-xl">
+                      <CardHeader className="bg-[var(--quiz-surface-warm)]">
+                        <CardTitle className="text-2xl text-[var(--quiz-ink)]">
+                          {interpretation.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-8 pt-8">
+                        <Text className="leading-relaxed text-foreground/90">
+                          {interpretation.summary}
+                        </Text>
+
+                        <div className="grid gap-6 md:grid-cols-2">
+                          <div className="rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-accent)] p-6">
+                            <Heading level="h4" className="mb-4 text-lg text-[var(--quiz-accent)]">
+                              {t("interpretationTensionsTitle")}
+                            </Heading>
+                            <ul className="space-y-3">
+                              {interpretation.tensions.map((tension) => (
+                                <li key={tension} className="flex items-start gap-2 text-sm leading-relaxed text-[var(--quiz-muted)]">
+                                  <span className="font-bold text-[var(--quiz-accent)]" aria-hidden="true">&bull;</span>
+                                  <span>{tension}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface)] p-6">
+                            <Heading level="h4" className="mb-4 text-lg text-[var(--quiz-ink)]">
+                              {t("interpretationQuestionsTitle")}
+                            </Heading>
+                            <ul className="space-y-3">
+                              {interpretation.reflectionQuestions.map((question) => (
+                                <li key={question} className="text-sm leading-relaxed text-[var(--quiz-muted)]">
+                                  {question}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+
+                        <div className="rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface)] p-6">
+                          <Heading level="h4" className="mb-3 text-lg text-[var(--quiz-ink)]">
+                            {t("interpretationStageTitle")}
+                          </Heading>
+                          <Text className="leading-relaxed text-[var(--quiz-muted)]">
+                            {interpretation.stageConnection}
+                          </Text>
+                        </div>
+
+                        {interpretation.relevantServices.length > 0 ? (
+                          <div>
+                            <Heading level="h4" className="mb-4 text-lg text-[var(--quiz-ink)]">
+                              {t("interpretationServicesTitle")}
+                            </Heading>
+                            <div className="grid gap-4 md:grid-cols-2">
+                              {interpretation.relevantServices.map((service) => (
+                                <Link
+                                  key={service.slug}
+                                  href={service.slug}
+                                  className="rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] p-5 transition-colors hover:border-[var(--quiz-accent)]"
+                                >
+                                  <span className="font-semibold text-[var(--quiz-ink)]">{service.label}</span>
+                                  <span className="mt-2 block text-sm leading-relaxed text-[var(--quiz-muted)]">
+                                    {service.reason}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        ) : null}
+
+                        <div>
+                          <Heading level="h4" className="mb-4 text-lg text-[var(--quiz-ink)]">
+                            {t("interpretationNextStepsTitle")}
+                          </Heading>
+                          <ol className="space-y-3">
+                            {interpretation.nextSteps.map((nextStep, index) => (
+                              <li key={nextStep} className="flex gap-3 text-sm leading-relaxed text-[var(--quiz-muted)]">
+                                <span className="font-semibold text-[var(--quiz-accent)]">{index + 1}.</span>
+                                <span>{nextStep}</span>
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
 
                 {isAnalyzing && (
                   <Card className="border-[var(--quiz-accent)] bg-[var(--quiz-surface-accent)] shadow-lg">
@@ -938,6 +1315,23 @@ export function CareerQuiz({
                     </CardContent>
                   </Card>
                 )}
+
+                {fallbackInterpretation ? (
+                  <DiagnosticResultShareForm
+                    result={{
+                      questionnaire: "career_anchors",
+                      situation: t(
+                        careerStageOptions.find((option) => option.value === careerStage)?.labelKey ??
+                          "contextOptionPreferNot",
+                      ),
+                      recommendedService: (interpretation ?? fallbackInterpretation).relevantServices[0]?.label,
+                      alternativeService: (interpretation ?? fallbackInterpretation).relevantServices[1]?.label,
+                      primaryAnchors: resultGroups.primary.map((anchor) => anchor.name),
+                      secondaryAnchors: resultGroups.secondary.map((anchor) => anchor.name),
+                      summary: (interpretation ?? fallbackInterpretation).summary,
+                    }}
+                  />
+                ) : null}
 
                 <div className="space-y-8 py-6 text-center">
                   <div className="mx-auto max-w-2xl space-y-4">

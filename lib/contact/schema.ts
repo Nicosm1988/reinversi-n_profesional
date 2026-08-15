@@ -6,13 +6,16 @@ export const CONTACT_LIMITS = {
   email: 254,
   message: 4_000,
   explorationInterest: 1_000,
+  resultSummary: 2_400,
+  resultLabel: 180,
   sourcePage: 80,
   honeypot: 200,
 } as const;
 
 export const CONTACT_FORM_ORIGINS = [
   "contacto",
-  "laboratorio_nuevas_narrativas",
+  "laboratorio_narrativas_laborales_alternativas",
+  "diagnostic_result",
 ] as const;
 
 export type ContactFormOrigin = (typeof CONTACT_FORM_ORIGINS)[number];
@@ -82,14 +85,14 @@ const standardContactSubmissionSchema = z
   .strict();
 
 const laboratorySourcePageSchema = z.enum([
-  "/laboratorio-nuevas-narrativas",
-  "/en/laboratorio-nuevas-narrativas",
+  "/laboratorio-narrativas-laborales-alternativas",
+  "/en/laboratorio-narrativas-laborales-alternativas",
 ]);
 
 const laboratoryContactSubmissionSchema = z
   .object({
     ...commonContactFields,
-    formOrigin: z.literal("laboratorio_nuevas_narrativas"),
+    formOrigin: z.literal("laboratorio_narrativas_laborales_alternativas"),
     explorationInterest: safeMultiline(CONTACT_LIMITS.explorationInterest)
       .optional()
       .transform((value) => value ?? ""),
@@ -97,21 +100,99 @@ const laboratoryContactSubmissionSchema = z
   })
   .strict();
 
+const diagnosticResultSourcePageSchema = z.enum([
+  "/encontrar-mi-recorrido",
+  "/en/encontrar-mi-recorrido",
+  "/test-anclas-de-carrera",
+  "/en/test-anclas-de-carrera",
+]);
+
+const optionalResultLabel = safeSingleLine(CONTACT_LIMITS.resultLabel)
+  .pipe(z.string().min(1).max(CONTACT_LIMITS.resultLabel))
+  .optional();
+
+const optionalResultLabels = z
+  .array(
+    safeSingleLine(CONTACT_LIMITS.resultLabel).pipe(
+      z.string().min(1).max(CONTACT_LIMITS.resultLabel),
+    ),
+  )
+  .max(8)
+  .optional();
+
+export const diagnosticResultSchema = z
+  .object({
+    questionnaire: z.enum(["route_finder", "career_anchors"]),
+    situation: optionalResultLabel,
+    recommendedService: optionalResultLabel,
+    alternativeService: optionalResultLabel,
+    primaryAnchors: optionalResultLabels,
+    secondaryAnchors: optionalResultLabels,
+    summary: safeMultiline(CONTACT_LIMITS.resultSummary).pipe(
+      z.string().min(1).max(CONTACT_LIMITS.resultSummary),
+    ),
+  })
+  .strict();
+
+const diagnosticResultContactSubmissionSchema = z
+  .object({
+    ...commonContactFields,
+    formOrigin: z.literal("diagnostic_result"),
+    preferredContact: z.enum(["email", "whatsapp", "either"]),
+    message: safeMultiline(CONTACT_LIMITS.message)
+      .optional()
+      .transform((value) => value ?? ""),
+    result: diagnosticResultSchema,
+    sourcePage: diagnosticResultSourcePageSchema,
+  })
+  .strict();
+
 const submissionWithExplicitOriginSchema = z
   .discriminatedUnion("formOrigin", [
     standardContactSubmissionSchema,
     laboratoryContactSubmissionSchema,
+    diagnosticResultContactSubmissionSchema,
   ])
   .superRefine((value, context) => {
+    const normalizedSourcePage = value.sourcePage.replace(/\/$/, "");
+
+    if (value.formOrigin === "diagnostic_result") {
+      const localePrefix = value.locale === "en" ? "/en" : "";
+      const expectedQuestionnaire = normalizedSourcePage.endsWith("/test-anclas-de-carrera")
+        ? "career_anchors"
+        : "route_finder";
+      const allowedSources = [
+        `${localePrefix}/encontrar-mi-recorrido`,
+        `${localePrefix}/test-anclas-de-carrera`,
+      ];
+
+      if (!allowedSources.includes(normalizedSourcePage)) {
+        context.addIssue({
+          code: "custom",
+          path: ["sourcePage"],
+          message: "Source page does not match locale",
+        });
+      }
+
+      if (value.result.questionnaire !== expectedQuestionnaire) {
+        context.addIssue({
+          code: "custom",
+          path: ["result", "questionnaire"],
+          message: "Questionnaire does not match source page",
+        });
+      }
+
+      return;
+    }
+
     const expectedSourcePage =
-      value.formOrigin === "laboratorio_nuevas_narrativas"
+      value.formOrigin === "laboratorio_narrativas_laborales_alternativas"
         ? value.locale === "en"
-          ? "/en/laboratorio-nuevas-narrativas"
-          : "/laboratorio-nuevas-narrativas"
+          ? "/en/laboratorio-narrativas-laborales-alternativas"
+          : "/laboratorio-narrativas-laborales-alternativas"
         : value.locale === "en"
           ? "/en/contacto"
           : "/contacto";
-    const normalizedSourcePage = value.sourcePage.replace(/\/$/, "");
 
     if (normalizedSourcePage !== expectedSourcePage) {
       context.addIssue({
@@ -130,6 +211,7 @@ export const contactSubmissionSchema = z.preprocess((value) => {
 }, submissionWithExplicitOriginSchema);
 
 export type ContactSubmission = z.infer<typeof contactSubmissionSchema>;
+export type DiagnosticResult = z.infer<typeof diagnosticResultSchema>;
 
 export type ContactField =
   | "name"
