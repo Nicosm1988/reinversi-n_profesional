@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { NextResponse } from "next/server";
@@ -114,7 +115,6 @@ export async function POST(req: Request) {
     if (!auth.ok) {
       logEvent(auth.status === 503 ? "error" : "warn", "diagnostics.analyze.auth_blocked", {
         requestId,
-        ip,
         reason: auth.reason,
       });
 
@@ -130,7 +130,7 @@ export async function POST(req: Request) {
     }
 
     const rateLimit = await limitRequest({
-      key: `${auth.user.id}:${ip}`,
+      key: createHash("sha256").update(`${auth.user.id}:${ip}`).digest("hex"),
       prefix: "diagnostics:analyze",
       limit: ANALYZE_LIMIT,
       windowMs: ANALYZE_WINDOW_MS,
@@ -143,7 +143,7 @@ export async function POST(req: Request) {
     });
 
     if (limited) {
-      logEvent("warn", "diagnostics.analyze.rate_limited", { requestId, userId: auth.user.id, ip });
+      logEvent("warn", "diagnostics.analyze.rate_limited", { requestId });
       return NextResponse.json(
         { error: "Too many requests. Please try again in one minute." },
         { status: 429, headers: rateHeaders },
@@ -177,8 +177,6 @@ export async function POST(req: Request) {
     if (!turnstile.passed) {
       logEvent("warn", "diagnostics.analyze.captcha_failed", {
         requestId,
-        userId: auth.user.id,
-        ip,
         errors: turnstile.errors,
       });
       return NextResponse.json(
@@ -197,7 +195,6 @@ export async function POST(req: Request) {
     if (existingAttemptError) {
       logEvent("error", "diagnostics.analyze.lookup_failed", {
         requestId,
-        userId: auth.user.id,
         code: existingAttemptError.code,
       });
       return NextResponse.json(
@@ -207,10 +204,7 @@ export async function POST(req: Request) {
     }
 
     if (existingAttempt) {
-      logEvent("info", "diagnostics.analyze.already_completed", {
-        requestId,
-        userId: auth.user.id,
-      });
+      logEvent("info", "diagnostics.analyze.already_completed", { requestId });
       return NextResponse.json(
         {
           code: "DIAGNOSTIC_ALREADY_COMPLETED",
@@ -232,9 +226,7 @@ export async function POST(req: Request) {
     if (claimError) {
       logEvent("error", "diagnostics.analyze.claim_failed", {
         requestId,
-        userId: auth.user.id,
         code: claimError.code,
-        message: claimError.message,
       });
       return NextResponse.json(
         { error: getLocalizedApiError(locale, "claim") },
@@ -243,10 +235,7 @@ export async function POST(req: Request) {
     }
 
     if (!diagnosticId) {
-      logEvent("info", "diagnostics.analyze.already_completed", {
-        requestId,
-        userId: auth.user.id,
-      });
+      logEvent("info", "diagnostics.analyze.already_completed", { requestId });
       return NextResponse.json(
         {
           code: "DIAGNOSTIC_ALREADY_COMPLETED",
@@ -261,9 +250,6 @@ export async function POST(req: Request) {
     if (!process.env.OPENAI_API_KEY) {
       logEvent("warn", "diagnostics.analyze.fallback", {
         requestId,
-        userId: auth.user.id,
-        ip,
-        anchor: anchor.name,
         reason: "openai_api_key_missing",
       });
       diagnosticResult = buildFallbackDiagnostic(anchor, userData, locale);
@@ -304,13 +290,10 @@ No menciones que sos una IA y no uses presión comercial, urgencia artificial ni
         });
 
         diagnosticResult = result.object;
-      } catch (error) {
+      } catch {
         logEvent("warn", "diagnostics.analyze.fallback", {
           requestId,
-          userId: auth.user.id,
-          ip,
-          anchor: anchor.name,
-          reason: error instanceof Error ? error.message : "openai_unknown_error",
+          reason: "openai_request_failed",
         });
         diagnosticResult = buildFallbackDiagnostic(anchor, userData, locale);
       }
@@ -327,9 +310,7 @@ No menciones que sos una IA y no uses presión comercial, urgencia artificial ni
     if (completionError || !completed) {
       logEvent("error", "diagnostics.analyze.completion_failed", {
         requestId,
-        userId: auth.user.id,
         code: completionError?.code,
-        message: completionError?.message,
       });
       return NextResponse.json(
         { error: getLocalizedApiError(locale, "save") },
@@ -339,17 +320,13 @@ No menciones que sos una IA y no uses presión comercial, urgencia artificial ni
 
     logEvent("info", "diagnostics.analyze.success", {
       requestId,
-      userId: auth.user.id,
-      ip,
-      anchor: anchor.name,
       locale,
     });
     return NextResponse.json(diagnosticResult, { headers: rateHeaders });
-  } catch (error) {
+  } catch {
     logEvent("error", "diagnostics.analyze.error", {
       requestId,
-      ip,
-      message: error instanceof Error ? error.message : "unknown-error",
+      reason: "unexpected_error",
     });
 
     return NextResponse.json(
