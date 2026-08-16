@@ -41,9 +41,10 @@ export function SendaHome() {
         <UniverseField className="left-[28%] text-[var(--senda-atmosphere-sky)] opacity-20" />
         <div className="relative mx-auto grid w-full max-w-[1240px] gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
           <div className="max-w-3xl">
-            <p className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">{t("hero.eyebrow")}</p>
-            <h1 className="mt-7 max-w-[17ch] whitespace-pre-line text-pretty font-heading text-[clamp(2.5rem,5vw,4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[var(--senda-atmosphere-ink)]">
-              {t("hero.title")}
+            <h1 className="max-w-[17ch] text-pretty font-heading text-[clamp(2.5rem,5vw,4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[var(--senda-atmosphere-ink)]">
+              {t("hero.title")}{" "}
+              <br />
+              <span className="font-bold text-[clamp(2.75rem,5.8vw,4.5rem)]">{t("hero.titleAccent")}</span>
             </h1>
             <div className="mt-7 max-w-2xl border-l border-[var(--senda-atmosphere-accent)] pl-5 sm:pl-7">
               <p className="text-base leading-7 text-[var(--senda-atmosphere-muted)] sm:text-lg sm:leading-8">{t("hero.description")}</p>

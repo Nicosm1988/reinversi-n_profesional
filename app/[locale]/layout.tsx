@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const isEnglish = locale === "en";
   const t = await getTranslations({ locale, namespace: "Home" });
-  const positioning = t("hero.title").replace(/\s+/g, " ").trim();
+  const positioning = `${t("hero.title")} ${t("hero.titleAccent")}`.replace(/\s+/g, " ").trim();
   const title = `Senda | ${positioning}`;
   const description = t("hero.description");
 

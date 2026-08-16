@@ -428,9 +428,10 @@
   "Home": {
     "hero": {
       "eyebrow": "Senda · Transiciones laborales",
-      "title": "Acompañamos\ntransiciones laborales",
+      "title": "Acompañamos",
+      "titleAccent": "transiciones laborales",
       "rhythm": "Tu trayectoria no se desecha.\nLas alternativas se exploran.\nLos próximos pasos se construyen.",
-      "description": "Un espacio para explorar intereses, reconocer alternativas y construir decisiones coherentes con tu trayectoria, continuando la construcción de sentido en diálogo con el contexto actual.",
+      "description": "Un espacio para explorar intereses, reconocer alternativas y construir decisiones en relación con tu trayectoria, tus intereses y en diálogo con el contexto actual.",
       "primaryCta": "Reconocer en qué momento estoy",
       "secondaryCta": "Explorar transiciones laborales"
     },

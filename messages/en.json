@@ -428,9 +428,10 @@
   "Home": {
     "hero": {
       "eyebrow": "Senda · Career transitions",
-      "title": "We support\ncareer transitions",
+      "title": "We support",
+      "titleAccent": "career transitions",
       "rhythm": "Your trajectory is not discarded.\nAlternatives can be explored.\nNext steps can be built.",
-      "description": "A space to explore interests, recognize alternatives, and build decisions that make sense within your trajectory, continuing to create meaning in dialogue with today's context.",
+      "description": "A space to explore interests, recognize alternatives, and build decisions in relation to your trajectory, your interests, and in dialogue with today's context.",
       "primaryCta": "Recognize where I am now",
       "secondaryCta": "Explore career transitions"
     },
