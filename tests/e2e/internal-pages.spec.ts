@@ -69,7 +69,6 @@ const targetRoutes = [
   },
   {
     path: "/laboratorio-narrativas-laborales-alternativas",
-    active: { es: "Laboratorio", en: "Laboratory" },
     title: { es: "Laboratorio de Narrativas Laborales Alternativas", en: "Alternative Work Narratives Lab" },
   },
   {

@@ -153,14 +153,6 @@ export function ProfileForm({ initialProfile }: { initialProfile: PersonalProfil
           <input name="email" autoComplete="email" value={profile.email} disabled aria-describedby="profile-email-help" className="h-12 w-full rounded-xl border bg-muted px-4 text-muted-foreground" />
           <span id="profile-email-help" className="block text-xs text-muted-foreground">{t("accessEmailHelp")}</span>
         </label>
-        <label className="space-y-2">
-          <span className="text-sm font-semibold text-foreground">{t("countryCode")}</span>
-          <input name="countryCode" autoComplete="country" value={profile.countryCode} onChange={(event) => setProfile({ ...profile, countryCode: event.target.value })} maxLength={2} placeholder={t("countryCodePlaceholder")} className="h-12 w-full rounded-xl border bg-background px-4 uppercase text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
-        </label>
-        <label className="space-y-2">
-          <span className="text-sm font-semibold text-foreground">{t("timezone")}</span>
-          <input name="timezone" value={profile.timezone} onChange={(event) => setProfile({ ...profile, timezone: event.target.value })} maxLength={80} placeholder={t("timezonePlaceholder")} className="h-12 w-full rounded-xl border bg-background px-4 text-foreground outline-none focus:ring-2 focus:ring-secondary/40" />
-        </label>
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

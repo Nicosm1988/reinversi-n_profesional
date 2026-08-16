@@ -96,7 +96,7 @@ async function chooseFinderAnswers(
       .click();
   }
 
-  await expect(page.getByRole("heading", { name: labels.result, exact: true })).toBeVisible();
+  await expect(page.locator("#primary-route-title")).toBeVisible();
 }
 
 test.beforeEach(async ({ page }) => {
@@ -131,7 +131,7 @@ for (const routeCase of routeCases) {
     await expect(page.getByRole("heading", { name: finderLabels.es.shareTitle })).toBeVisible();
     expect(contactRequests).toBe(0);
 
-    const serialized = await page.evaluate(() => window.sessionStorage.getItem("senda_route_finder_result_v1"));
+    const serialized = await page.evaluate(() => window.localStorage.getItem("senda_route_finder_answers_v1"));
     expect(serialized).toBeTruthy();
     expect(serialized ?? "").not.toMatch(/fullName|email|phone/i);
   });
@@ -159,11 +159,21 @@ test("route finder validates, preserves Back navigation, exposes a close alterna
   await expect(form.locator('input[name="urgency"][value="exploring"]')).toBeChecked();
   await form.getByRole("button", { name: "Ver mi orientación", exact: true }).click();
 
-  const resultHeading = page.getByRole("heading", { name: finderLabels.es.result, exact: true });
+  const resultHeading = page.locator("#primary-route-title");
   await expect(resultHeading).toBeFocused();
-  await expect(page.locator("#primary-route-title")).toHaveText("Explorar una nueva dirección profesional");
+  await expect(resultHeading).toHaveText("Explorar una nueva dirección profesional");
   await expect(page.locator("#secondary-route-title")).toHaveText("Elegir una formación para el próximo paso");
   await expect(page.locator('main a[href="/transiciones-laborales/elegir-formacion"]')).toBeVisible();
+});
+
+test("route finder remembers a completed result and skips the questionnaire on return", async ({ page }) => {
+  await page.goto("/encontrar-mi-recorrido");
+  await chooseFinderAnswers(page, routeCases[0].answers);
+  await expect(page.locator("#primary-route-title")).toHaveText(routeCases[0].title);
+
+  await page.reload();
+  await expect(page.locator("#primary-route-title")).toHaveText(routeCases[0].title);
+  await expect(page.locator('input[name="situation"]')).toHaveCount(0);
 });
 
 test("urgent answers preserve the grounded route and add a human-contact signal", async ({ page }) => {
@@ -177,7 +187,7 @@ test("urgent answers preserve the grounded route and add a human-contact signal"
 
   await expect(page.locator("#primary-route-title")).toHaveText("Construir o reordenar un proyecto propio");
   await expect(page.getByRole("heading", { name: "Tal vez sea importante conversar antes de elegir un recorrido" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Conversar con Senda", exact: true })).toHaveAttribute("href", "/contacto");
+  await expect(page.getByRole("link", { name: "Conversar con Senda", exact: true }).first()).toHaveAttribute("href", "/contacto");
 });
 
 test("English route finder keeps locale through its recommendation", async ({ page }) => {
@@ -189,7 +199,7 @@ test("English route finder keeps locale through its recommendation", async ({ pa
   );
 
   await expect(page.locator("#primary-route-title")).toHaveText("Prepare for a job change");
-  await expect(page.locator('main a[href="/en/transiciones-laborales/cambiar-empleo"]')).toBeVisible();
+  await expect(page.locator('main a[href="/en/transiciones-laborales/cambiar-empleo"]').first()).toBeVisible();
   await expect(page.getByRole("heading", { name: finderLabels.en.shareTitle })).toBeVisible();
 });
 
@@ -336,7 +346,7 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
   await expect(page.getByText(labels.tie, { exact: true })).toHaveCount(0);
 }
 
-test("complete Spanish Career Anchors flow breaks ties into unique positions, AI/fallback and consented sharing", async ({ page }) => {
+test("complete Spanish Career Anchors flow breaks ties into unique positions, auto-generates a reading and allows consented sharing", async ({ page }) => {
   test.slow();
   let analyzeRequests = 0;
   let persistedPublicAttempts = 0;
@@ -352,30 +362,26 @@ test("complete Spanish Career Anchors flow breaks ties into unique positions, AI
   await page.route("**/api/diagnostics/interpret", async (route) => {
     interpretationAttempts += 1;
     interpretationPayload = route.request().postDataJSON() as Record<string, unknown>;
-    if (interpretationAttempts === 1) {
-      await route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify({
-          mode: "ai",
-          title: "Una lectura asistida posible",
-          summary: "La competencia técnica y la gestión comparten el primer lugar sin definir por sí solas una decisión.",
-          tensions: ["Equilibrar profundidad y coordinación.", "Evitar decisiones apresuradas."],
-          reflectionQuestions: ["¿Qué querés preservar?", "¿Qué falta hoy?", "¿Qué podrías probar?"],
-          stageConnection: "El cambio de empleo puede compararse con estos criterios.",
-          relevantServices: [
-            {
-              slug: "/transiciones-laborales/cambiar-empleo",
-              label: "Preparar un cambio de empleo",
-              reason: "Permite ordenar alternativas sin convertir el resultado en una prescripción.",
-            },
-          ],
-          nextSteps: ["Revisar experiencias.", "Comparar una alternativa.", "Definir un experimento pequeño."],
-        }),
-      });
-      return;
-    }
-    await route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "unavailable" }) });
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        mode: "ai",
+        title: "Una lectura asistida posible",
+        summary: "La competencia técnica y la gestión comparten el primer lugar sin definir por sí solas una decisión.",
+        tensions: ["Equilibrar profundidad y coordinación.", "Evitar decisiones apresuradas."],
+        reflectionQuestions: ["¿Qué querés preservar?", "¿Qué falta hoy?", "¿Qué podrías probar?"],
+        stageConnection: "El cambio de empleo puede compararse con estos criterios.",
+        relevantServices: [
+          {
+            slug: "/transiciones-laborales/cambiar-empleo",
+            label: "Preparar un cambio de empleo",
+            reason: "Permite ordenar alternativas sin convertir el resultado en una prescripción.",
+          },
+        ],
+        nextSteps: ["Revisar experiencias.", "Comparar una alternativa.", "Definir un experimento pequeño."],
+      }),
+    });
   });
   await page.route("**/api/contact", async (route) => {
     contactAttempts += 1;
@@ -391,30 +397,16 @@ test("complete Spanish Career Anchors flow breaks ties into unique positions, AI
   await completeCareerAnchors(page, "es", true);
   expect(analyzeRequests).toBe(0);
   expect(persistedPublicAttempts).toBe(0);
-  expect(interpretationAttempts).toBe(0);
   expect(contactAttempts).toBe(0);
 
-  await page.getByLabel(careerLabels.es.contextLabel).selectOption("changing_employment");
-  await page.getByRole("button", { name: careerLabels.es.contextButton }).click();
   await expect(page.getByRole("heading", { name: "Una lectura asistida posible" })).toBeVisible();
   await expect(page.locator(".career-quiz").getByRole("link", { name: /Preparar un cambio de empleo/ })).toHaveAttribute(
     "href",
     "/transiciones-laborales/cambiar-empleo",
   );
   expect(interpretationAttempts).toBe(1);
-  expect(interpretationPayload).toMatchObject({ careerStage: "changing_employment", locale: "es" });
+  expect(interpretationPayload).toMatchObject({ careerStage: "prefer_not_to_say", locale: "es" });
   expect(JSON.stringify(interpretationPayload)).not.toMatch(/name|email|phone|ranking/i);
-
-  await page.getByLabel(careerLabels.es.contextLabel).selectOption("choosing_education");
-  await page.getByRole("button", { name: careerLabels.es.contextButton }).click();
-  await expect(page.getByText(careerLabels.es.fallback, { exact: true })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Tensiones posibles" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Preguntas para seguir pensando" })).toBeVisible();
-  await expect(page.locator(".career-quiz").getByRole("link", { name: /Elegir una formación para el próximo paso/ })).toHaveAttribute(
-    "href",
-    "/transiciones-laborales/elegir-formacion",
-  );
-  expect(interpretationAttempts).toBe(2);
 
   const share = page.getByRole("heading", { name: careerLabels.es.shareTitle }).locator("..");
   await share.getByLabel("Nombre", { exact: true }).fill("Grace Hopper");

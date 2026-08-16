@@ -19,22 +19,23 @@ export function TransitionsPage() {
       </PageSection>
 
       <PageSection tone="muted">
-        <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="divide-y divide-[var(--senda-border)] overflow-hidden rounded-[1.35rem] border border-[var(--senda-border)] bg-[var(--senda-paper)]">
           {transitionServices.map((process) => (
-            <article key={process.slug} data-cursor-glow className="senda-editorial-card group flex min-h-[23rem] flex-col rounded-[1.35rem] p-7 sm:p-8">
-              <div className="flex items-center justify-between gap-4 border-b border-[var(--senda-border)] pb-5">
-                <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">{process.number}</span>
-                <span className="senda-kicker">{t(`items.${process.key}.eyebrow`)}</span>
-              </div>
-              <div className="mt-auto pt-10">
-                <h2 className="max-w-[15ch] text-pretty font-heading text-[clamp(2rem,4vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t(`items.${process.key}.title`)}</h2>
-                <p className="mt-5 text-lg font-semibold leading-8">{t(`items.${process.key}.lead`)}</p>
-                <p className="mt-4 max-w-xl text-base leading-7 text-[var(--senda-muted)]">{t(`items.${process.key}.description`)}</p>
-                <Link href={`/transiciones-laborales/${process.slug}`} className="mt-7 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 transition-colors hover:text-[var(--senda-accent)]">
-                  {t(`items.${process.key}.cta`)} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" aria-hidden="true" />
-                </Link>
-              </div>
-            </article>
+            <Link
+              key={process.slug}
+              href={`/transiciones-laborales/${process.slug}`}
+              data-cursor-glow
+              className="group flex flex-col gap-4 p-6 transition-colors hover:bg-[var(--senda-section-warm)] sm:flex-row sm:items-center sm:gap-8 sm:p-7"
+            >
+              <article className="flex flex-1 flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+                <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)] sm:w-8 sm:shrink-0">{process.number}</span>
+                <h2 className="text-pretty font-heading text-2xl leading-[1.1] tracking-[-0.03em] sm:w-[16rem] sm:shrink-0 lg:text-3xl">{t(`items.${process.key}.title`)}</h2>
+                <p className="max-w-2xl text-base leading-7 text-[var(--senda-muted)]">{t(`items.${process.key}.lead`)}</p>
+              </article>
+              <span className="inline-flex shrink-0 items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 transition-colors group-hover:text-[var(--senda-accent)] sm:ml-4">
+                {t(`items.${process.key}.cta`)} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" aria-hidden="true" />
+              </span>
+            </Link>
           ))}
         </div>
       </PageSection>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useLocale, useTranslations } from "next-intl";
 import {
   ArrowLeft,
@@ -26,7 +27,7 @@ import {
 } from "@/lib/diagnostics/initial-diagnostic";
 import { cn } from "@/lib/utils";
 
-const SESSION_STORAGE_KEY = "senda_route_finder_result_v1";
+const ANSWERS_STORAGE_KEY = "senda_route_finder_answers_v1";
 
 const situationOptions = routeFinderSituations.map((value) => ({
   value,
@@ -119,10 +120,34 @@ export function InitialDiagnosticForm({ renderResultShare }: InitialDiagnosticFo
   const [shareableResult, setShareableResult] = useState<ShareableDiagnosticResult | null>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const questionLegendRef = useRef<HTMLLegendElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (result) resultHeadingRef.current?.focus();
   }, [result]);
+
+  useEffect(() => {
+    if (result) return;
+    let stored: unknown;
+    try {
+      const raw = window.localStorage.getItem(ANSWERS_STORAGE_KEY);
+      stored = raw ? JSON.parse(raw) : null;
+    } catch {
+      return;
+    }
+    const completeAnswers = toCompleteAnswers((stored ?? {}) as RouteFinderDraft);
+    if (!completeAnswers) return;
+
+    const previousResult = calculateRouteFinderResult(completeAnswers);
+    setAnswers(completeAnswers);
+    setResult(previousResult);
+    setShareableResult(toShareableDiagnosticResult(previousResult, locale));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!result) questionLegendRef.current?.focus();
@@ -143,42 +168,43 @@ export function InitialDiagnosticForm({ renderResultShare }: InitialDiagnosticFo
     };
 
     return (
-      <div className="space-y-8" aria-live="polite">
+      <>
+      <div className="space-y-8 pb-24" aria-live="polite">
         <div>
           <p className="senda-kicker">{t("results.eyebrow")}</p>
           <h2
+            id="primary-route-title"
             ref={resultHeadingRef}
             tabIndex={-1}
-            className="mt-5 max-w-[15ch] text-pretty font-heading text-4xl leading-[1.04] tracking-[-0.035em] text-[var(--senda-ink)] outline-none sm:text-5xl"
+            className="mt-5 max-w-[16ch] text-pretty font-heading text-4xl leading-[1.04] tracking-[-0.035em] text-[var(--senda-ink)] outline-none sm:text-5xl"
           >
-            {t("results.title")}
-          </h2>
-        </div>
-
-        {situationKey ? (
-          <p className="rounded-[1.25rem] border border-[var(--senda-border)] bg-[var(--senda-section)] px-5 py-4 text-base leading-7 text-[var(--senda-muted)]">
-            <span className="mr-2 font-bold text-[var(--senda-ink)]">{t("results.situationLabel")}:</span>
-            {t(situationKey)}
-          </p>
-        ) : null}
-
-        <section className="rounded-[1.7rem] border border-[var(--senda-olive)]/45 bg-[color-mix(in_srgb,var(--senda-olive)_12%,var(--senda-paper))] p-6 sm:p-8" aria-labelledby="primary-route-title">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-terracotta)]">
-            {t("results.primaryLabel")}
-          </p>
-          <h3 id="primary-route-title" className="mt-4 font-heading text-3xl leading-tight text-[var(--senda-ink)]">
             {t(`${primaryRouteKey}.title`)}
-          </h3>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--senda-muted)]">
+          </h2>
+          {situationKey ? (
+            <p className="mt-4 text-base leading-7 text-[var(--senda-muted)]">
+              <span className="mr-2 font-bold text-[var(--senda-ink)]">{t("results.situationLabel")}:</span>
+              {t(situationKey)}
+            </p>
+          ) : null}
+          <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--senda-muted)]">
             {t(`${primaryRouteKey}.description`)}
           </p>
+        </div>
+
+        <div className="flex flex-col gap-3 sm:flex-row">
           <Link
             href={result.primary.href}
-            className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-action)] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-paper)]"
+            className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-[var(--senda-action)] px-8 text-base font-bold text-white transition-colors hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-paper)]"
           >
             {t("results.exploreService")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
-        </section>
+          <Link
+            href="/contacto"
+            className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full border border-[var(--senda-border)] bg-[var(--senda-paper)] px-8 text-base font-bold text-[var(--senda-ink)] transition-colors hover:border-[var(--senda-olive)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)]"
+          >
+            {t("results.contactCta")}
+          </Link>
+        </div>
 
         {secondaryRouteKey && result.secondary ? (
           <section className="rounded-[1.5rem] border border-[var(--senda-border)] bg-[var(--senda-paper)] p-6 sm:p-7" aria-labelledby="secondary-route-title">
@@ -268,7 +294,7 @@ export function InitialDiagnosticForm({ renderResultShare }: InitialDiagnosticFo
               setResult(null);
               setShareableResult(null);
               try {
-                window.sessionStorage.removeItem(SESSION_STORAGE_KEY);
+                window.localStorage.removeItem(ANSWERS_STORAGE_KEY);
               } catch {
                 // Storage is optional; the questionnaire remains fully usable.
               }
@@ -284,6 +310,21 @@ export function InitialDiagnosticForm({ renderResultShare }: InitialDiagnosticFo
           ) : null}
         </div>
       </div>
+
+      {mounted
+        ? createPortal(
+            <div className="fixed inset-x-0 bottom-0 z-40 flex justify-center border-t border-[var(--senda-border)] bg-[color-mix(in_srgb,var(--senda-paper)_96%,transparent)] px-4 py-3 shadow-[0_-18px_40px_-28px_rgba(10,20,34,.35)] backdrop-blur-sm">
+              <Link
+                href={result.primary.href}
+                className="inline-flex min-h-12 w-full max-w-md items-center justify-center gap-2 rounded-full bg-[var(--senda-action)] px-8 text-base font-bold text-white transition-colors hover:bg-[var(--senda-action-hover)]"
+              >
+                {t("results.exploreService")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>,
+            document.body,
+          )
+        : null}
+      </>
     );
   }
 
@@ -315,7 +356,7 @@ export function InitialDiagnosticForm({ renderResultShare }: InitialDiagnosticFo
     setShareableResult(nextShareableResult);
 
     try {
-      window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(nextShareableResult));
+      window.localStorage.setItem(ANSWERS_STORAGE_KEY, JSON.stringify(completeAnswers));
     } catch {
       // Storage is optional; calculation and rendering do not depend on it.
     }
@@ -369,7 +410,7 @@ export function InitialDiagnosticForm({ renderResultShare }: InitialDiagnosticFo
               <label
                 key={option.value}
                 className={cn(
-                  "group flex min-h-24 cursor-pointer items-start gap-4 rounded-[1.4rem] border p-5 text-left transition-[background-color,border-color,box-shadow,transform] focus-within:ring-2 focus-within:ring-[var(--senda-olive)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--senda-bg)] motion-reduce:transition-none",
+                  "group flex min-h-14 cursor-pointer items-center gap-4 rounded-[1.1rem] border p-4 text-left transition-[background-color,border-color,box-shadow,transform] focus-within:ring-2 focus-within:ring-[var(--senda-olive)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--senda-bg)] motion-reduce:transition-none",
                   checked
                     ? "border-[var(--senda-olive)] bg-[color-mix(in_srgb,var(--senda-olive)_14%,var(--senda-paper))] shadow-[0_18px_38px_-30px_rgba(10,20,34,.5)]"
                     : "border-[var(--senda-border)] bg-[var(--senda-paper)] hover:-translate-y-0.5 hover:border-[var(--senda-olive)]/55 motion-reduce:hover:transform-none",
@@ -389,7 +430,7 @@ export function InitialDiagnosticForm({ renderResultShare }: InitialDiagnosticFo
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-colors",
+                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-colors",
                     checked
                       ? "border-[var(--senda-olive)] bg-[var(--senda-olive)] text-[var(--senda-on-olive)]"
                       : "border-[var(--senda-border)] bg-[var(--senda-card)] text-transparent",

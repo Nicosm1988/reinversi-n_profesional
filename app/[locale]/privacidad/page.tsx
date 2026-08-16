@@ -7,7 +7,7 @@ type PageProps = {
   params: Promise<{ locale: string }>;
 };
 
-const sections = [1, 2, 3, 4, 5, 6, 7] as const;
+const sections = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
@@ -46,8 +46,8 @@ export default async function PrivacidadPage({ params }: PageProps) {
                     {t(`section${section}Title`)}
                   </h2>
                   <p className="leading-relaxed text-foreground/80">
-                    {section === 7
-                      ? t.rich("section7Text", {
+                    {section === 12
+                      ? t.rich("section12Text", {
                           email: (chunks) => (
                             <a href="mailto:hola@universosenda.com" className="font-medium text-foreground underline decoration-2 decoration-secondary underline-offset-4">
                               {chunks}

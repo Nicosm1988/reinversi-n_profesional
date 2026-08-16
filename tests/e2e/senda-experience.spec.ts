@@ -14,7 +14,7 @@ test("home is a concise gateway to six adult services, the finder and secondary 
   await page.goto("/");
 
   const home = page.locator("main .senda-home");
-  await expect(home.locator(":scope > section")).toHaveCount(8);
+  await expect(home.locator(":scope > section")).toHaveCount(7);
   await expect(home.locator("article")).toHaveCount(6);
   await expect(home.locator("details")).toHaveCount(0);
 
@@ -32,7 +32,7 @@ test("home is a concise gateway to six adult services, the finder and secondary 
   await expect(home.locator('a[href="/encontrar-mi-recorrido"]').first()).toBeVisible();
   await expect(home.locator('a[href="/transiciones-laborales"]').first()).toBeVisible();
   await expect(home.locator('a[href="/como-trabajamos"]').first()).toBeVisible();
-  await expect(home.locator('a[href="/laboratorio-narrativas-laborales-alternativas"]')).toBeVisible();
+  await expect(home.locator('a[href="/laboratorio-narrativas-laborales-alternativas"]')).toHaveCount(0);
   await expect(home.locator('a[href="/brujulas"]')).toBeVisible();
   await expect(home.locator('a[href="/contacto"]')).toHaveCount(1);
 

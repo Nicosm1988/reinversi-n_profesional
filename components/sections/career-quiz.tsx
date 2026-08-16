@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence, MotionConfig, useReducedMotion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import {
@@ -162,12 +163,17 @@ export function CareerQuiz({
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [questionPageIndex, setQuestionPageIndex] = useState(0);
   const [bonusPageIndex, setBonusPageIndex] = useState(0);
-  const [careerStage, setCareerStage] = useState<CareerStage>("prefer_not_to_say");
+  const careerStage: CareerStage = "prefer_not_to_say";
   const [interpretation, setInterpretation] = useState<CareerAnchorInterpretation | null>(null);
   const [isInterpreting, setIsInterpreting] = useState(false);
   const [isRecordingAttempt, setIsRecordingAttempt] = useState(false);
   const [completionError, setCompletionError] = useState<string | null>(null);
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
@@ -232,6 +238,12 @@ export function CareerQuiz({
         : null,
     [calculateResults, careerStage, locale],
   );
+
+  useEffect(() => {
+    if (step !== "results" || !calculateResults || interpretation || isInterpreting) return;
+    void requestPublicInterpretation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, calculateResults, interpretation, isInterpreting]);
 
   const handleAnswer = (questionId: number, value: number) => {
     setAnswers((previous) => ({ ...previous, [questionId]: value }));
@@ -999,60 +1011,15 @@ export function CareerQuiz({
                   </CardContent>
                 </Card>
 
-                <Card className="border-[var(--quiz-border)] bg-[var(--quiz-surface)] shadow-sm">
-                  <CardHeader>
-                    <CardTitle>{t("contextTitle")}</CardTitle>
-                    <CardDescription>{t("contextDescription")}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-5">
-                    <div>
-                      <label
-                        htmlFor="career-stage"
-                        className="mb-2 block text-sm font-semibold text-[var(--quiz-ink)]"
-                      >
-                        {t("contextLabel")}
-                      </label>
-                      <select
-                        id="career-stage"
-                        value={careerStage}
-                        disabled={isInterpreting}
-                        onChange={(event) => {
-                          setCareerStage(event.target.value as CareerStage);
-                          setInterpretation(null);
-                        }}
-                        className="w-full rounded-xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-raised)] px-4 py-3 text-base text-[var(--quiz-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--quiz-accent)]/55 disabled:opacity-70"
-                      >
-                        {careerStageOptions.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {t(option.labelKey)}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                      <Text variant="small" className="max-w-2xl text-[var(--quiz-muted)]">
-                        {isRecordingAttempt
-                          ? t("recordingAttempt")
-                          : completionError
-                            ? t("responsesNotSaved")
-                            : saveStatus === "saved" || existingDiagnostic
-                              ? t("responsesSaved")
-                              : t("responsesPrivate")}
-                      </Text>
-                      <Button
-                        type="button"
-                        variant="default"
-                        disabled={isInterpreting}
-                        className={`shrink-0 px-7 ${warmPrimaryButtonClass}`}
-                        onClick={requestPublicInterpretation}
-                      >
-                        {t("contextCta")}
-                        <Sparkles className="ml-2 h-4 w-4" aria-hidden="true" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <Text variant="small" className="text-center text-[var(--quiz-muted)]">
+                  {isRecordingAttempt
+                    ? t("recordingAttempt")
+                    : completionError
+                      ? t("responsesNotSaved")
+                      : saveStatus === "saved" || existingDiagnostic
+                        ? t("responsesSaved")
+                        : t("responsesPrivate")}
+                </Text>
 
                 <div className="space-y-8">
                   <Heading level="h3" className="text-[var(--quiz-ink)]">
@@ -1367,13 +1334,16 @@ export function CareerQuiz({
         </div>
       </Container>
 
-      {step === "results" && (
-        <div className="fixed inset-x-0 bottom-0 z-40 flex justify-center border-t border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-raised)_96%,transparent)] px-4 py-3 shadow-[0_-18px_40px_-28px_var(--quiz-shadow)] backdrop-blur-sm">
-          <Button asChild size="lg" variant="default" className={`h-12 w-full max-w-md px-8 ${warmPrimaryButtonClass}`}>
-            <Link href="/contacto">{t("resultsCtaSession")}</Link>
-          </Button>
-        </div>
-      )}
+      {mounted && step === "results"
+        ? createPortal(
+            <div className="fixed inset-x-0 bottom-0 z-40 flex justify-center border-t border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-raised)_96%,transparent)] px-4 py-3 shadow-[0_-18px_40px_-28px_var(--quiz-shadow)] backdrop-blur-sm">
+              <Button asChild size="lg" variant="default" className={`h-12 w-full max-w-md px-8 ${warmPrimaryButtonClass}`}>
+                <Link href="/contacto">{t("resultsCtaSession")}</Link>
+              </Button>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }

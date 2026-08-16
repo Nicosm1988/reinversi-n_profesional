@@ -72,7 +72,6 @@ export function Header() {
     { name: t("navTransitions"), href: "/transiciones-laborales" },
     { name: t("navHow"), href: "/como-trabajamos" },
     { name: t("navTeam"), href: "/equipo" },
-    { name: t("navLaboratory"), href: "/laboratorio-narrativas-laborales-alternativas" },
     { name: t("navFaq"), href: "/preguntas-frecuentes" },
     { name: t("navContact"), href: "/contacto" },
   ] as const;
@@ -210,7 +209,7 @@ export function Header() {
           <SendaLogo className="senda-logo--header" />
         </Link>
 
-        <nav className="hidden min-[1600px]:block" aria-label={t("primaryNavigation")}>
+        <nav className="ml-8 hidden min-[1600px]:block lg:ml-12 xl:ml-16" aria-label={t("primaryNavigation")}>
           <ul className="flex items-center gap-5 2xl:gap-6">
             {navLinks.map((link) => {
               const current = isCurrentPath(pathname, link.href);
