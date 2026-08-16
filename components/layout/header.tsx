@@ -211,7 +211,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden min-[1600px]:block" aria-label={t("primaryNavigation")}>
-          <ul className="flex items-center gap-4">
+          <ul className="flex items-center gap-5 2xl:gap-6">
             {navLinks.map((link) => {
               const current = isCurrentPath(pathname, link.href);
               const active = isActiveSection(pathname, link.href);
@@ -221,7 +221,7 @@ export function Header() {
                   aria-current={current ? "page" : undefined}
                   onClick={() => setJourneysOpen(false)}
                   className={cn(
-                    "relative py-3 text-[11px] font-bold uppercase tracking-[0.06em] after:absolute after:inset-x-0 after:bottom-1.5 after:h-px after:origin-left after:bg-[var(--senda-terracotta)] after:transition-transform focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] focus-visible:ring-offset-2 2xl:tracking-[0.075em]",
+                    "relative whitespace-nowrap py-3 text-[11px] font-bold uppercase tracking-[0.06em] after:absolute after:inset-x-0 after:bottom-1.5 after:h-px after:origin-left after:bg-[var(--senda-terracotta)] after:transition-transform focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] focus-visible:ring-offset-2 2xl:tracking-[0.075em]",
                     active ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100",
                     transparent
                       ? active ? "text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)]"
@@ -235,7 +235,7 @@ export function Header() {
               );
 
               if (link.href !== "/transiciones-laborales") {
-                return <li key={link.href} className="flex items-center">{navLink}</li>;
+                return <li key={link.href} className="flex shrink-0 items-center">{navLink}</li>;
               }
 
               return (
@@ -245,7 +245,7 @@ export function Header() {
                   onBlur={(event) => {
                     if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setJourneysOpen(false);
                   }}
-                  className="relative flex items-center"
+                  className="relative flex shrink-0 items-center"
                 >
                   {navLink}
                   <button
