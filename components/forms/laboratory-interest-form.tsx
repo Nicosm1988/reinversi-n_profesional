@@ -278,6 +278,7 @@ export function LaboratoryInterestForm() {
             type="tel"
             inputMode="tel"
             autoComplete="tel"
+            required
             maxLength={CONTACT_LIMITS.phone}
             value={form.phone}
             disabled={status === "submitting"}

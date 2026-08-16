@@ -130,7 +130,7 @@
     "formTitle": "Send us your inquiry",
     "labelName": "Full name",
     "placeholderName": "Your name",
-    "labelPhone": "Phone (optional)",
+    "labelPhone": "Phone",
     "placeholderPhone": "+54 9 11 0000-0000",
     "labelEmail": "Email",
     "placeholderEmail": "you@email.com",
@@ -141,6 +141,7 @@
     "consent": "I agree that Senda may use this data only to respond to my inquiry.",
     "errors": {
       "name": "Enter a valid name between 2 and 100 characters.",
+      "phone": "Enter a valid phone number, between 6 and 40 characters.",
       "email": "Enter a valid email address.",
       "message": "Write a message between 10 and 4000 characters.",
       "consent": "We need your consent to respond to the inquiry.",
@@ -319,6 +320,7 @@
     "introTakeawayPersonalized": "Personalized feedback grounded in your current context.",
     "introEstimatedTitle": "Estimated time",
     "introEstimatedText": "8 to 12 minutes, including a final selection of 3 important statements.",
+    "introPaceNote": "Take all the time you need — there's no rush. There are no right or wrong answers, so answer honestly, based on what you think and feel today. This matters for you, and every answer counts.",
     "questionsBlock": "Block {current} of {total}",
     "questionsRange": "Questions {start} to {end}",
     "questionsGeneralProgress": "Overall progress",
@@ -575,7 +577,7 @@
       "labels": {
         "name": "Name",
         "email": "Email address",
-        "phone": "Phone (optional)",
+        "phone": "Phone",
         "explorationInterest": "What would you like to explore? (optional)"
       },
       "placeholders": {
@@ -593,7 +595,7 @@
       "errors": {
         "name": "Enter a valid name between 2 and 100 characters.",
         "email": "Enter a valid email address.",
-        "phone": "Enter a valid phone number or leave the field blank.",
+        "phone": "Enter a valid phone number, between 6 and 40 characters.",
         "explorationInterest": "Review the content of this field and try again.",
         "consent": "We need your consent to send you information about the Lab.",
         "invalid": "Review the indicated fields and try again.",

@@ -130,7 +130,7 @@
     "formTitle": "Envianos tu consulta",
     "labelName": "Nombre completo",
     "placeholderName": "Tu nombre",
-    "labelPhone": "Teléfono (opcional)",
+    "labelPhone": "Teléfono",
     "placeholderPhone": "+54 9 11 0000-0000",
     "labelEmail": "Email",
     "placeholderEmail": "tu@email.com",
@@ -141,6 +141,7 @@
     "consent": "Acepto que Senda utilice estos datos únicamente para responder mi consulta.",
     "errors": {
       "name": "Ingresá un nombre válido de entre 2 y 100 caracteres.",
+      "phone": "Ingresá un teléfono válido, de entre 6 y 40 caracteres.",
       "email": "Ingresá un correo electrónico válido.",
       "message": "Escribí un mensaje de entre 10 y 4000 caracteres.",
       "consent": "Necesitamos tu consentimiento para responder la consulta.",
@@ -319,6 +320,7 @@
     "introTakeawayPersonalized": "Una devolución personalizada sobre tu contexto actual.",
     "introEstimatedTitle": "Tiempo estimado",
     "introEstimatedText": "Entre 8 y 12 minutos, incluida una selección final de 3 afirmaciones importantes.",
+    "introPaceNote": "Tomate el tiempo que necesites: no hay apuro. No existen respuestas correctas ni incorrectas, así que respondé con honestidad, según lo que pensás y sentís hoy. Es importante para vos, y cada respuesta cuenta.",
     "questionsBlock": "Bloque {current} de {total}",
     "questionsRange": "Preguntas {start} a {end}",
     "questionsGeneralProgress": "Progreso general",
@@ -575,7 +577,7 @@
       "labels": {
         "name": "Nombre",
         "email": "Correo electrónico",
-        "phone": "Teléfono (opcional)",
+        "phone": "Teléfono",
         "explorationInterest": "¿Qué te interesa explorar? (opcional)"
       },
       "placeholders": {
@@ -593,7 +595,7 @@
       "errors": {
         "name": "Ingresá un nombre válido de entre 2 y 100 caracteres.",
         "email": "Ingresá un correo electrónico válido.",
-        "phone": "Ingresá un teléfono válido o dejá el campo vacío.",
+        "phone": "Ingresá un teléfono válido, de entre 6 y 40 caracteres.",
         "explorationInterest": "Revisá el contenido de este campo y volvé a intentar.",
         "consent": "Necesitamos tu consentimiento para enviarte información sobre el laboratorio.",
         "invalid": "Revisá los campos indicados y volvé a intentar.",

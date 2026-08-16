@@ -19,6 +19,7 @@ const VALID_SUBMISSION = {
 const VALID_LABORATORY_SUBMISSION = {
   formOrigin: "laboratorio_narrativas_laborales_alternativas",
   name: "  Ana   Pérez  ",
+  phone: " +54 9 11 1234-5678 ",
   email: " ANA@EXAMPLE.COM ",
   explorationInterest: "Explorar nuevos relatos sobre mi trabajo.  \r\nCon otras personas.  ",
   consent: true,
@@ -31,7 +32,7 @@ const VALID_DIAGNOSTIC_RESULT_SUBMISSION = {
   formOrigin: "diagnostic_result",
   name: "  Ana   Pérez  ",
   email: " ANA@EXAMPLE.COM ",
-  phone: "",
+  phone: " +54 9 11 1234-5678 ",
   preferredContact: "email",
   message: "Me gustaría conversar sobre este resultado.",
   consent: true,
@@ -105,7 +106,7 @@ describe("contactSubmissionSchema", () => {
     expect(parsed).toEqual({
       formOrigin: "laboratorio_narrativas_laborales_alternativas",
       name: "Ana Pérez",
-      phone: "",
+      phone: "+54 9 11 1234-5678",
       email: "ana@example.com",
       explorationInterest:
         "Explorar nuevos relatos sobre mi trabajo.\nCon otras personas.",
@@ -121,6 +122,7 @@ describe("contactSubmissionSchema", () => {
     const parsed = contactSubmissionSchema.parse({
       formOrigin: "laboratorio_narrativas_laborales_alternativas",
       name: "Ana Pérez",
+      phone: "+54 9 11 1234-5678",
       email: "ana@example.com",
       consent: true,
       companyWebsite: "",

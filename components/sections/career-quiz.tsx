@@ -418,7 +418,7 @@ export function CareerQuiz({
       <div className="pointer-events-none absolute bottom-0 left-1/2 h-72 w-[44rem] -translate-x-1/2 rounded-full bg-[color-mix(in_srgb,var(--quiz-surface)_8%,transparent)] blur-3xl" />
 
       <Container className="relative z-10">
-        <div className="mx-auto max-w-5xl pb-12 pt-28 md:pb-20 md:pt-32">
+        <div className={`mx-auto max-w-5xl pt-28 md:pt-32 ${step === "results" ? "pb-28 md:pb-32" : "pb-12 md:pb-20"}`}>
           <h1 className="sr-only">{t("metadataTitle")}</h1>
           <MotionConfig reducedMotion="user">
             <AnimatePresence mode="wait">
@@ -512,6 +512,12 @@ export function CareerQuiz({
                     </div>
                   </CardContent>
                 </Card>
+
+                <div className="mx-auto max-w-2xl rounded-2xl border border-[var(--quiz-border-soft)] bg-[var(--quiz-surface-accent)] p-5 text-center">
+                  <Text variant="small" className="text-[var(--quiz-ink)]">
+                    {t("introPaceNote")}
+                  </Text>
+                </div>
 
                 <div className="text-center">
                   <Button
@@ -922,6 +928,9 @@ export function CareerQuiz({
                   <Text className="mx-auto max-w-2xl italic text-[var(--quiz-muted)]">
                     {t("resultsScheinQuote")}
                   </Text>
+                  <Button asChild size="lg" variant="default" className={`h-14 px-10 text-lg ${warmPrimaryButtonClass}`}>
+                    <Link href="/contacto">{t("resultsCtaSession")}</Link>
+                  </Button>
                 </div>
 
                 {completionError ? (
@@ -1105,7 +1114,7 @@ export function CareerQuiz({
                                   })}
                             </Text>
                             <div className="mt-6">
-                              <Button asChild variant="default" className={`px-8 ${warmPrimaryButtonClass}`}>
+                              <Button asChild size="lg" variant="default" className={`h-14 px-10 text-lg ${warmPrimaryButtonClass}`}>
                                 <Link href="/contacto">{t("resultsCtaSession")}</Link>
                               </Button>
                             </div>
@@ -1357,6 +1366,14 @@ export function CareerQuiz({
           </MotionConfig>
         </div>
       </Container>
+
+      {step === "results" && (
+        <div className="fixed inset-x-0 bottom-0 z-40 flex justify-center border-t border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-raised)_96%,transparent)] px-4 py-3 shadow-[0_-18px_40px_-28px_var(--quiz-shadow)] backdrop-blur-sm">
+          <Button asChild size="lg" variant="default" className={`h-12 w-full max-w-md px-8 ${warmPrimaryButtonClass}`}>
+            <Link href="/contacto">{t("resultsCtaSession")}</Link>
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

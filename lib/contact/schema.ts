@@ -63,9 +63,7 @@ const contactSourcePageSchema = z
 const commonContactFields = {
   name: safeSingleLine(CONTACT_LIMITS.name).pipe(z.string().min(2)),
   phone: safeSingleLine(CONTACT_LIMITS.phone)
-    .refine((value) => value === "" || /^[+()\d .-]{6,40}$/.test(value))
-    .optional()
-    .transform((value) => value ?? ""),
+    .refine((value) => /^[+()\d .-]{6,40}$/.test(value)),
   email: safeSingleLine(CONTACT_LIMITS.email)
     .transform((value) => value.toLowerCase())
     .pipe(z.email().max(CONTACT_LIMITS.email)),

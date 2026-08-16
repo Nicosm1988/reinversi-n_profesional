@@ -311,18 +311,18 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-1.5 min-[1600px]:flex">
+        <div className="hidden shrink-0 items-center gap-2.5 min-[1600px]:flex">
           <LanguageSwitcher compact />
           <ThemeToggle />
           {authState.status === "authenticated" ? (
-            <div ref={accountDropdownRef} className="relative">
+            <div ref={accountDropdownRef} className="relative shrink-0">
               <button
                 type="button"
                 aria-label={t("ctaAccount")}
                 aria-expanded={accountOpen}
                 aria-haspopup="menu"
                 onClick={() => setAccountOpen((current) => !current)}
-                className="flex h-10 items-center gap-2 rounded-full border border-[var(--senda-ink)]/15 bg-white/45 pl-1.5 pr-3 text-xs font-bold text-[var(--senda-ink)] backdrop-blur-sm hover:bg-white/70 dark:border-white/15 dark:bg-white/5 dark:text-[#f4efe4] dark:hover:bg-white/10"
+                className="flex h-10 shrink-0 items-center gap-2 rounded-full border border-[var(--senda-ink)]/15 bg-white/45 pl-1.5 pr-3 text-xs font-bold text-[var(--senda-ink)] backdrop-blur-sm hover:bg-white/70 dark:border-white/15 dark:bg-white/5 dark:text-[#f4efe4] dark:hover:bg-white/10"
               >
                 {authState.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -330,7 +330,7 @@ export function Header() {
                 ) : (
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--senda-ink)] text-[10px] text-white dark:bg-[#f4efe4] dark:text-[#252a22]">{userInitials(authState.fullName, authState.email)}</span>
                 )}
-                <span className="hidden min-[1760px]:inline">{t("ctaAccount")}</span>
+                <span className="hidden whitespace-nowrap min-[1760px]:inline">{t("ctaAccount")}</span>
                 <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", accountOpen && "rotate-180")} />
               </button>
               {accountOpen ? (
@@ -357,7 +357,7 @@ export function Header() {
           ) : (
             <span className="h-3 w-14 animate-pulse rounded-full bg-[var(--senda-border)]" aria-label={t("authLoading")} />
           )}
-          <Link href="/encontrar-mi-recorrido" className="ml-1 inline-flex min-h-11 items-center rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
+          <Link href="/encontrar-mi-recorrido" className="ml-1 inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
             {t("ctaDiagnostic")}
           </Link>
         </div>

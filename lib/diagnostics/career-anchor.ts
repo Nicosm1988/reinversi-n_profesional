@@ -144,17 +144,14 @@ export function calculateCareerAnchorRanking(
     ),
   }));
 
+  // Ties are broken deterministically by canonical catalog order rather than
+  // left in place, so no two anchors ever share a displayed position.
   scored.sort(
     (left, right) => right.score - left.score || left.catalogIndex - right.catalogIndex,
   );
 
-  let previousScore: number | null = null;
-  let previousRank = 0;
-
   return scored.map((anchor, index) => {
-    const rank = previousScore === anchor.score ? previousRank : index + 1;
-    previousScore = anchor.score;
-    previousRank = rank;
+    const rank = index + 1;
 
     return {
       id: anchor.id,

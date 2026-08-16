@@ -75,7 +75,7 @@ describe("translation catalogs", () => {
     expect("faq" in spanishMessages.Home).toBe(false);
     expect("territories" in spanishMessages.Home).toBe(false);
     expect("manifesto" in spanishMessages.Home).toBe(false);
-    expect(spanishMessages.Contact.labelPhone).toContain("opcional");
+    expect(spanishMessages.Contact.labelPhone).toBe("Teléfono");
     expect(spanishMessages.Contact.directWhatsapp).toContain("WhatsApp");
     expect("reasonVocational" in spanishMessages.Contact).toBe(false);
 

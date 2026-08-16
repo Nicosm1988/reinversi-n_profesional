@@ -105,13 +105,14 @@ test("contact form validates locally and preserves every value after a controlle
 
   await page.getByRole("button", { name: "Enviar consulta" }).click();
   await expect(page.locator("#contact-name")).toHaveAttribute("aria-invalid", "true");
+  await expect(page.locator("#contact-phone")).toHaveAttribute("aria-invalid", "true");
   await expect(page.locator("#contact-email")).toHaveAttribute("aria-invalid", "true");
   await expect(page.locator("#contact-message")).toHaveAttribute("aria-invalid", "true");
   await expect(page.getByRole("checkbox")).toHaveAttribute("aria-invalid", "true");
   await expect(page.locator("main [role=alert]")).toContainText("Revisá los campos indicados");
 
   await page.getByLabel("Nombre completo").fill("Ada Lovelace");
-  await page.getByLabel("Teléfono (opcional)").fill("+54 9 11 1234-5678");
+  await page.getByLabel("Teléfono").fill("+54 9 11 1234-5678");
   await page.getByLabel("Email", { exact: true }).fill("ada@example.com");
   await page.getByLabel("Tu mensaje").fill("Quisiera conversar sobre mi próxima etapa y conocer el recorrido.");
   await page.getByRole("checkbox").check();
@@ -119,7 +120,7 @@ test("contact form validates locally and preserves every value after a controlle
 
   await expect(page.locator("main [role=alert]")).toContainText("El servidor de correo no aceptó la consulta");
   await expect(page.getByLabel("Nombre completo")).toHaveValue("Ada Lovelace");
-  await expect(page.getByLabel("Teléfono (opcional)")).toHaveValue("+54 9 11 1234-5678");
+  await expect(page.getByLabel("Teléfono")).toHaveValue("+54 9 11 1234-5678");
   await expect(page.getByLabel("Email", { exact: true })).toHaveValue("ada@example.com");
   await expect(page.getByLabel("Tu mensaje")).toHaveValue(
     "Quisiera conversar sobre mi próxima etapa y conocer el recorrido.",
@@ -189,6 +190,7 @@ test("contact form confirms success only after the API accepts a valid submissio
   );
   await expect(page.locator("main").getByText("+54 9 11 3673-6778", { exact: true })).toBeVisible();
   await page.getByLabel("Full name").fill("Grace Hopper");
+  await page.getByLabel("Phone").fill("+54 9 11 1234-5678");
   await page.getByLabel("Email", { exact: true }).fill("grace@example.com");
   await page.getByLabel("Your message").fill("I would like to learn more about the next-stage journey.");
   await page.getByRole("checkbox").check();
@@ -235,7 +237,7 @@ test("laboratory interest preserves its data when the secure contact endpoint re
 
   await nameField.fill("Ada Lovelace");
   await page.getByLabel("Correo electrónico").fill("ada@example.com");
-  await page.getByLabel("Teléfono (opcional)").fill("+54 9 11 1234-5678");
+  await page.getByLabel("Teléfono").fill("+54 9 11 1234-5678");
   await page
     .getByLabel("¿Qué te interesa explorar? (opcional)")
     .fill("Quiero revisar cómo narro mi trayectoria y qué deseo conservar.");
@@ -247,7 +249,7 @@ test("laboratory interest preserves its data when the secure contact endpoint re
   );
   await expect(page.getByLabel("Nombre")).toHaveValue("Ada Lovelace");
   await expect(page.getByLabel("Correo electrónico")).toHaveValue("ada@example.com");
-  await expect(page.getByLabel("Teléfono (opcional)")).toHaveValue("+54 9 11 1234-5678");
+  await expect(page.getByLabel("Teléfono")).toHaveValue("+54 9 11 1234-5678");
   await expect(page.getByLabel("¿Qué te interesa explorar? (opcional)")).toHaveValue(
     "Quiero revisar cómo narro mi trayectoria y qué deseo conservar.",
   );
@@ -287,6 +289,7 @@ test("laboratory interest confirms only an accepted English submission", async (
   );
   await page.getByLabel("Name").fill("Grace Hopper");
   await page.getByLabel("Email address").fill("grace@example.com");
+  await page.getByLabel("Phone").fill("+54 9 11 1234-5678");
   await page.getByRole("checkbox").check();
   const submitButton = page.getByRole("button", { name: "I want to receive updates" });
   await submitButton.click();

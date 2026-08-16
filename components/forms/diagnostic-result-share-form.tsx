@@ -212,7 +212,7 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
 
           <div>
             <label htmlFor={fieldId("phone")} className="mb-2 block text-sm font-semibold text-[var(--quiz-ink)]">
-              {t("phoneLabel")} <span className="font-normal text-[var(--quiz-muted)]">({t("optional")})</span>
+              {t("phoneLabel")}
             </label>
             <input
               id={fieldId("phone")}
@@ -220,6 +220,7 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
               type="tel"
               inputMode="tel"
               autoComplete="tel"
+              required
               maxLength={CONTACT_LIMITS.phone}
               value={form.phone}
               aria-invalid={invalidFields.has("phone")}

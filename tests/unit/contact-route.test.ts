@@ -38,6 +38,7 @@ const VALID_BODY = {
 const VALID_LABORATORY_BODY = {
   formOrigin: "laboratorio_narrativas_laborales_alternativas",
   name: "Ana Pérez",
+  phone: "+54 9 11 1234-5678",
   email: "ana@example.com",
   explorationInterest: "Explorar nuevas formas de contar mi trayectoria.",
   consent: true,
@@ -50,7 +51,7 @@ const VALID_DIAGNOSTIC_RESULT_BODY = {
   formOrigin: "diagnostic_result",
   name: "Ana Pérez",
   email: "ana@example.com",
-  phone: "",
+  phone: "+54 9 11 1234-5678",
   preferredContact: "email",
   message: "Quisiera conversar sobre el resultado.",
   consent: true,
@@ -111,7 +112,7 @@ describe("POST /api/contact", () => {
     expect(mocks.sendContactEmail).toHaveBeenCalledWith(
       expect.objectContaining({
         formOrigin: "laboratorio_narrativas_laborales_alternativas",
-        phone: "",
+        phone: "+54 9 11 1234-5678",
         explorationInterest:
           "Explorar nuevas formas de contar mi trayectoria.",
       }),

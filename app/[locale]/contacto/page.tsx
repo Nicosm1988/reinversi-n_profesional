@@ -50,7 +50,7 @@ const EMPTY_FORM: ContactFormValues = {
 
 const FIELD_ERROR_KEYS: Record<ContactField, string> = {
   name: "errors.name",
-  phone: "errors.invalid",
+  phone: "errors.phone",
   email: "errors.email",
   message: "errors.message",
   explorationInterest: "errors.invalid",
@@ -225,6 +225,7 @@ export default function ContactoPage() {
                           type="tel"
                           autoComplete="tel"
                           inputMode="tel"
+                          required
                           maxLength={CONTACT_LIMITS.phone}
                           value={form.phone}
                           onChange={(event) => updateField("phone", event.target.value)}

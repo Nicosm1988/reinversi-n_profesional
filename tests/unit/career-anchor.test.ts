@@ -142,7 +142,7 @@ describe("public career anchor ranking", () => {
     expect(calculateCareerAnchorRanking(payload.rawAnswers)[0]?.id).toBe(anchor.id);
   });
 
-  it("uses standard competition ranks when scores tie", () => {
+  it("breaks tied scores into unique, deterministic positions", () => {
     const payload = buildValidPayload();
     payload.rawAnswers.bonus = [1, 2, 3];
     payload.rawAnswers.answers["9"] = 2;
@@ -152,13 +152,13 @@ describe("public career anchor ranking", () => {
 
     expect(ranking.slice(0, 4).map(({ id, score, rank }) => ({ id, score, rank }))).toEqual([
       { id: "technical", score: 10, rank: 1 },
-      { id: "management", score: 10, rank: 1 },
+      { id: "management", score: 10, rank: 2 },
       { id: "autonomy", score: 9, rank: 3 },
       { id: "security", score: 5, rank: 4 },
     ]);
     expect(getCareerAnchorResultGroups(ranking)).toMatchObject({
-      primary: [{ id: "technical" }, { id: "management" }],
-      secondary: [{ id: "autonomy" }],
+      primary: [{ id: "technical" }],
+      secondary: [{ id: "management" }],
     });
   });
 

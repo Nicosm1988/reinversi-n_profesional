@@ -333,10 +333,10 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
   const resultHeading = page.getByRole("heading", { name: labels.result, exact: true });
   await expect(resultHeading).toBeVisible();
   await expect(resultHeading).toBeFocused();
-  await expect(page.getByText(labels.tie, { exact: true })).toHaveCount(2);
+  await expect(page.getByText(labels.tie, { exact: true })).toHaveCount(0);
 }
 
-test("complete Spanish Career Anchors flow preserves the tie, AI/fallback and consented sharing", async ({ page }) => {
+test("complete Spanish Career Anchors flow breaks ties into unique positions, AI/fallback and consented sharing", async ({ page }) => {
   test.slow();
   let analyzeRequests = 0;
   let persistedPublicAttempts = 0;
@@ -419,6 +419,7 @@ test("complete Spanish Career Anchors flow preserves the tie, AI/fallback and co
   const share = page.getByRole("heading", { name: careerLabels.es.shareTitle }).locator("..");
   await share.getByLabel("Nombre", { exact: true }).fill("Grace Hopper");
   await share.getByLabel("Correo", { exact: true }).fill("grace@example.com");
+  await share.getByLabel("Teléfono", { exact: true }).fill("+54 9 11 5555-4444");
   await share.getByLabel("Preferencia de contacto").selectOption("email");
   await share.getByLabel(/Mensaje/).fill("Quiero conversar sobre mis anclas.");
   await share.getByRole("button", { name: careerLabels.es.shareSubmit }).click();
@@ -444,7 +445,7 @@ test("complete Spanish Career Anchors flow preserves the tie, AI/fallback and co
     locale: "es",
     result: {
       questionnaire: "career_anchors",
-      primaryAnchors: ["Técnica/Funcional", "Dirección General"],
+      primaryAnchors: ["Técnica/Funcional"],
     },
   });
 });
