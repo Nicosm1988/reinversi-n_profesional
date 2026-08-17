@@ -232,4 +232,34 @@ describe("contactSubmissionSchema", () => {
       }).success,
     ).toBe(false);
   });
+
+  it("accepts a transitions-page service interest lead", () => {
+    const submission = {
+      formOrigin: "transiciones_laborales_interes",
+      name: "Ana Pérez",
+      phone: "+54 9 11 1234-5678",
+      email: "ana@example.com",
+      consent: true,
+      companyWebsite: "",
+      service: "cambiar-empleo",
+      sourcePage: "/transiciones-laborales",
+      locale: "es",
+    };
+    const parsed = contactSubmissionSchema.parse(submission);
+
+    expect(parsed).toMatchObject({
+      formOrigin: "transiciones_laborales_interes",
+      service: "cambiar-empleo",
+      sourcePage: "/transiciones-laborales",
+    });
+    expect(
+      contactSubmissionSchema.safeParse({ ...submission, service: "not-a-service" }).success,
+    ).toBe(false);
+    expect(
+      contactSubmissionSchema.safeParse({ ...submission, sourcePage: "/contacto" }).success,
+    ).toBe(false);
+    expect(
+      contactSubmissionSchema.safeParse({ ...submission, phone: "" }).success,
+    ).toBe(false);
+  });
 });

@@ -10,28 +10,17 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("home is a concise gateway to six adult services, the finder and secondary proposals", async ({ page }) => {
+test("home is a short gateway to the finder and secondary proposals", async ({ page }) => {
   await page.goto("/");
 
   const home = page.locator("main .senda-home");
-  await expect(home.locator(":scope > section")).toHaveCount(7);
-  await expect(home.locator("article")).toHaveCount(6);
+  await expect(home.locator(":scope > section")).toHaveCount(4);
+  await expect(home.locator("article")).toHaveCount(0);
   await expect(home.locator("details")).toHaveCount(0);
 
   await expect(home.getByRole("heading", { level: 1 })).toContainText(/Acompañamos\s+transiciones laborales/);
-  for (const slug of [
-    "explorar-direccion",
-    "cambiar-empleo",
-    "proyecto-propio",
-    "liderazgo-empresa",
-    "desafio-puntual",
-    "elegir-formacion",
-  ]) {
-    await expect(home.locator(`a[href="/transiciones-laborales/${slug}"]`)).toBeVisible();
-  }
   await expect(home.locator('a[href="/encontrar-mi-recorrido"]').first()).toBeVisible();
   await expect(home.locator('a[href="/transiciones-laborales"]').first()).toBeVisible();
-  await expect(home.locator('a[href="/como-trabajamos"]').first()).toBeVisible();
   await expect(home.locator('a[href="/laboratorio-narrativas-laborales-alternativas"]')).toHaveCount(0);
   await expect(home.locator('a[href="/brujulas"]')).toBeVisible();
   await expect(home.locator('a[href="/contacto"]')).toHaveCount(1);
@@ -40,6 +29,9 @@ test("home is a concise gateway to six adult services, the finder and secondary 
   await expect(hero).not.toContainText(/Brújulas|Compass/);
 
   const publicText = await home.innerText();
+  expect(publicText).not.toMatch(/Señales para reconocerte|Signs to recognize/i);
+  expect(publicText).not.toMatch(/Distintos momentos requieren preguntas distintas|Different moments call for different questions/i);
+  expect(publicText).not.toMatch(/Cómo funciona Senda|How Senda works/i);
   expect(publicText).not.toMatch(/Nuestra forma de acompañar|Herramientas al servicio/i);
   expect(publicText).not.toMatch(/Preguntas frecuentes|Antes de empezar/i);
   expect(publicText).not.toMatch(/\b(?:1500|1800|USD)\b|US\$/i);
@@ -306,4 +298,40 @@ test("laboratory interest confirms only an accepted English submission", async (
   await expect(successStatus).toContainText("We have registered your interest");
   await expect(successStatus).toBeFocused();
   expect(attempts).toBe(2);
+});
+
+test("each transiciones-laborales service has an inline lead form that submits to /api/contact", async ({ page }) => {
+  let submission: Record<string, unknown> | null = null;
+
+  await page.route("**/api/contact", async (route) => {
+    submission = route.request().postDataJSON() as Record<string, unknown>;
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ ok: true }),
+    });
+  });
+
+  await page.goto("/transiciones-laborales");
+  const rows = page.locator("main article");
+  await expect(rows).toHaveCount(6);
+
+  const secondRow = rows.nth(1);
+  await secondRow.getByLabel("Nombre").fill("Ada Lovelace");
+  await secondRow.getByLabel("Teléfono").fill("+54 9 11 1234-5678");
+  await secondRow.getByLabel("Correo electrónico").fill("ada@example.com");
+  await secondRow.getByRole("checkbox").check();
+  await secondRow.getByRole("button", { name: "Quiero que me escriban" }).click();
+
+  await expect(secondRow.getByRole("status")).toContainText("Recibimos tus datos");
+  expect(submission).toMatchObject({
+    formOrigin: "transiciones_laborales_interes",
+    service: "cambiar-empleo",
+    name: "Ada Lovelace",
+    phone: "+54 9 11 1234-5678",
+    email: "ada@example.com",
+    consent: true,
+    sourcePage: "/transiciones-laborales",
+    locale: "es",
+  });
 });

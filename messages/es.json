@@ -431,7 +431,7 @@
       "title": "Acompañamos",
       "titleAccent": "transiciones laborales",
       "rhythm": "Tu trayectoria no se desecha.\nLas alternativas se exploran.\nLos próximos pasos se construyen.",
-      "description": "Un espacio para explorar intereses, reconocer alternativas y construir decisiones en relación con tu trayectoria, tus intereses y en diálogo con el contexto actual.",
+      "description": "Un espacio para explorar intereses, <strong>reconocer alternativas y construir decisiones</strong> en relación con tu trayectoria, tus intereses y en diálogo con el contexto actual.",
       "primaryCta": "Reconocer en qué momento estoy",
       "secondaryCta": "Explorar transiciones laborales"
     },
@@ -451,7 +451,7 @@
     "finder": {
       "eyebrow": "Orientación inicial",
       "title": "¿En qué momento de tu trayectoria estás?",
-      "description": "Un recorrido breve para reconocer qué tipo de acompañamiento puede resultar más adecuado para tu situación actual. El resultado aparece antes de pedirte datos.",
+      "description": "Un recorrido breve para reconocer qué tipo de acompañamiento puede resultar más adecuado para tu situación actual. <strong>El resultado aparece antes de pedirte datos.</strong>",
       "cta": "Reconocer en qué momento estoy"
     },
     "situations": {
@@ -537,15 +537,37 @@
     "compass": {
       "eyebrow": "Primeras decisiones",
       "title": "Brújulas",
-      "description": "Una propuesta secundaria para adolescentes y jóvenes que están comenzando a explorar opciones de estudio, formación y trabajo.",
+      "description": "Una propuesta secundaria para <strong>adolescentes y jóvenes</strong> que están comenzando a explorar opciones de estudio, formación y trabajo.",
       "cta": "Explorar Brújulas"
     },
     "final": {
       "eyebrow": "Contacto",
       "title": "Una conversación puede ser el próximo paso.",
-      "description": "Si preferís contar tu situación directamente, podés escribirnos. La lectura y la respuesta son personales.",
+      "description": "Si preferís contar tu situación directamente, podés escribirnos. <strong>La lectura y la respuesta son personales.</strong>",
       "primaryCta": "Reconocer mi momento",
       "secondaryCta": "Conversar con Senda"
+    }
+  },
+  "TransitionsInterestForm": {
+    "labels": { "name": "Nombre", "phone": "Teléfono", "email": "Correo electrónico" },
+    "placeholders": { "name": "Tu nombre", "phone": "Tu teléfono", "email": "tu@email.com" },
+    "consent": "Acepto que Senda use estos datos para contactarme sobre este servicio. Ver",
+    "privacyLink": "política de privacidad",
+    "submit": "Quiero que me escriban",
+    "submitting": "Enviando…",
+    "success": "Recibimos tus datos. Te vamos a escribir para conversar sobre este servicio.",
+    "errors": {
+      "name": "Ingresá un nombre válido de entre 2 y 100 caracteres.",
+      "phone": "Ingresá un teléfono válido, de entre 6 y 40 caracteres.",
+      "email": "Ingresá un correo electrónico válido.",
+      "consent": "Necesitamos tu consentimiento para contactarte.",
+      "invalid": "Revisá los campos indicados y volvé a intentar.",
+      "tooLarge": "La solicitud supera el tamaño permitido. Volvé a intentar.",
+      "rateLimit": "Recibimos varios intentos seguidos. Esperá unos minutos antes de volver a enviar.",
+      "origin": "No pudimos validar el origen de la solicitud. Recargá la página y volvé a intentar.",
+      "config": "El formulario no está disponible temporalmente. Podés escribirnos por correo o WhatsApp.",
+      "send": "El servidor de correo no aceptó la solicitud. Volvé a intentar.",
+      "unexpected": "Ocurrió un error inesperado. Volvé a intentar."
     }
   },
   "NarrativesLab": {

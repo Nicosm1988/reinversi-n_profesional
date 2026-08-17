@@ -16,6 +16,18 @@ export const CONTACT_FORM_ORIGINS = [
   "contacto",
   "laboratorio_narrativas_laborales_alternativas",
   "diagnostic_result",
+  "transiciones_laborales_interes",
+] as const;
+
+// Kept in sync by hand with transitionServiceSlugs in lib/data/senda-processes.ts,
+// which is server-only and cannot be imported from the client forms that use this schema.
+export const transitionServiceInterestSlugs = [
+  "explorar-direccion",
+  "cambiar-empleo",
+  "proyecto-propio",
+  "liderazgo-empresa",
+  "desafio-puntual",
+  "elegir-formacion",
 ] as const;
 
 export type ContactFormOrigin = (typeof CONTACT_FORM_ORIGINS)[number];
@@ -98,6 +110,20 @@ const laboratoryContactSubmissionSchema = z
   })
   .strict();
 
+const transitionsInterestSourcePageSchema = z.enum([
+  "/transiciones-laborales",
+  "/en/transiciones-laborales",
+]);
+
+const transitionsInterestContactSubmissionSchema = z
+  .object({
+    ...commonContactFields,
+    formOrigin: z.literal("transiciones_laborales_interes"),
+    service: z.enum(transitionServiceInterestSlugs),
+    sourcePage: transitionsInterestSourcePageSchema,
+  })
+  .strict();
+
 const diagnosticResultSourcePageSchema = z.enum([
   "/encontrar-mi-recorrido",
   "/en/encontrar-mi-recorrido",
@@ -150,6 +176,7 @@ const submissionWithExplicitOriginSchema = z
     standardContactSubmissionSchema,
     laboratoryContactSubmissionSchema,
     diagnosticResultContactSubmissionSchema,
+    transitionsInterestContactSubmissionSchema,
   ])
   .superRefine((value, context) => {
     const normalizedSourcePage = value.sourcePage.replace(/\/$/, "");
@@ -188,9 +215,13 @@ const submissionWithExplicitOriginSchema = z
         ? value.locale === "en"
           ? "/en/laboratorio-narrativas-laborales-alternativas"
           : "/laboratorio-narrativas-laborales-alternativas"
-        : value.locale === "en"
-          ? "/en/contacto"
-          : "/contacto";
+        : value.formOrigin === "transiciones_laborales_interes"
+          ? value.locale === "en"
+            ? "/en/transiciones-laborales"
+            : "/transiciones-laborales"
+          : value.locale === "en"
+            ? "/en/contacto"
+            : "/contacto";
 
     if (normalizedSourcePage !== expectedSourcePage) {
       context.addIssue({

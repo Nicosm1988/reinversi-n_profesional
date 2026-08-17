@@ -34,6 +34,20 @@ export function buildContactEmailText(
     ].join("\n");
   }
 
+  if (submission.formOrigin === "transiciones_laborales_interes") {
+    return [
+      "Interés en una transición laboral desde la web de Senda",
+      "",
+      `Servicio de interés: ${submission.service}`,
+      `Nombre: ${submission.name}`,
+      `Teléfono: ${submission.phone}`,
+      `Correo: ${submission.email}`,
+      `Fecha: ${context.date.toISOString()}`,
+      `Origen: ${submission.formOrigin}`,
+      `Página de origen: ${context.source}`,
+    ].join("\n");
+  }
+
   if (submission.formOrigin === "laboratorio_narrativas_laborales_alternativas") {
     return [
       "Interés en el Laboratorio de Narrativas Laborales Alternativas",

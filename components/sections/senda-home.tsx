@@ -1,18 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
-import { transitionServices } from "@/lib/data/senda-processes";
 import { UniverseField } from "@/components/visual/universe-field";
-
-const methodSteps = ["listen", "map", "define", "move"] as const;
-const signalKeys = [
-  "misalignment",
-  "jobChange",
-  "project",
-  "leadership",
-  "decision",
-  "education",
-] as const;
 
 function RouteMap() {
   return (
@@ -47,7 +36,9 @@ export function SendaHome() {
               <span className="font-bold text-[clamp(2.75rem,5.8vw,4.5rem)]">{t("hero.titleAccent")}</span>
             </h1>
             <div className="mt-7 max-w-2xl border-l border-[var(--senda-atmosphere-accent)] pl-5 sm:pl-7">
-              <p className="text-base leading-7 text-[var(--senda-atmosphere-muted)] sm:text-lg sm:leading-8">{t("hero.description")}</p>
+              <p className="text-base leading-7 text-[var(--senda-atmosphere-muted)] sm:text-lg sm:leading-8">
+                {t.rich("hero.description", { strong: (chunks) => <strong className="font-bold text-[var(--senda-atmosphere-ink)]">{chunks}</strong> })}
+              </p>
             </div>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link href="/encontrar-mi-recorrido" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] shadow-[0_20px_50px_-28px_rgba(0,0,0,.55)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
@@ -62,32 +53,14 @@ export function SendaHome() {
         </div>
       </section>
 
-      <section className="px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1180px]">
-          <div className="grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
-            <div>
-              <p className="senda-kicker">{t("signals.eyebrow")}</p>
-              <h2 className="mt-4 max-w-[17ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("signals.title")}</h2>
-            </div>
-            <p className="max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg lg:justify-self-end">{t("signals.description")}</p>
-          </div>
-          <ul className="mt-10 grid overflow-hidden rounded-[1.35rem] border border-[var(--senda-border)] bg-[var(--senda-border)] sm:grid-cols-2 lg:grid-cols-3">
-            {signalKeys.map((signal, index) => (
-              <li key={signal} className="min-h-40 bg-[var(--senda-paper)] p-6 sm:min-h-48 sm:p-7">
-                <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">{String(index + 1).padStart(2, "0")}</span>
-                <p className="mt-7 text-pretty font-heading text-xl leading-7 sm:text-2xl">{t(`signals.items.${signal}`)}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
       <section className="border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)] px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
         <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
           <p className="senda-kicker">{t("finder.eyebrow")}</p>
           <div>
             <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("finder.title")}</h2>
-            <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("finder.description")}</p>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">
+              {t.rich("finder.description", { strong: (chunks) => <strong className="font-bold text-[var(--senda-ink)]">{chunks}</strong> })}
+            </p>
             <Link href="/encontrar-mi-recorrido" className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-action)] px-7 py-3 text-sm font-bold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)]">
               {t("finder.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
@@ -95,72 +68,17 @@ export function SendaHome() {
         </div>
       </section>
 
-      <section className="px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1180px]">
-          <div className="grid gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-            <div>
-              <p className="senda-kicker">{t("situations.eyebrow")}</p>
-              <h2 className="mt-4 max-w-[14ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("situations.title")}</h2>
-            </div>
-            <p className="max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg lg:justify-self-end">{t("situations.intro")}</p>
-          </div>
-
-          <div className="mt-10 grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
-            {transitionServices.map((process) => (
-              <article key={process.slug} data-cursor-glow className="senda-process-card senda-editorial-card group relative flex min-h-[21rem] flex-col overflow-hidden rounded-[1.35rem] p-7 sm:p-8">
-                <div className="relative z-10 flex items-center justify-between gap-4 border-b border-[var(--senda-border)] pb-5 text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-muted)]">
-                  <span>{process.number}</span>
-                  <span>{t(`situations.items.${process.key}.label`)}</span>
-                </div>
-                <div className="relative z-10 mt-auto pt-9">
-                  <h3 className="max-w-[16ch] text-pretty font-heading text-[clamp(1.65rem,2.5vw,2.25rem)] leading-[1.08] tracking-[-0.03em]">{t(`situations.items.${process.key}.title`)}</h3>
-                  <p className="mt-4 max-w-[36rem] text-base font-semibold leading-7">{t(`situations.items.${process.key}.lead`)}</p>
-                  <p className="mt-3 max-w-[38rem] text-sm leading-6 text-[var(--senda-muted)]">{t(`situations.items.${process.key}.description`)}</p>
-                  <Link href={`/transiciones-laborales/${process.slug}`} className="mt-6 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 transition-colors hover:text-[var(--senda-accent)]">
-                    {t("situations.cta")} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none" aria-hidden="true" />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-          <Link href="/transiciones-laborales" className="mt-8 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
-            {t("situations.viewAll")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
-
-      <section className="px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1180px]">
-          <div className="grid gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-            <div>
-              <p className="senda-kicker">{t("method.eyebrow")}</p>
-              <h2 className="mt-4 text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("method.title")}</h2>
-            </div>
-            <p className="max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg lg:justify-self-end">{t("method.intro")}</p>
-          </div>
-          <ol className="mt-10 grid gap-px overflow-hidden rounded-[1.25rem] border border-[var(--senda-border)] bg-[var(--senda-border)] sm:grid-cols-2 lg:grid-cols-4">
-            {methodSteps.map((step) => (
-              <li key={step} className="bg-[var(--senda-paper)] p-6 sm:p-7">
-                <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">{t(`method.steps.${step}.number`)}</span>
-                <h3 className="mt-7 font-heading text-2xl leading-tight">{t(`method.steps.${step}.title`)}</h3>
-              </li>
-            ))}
-          </ol>
-          <Link href="/como-trabajamos" className="mt-8 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
-            {t("method.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
-
-      {/* Laboratorio de Narrativas Laborales Alternativas: retirado de la home a pedido del cliente.
-          El componente y su ruta siguen disponibles para reactivarlo más adelante. */}
+      {/* Situations, method y laboratorio: retirados de la home a pedido del cliente para acortar la página.
+          Los componentes y las rutas siguen disponibles para reactivarlos más adelante. */}
 
       <section className="px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
         <div className="mx-auto grid max-w-[1180px] gap-8 border-l-2 border-[var(--senda-olive)]/45 pl-6 sm:pl-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
           <p className="senda-kicker">{t("compass.eyebrow")}</p>
           <div>
             <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("compass.title")}</h2>
-            <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">{t("compass.description")}</p>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">
+              {t.rich("compass.description", { strong: (chunks) => <strong className="font-bold text-[var(--senda-ink)]">{chunks}</strong> })}
+            </p>
             <Link href="/brujulas" className="mt-7 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-olive)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
               {t("compass.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
@@ -174,7 +92,9 @@ export function SendaHome() {
           <div className="relative max-w-3xl">
             <p className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">{t("final.eyebrow")}</p>
             <h2 className="mt-6 max-w-[18ch] text-pretty font-heading text-[clamp(2rem,4vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("final.title")}</h2>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--senda-atmosphere-muted)] sm:text-lg">{t("final.description")}</p>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--senda-atmosphere-muted)] sm:text-lg">
+              {t.rich("final.description", { strong: (chunks) => <strong className="font-bold text-[var(--senda-atmosphere-ink)]">{chunks}</strong> })}
+            </p>
             <Link href="/contacto" className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]">
               {t("final.secondaryCta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>

@@ -431,7 +431,7 @@
       "title": "We support",
       "titleAccent": "career transitions",
       "rhythm": "Your trajectory is not discarded.\nAlternatives can be explored.\nNext steps can be built.",
-      "description": "A space to explore interests, recognize alternatives, and build decisions in relation to your trajectory, your interests, and in dialogue with today's context.",
+      "description": "A space to explore interests, <strong>recognize alternatives, and build decisions</strong> in relation to your trajectory, your interests, and in dialogue with today's context.",
       "primaryCta": "Recognize where I am now",
       "secondaryCta": "Explore career transitions"
     },
@@ -451,7 +451,7 @@
     "finder": {
       "eyebrow": "Initial orientation",
       "title": "Where are you in your trajectory?",
-      "description": "A brief path to recognize what kind of professional support may be better suited to your current situation. You see the result before sharing any personal data.",
+      "description": "A brief path to recognize what kind of professional support may be better suited to your current situation. <strong>You see the result before sharing any personal data.</strong>",
       "cta": "Recognize where I am now"
     },
     "situations": {
@@ -537,15 +537,37 @@
     "compass": {
       "eyebrow": "First decisions",
       "title": "Compass",
-      "description": "A secondary proposal for teenagers and young adults who are beginning to explore study, learning, and work options.",
+      "description": "A secondary proposal for <strong>teenagers and young adults</strong> who are beginning to explore study, learning, and work options.",
       "cta": "Explore Compass"
     },
     "final": {
       "eyebrow": "Contact",
       "title": "A conversation can be the next step.",
-      "description": "If you would rather describe your situation directly, you can write to us. Your message will be read and answered personally.",
+      "description": "If you would rather describe your situation directly, you can write to us. <strong>Your message will be read and answered personally.</strong>",
       "primaryCta": "Recognize my situation",
       "secondaryCta": "Talk with Senda"
+    }
+  },
+  "TransitionsInterestForm": {
+    "labels": { "name": "Name", "phone": "Phone", "email": "Email" },
+    "placeholders": { "name": "Your name", "phone": "Your phone", "email": "you@email.com" },
+    "consent": "I agree that Senda uses this data to contact me about this service. See",
+    "privacyLink": "privacy policy",
+    "submit": "I want them to write to me",
+    "submitting": "Sending…",
+    "success": "We received your details. We'll write to you to talk about this service.",
+    "errors": {
+      "name": "Enter a valid name between 2 and 100 characters.",
+      "phone": "Enter a valid phone number, between 6 and 40 characters.",
+      "email": "Enter a valid email address.",
+      "consent": "We need your consent to contact you.",
+      "invalid": "Review the highlighted fields and try again.",
+      "tooLarge": "The request exceeds the allowed size. Try again.",
+      "rateLimit": "We received several attempts in a row. Wait a few minutes before trying again.",
+      "origin": "We couldn't verify the origin of the request. Reload the page and try again.",
+      "config": "The form is temporarily unavailable. You can write to us by email or WhatsApp.",
+      "send": "The mail server did not accept the request. Try again.",
+      "unexpected": "An unexpected error occurred. Try again."
     }
   },
   "NarrativesLab": {

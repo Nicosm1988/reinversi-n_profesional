@@ -310,7 +310,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="hidden shrink-0 items-center gap-2.5 min-[1600px]:flex">
+        <div className="ml-8 hidden shrink-0 items-center gap-3 min-[1600px]:flex lg:ml-10">
           <LanguageSwitcher compact />
           <ThemeToggle />
           {authState.status === "authenticated" ? (
@@ -356,7 +356,7 @@ export function Header() {
           ) : (
             <span className="h-3 w-14 animate-pulse rounded-full bg-[var(--senda-border)]" aria-label={t("authLoading")} />
           )}
-          <Link href="/encontrar-mi-recorrido" className="ml-1 inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
+          <Link href="/encontrar-mi-recorrido" className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
             {t("ctaDiagnostic")}
           </Link>
         </div>
