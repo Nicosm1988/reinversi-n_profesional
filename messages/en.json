@@ -798,18 +798,19 @@
   "AboutMe": {
     "meta": {
       "title": "About me",
-      "description": "A space in preparation to share the trajectory, approach, and experiences behind Senda."
+      "description": "The trajectory, approach, and experiences behind Senda."
     },
     "hero": {
       "eyebrow": "About me",
       "title": "The journey behind Senda.",
-      "description": "This space is under construction. Here I will share my trajectory, working perspective, and the experiences that shaped Senda."
+      "description": "Consultant specialized in talent and digital transformation, agile coach. This is the trajectory and working perspective that shaped Senda."
     },
     "story": {
       "eyebrow": "My journey",
-      "title": "A story I am still putting in order to tell.",
-      "paragraph1": "This section is ready to present my personal and professional journey clearly, without reducing it to a list of credentials.",
-      "paragraph2": "I will soon add the milestones, lessons, and decisions that explain the perspective from which I support each process."
+      "title": "Over 15 years connecting talent with opportunity.",
+      "photoAlt": "Tania, consultant specialized in talent and digital transformation",
+      "paragraph1": "I'm a consultant specialized in talent and digital transformation, and an agile coach. Thousands of interviews, leading recruitment teams, and supporting technology teams behind digital products kept building, over more than 15 years, the same underlying question: how to connect talent with real opportunity through technology.",
+      "paragraph2": "That accumulated experience — interviews, teams, decisions, lessons — is what I decided to pour into building Senda: a space to think about career the way any major transformation deserves to be thought through."
     },
     "structure": {
       "eyebrow": "What you will find",

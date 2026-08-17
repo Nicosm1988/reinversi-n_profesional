@@ -460,6 +460,31 @@ body {
   }
 }
 
+.senda-routemap__ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.senda-routemap__path-group {
+  animation: universe-drift 34s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .senda-routemap__ring--one {
+    animation: senda-orbit-clockwise 90s linear infinite;
+  }
+
+  .senda-routemap__ring--two {
+    animation: senda-orbit-counterclockwise 120s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .senda-routemap__path-group {
+    animation: none;
+  }
+}
+
 .senda-night {
   position: relative;
   isolation: isolate;

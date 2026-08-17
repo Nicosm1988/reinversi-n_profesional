@@ -15,10 +15,18 @@ export function AboutMePage() {
       />
 
       <PageSection>
-        <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-start lg:gap-16">
-          <p className="senda-kicker">{t("story.eyebrow")}</p>
+        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.6fr] lg:items-start lg:gap-14">
+          <div className="mx-auto w-full max-w-[16rem] lg:mx-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/tania-marquez.jpg"
+              alt={t("story.photoAlt")}
+              className="w-full rounded-[1.5rem] object-cover grayscale [aspect-ratio:4/5]"
+            />
+          </div>
           <div>
-            <h2 className="max-w-[18ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
+            <p className="senda-kicker">{t("story.eyebrow")}</p>
+            <h2 className="mt-4 max-w-[22ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
               {t("story.title")}
             </h2>
             <div className="mt-6 max-w-2xl space-y-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">

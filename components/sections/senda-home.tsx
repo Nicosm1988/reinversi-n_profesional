@@ -7,13 +7,15 @@ function RouteMap() {
   return (
     <div className="relative mx-auto aspect-[5/4] w-full max-w-[31rem]" aria-hidden="true">
       <svg className="absolute inset-0 h-full w-full" viewBox="0 0 500 400" fill="none">
-        <ellipse cx="250" cy="200" rx="212" ry="112" className="[stroke:var(--senda-atmosphere-line)]" />
-        <ellipse cx="250" cy="200" rx="156" ry="176" className="opacity-60 [stroke:var(--senda-atmosphere-line)]" transform="rotate(38 250 200)" />
-        <path d="M48 294C136 244 177 310 264 225c66-64 117-71 190-121" className="opacity-55 [stroke:var(--senda-atmosphere-gold)]" />
-        <path d="M65 330C161 273 207 344 303 253c58-55 102-65 154-97" className="opacity-60 [stroke:var(--senda-atmosphere-line)]" strokeDasharray="4 9" />
-        <circle cx="125" cy="276" r="6" className="[fill:var(--senda-atmosphere-accent)]" />
-        <circle cx="264" cy="225" r="8" className="[fill:var(--senda-atmosphere-gold)]" />
-        <circle cx="407" cy="135" r="5" className="[fill:var(--senda-atmosphere-sky)]" />
+        <ellipse cx="250" cy="200" rx="212" ry="112" className="senda-routemap__ring senda-routemap__ring--one [stroke:var(--senda-atmosphere-line)]" />
+        <ellipse cx="250" cy="200" rx="156" ry="176" className="senda-routemap__ring senda-routemap__ring--two opacity-60 [stroke:var(--senda-atmosphere-line)]" transform="rotate(38 250 200)" />
+        <g className="senda-routemap__path-group">
+          <path d="M48 294C136 244 177 310 264 225c66-64 117-71 190-121" className="opacity-55 [stroke:var(--senda-atmosphere-gold)]" />
+          <path d="M65 330C161 273 207 344 303 253c58-55 102-65 154-97" className="opacity-60 [stroke:var(--senda-atmosphere-line)]" strokeDasharray="4 9" />
+          <circle cx="125" cy="276" r="6" className="[fill:var(--senda-atmosphere-accent)]" />
+          <circle cx="264" cy="225" r="8" className="[fill:var(--senda-atmosphere-gold)]" />
+          <circle cx="407" cy="135" r="5" className="[fill:var(--senda-atmosphere-sky)]" />
+        </g>
       </svg>
       <span className="absolute left-[18%] top-[64%] text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--senda-atmosphere-muted)]">01 · 34°36&apos;S</span>
       <span className="absolute right-[8%] top-[26%] text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--senda-atmosphere-muted)]">02 · 58°22&apos;W</span>
@@ -71,15 +73,15 @@ export function SendaHome() {
       {/* Situations, method y laboratorio: retirados de la home a pedido del cliente para acortar la página.
           Los componentes y las rutas siguen disponibles para reactivarlos más adelante. */}
 
-      <section className="px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
-        <div className="mx-auto grid max-w-[1180px] gap-8 border-l-2 border-[var(--senda-olive)]/45 pl-6 sm:pl-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+      <section className="border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)] px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
+        <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
           <p className="senda-kicker">{t("compass.eyebrow")}</p>
           <div>
             <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("compass.title")}</h2>
             <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">
               {t.rich("compass.description", { strong: (chunks) => <strong className="font-bold text-[var(--senda-ink)]">{chunks}</strong> })}
             </p>
-            <Link href="/brujulas" className="mt-7 inline-flex items-center gap-2 text-sm font-bold underline decoration-[var(--senda-olive)]/55 underline-offset-8 hover:text-[var(--senda-accent)]">
+            <Link href="/brujulas" className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-action)] px-7 py-3 text-sm font-bold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)]">
               {t("compass.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>

@@ -58,7 +58,7 @@ const targetRoutes = [
     active: { es: "Cómo trabajamos", en: "How we work" },
     methodSteps: 4,
   },
-  { path: "/equipo", active: { es: "Equipo", en: "Team" }, teamCards: 3 },
+  { path: "/equipo", title: { es: "Equipo", en: "Team" }, teamCards: 3 },
   {
     path: "/test-anclas-de-carrera",
     title: { es: "Test de Anclas de Carrera", en: "Career Anchors Assessment" },
@@ -168,7 +168,7 @@ for (const locale of locales) {
       expect(canonicalPath).toBe(expectedPath);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       await expect(page.getByRole("link", { name: locale.whatsappLabel, exact: true })).toBeVisible();
-      await expect(page.locator("main img")).toHaveCount(0);
+      await expect(page.locator("main img")).toHaveCount(route.path === "/sobre-mi" ? 1 : 0);
 
       const publicSurface = [
         await page.title(),

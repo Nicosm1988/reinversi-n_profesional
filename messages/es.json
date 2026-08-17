@@ -798,18 +798,19 @@
   "AboutMe": {
     "meta": {
       "title": "Sobre mí",
-      "description": "Un espacio en preparación para compartir la trayectoria, el enfoque y las experiencias detrás de Senda."
+      "description": "La trayectoria, el enfoque y las experiencias detrás de Senda."
     },
     "hero": {
       "eyebrow": "Sobre mí",
       "title": "El recorrido detrás de Senda.",
-      "description": "Este espacio está en construcción. Acá voy a compartir mi trayectoria, la mirada de trabajo y las experiencias que dieron forma a Senda."
+      "description": "Consultora especializada en talento y transformación digital, agile coach. Esta es la trayectoria y la mirada de trabajo que le dieron forma a Senda."
     },
     "story": {
       "eyebrow": "Mi recorrido",
-      "title": "Una historia que todavía estoy ordenando para contar.",
-      "paragraph1": "Esta sección queda preparada para presentar mi recorrido personal y profesional con claridad, sin reducirlo a una lista de credenciales.",
-      "paragraph2": "Próximamente voy a sumar los hitos, aprendizajes y decisiones que explican desde dónde acompaño cada proceso."
+      "title": "Más de 15 años conectando talento con oportunidades.",
+      "photoAlt": "Tania, consultora especializada en talento y transformación digital",
+      "paragraph1": "Soy consultora especializada en talento y transformación digital, y agile coach. Miles de entrevistas, la dirección de equipos de reclutadores y el acompañamiento a equipos tecnológicos de productos digitales fueron construyendo, a lo largo de más de 15 años, una misma pregunta de fondo: cómo conectar talento con oportunidades reales a través de la tecnología.",
+      "paragraph2": "Esa experiencia acumulada —entrevistas, equipos, decisiones, aprendizajes— fue lo que decidí volcar en construir Senda: un espacio para pensar la carrera con la misma seriedad con la que se piensa cualquier transformación importante."
     },
     "structure": {
       "eyebrow": "Lo que vas a encontrar",

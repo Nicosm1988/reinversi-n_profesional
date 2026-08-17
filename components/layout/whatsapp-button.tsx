@@ -11,7 +11,7 @@ export async function WhatsappButton({ locale }: { locale: string }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t("ariaLabel")}
-      className="fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-[#187B45] text-white shadow-[0_18px_40px_-16px_rgba(0,0,0,.55)] motion-safe:transition-transform motion-safe:hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-bg)] sm:h-14 sm:w-14"
+      className="fixed z-40 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--senda-ink)] text-[var(--senda-bg)] shadow-[0_18px_40px_-16px_rgba(0,0,0,.55)] motion-safe:transition-transform motion-safe:hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-olive)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-bg)] sm:h-14 sm:w-14"
       style={{
         right: "max(env(safe-area-inset-right, 0px), 1rem)",
         bottom: "max(env(safe-area-inset-bottom, 0px), 5rem)",

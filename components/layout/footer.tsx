@@ -44,7 +44,6 @@ export function Footer() {
             <ul className="mt-7 space-y-4 text-sm font-semibold text-[var(--senda-atmosphere-muted)]">
               <li><Link href="/sobre-mi" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkAbout")}</Link></li>
               <li><Link href="/como-trabajamos" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkHow")}</Link></li>
-              <li><Link href="/equipo" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkTeam")}</Link></li>
               <li><Link href="/encontrar-mi-recorrido" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkInitialDiagnostic")}</Link></li>
               <li><Link href="/test-anclas-de-carrera" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkCareerAnchor")}</Link></li>
               <li><Link href="/preguntas-frecuentes" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkFaq")}</Link></li>

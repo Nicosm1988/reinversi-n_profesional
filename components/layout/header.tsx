@@ -71,7 +71,6 @@ export function Header() {
     { name: t("navAbout"), href: "/sobre-mi" },
     { name: t("navTransitions"), href: "/transiciones-laborales" },
     { name: t("navHow"), href: "/como-trabajamos" },
-    { name: t("navTeam"), href: "/equipo" },
     { name: t("navFaq"), href: "/preguntas-frecuentes" },
     { name: t("navContact"), href: "/contacto" },
   ] as const;
