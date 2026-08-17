@@ -27,7 +27,7 @@
 ## Riesgos y deuda conocidos
 
 - Producción todavía no contiene `SMTP_PASSWORD`: `/api/health` permanece degradado y los formularios fallan cerrado con 503 hasta cargar el secreto y redesplegar. No debe afirmarse recepción de correo antes de una prueba real de buzón.
-- El dominio heredado de producción contiene `reinvension-profesional`; la comunicación y rutas visibles ya no usan “reinvención”, pero cambiar el hostname requiere un dominio/alias confirmado.
+- El dominio heredado de producción contiene `reinvension-profesional`; el dominio definitivo ya está comprado (`universosenda.com`, confirmado 2026-08-17), pero falta conectarlo en Vercel y completar el resto de `docs/operations/brand-domain-migration.md` (DNS, `NEXT_PUBLIC_SITE_URL`, redirect URIs de Google OAuth/Supabase Auth, Cloudflare Turnstile).
 - Sin Upstash válido, el rate limit degrada a memoria por instancia; verificar sus credenciales en cada entorno productivo.
 
 ## Base de datos (Supabase, actualizado 2026-08-17)

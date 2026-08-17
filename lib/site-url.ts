@@ -1,4 +1,4 @@
-const FALLBACK_SITE_URL = "https://reinvension-profesional.vercel.app";
+const FALLBACK_SITE_URL = "https://universosenda.com";
 
 export function getSiteUrl() {
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();

@@ -11,7 +11,7 @@ afterEach(() => {
 describe("getSiteUrl", () => {
   it("uses the current production URL as a safe fallback", () => {
     delete process.env.NEXT_PUBLIC_SITE_URL;
-    expect(getSiteUrl()).toBe("https://reinvension-profesional.vercel.app");
+    expect(getSiteUrl()).toBe("https://universosenda.com");
   });
 
   it("normalizes a configured domain to its origin", () => {
@@ -21,6 +21,6 @@ describe("getSiteUrl", () => {
 
   it("falls back when the configured value is invalid", () => {
     process.env.NEXT_PUBLIC_SITE_URL = "not a URL";
-    expect(getSiteUrl()).toBe("https://reinvension-profesional.vercel.app");
+    expect(getSiteUrl()).toBe("https://universosenda.com");
   });
 });
