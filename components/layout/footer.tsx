@@ -5,8 +5,6 @@ import { Link } from "@/navigation";
 import { UniverseField } from "@/components/visual/universe-field";
 import { CONTACT_EMAIL } from "@/lib/contact-config";
 
-const GMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT_EMAIL)}`;
-
 export function Footer() {
   const t = useTranslations("Footer");
 
@@ -20,7 +18,7 @@ export function Footer() {
               <SendaLogo className="senda-logo--footer text-[var(--senda-atmosphere-ink)]" />
             </Link>
             <p className="mt-8 max-w-lg font-heading text-3xl leading-[1.15] text-[var(--senda-atmosphere-ink)] sm:text-4xl">{t("statement")}</p>
-            <a href={GMAIL_COMPOSE_URL} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
               {CONTACT_EMAIL} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
