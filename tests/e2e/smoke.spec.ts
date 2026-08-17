@@ -97,17 +97,17 @@ test("logo links home and exposes both slow orbits and the live trail", async ({
     };
   });
 
-  expect(logoGeometry.markHeight).toBeGreaterThanOrEqual(79);
-  expect(logoGeometry.markHeight).toBeLessThanOrEqual(81);
-  expect(logoGeometry.wordFontSize).toBeCloseTo(52, 1);
-  expect(logoGeometry.horizontalOverlap).toBeGreaterThanOrEqual(21);
-  expect(logoGeometry.horizontalOverlap).toBeLessThanOrEqual(26);
+  expect(logoGeometry.markHeight).toBeGreaterThanOrEqual(86);
+  expect(logoGeometry.markHeight).toBeLessThanOrEqual(89);
+  expect(logoGeometry.wordFontSize).toBeCloseTo(56.7, 1);
+  expect(logoGeometry.horizontalOverlap).toBeGreaterThanOrEqual(22);
+  expect(logoGeometry.horizontalOverlap).toBeLessThanOrEqual(29);
   expect(logoGeometry.trailStartY).toBeGreaterThan(logoGeometry.sTop);
   expect(logoGeometry.trailStartY).toBeLessThan(logoGeometry.sBottom);
-  expect(logoGeometry.trailWidth).toBeGreaterThanOrEqual(147);
-  expect(logoGeometry.trailWidth).toBeLessThanOrEqual(152);
-  expect(logoGeometry.trailHeight).toBeGreaterThanOrEqual(15);
-  expect(logoGeometry.trailHeight).toBeLessThanOrEqual(17);
+  expect(logoGeometry.trailWidth).toBeGreaterThanOrEqual(159);
+  expect(logoGeometry.trailWidth).toBeLessThanOrEqual(166);
+  expect(logoGeometry.trailHeight).toBeGreaterThanOrEqual(16);
+  expect(logoGeometry.trailHeight).toBeLessThanOrEqual(19);
   expect(logoGeometry.trailLeft).toBe(-1);
   expect(logoGeometry.trailBottom).toBe(1);
   expect(logoGeometry.initialThickness).toBeGreaterThan(logoGeometry.finalThickness * 3);

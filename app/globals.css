@@ -198,6 +198,12 @@
     scroll-padding-top: 6rem;
   }
 
+  @media (min-width: 1024px) {
+    html {
+      font-size: 109%;
+    }
+  }
+
   body {
     @apply min-h-screen bg-background text-foreground antialiased;
     background-image:

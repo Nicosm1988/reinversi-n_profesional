@@ -13,7 +13,7 @@ export function PageHero({ eyebrow, title, description }: PageHeroProps) {
   return (
     <header className="senda-night border-b border-[var(--senda-atmosphere-border)] px-5 pb-20 pt-32 text-[var(--senda-atmosphere-ink)] sm:px-8 sm:pb-24 sm:pt-36 lg:px-12 xl:px-20">
       <UniverseField className="left-[30%] text-[var(--senda-atmosphere-sky)] opacity-20" />
-      <div className="relative mx-auto max-w-[1120px]">
+      <div className="relative mx-auto max-w-[1290px]">
         <p className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">{eyebrow}</p>
         <div className="mt-6 grid gap-7 lg:grid-cols-[1fr_0.72fr] lg:items-end lg:gap-16">
           <h1 className="max-w-[15ch] text-pretty font-heading text-[clamp(2.5rem,5vw,4rem)] font-medium leading-[1.02] tracking-[-0.045em]">
@@ -43,7 +43,7 @@ const sectionTones = {
 export function PageSection({ children, tone = "default", className = "" }: PageSectionProps) {
   return (
     <section className={`${sectionTones[tone]} px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20 ${className}`}>
-      <div className="mx-auto max-w-[1120px]">{children}</div>
+      <div className="mx-auto max-w-[1290px]">{children}</div>
     </section>
   );
 }
@@ -63,7 +63,7 @@ type ClosingCtaProps = {
 export function ClosingCta({ title, description, label, href = "/contacto" }: ClosingCtaProps) {
   return (
     <section className="px-5 pb-10 pt-14 sm:px-8 sm:pt-16 lg:px-12 lg:pt-20 xl:px-20">
-      <div className="senda-night relative mx-auto max-w-[1120px] overflow-hidden rounded-[1.4rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16">
+      <div className="senda-night relative mx-auto max-w-[1290px] overflow-hidden rounded-[1.4rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16">
         <UniverseField compact className="left-[38%] text-[var(--senda-atmosphere-sky)] opacity-20" />
         <div className="relative mx-auto max-w-3xl">
           <h2 className="max-w-[18ch] text-pretty font-heading text-[clamp(2rem,4vw,3rem)] leading-[1.08] tracking-[-0.035em]">{title}</h2>

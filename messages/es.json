@@ -5,7 +5,7 @@
     "primaryNavigation": "Navegación principal",
     "mobileNavigation": "Navegación móvil",
     "navHome": "Inicio",
-    "navAbout": "Sobre mí",
+    "navAbout": "Equipo",
     "navTransitions": "Transiciones laborales",
     "navHow": "Cómo trabajamos",
     "navTeam": "Equipo",
@@ -46,7 +46,7 @@
     "serviceLeadership": "Liderazgo y continuidad de empresa",
     "serviceFocused": "Desafío profesional puntual",
     "serviceEducation": "Elegir una formación",
-    "linkAbout": "Sobre mí",
+    "linkAbout": "Equipo",
     "linkTeam": "Equipo",
     "linkLaboratory": "Laboratorio",
     "linkContact": "Contacto",
@@ -797,25 +797,31 @@
   },
   "AboutMe": {
     "meta": {
-      "title": "Sobre mí",
-      "description": "La trayectoria, el enfoque y las experiencias detrás de Senda."
+      "title": "Equipo",
+      "description": "Quién acompaña los procesos de transformación en Senda."
     },
     "hero": {
-      "eyebrow": "Sobre mí",
-      "title": "El recorrido detrás de Senda.",
-      "description": "Consultora especializada en talento y transformación digital, agile coach. Esta es la trayectoria y la mirada de trabajo que le dieron forma a Senda."
+      "eyebrow": "Equipo",
+      "title": "Acompañar una transformación implica poner en el centro a quien la está atravesando.",
+      "description": "Soy consultora de proyectos, especializada en gestión de talento y transformación, con más de quince años de experiencia acompañando personas, equipos y organizaciones."
     },
     "story": {
       "eyebrow": "Mi recorrido",
-      "title": "Más de 15 años conectando talento con oportunidades.",
+      "title": "¿Cómo acompañar procesos de transformación poniendo en el centro a la persona que los atraviesa?",
       "photoAlt": "Tania, consultora especializada en talento y transformación digital",
-      "paragraph1": "Soy consultora especializada en talento y transformación digital, y agile coach. Miles de entrevistas, la dirección de equipos de reclutadores y el acompañamiento a equipos tecnológicos de productos digitales fueron construyendo, a lo largo de más de 15 años, una misma pregunta de fondo: cómo conectar talento con oportunidades reales a través de la tecnología.",
-      "paragraph2": "Esa experiencia acumulada —entrevistas, equipos, decisiones, aprendizajes— fue lo que decidí volcar en construir Senda: un espacio para pensar la carrera con la misma seriedad con la que se piensa cualquier transformación importante."
+      "paragraph1": "A lo largo de mi trayectoria trabajé en gestión de talento, lideré y acompañé equipos en los ámbitos de la ciencia, la tecnología y la educación. Ese recorrido me permitió conocer de cerca distintas formas de transitar la vida profesional: personas que buscan nuevas oportunidades, profesionales que empiezan a preguntarse cómo seguir, equipos que atraviesan procesos de cambio y organizaciones que necesitan revisar y transformar sus maneras de trabajar.",
+      "paragraph2": "Miles de entrevistas con personas diversas, años de trabajo junto a profesionales de distintos ámbitos y la experiencia de acompañar procesos individuales y colectivos fueron consolidando una pregunta que atraviesa todo mi recorrido.",
+      "highlights": [
+        "+15 años acompañando personas, equipos y organizaciones",
+        "Miles de entrevistas y procesos vinculados al desarrollo de talento",
+        "Experiencia en ciencia, tecnología y educación",
+        "Gestión de equipos y procesos de transformación"
+      ]
     },
     "structure": {
-      "eyebrow": "Lo que vas a encontrar",
-      "title": "Tres dimensiones para conocerme mejor.",
-      "description": "La página va a crecer sobre una estructura simple, para que cada parte pueda completarse sin perder claridad.",
+      "eyebrow": "Nuestro enfoque",
+      "title": "Así acompañamos, y así nació Senda.",
+      "description": "Dos maneras de mirar el mismo recorrido: la forma de trabajar y el origen del proyecto.",
       "items": {
         "experience": {
           "number": "01",
@@ -823,14 +829,14 @@
           "description": "Formación, experiencias y momentos que fueron dando forma a mi mirada profesional."
         },
         "practice": {
-          "number": "02",
-          "title": "Forma de acompañar",
-          "description": "Criterios, valores y una manera de trabajar que cuida la singularidad de cada recorrido."
+          "number": "01",
+          "title": "Nuestra forma de acompañar",
+          "description": "Los cambios profesionales no suceden únicamente en un currículum, un puesto o una organización. Involucran intereses, expectativas, recorridos, vínculos, preguntas y formas de imaginar lo que viene. Por eso, nuestro trabajo parte de crear espacios donde sea posible tomar perspectiva, revisar el propio recorrido, reconocer aquello que hoy genera interés y explorar alternativas para poder elegir cómo seguir. No se trata de indicar un camino ni de ofrecer respuestas prefabricadas. Se trata de acompañar cada proceso con escucha, criterio y herramientas que permitan ampliar el campo de posibilidades y construir una dirección propia."
         },
         "senda": {
-          "number": "03",
-          "title": "El origen de Senda",
-          "description": "La historia del proyecto y las preguntas que hicieron necesario crear este espacio."
+          "number": "02",
+          "title": "De ese recorrido nace Senda",
+          "description": "Senda reúne aprendizajes construidos durante más de quince años trabajando con talento, personas, equipos y procesos de cambio. Nace como un espacio para acompañar a las personas a pensar su trayectoria profesional con profundidad, perspectiva y herramientas concretas, entendiendo que los cambios de carrera también son transformaciones importantes de la vida. Un espacio para hacer una pausa, mirar el recorrido, reconocer lo que hoy importa y abrir nuevas posibilidades para elegir cómo continuar."
         }
       }
     },

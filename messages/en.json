@@ -5,7 +5,7 @@
     "primaryNavigation": "Primary navigation",
     "mobileNavigation": "Mobile navigation",
     "navHome": "Home",
-    "navAbout": "About me",
+    "navAbout": "Team",
     "navTransitions": "Career transitions",
     "navHow": "How we work",
     "navTeam": "Team",
@@ -46,7 +46,7 @@
     "serviceLeadership": "Leadership and business continuity",
     "serviceFocused": "A focused professional challenge",
     "serviceEducation": "Choose learning for your next step",
-    "linkAbout": "About me",
+    "linkAbout": "Team",
     "linkTeam": "Team",
     "linkLaboratory": "Laboratory",
     "linkContact": "Contact",
@@ -797,25 +797,31 @@
   },
   "AboutMe": {
     "meta": {
-      "title": "About me",
-      "description": "The trajectory, approach, and experiences behind Senda."
+      "title": "Team",
+      "description": "Who accompanies transformation processes at Senda."
     },
     "hero": {
-      "eyebrow": "About me",
-      "title": "The journey behind Senda.",
-      "description": "Consultant specialized in talent and digital transformation, agile coach. This is the trajectory and working perspective that shaped Senda."
+      "eyebrow": "Team",
+      "title": "Accompanying a transformation means putting the person going through it at the center.",
+      "description": "I'm a project consultant specialized in talent and transformation management, with more than fifteen years of experience accompanying people, teams, and organizations."
     },
     "story": {
       "eyebrow": "My journey",
-      "title": "Over 15 years connecting talent with opportunity.",
+      "title": "How do you accompany transformation processes while keeping the person going through them at the center?",
       "photoAlt": "Tania, consultant specialized in talent and digital transformation",
-      "paragraph1": "I'm a consultant specialized in talent and digital transformation, and an agile coach. Thousands of interviews, leading recruitment teams, and supporting technology teams behind digital products kept building, over more than 15 years, the same underlying question: how to connect talent with real opportunity through technology.",
-      "paragraph2": "That accumulated experience — interviews, teams, decisions, lessons — is what I decided to pour into building Senda: a space to think about career the way any major transformation deserves to be thought through."
+      "paragraph1": "Throughout my career I worked in talent management, and led and supported teams in science, technology, and education. That path let me see up close many different ways of navigating professional life: people looking for new opportunities, professionals starting to ask how to move forward, teams going through change, and organizations that need to review and transform how they work.",
+      "paragraph2": "Thousands of interviews with diverse people, years working alongside professionals from different fields, and the experience of supporting individual and collective processes gradually shaped a question that runs through my whole journey.",
+      "highlights": [
+        "+15 years accompanying people, teams, and organizations",
+        "Thousands of interviews and processes tied to talent development",
+        "Experience in science, technology, and education",
+        "Team management and transformation processes"
+      ]
     },
     "structure": {
-      "eyebrow": "What you will find",
-      "title": "Three dimensions to get to know me better.",
-      "description": "The page will grow from a simple structure, so each part can be completed without losing clarity.",
+      "eyebrow": "Our approach",
+      "title": "How we accompany, and how Senda was born.",
+      "description": "Two ways of looking at the same journey: how we work, and where the project comes from.",
       "items": {
         "experience": {
           "number": "01",
@@ -823,14 +829,14 @@
           "description": "Education, experiences, and moments that gradually shaped my professional perspective."
         },
         "practice": {
-          "number": "02",
-          "title": "How I support people",
-          "description": "Criteria, values, and a way of working that respects the singular nature of every journey."
+          "number": "01",
+          "title": "How we accompany",
+          "description": "Professional changes don't happen only in a résumé, a role, or an organization. They involve interests, expectations, journeys, bonds, questions, and ways of imagining what comes next. That's why our work starts by creating spaces where it's possible to gain perspective, revisit your own path, recognize what genuinely interests you today, and explore alternatives to choose how to move forward. It's not about pointing to a single path or offering ready-made answers. It's about accompanying each process with listening, judgment, and tools that widen the field of possibilities and help build a direction of your own."
         },
         "senda": {
-          "number": "03",
-          "title": "The origin of Senda",
-          "description": "The story of the project and the questions that made it necessary to create this space."
+          "number": "02",
+          "title": "Senda is born from that journey",
+          "description": "Senda brings together lessons built over more than fifteen years working with talent, people, teams, and change processes. It was born as a space to accompany people in thinking through their career with depth, perspective, and concrete tools, understanding that career changes are also significant life transformations. A space to pause, look at the journey so far, recognize what matters today, and open new possibilities to choose how to continue."
         }
       }
     },

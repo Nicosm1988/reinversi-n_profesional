@@ -30,7 +30,7 @@ export function SendaHome() {
     <div className="senda-home overflow-hidden bg-[var(--senda-bg)] text-[var(--senda-ink)]">
       <section className="senda-night border-b border-[var(--senda-atmosphere-border)] px-5 pb-20 pt-32 sm:px-8 sm:pb-24 sm:pt-36 lg:px-12 lg:pb-28 xl:px-20">
         <UniverseField className="left-[28%] text-[var(--senda-atmosphere-sky)] opacity-20" />
-        <div className="relative mx-auto grid w-full max-w-[1240px] gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
+        <div className="relative mx-auto grid w-full max-w-[1430px] gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
           <div className="max-w-3xl">
             <h1 className="max-w-[17ch] text-pretty font-heading text-[clamp(2.5rem,5vw,4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[var(--senda-atmosphere-ink)]">
               {t("hero.title")}{" "}
@@ -61,7 +61,7 @@ export function SendaHome() {
           Los componentes y las rutas siguen disponibles para reactivarlos más adelante. */}
 
       <section className="border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)] px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
-        <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+        <div className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
           <p className="senda-kicker">{t("compass.eyebrow")}</p>
           <div>
             <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("compass.title")}</h2>
@@ -76,7 +76,7 @@ export function SendaHome() {
       </section>
 
       <section className="px-5 pb-10 pt-14 sm:px-8 sm:pt-16 lg:px-12 lg:pt-20 xl:px-20">
-        <div className="senda-night relative mx-auto max-w-[1180px] overflow-hidden rounded-[1.5rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+        <div className="senda-night relative mx-auto max-w-[1360px] overflow-hidden rounded-[1.5rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16 lg:py-20">
           <UniverseField compact className="left-[38%] text-[var(--senda-atmosphere-sky)] opacity-20" />
           <div className="relative mx-auto max-w-3xl">
             <p className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">{t("final.eyebrow")}</p>

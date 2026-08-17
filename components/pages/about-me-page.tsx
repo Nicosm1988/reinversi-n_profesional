@@ -1,10 +1,11 @@
 import { useTranslations } from "next-intl";
 import { ClosingCta, PageHero, PageSection } from "@/components/pages/page-primitives";
 
-const dimensions = ["experience", "practice", "senda"] as const;
+const dimensions = ["practice", "senda"] as const;
 
 export function AboutMePage() {
   const t = useTranslations("AboutMe");
+  const highlights = t.raw("story.highlights") as string[];
 
   return (
     <div className="overflow-hidden bg-[var(--senda-bg)] text-[var(--senda-ink)]">
@@ -15,8 +16,8 @@ export function AboutMePage() {
       />
 
       <PageSection>
-        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.6fr] lg:items-start lg:gap-14">
-          <div className="mx-auto w-full max-w-[16rem] lg:mx-0">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:items-start lg:gap-14">
+          <div className="mx-auto w-full max-w-[24rem] lg:mx-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/tania-marquez.jpg"
@@ -26,13 +27,20 @@ export function AboutMePage() {
           </div>
           <div>
             <p className="senda-kicker">{t("story.eyebrow")}</p>
-            <h2 className="mt-4 max-w-[22ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
+            <h2 className="mt-4 max-w-[28ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
               {t("story.title")}
             </h2>
             <div className="mt-6 max-w-2xl space-y-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">
               <p>{t("story.paragraph1")}</p>
               <p>{t("story.paragraph2")}</p>
             </div>
+            <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+              {highlights.map((highlight) => (
+                <li key={highlight} className="rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] px-4 py-3 text-sm font-semibold leading-6 text-[var(--senda-ink)]">
+                  {highlight}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </PageSection>
@@ -48,7 +56,7 @@ export function AboutMePage() {
           </p>
         </div>
 
-        <ol className="mt-10 grid gap-5 md:grid-cols-3">
+        <ol className="mt-10 grid gap-5 md:grid-cols-2">
           {dimensions.map((dimension) => (
             <li key={dimension} className="senda-editorial-card rounded-[1.2rem] p-7 sm:p-8">
               <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">

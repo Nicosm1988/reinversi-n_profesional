@@ -13,7 +13,7 @@ export function Footer() {
   return (
     <footer className="senda-night border-t border-[var(--senda-atmosphere-border)] px-5 pb-8 pt-16 text-[var(--senda-atmosphere-ink)] sm:px-8 md:pt-24 lg:px-12 xl:px-20">
       <UniverseField compact className="left-[48%] text-[var(--senda-atmosphere-sky)] opacity-15" />
-      <div className="relative mx-auto max-w-[1280px]">
+      <div className="relative mx-auto max-w-[1470px]">
         <div className="grid gap-14 border-b border-[var(--senda-atmosphere-border)] pb-16 lg:grid-cols-[1.2fr_0.8fr_0.8fr] lg:pb-20">
           <div className="max-w-xl">
             <Link href="/" className="inline-flex items-center gap-3" aria-label={t("homeLabel")}>

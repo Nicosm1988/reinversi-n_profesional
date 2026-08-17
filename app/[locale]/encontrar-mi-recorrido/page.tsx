@@ -40,7 +40,7 @@ export default async function FindMyRoutePage({ params }: PageProps) {
         ))}
       </svg>
 
-      <div className="relative mx-auto grid max-w-[1180px] grid-cols-[minmax(0,1fr)] gap-14 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-start">
+      <div className="relative mx-auto grid max-w-[1360px] grid-cols-[minmax(0,1fr)] gap-14 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-start">
         <div className="min-w-0 lg:sticky lg:top-32">
           <p className="senda-kicker">{t("eyebrow")}</p>
           <h1 className="mt-6 max-w-[13ch] text-pretty font-heading text-[clamp(2.75rem,6vw,4rem)] leading-[0.98] tracking-[-0.04em]">

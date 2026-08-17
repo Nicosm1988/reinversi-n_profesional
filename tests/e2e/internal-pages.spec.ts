@@ -5,7 +5,7 @@ const retiredPublicTerms =
 
 const targetRoutes = [
   { path: "/", active: { es: "Inicio", en: "Home" } },
-  { path: "/sobre-mi", active: { es: "Sobre mí", en: "About me" }, aboutCards: 3 },
+  { path: "/sobre-mi", active: { es: "Equipo", en: "Team" }, aboutCards: 2 },
   {
     path: "/transiciones-laborales",
     active: { es: "Transiciones laborales", en: "Career transitions" },
@@ -286,7 +286,7 @@ test("desktop services dropdown opens from the keyboard, focuses its first route
 });
 
 for (const locale of locales) {
-  test(`${locale.id.toUpperCase()} places About me between Home and Career transitions`, async ({ page }) => {
+  test(`${locale.id.toUpperCase()} places Team between Home and Career transitions`, async ({ page }) => {
     await page.setViewportSize({ width: 1720, height: 900 });
     await page.goto(locale.prefix || "/");
 
@@ -297,8 +297,8 @@ for (const locale of locales) {
 
     expect(labels.slice(0, 3).map((label) => label.trim())).toEqual(
       locale.id === "es"
-        ? ["Inicio", "Sobre mí", "Transiciones laborales"]
-        : ["Home", "About me", "Career transitions"],
+        ? ["Inicio", "Equipo", "Transiciones laborales"]
+        : ["Home", "Team", "Career transitions"],
     );
   });
 }
@@ -326,6 +326,7 @@ for (const locale of locales) {
     ] as const;
 
     for (const viewport of viewports) {
+      const scale = viewport.width >= 1024 ? 1.09 : 1;
       await page.setViewportSize({ width: viewport.width, height: 844 });
 
       const layout = await page.evaluate((primaryNavigation) => {
@@ -397,17 +398,17 @@ for (const locale of locales) {
       expect(layout.desktopNavigationVisible).toBe(viewport.desktop);
       expect(layout.menuButtonVisible).toBe(!viewport.desktop);
       expect(layout.wordVisible).toBe(viewport.word);
-      expect(layout.markHeight).toBeGreaterThanOrEqual(viewport.largeLogo ? 79 : 63);
-      expect(layout.markHeight).toBeLessThanOrEqual(viewport.largeLogo ? 81 : 65);
-      expect(layout.wordFontSize).toBeCloseTo(viewport.largeLogo ? 52 : 34.4, 1);
+      expect(layout.markHeight).toBeGreaterThanOrEqual((viewport.largeLogo ? 79 : 63) * scale - 1);
+      expect(layout.markHeight).toBeLessThanOrEqual((viewport.largeLogo ? 81 : 65) * scale + 1);
+      expect(layout.wordFontSize).toBeCloseTo((viewport.largeLogo ? 52 : 34.4) * scale, 0);
       if (!viewport.word) {
         expect(layout.trailWidth).toBe(0);
         expect(layout.trailHeight).toBe(0);
       } else if (viewport.largeLogo) {
-        expect(layout.trailWidth).toBeGreaterThanOrEqual(147);
-        expect(layout.trailWidth).toBeLessThanOrEqual(152);
-        expect(layout.trailHeight).toBeGreaterThanOrEqual(15);
-        expect(layout.trailHeight).toBeLessThanOrEqual(17);
+        expect(layout.trailWidth).toBeGreaterThanOrEqual(147 * scale - 1);
+        expect(layout.trailWidth).toBeLessThanOrEqual(152 * scale + 1);
+        expect(layout.trailHeight).toBeGreaterThanOrEqual(15 * scale - 1);
+        expect(layout.trailHeight).toBeLessThanOrEqual(17 * scale + 1);
       } else {
         expect(layout.trailWidth).toBeGreaterThanOrEqual(96);
         expect(layout.trailWidth).toBeLessThanOrEqual(101);
@@ -432,7 +433,7 @@ test("mobile menu is focus-managed, marks the current page and preserves locale 
 
   const mobileNavigation = page.getByRole("navigation", { name: "Mobile navigation" });
   await expect(mobileNavigation.getByRole("link", { name: /Home$/ })).toBeFocused();
-  await expect(mobileNavigation.getByRole("link", { name: /About me$/ })).toHaveAttribute(
+  await expect(mobileNavigation.getByRole("link", { name: /Team$/ })).toHaveAttribute(
     "aria-current",
     "page",
   );

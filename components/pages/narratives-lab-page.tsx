@@ -81,7 +81,7 @@ export function NarrativesLabPage() {
     <div className="overflow-hidden bg-[var(--senda-bg)] text-[var(--senda-ink)]">
       <header className="senda-night border-b border-[var(--senda-atmosphere-border)] px-5 pb-20 pt-32 text-[var(--senda-atmosphere-ink)] sm:px-8 sm:pb-24 sm:pt-36 lg:px-12 lg:pb-28 xl:px-20">
         <UniverseField className="left-[28%] text-[var(--senda-atmosphere-sky)] opacity-20" />
-        <div className="relative mx-auto grid w-full max-w-[1240px] gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
+        <div className="relative mx-auto grid w-full max-w-[1430px] gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
           <div className="max-w-3xl">
             <p className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">
               {t("hero.eyebrow")}
@@ -160,7 +160,7 @@ export function NarrativesLabPage() {
         id="interes-laboratorio"
         className="scroll-mt-24 px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20"
       >
-        <div className="mx-auto grid max-w-[1120px] gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:gap-16">
+        <div className="mx-auto grid max-w-[1290px] gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:gap-16">
           <div className="lg:pt-8">
             <p className="senda-coordinate-label text-[var(--senda-accent-dark)]">{t("closing.eyebrow")}</p>
             <h2 className="mt-6 max-w-[15ch] text-pretty font-heading text-[clamp(2rem,4vw,3.25rem)] leading-[1.06] tracking-[-0.04em]">

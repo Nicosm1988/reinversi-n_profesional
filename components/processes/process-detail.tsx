@@ -13,7 +13,7 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
     <article className={`senda-process-detail senda-process-detail--${process.accent} bg-[var(--senda-bg)] text-[var(--senda-ink)]`}>
       <header className="senda-night border-b border-[var(--senda-atmosphere-border)] px-5 pb-20 pt-32 text-[var(--senda-atmosphere-ink)] sm:px-8 sm:pb-24 sm:pt-36 lg:px-12 xl:px-20">
         <UniverseField className="left-[28%] text-[var(--senda-atmosphere-sky)] opacity-20" />
-        <div className="relative mx-auto max-w-[1120px]">
+        <div className="relative mx-auto max-w-[1290px]">
           {!process.secondary ? (
             <Link href="/transiciones-laborales" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--senda-atmosphere-muted)] transition-colors hover:text-[var(--senda-atmosphere-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" /> {t("back")}
@@ -44,7 +44,7 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
       </header>
 
       <section className="px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
-        <div className="mx-auto grid max-w-[1080px] gap-6 lg:grid-cols-[0.52fr_1fr] lg:gap-14">
+        <div className="mx-auto grid max-w-[1250px] gap-6 lg:grid-cols-[0.52fr_1fr] lg:gap-14">
           <p className="senda-kicker">{t("introduction")}</p>
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="senda-editorial-card rounded-[1.2rem] p-7">
@@ -68,7 +68,7 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
 
       {process.stageKeys.length > 0 ? (
         <section className="border-y border-[var(--senda-border)] bg-[var(--senda-stone)] px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
-          <div className="mx-auto max-w-[1080px]">
+          <div className="mx-auto max-w-[1250px]">
             <div className="flex flex-col justify-between gap-7 border-b border-[var(--senda-border)] pb-8 sm:flex-row sm:items-end">
               <div>
                 <p className="senda-kicker">{t("journey.eyebrow")}</p>
@@ -92,7 +92,7 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
 
       {process.takeawayKeys.length > 0 ? (
         <section className="px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
-          <div data-cursor-glow className="senda-editorial-card mx-auto grid max-w-[1080px] gap-10 overflow-hidden rounded-[1.35rem] p-7 sm:p-10 lg:grid-cols-[0.7fr_1fr] lg:p-12">
+          <div data-cursor-glow className="senda-editorial-card mx-auto grid max-w-[1250px] gap-10 overflow-hidden rounded-[1.35rem] p-7 sm:p-10 lg:grid-cols-[0.7fr_1fr] lg:p-12">
             <div className="relative z-10">
               <p className="senda-kicker">{t("takeaways.eyebrow")}</p>
               <h2 className="mt-4 max-w-[14ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("takeaways.title")}</h2>
@@ -111,7 +111,7 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
 
       {process.key === "compass" ? (
         <section className="px-5 pb-10 pt-14 sm:px-8 sm:pt-16 lg:px-12 lg:pt-20 xl:px-20">
-          <div className="senda-night relative mx-auto max-w-[1080px] overflow-hidden rounded-[1.4rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16">
+          <div className="senda-night relative mx-auto max-w-[1250px] overflow-hidden rounded-[1.4rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16">
             <UniverseField compact className="left-[35%] text-[var(--senda-atmosphere-sky)] opacity-20" />
             <div className="relative mx-auto max-w-3xl">
               <h2 className="max-w-[18ch] text-pretty font-heading text-[clamp(2rem,4vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t(`items.${process.key}.lead`)}</h2>
