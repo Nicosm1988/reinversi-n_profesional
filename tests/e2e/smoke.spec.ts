@@ -15,7 +15,7 @@ test("smoke: multipage gateway, public intake and protected account routes are a
   await expect(page).toHaveTitle(/Senda/i);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(/Acompañamos\s+transiciones laborales/);
   await expect(page.locator('main a[href="/transiciones-laborales"]').first()).toBeVisible();
-  await expect(page.locator('main a[href="/encontrar-mi-recorrido"]').first()).toBeVisible();
+  await expect(page.locator('main a[href="/test-anclas-de-carrera"]').first()).toBeVisible();
 
   await page.goto("/encontrar-mi-recorrido");
   await expect(page).toHaveURL(/\/encontrar-mi-recorrido$/);

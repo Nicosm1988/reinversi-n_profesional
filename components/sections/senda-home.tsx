@@ -43,7 +43,7 @@ export function SendaHome() {
               </p>
             </div>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/encontrar-mi-recorrido" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] shadow-[0_20px_50px_-28px_rgba(0,0,0,.55)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
+              <Link href="/test-anclas-de-carrera" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] shadow-[0_20px_50px_-28px_rgba(0,0,0,.55)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
                 {t("hero.primaryCta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <Link href="/transiciones-laborales" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-atmosphere-control)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-ink)] backdrop-blur-sm transition-colors hover:bg-[var(--senda-atmosphere-control-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]">
@@ -55,22 +55,9 @@ export function SendaHome() {
         </div>
       </section>
 
-      <section className="border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)] px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
-        <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
-          <p className="senda-kicker">{t("finder.eyebrow")}</p>
-          <div>
-            <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("finder.title")}</h2>
-            <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">
-              {t.rich("finder.description", { strong: (chunks) => <strong className="font-bold text-[var(--senda-ink)]">{chunks}</strong> })}
-            </p>
-            <Link href="/encontrar-mi-recorrido" className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-action)] px-7 py-3 text-sm font-bold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)]">
-              {t("finder.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Situations, method y laboratorio: retirados de la home a pedido del cliente para acortar la página.
+      {/* Finder (orientación inicial /encontrar-mi-recorrido), situations, method y laboratorio:
+          retirados de la home a pedido del cliente. El botón "Reconocer en qué momento estoy" se
+          saca de toda la web; el finder se revisa con preguntas nuevas antes de volver a mostrarse.
           Los componentes y las rutas siguen disponibles para reactivarlos más adelante. */}
 
       <section className="border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)] px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">

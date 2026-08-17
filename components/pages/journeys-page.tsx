@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 import { compassProcess, transitionServices } from "@/lib/data/senda-processes";
-import { ClosingCta, PageHero, PageSection } from "@/components/pages/page-primitives";
+import { PageHero, PageSection } from "@/components/pages/page-primitives";
 import { ServiceInterestForm } from "@/components/forms/service-interest-form";
 
 export function TransitionsPage() {
@@ -27,9 +27,6 @@ export function TransitionsPage() {
                 <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)] sm:w-8 sm:shrink-0">{process.number}</span>
                 <div className="sm:w-[15rem] sm:shrink-0">
                   <h2 className="text-pretty font-heading text-2xl leading-[1.1] tracking-[-0.03em] lg:text-3xl">{t(`items.${process.key}.title`)}</h2>
-                  <Link href={`/transiciones-laborales/${process.slug}`} className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold underline decoration-[var(--senda-terracotta)]/55 underline-offset-4 transition-colors hover:text-[var(--senda-accent)]">
-                    {t(`items.${process.key}.cta`)} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  </Link>
                 </div>
                 <p className="max-w-xl text-base leading-7 text-[var(--senda-muted)]">{t(`items.${process.key}.lead`)}</p>
               </div>
@@ -59,7 +56,8 @@ export function TransitionsPage() {
         </div>
       </PageSection>
 
-      <ClosingCta title={t("closing.title")} description={t("closing.description")} label={t("closing.cta")} href="/encontrar-mi-recorrido" />
+      {/* Cierre "Reconocer en qué momento estoy" retirado de toda la web; el finder se revisa
+          con preguntas nuevas antes de volver a mostrarse. El componente sigue disponible. */}
     </div>
   );
 }

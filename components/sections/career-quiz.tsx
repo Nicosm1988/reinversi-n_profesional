@@ -987,9 +987,6 @@ export function CareerQuiz({
                         <div className="flex-1">
                           <div className="mb-2 flex items-center justify-between gap-4">
                             <span className="font-bold text-foreground">{result.name}</span>
-                            <span className="text-sm font-medium text-muted-foreground">
-                              {t("resultsScore", { score: result.score })}
-                            </span>
                           </div>
                           <div className="h-2.5 overflow-hidden rounded-full bg-muted">
                             <motion.div

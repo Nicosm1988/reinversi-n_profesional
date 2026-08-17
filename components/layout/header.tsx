@@ -355,9 +355,6 @@ export function Header() {
           ) : (
             <span className="h-3 w-14 animate-pulse rounded-full bg-[var(--senda-border)]" aria-label={t("authLoading")} />
           )}
-          <Link href="/encontrar-mi-recorrido" className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(20,14,30,.85)] hover:bg-[var(--senda-action-hover)]">
-            {t("ctaDiagnostic")}
-          </Link>
         </div>
 
         <div className="flex shrink-0 items-center gap-1.5 min-[1600px]:hidden">
@@ -462,9 +459,6 @@ export function Header() {
                 })}
               </ul>
             </nav>
-            <Link href="/encontrar-mi-recorrido" onClick={() => setMobileMenuOpen(false)} className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--senda-ink)] px-6 py-3.5 text-sm font-bold text-white dark:bg-[#f5f2f7] dark:text-[#1d172c]">
-              {t("ctaDiagnostic")}
-            </Link>
             <div className="mt-auto pt-10">
               {authState.status === "authenticated" ? (
                 <div className="grid gap-2 text-sm font-semibold text-[var(--senda-muted)]">

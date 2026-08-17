@@ -10,16 +10,16 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("home is a short gateway to the finder and secondary proposals", async ({ page }) => {
+test("home is a short gateway to the career anchors test and secondary proposals", async ({ page }) => {
   await page.goto("/");
 
   const home = page.locator("main .senda-home");
-  await expect(home.locator(":scope > section")).toHaveCount(4);
+  await expect(home.locator(":scope > section")).toHaveCount(3);
   await expect(home.locator("article")).toHaveCount(0);
   await expect(home.locator("details")).toHaveCount(0);
 
   await expect(home.getByRole("heading", { level: 1 })).toContainText(/Acompañamos\s+transiciones laborales/);
-  await expect(home.locator('a[href="/encontrar-mi-recorrido"]').first()).toBeVisible();
+  await expect(home.locator('a[href="/test-anclas-de-carrera"]').first()).toBeVisible();
   await expect(home.locator('a[href="/transiciones-laborales"]').first()).toBeVisible();
   await expect(home.locator('a[href="/laboratorio-narrativas-laborales-alternativas"]')).toHaveCount(0);
   await expect(home.locator('a[href="/brujulas"]')).toBeVisible();
@@ -39,10 +39,7 @@ test("home is a short gateway to the finder and secondary proposals", async ({ p
   expect(publicText).not.toMatch(/No creemos que una persona sea (?:su|un) currículum/i);
 });
 
-for (const locale of [
-  { prefix: "", finderHref: "/encontrar-mi-recorrido" },
-  { prefix: "/en", finderHref: "/en/encontrar-mi-recorrido" },
-] as const) {
+for (const locale of [{ prefix: "" }, { prefix: "/en" }] as const) {
   test(`${locale.prefix || "/es"} presents every complete service`, async ({ page }) => {
     for (const service of [
       { path: "/transiciones-laborales/explorar-direccion", stages: 7 },
@@ -56,9 +53,6 @@ for (const locale of [
       await page.goto(`${locale.prefix}${service.path}`);
 
       await expect(page.locator("main article ol > li")).toHaveCount(service.stages);
-      await expect(
-        page.locator(`main a[href="${locale.finderHref}"]`).last(),
-      ).toBeVisible();
 
       const publicText = await page.locator("main").innerText();
       expect(publicText).not.toMatch(/\b(?:1500|1800|USD)\b|US\$/i);

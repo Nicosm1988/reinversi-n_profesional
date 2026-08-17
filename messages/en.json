@@ -432,7 +432,7 @@
       "titleAccent": "career transitions",
       "rhythm": "Your trajectory is not discarded.\nAlternatives can be explored.\nNext steps can be built.",
       "description": "A space to explore interests, <strong>recognize alternatives, and build decisions</strong> in relation to your trajectory, your interests, and in dialogue with today's context.",
-      "primaryCta": "Recognize where I am now",
+      "primaryCta": "Recognize my career anchors",
       "secondaryCta": "Explore career transitions"
     },
     "signals": {
@@ -654,12 +654,12 @@
     },
     "hero": {
       "eyebrow": "Career transitions",
-      "title": "A trajectory can open more than one direction.",
-      "description": "Senda organizes its proposals around each person's situation, bringing together identity, experience, possibilities, and context."
+      "title": "Personalized advisory sessions",
+      "description": "Taking a pause to gain perspective is an act of health in the face of work pressures. At Senda we work with people, teams, and organizations going through moments of change, uncertainty, or reassessment who need a space to understand what's happening, put it into words, and explore how to move forward."
     },
     "intro": {
-      "title": "Recognizing the moment helps you ask better questions.",
-      "description": "These proposals are not fixed formulas. They are starting points for working through a transition with depth, criteria, and possible next steps."
+      "title": "Identify which proposal can best support the moment you're going through.",
+      "description": "We support career transitions without reducing them to formulas, prefabricated answers, or productivity mandates. We offer personalized paths to review trajectories, recognize interests, open up possibilities, and reclaim the space to choose how to continue."
     },
     "items": {
       "direction": {

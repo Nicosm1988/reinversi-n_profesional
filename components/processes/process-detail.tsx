@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Check, Clock3 } from "lucide-react";
+import { ArrowLeft, Check, Clock3 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { getSendaProcess } from "@/lib/data/senda-processes";
 import { Link } from "@/navigation";
@@ -93,19 +93,8 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
         </div>
       </section>
 
-      <section className="px-5 pb-10 sm:px-8 lg:px-12 xl:px-20">
-        <div className="senda-night relative mx-auto max-w-[1080px] overflow-hidden rounded-[1.4rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16">
-          <UniverseField compact className="left-[35%] text-[var(--senda-atmosphere-sky)] opacity-20" />
-          <div className="relative mx-auto max-w-3xl">
-            <p className="senda-coordinate-label text-[var(--senda-atmosphere-gold)]">{t("cta.eyebrow")}</p>
-            <h2 className="mt-5 max-w-[18ch] text-pretty font-heading text-[clamp(2rem,4vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("cta.title")}</h2>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--senda-atmosphere-muted)] sm:text-lg">{t("cta.description")}</p>
-            <Link href="/encontrar-mi-recorrido" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]">
-              {t("cta.button")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Cierre "Reconocer en qué momento estoy" retirado de toda la web; el finder se revisa
+          con preguntas nuevas antes de volver a mostrarse. */}
     </article>
   );
 }

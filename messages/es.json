@@ -432,7 +432,7 @@
       "titleAccent": "transiciones laborales",
       "rhythm": "Tu trayectoria no se desecha.\nLas alternativas se exploran.\nLos próximos pasos se construyen.",
       "description": "Un espacio para explorar intereses, <strong>reconocer alternativas y construir decisiones</strong> en relación con tu trayectoria, tus intereses y en diálogo con el contexto actual.",
-      "primaryCta": "Reconocer en qué momento estoy",
+      "primaryCta": "Reconocer mis anclas de carrera",
       "secondaryCta": "Explorar transiciones laborales"
     },
     "signals": {
@@ -654,12 +654,12 @@
     },
     "hero": {
       "eyebrow": "Transiciones laborales",
-      "title": "Una trayectoria puede abrir más de una dirección.",
-      "description": "Senda organiza sus propuestas según la situación que atraviesa cada persona, integrando identidad, experiencia, posibilidades y contexto."
+      "title": "Asesorías personalizadas",
+      "description": "Darse una pausa para tomar perspectiva es un acto de salud frente a las exigencias laborales. En Senda trabajamos con personas, equipos y organizaciones que atraviesan momentos de cambio, incertidumbre o revisión y necesitan un espacio para comprender lo que está pasando, ponerlo en palabras y explorar cómo seguir."
     },
     "intro": {
-      "title": "Reconocer el momento permite formular mejores preguntas.",
-      "description": "Las propuestas no son fórmulas cerradas. Funcionan como puntos de partida para trabajar una transición con profundidad, criterios y próximos pasos posibles."
+      "title": "Identifica qué propuesta puede acompañar mejor el momento que estás atravesando.",
+      "description": "Acompañamos transiciones laborales sin reducirlas a recetas, respuestas prefabricadas ni mandatos de productividad. Proponemos recorridos personalizados para revisar trayectorias, reconocer intereses, abrir posibilidades y recuperar espacio para elegir cómo continuar."
     },
     "items": {
       "direction": {

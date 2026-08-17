@@ -30,7 +30,7 @@ test("Senda remains readable on a narrow mobile viewport", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Reconocer en qué momento estoy/i }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /Reconocer mis anclas de carrera/i }).first()).toBeVisible();
 
   const hasHorizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   expect(hasHorizontalOverflow).toBe(false);
