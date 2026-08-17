@@ -82,7 +82,7 @@ export function CookieBanner() {
           className="pointer-events-none fixed inset-0 z-[60] flex items-end justify-center p-3 sm:justify-end sm:p-5"
           style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 0.75rem)" }}
         >
-          <div role="region" aria-label={t("title")} className="senda-editorial-card senda-cookie-card pointer-events-auto max-h-[68svh] w-full max-w-md overscroll-contain overflow-y-auto rounded-[1.2rem] text-card-foreground shadow-[0_28px_74px_-30px_rgba(10,20,34,.72)] sm:max-h-[72vh] dark:border-white/15 dark:shadow-[0_28px_74px_-30px_rgba(0,0,0,.88)]">
+          <div role="region" aria-label={t("title")} className="senda-editorial-card senda-cookie-card pointer-events-auto max-h-[68svh] w-full max-w-md overscroll-contain overflow-y-auto rounded-[1.2rem] text-card-foreground shadow-[0_28px_74px_-30px_rgba(20,14,30,.72)] sm:max-h-[72vh] dark:border-white/15 dark:shadow-[0_28px_74px_-30px_rgba(10,6,16,.88)]">
             {!showPreferences ? (
               <div className="p-4 sm:p-5 md:p-6">
                 <div className="mb-3 flex items-start justify-between gap-4">
@@ -102,7 +102,7 @@ export function CookieBanner() {
                   <Button
                     variant="outline"
                     onClick={rejectAll}
-                    className="h-10 rounded-full px-3 text-xs font-semibold sm:h-11 sm:px-6 sm:text-sm dark:border-white/20 dark:bg-white/5 dark:text-[#f6efe7] dark:hover:bg-white/10"
+                    className="h-10 rounded-full px-3 text-xs font-semibold sm:h-11 sm:px-6 sm:text-sm dark:border-white/20 dark:bg-white/5 dark:text-[#f5f2f7] dark:hover:bg-white/10"
                   >
                     {t("rejectCookies")}
                   </Button>
@@ -115,7 +115,7 @@ export function CookieBanner() {
                   </Button>
                 </div>
 
-                <button onClick={handleOpenPreferences} className="rounded-sm text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card sm:text-sm dark:text-[#cf8a70]">
+                <button onClick={handleOpenPreferences} className="rounded-sm text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card sm:text-sm dark:text-[#e8459e]">
                   {t("managePreferences")}
                 </button>
               </div>

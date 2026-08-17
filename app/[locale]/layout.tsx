@@ -30,8 +30,8 @@ const raleway = localFont({
 export const viewport: Viewport = {
   colorScheme: "light dark",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4f1ea" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d1725" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f5f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#1d172c" },
   ],
 };
 
@@ -85,7 +85,7 @@ export default async function RootLayout(
           <PointerIllumination />
           <NextIntlClientProvider messages={messages}>
             <CookieProvider>
-            <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 rounded-full bg-[var(--senda-ink)] px-5 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0 dark:bg-[#f4efe4] dark:text-[#272b23]">
+            <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-24 rounded-full bg-[var(--senda-ink)] px-5 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0 dark:bg-[#fafafa] dark:text-[#1d172c]">
               {locale === "en" ? "Skip to content" : "Saltar al contenido"}
             </a>
             <Header />

@@ -5,188 +5,188 @@
 @layer base {
   :root {
     color-scheme: light;
-    --senda-bg: #f4f1ea;
-    --senda-ink: #17263a;
+    --senda-bg: #f5f5f5;
+    --senda-ink: #1d172c;
     /* Fixed dark ink for light CTA labels that must stay dark in both themes. */
-    --senda-ink-fixed: #111d2c;
-    --senda-dark: #101c2c;
-    --senda-dark-hover: #203650;
-    --senda-light: #f7f3eb;
-    --senda-accent: #92513f;
-    --senda-accent-soft: #d8a08a;
-    --senda-accent-dark: #92513f;
-    --senda-border: #ced2d3;
-    --senda-card: #fbf9f4;
-    --senda-paper: #faf7f0;
-    --senda-stone: #e9ebe9;
-    --senda-section: #eaebe8;
-    --senda-section-warm: #e9e2d8;
-    --senda-muted: #5b6876;
-    --senda-olive: #5c7776;
-    --senda-terracotta: #92513f;
-    --senda-action: #92513f;
-    --senda-action-hover: #743b2e;
-    --senda-charcoal: #17263a;
-    --senda-gold: #c2a366;
-    --senda-sky: #89a9bd;
-    --senda-atmosphere-ink: #17263a;
-    --senda-atmosphere-muted: #526272;
-    --senda-atmosphere-border: rgba(23, 38, 58, 0.16);
-    --senda-atmosphere-line: rgba(23, 38, 58, 0.2);
-    --senda-atmosphere-grid: rgba(23, 38, 58, 0.11);
-    --senda-atmosphere-gold: #765a23;
-    --senda-atmosphere-accent: #92513f;
-    --senda-atmosphere-sky: #56788c;
+    --senda-ink-fixed: #1d172c;
+    --senda-dark: #1d172c;
+    --senda-dark-hover: #2c2440;
+    --senda-light: #fafafa;
+    --senda-accent: #cc148c;
+    --senda-accent-soft: #e88bc4;
+    --senda-accent-dark: #cc148c;
+    --senda-border: #e1dce8;
+    --senda-card: #ffffff;
+    --senda-paper: #fbf9fc;
+    --senda-stone: #ece8ef;
+    --senda-section: #eae7ee;
+    --senda-section-warm: #f3e6f0;
+    --senda-muted: #57506b;
+    --senda-olive: #6b3fa0;
+    --senda-terracotta: #cc148c;
+    --senda-action: #cc148c;
+    --senda-action-hover: #a80e70;
+    --senda-charcoal: #1d172c;
+    --senda-gold: #d50034;
+    --senda-sky: #9b7fd1;
+    --senda-atmosphere-ink: #1d172c;
+    --senda-atmosphere-muted: #4f4864;
+    --senda-atmosphere-border: rgba(29, 23, 44, 0.16);
+    --senda-atmosphere-line: rgba(29, 23, 44, 0.2);
+    --senda-atmosphere-grid: rgba(29, 23, 44, 0.11);
+    --senda-atmosphere-gold: #d50034;
+    --senda-atmosphere-accent: #cc148c;
+    --senda-atmosphere-sky: #9b7fd1;
     --senda-atmosphere-control: rgba(255, 255, 255, 0.5);
     --senda-atmosphere-control-hover: rgba(255, 255, 255, 0.78);
-    --senda-atmosphere-action-bg: #17263a;
-    --senda-atmosphere-action-ink: #f7f3eb;
-    --senda-atmosphere-action-hover: #203650;
-    --senda-atmosphere-ring: #17263a;
-    --senda-atmosphere-ring-offset: #e9edef;
+    --senda-atmosphere-action-bg: #1d172c;
+    --senda-atmosphere-action-ink: #fafafa;
+    --senda-atmosphere-action-hover: #2c2440;
+    --senda-atmosphere-ring: #1d172c;
+    --senda-atmosphere-ring-offset: #ece8ef;
     --senda-atmosphere-bg:
-      radial-gradient(circle at 78% 18%, rgba(86, 120, 140, 0.18), transparent 27%),
-      radial-gradient(circle at 16% 82%, rgba(146, 81, 63, 0.11), transparent 24%),
-      linear-gradient(145deg, #f4efe7 0%, #e7edef 54%, #f1f2ee 100%);
+      radial-gradient(circle at 78% 18%, rgba(184, 160, 232, 0.18), transparent 27%),
+      radial-gradient(circle at 16% 82%, rgba(204, 20, 140, 0.11), transparent 24%),
+      linear-gradient(145deg, #f6f3f8 0%, #ece6f2 54%, #f4f1f6 100%);
     --senda-on-olive: #ffffff;
-    --quiz-bg: #eef0ed;
-    --quiz-ink: #2f3647;
-    --quiz-muted: #596173;
-    --quiz-border: #d7c3ae;
-    --quiz-border-soft: #dcc8b5;
-    --quiz-surface: #fffaf4;
-    --quiz-surface-raised: #fbf9f4;
-    --quiz-surface-soft: #f6efe7;
-    --quiz-surface-muted: #f4e9de;
-    --quiz-surface-warm: #f0dfd1;
-    --quiz-surface-accent: #f4dfd3;
-    --quiz-choice-hover: #f4e5d8;
-    --quiz-accent: #92513f;
-    --quiz-accent-strong: #743b2e;
-    --quiz-accent-soft: #eadacc;
-    --quiz-danger: #9f422d;
-    --quiz-danger-soft: #f5e3dc;
-    --quiz-shadow: rgba(10, 20, 34, 0.5);
-    --background: 39 26% 94%;
-    --foreground: 215 43% 16%;
+    --quiz-bg: #f0eef3;
+    --quiz-ink: #241a33;
+    --quiz-muted: #5c5470;
+    --quiz-border: #e6c7dd;
+    --quiz-border-soft: #ecd3e3;
+    --quiz-surface: #fffafd;
+    --quiz-surface-raised: #fbf7fa;
+    --quiz-surface-soft: #f7eef4;
+    --quiz-surface-muted: #f3e3ee;
+    --quiz-surface-warm: #f0d6e6;
+    --quiz-surface-accent: #f4d9ec;
+    --quiz-choice-hover: #f4dced;
+    --quiz-accent: #cc148c;
+    --quiz-accent-strong: #a80e70;
+    --quiz-accent-soft: #ecd0e4;
+    --quiz-danger: #c41e3a;
+    --quiz-danger-soft: #f8dde1;
+    --quiz-shadow: rgba(29, 23, 44, 0.5);
+    --background: 0 0% 96%;
+    --foreground: 257 31% 13%;
 
     --card: 0 0% 100%;
-    --card-foreground: 45 6% 11%;
+    --card-foreground: 257 31% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 45 6% 11%;
+    --popover-foreground: 257 31% 13%;
 
-    --primary: 215 43% 16%;
-    --primary-foreground: 39 31% 95%;
+    --primary: 257 31% 13%;
+    --primary-foreground: 276 24% 96%;
 
-    --secondary: 13 40% 41%;
+    --secondary: 321 82% 44%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 180 5% 89%;
-    --muted-foreground: 211 13% 41%;
+    --muted: 274 18% 92%;
+    --muted-foreground: 256 14% 37%;
 
-    --accent: 179 13% 41%;
-    --accent-foreground: 39 31% 95%;
+    --accent: 267 43% 44%;
+    --accent-foreground: 276 24% 96%;
 
-    --destructive: 0 72% 42%;
+    --destructive: 350 73% 44%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 190 5% 82%;
-    --input: 190 5% 82%;
-    --ring: 179 13% 41%;
+    --border: 265 21% 89%;
+    --input: 265 21% 89%;
+    --ring: 267 43% 44%;
 
     --radius: 1rem;
   }
 
   .dark {
     color-scheme: dark;
-    --senda-bg: #0d1725;
-    --senda-ink: #edf0f2;
-    --senda-dark: #09121f;
-    --senda-dark-hover: #213650;
-    --senda-light: #f5f1e8;
-    --senda-accent: #cf8a70;
-    --senda-accent-soft: #e0aa96;
-    --senda-accent-dark: #e2a088;
-    --senda-border: #314154;
-    --senda-card: #152337;
-    --senda-paper: #17273a;
-    --senda-stone: #111e2e;
-    --senda-section: #111f31;
-    --senda-section-warm: #202b37;
-    --senda-muted: #b9c2ca;
-    --senda-olive: #7fa09d;
-    --senda-terracotta: #cf8a70;
-    --senda-action: #92513f;
-    --senda-action-hover: #743b2e;
-    --senda-charcoal: #0d1725;
-    --senda-gold: #d0b77d;
-    --senda-sky: #8eb3c9;
-    --senda-atmosphere-ink: #f5f1e8;
-    --senda-atmosphere-muted: #d0d8dd;
-    --senda-atmosphere-border: rgba(222, 231, 236, 0.14);
-    --senda-atmosphere-line: rgba(223, 232, 237, 0.18);
-    --senda-atmosphere-grid: rgba(223, 232, 237, 0.16);
-    --senda-atmosphere-gold: #d2b879;
-    --senda-atmosphere-accent: #cf8a70;
-    --senda-atmosphere-sky: #89a9bd;
+    --senda-bg: #1d172c;
+    --senda-ink: #f5f2f7;
+    --senda-dark: #120e1c;
+    --senda-dark-hover: #2c2440;
+    --senda-light: #f5f2f7;
+    --senda-accent: #e8459e;
+    --senda-accent-soft: #f0a8d2;
+    --senda-accent-dark: #e8459e;
+    --senda-border: #3a3050;
+    --senda-card: #241d38;
+    --senda-paper: #221b34;
+    --senda-stone: #1a1428;
+    --senda-section: #1c1730;
+    --senda-section-warm: #2a1f38;
+    --senda-muted: #c9bfe0;
+    --senda-olive: #c9a6f0;
+    --senda-terracotta: #e8459e;
+    --senda-action: #cc148c;
+    --senda-action-hover: #a80e70;
+    --senda-charcoal: #1d172c;
+    --senda-gold: #ff6b9e;
+    --senda-sky: #b8a0e8;
+    --senda-atmosphere-ink: #f5f2f7;
+    --senda-atmosphere-muted: #d6cce8;
+    --senda-atmosphere-border: rgba(245, 242, 247, 0.14);
+    --senda-atmosphere-line: rgba(245, 242, 247, 0.18);
+    --senda-atmosphere-grid: rgba(245, 242, 247, 0.16);
+    --senda-atmosphere-gold: #ff6b9e;
+    --senda-atmosphere-accent: #e8459e;
+    --senda-atmosphere-sky: #b8a0e8;
     --senda-atmosphere-control: rgba(255, 255, 255, 0.06);
     --senda-atmosphere-control-hover: rgba(255, 255, 255, 0.12);
-    --senda-atmosphere-action-bg: #f5f1e8;
-    --senda-atmosphere-action-ink: #17263a;
+    --senda-atmosphere-action-bg: #f5f2f7;
+    --senda-atmosphere-action-ink: #1d172c;
     --senda-atmosphere-action-hover: #ffffff;
-    --senda-atmosphere-ring: #f5f1e8;
-    --senda-atmosphere-ring-offset: #101c2c;
+    --senda-atmosphere-ring: #f5f2f7;
+    --senda-atmosphere-ring-offset: #120e1c;
     --senda-atmosphere-bg:
-      radial-gradient(circle at 78% 18%, rgba(137, 169, 189, 0.16), transparent 27%),
-      radial-gradient(circle at 16% 82%, rgba(184, 109, 84, 0.13), transparent 24%),
-      linear-gradient(145deg, #0a1422 0%, #13243a 54%, #0d1929 100%);
-    --senda-on-olive: #09121f;
-    --quiz-bg: #0d1725;
-    --quiz-ink: #edf0f2;
-    --quiz-muted: #b9c2ca;
-    --quiz-border: #3b4d61;
-    --quiz-border-soft: #314154;
-    --quiz-surface: #0f1d2d;
-    --quiz-surface-raised: #152337;
-    --quiz-surface-soft: #17273a;
-    --quiz-surface-muted: #1b2c40;
-    --quiz-surface-warm: #2c2c36;
-    --quiz-surface-accent: #342d35;
-    --quiz-choice-hover: #24364b;
-    --quiz-accent: #cf8a70;
-    --quiz-accent-strong: #e2a088;
-    --quiz-accent-soft: #3b3540;
-    --quiz-danger: #f1a28d;
-    --quiz-danger-soft: #3c2528;
+      radial-gradient(circle at 78% 18%, rgba(184, 160, 232, 0.16), transparent 27%),
+      radial-gradient(circle at 16% 82%, rgba(232, 69, 158, 0.13), transparent 24%),
+      linear-gradient(145deg, #16101f 0%, #241c38 54%, #1a1428 100%);
+    --senda-on-olive: #1d172c;
+    --quiz-bg: #1d172c;
+    --quiz-ink: #f5f2f7;
+    --quiz-muted: #c9bfe0;
+    --quiz-border: #4a3a5c;
+    --quiz-border-soft: #3a3050;
+    --quiz-surface: #201a30;
+    --quiz-surface-raised: #241d38;
+    --quiz-surface-soft: #221b34;
+    --quiz-surface-muted: #2a2140;
+    --quiz-surface-warm: #362a3a;
+    --quiz-surface-accent: #3a2a3a;
+    --quiz-choice-hover: #2e2444;
+    --quiz-accent: #e8459e;
+    --quiz-accent-strong: #f080b8;
+    --quiz-accent-soft: #3a2c3a;
+    --quiz-danger: #ff8a80;
+    --quiz-danger-soft: #3a2228;
     --quiz-shadow: rgba(0, 0, 0, 0.46);
-    --background: 216 47% 10%;
-    --foreground: 204 16% 94%;
+    --background: 257 31% 13%;
+    --foreground: 276 24% 96%;
 
-    --card: 225 17% 12%;
-    --card-foreground: 0 0% 97%;
+    --card: 256 32% 17%;
+    --card-foreground: 276 24% 96%;
 
-    --popover: 225 17% 12%;
-    --popover-foreground: 0 0% 97%;
+    --popover: 256 32% 17%;
+    --popover-foreground: 276 24% 96%;
 
-    --primary: 204 16% 94%;
-    --primary-foreground: 216 47% 10%;
+    --primary: 276 24% 96%;
+    --primary-foreground: 257 31% 13%;
 
-    --secondary: 16 45% 63%;
-    --secondary-foreground: 216 47% 10%;
+    --secondary: 327 78% 59%;
+    --secondary-foreground: 257 31% 13%;
 
-    --muted: 215 35% 17%;
-    --muted-foreground: 207 13% 73%;
+    --muted: 256 32% 17%;
+    --muted-foreground: 258 35% 81%;
 
-    --accent: 178 17% 56%;
-    --accent-foreground: 216 47% 10%;
+    --accent: 268 71% 80%;
+    --accent-foreground: 257 31% 13%;
 
-    --destructive: 0 72% 70%;
-    --destructive-foreground: 223 18% 12%;
+    --destructive: 5 100% 75%;
+    --destructive-foreground: 256 32% 17%;
 
-    --border: 214 25% 26%;
-    --input: 214 25% 26%;
-    --ring: 178 17% 56%;
+    --border: 259 25% 25%;
+    --input: 259 25% 25%;
+    --ring: 268 71% 80%;
   }
 
   * {
@@ -201,17 +201,17 @@
   body {
     @apply min-h-screen bg-background text-foreground antialiased;
     background-image:
-      radial-gradient(circle at 14% -6%, rgba(137, 169, 189, 0.14), transparent 34%),
-      radial-gradient(circle at 88% 4%, rgba(184, 109, 84, 0.09), transparent 30%),
-      linear-gradient(180deg, #f8f5ee 0%, #f1f0ea 46%, #f7f3ec 100%);
+      radial-gradient(circle at 14% -6%, rgba(184, 160, 232, 0.14), transparent 34%),
+      radial-gradient(circle at 88% 4%, rgba(204, 20, 140, 0.09), transparent 30%),
+      linear-gradient(180deg, #f8f6fa 0%, #f1eef5 46%, #f7f4f9 100%);
     text-rendering: optimizeLegibility;
   }
 
   .dark body {
     background-image:
-      radial-gradient(circle at 12% -4%, rgba(137, 169, 189, 0.1), transparent 34%),
-      radial-gradient(circle at 88% 4%, rgba(207, 138, 112, 0.08), transparent 30%),
-      linear-gradient(180deg, #0d1725 0%, #101d2c 45%, #0d1725 100%);
+      radial-gradient(circle at 12% -4%, rgba(184, 160, 232, 0.1), transparent 34%),
+      radial-gradient(circle at 88% 4%, rgba(204, 20, 140, 0.08), transparent 30%),
+      linear-gradient(180deg, #1d172c 0%, #241d38 45%, #1d172c 100%);
   }
 
   a {
@@ -503,7 +503,7 @@ body {
 .senda-editorial-card {
   border: 1px solid color-mix(in srgb, var(--senda-border) 88%, transparent);
   background: color-mix(in srgb, var(--senda-paper) 94%, transparent);
-  box-shadow: 0 30px 80px -60px rgba(10, 20, 34, 0.68);
+  box-shadow: 0 30px 80px -60px rgba(20, 14, 30, 0.68);
 }
 
 .senda-cookie-card {
@@ -675,7 +675,7 @@ body {
 
 .senda-home {
   background:
-    radial-gradient(circle at 90% 16%, rgba(137, 169, 189, 0.1), transparent 26rem),
+    radial-gradient(circle at 90% 16%, rgba(184, 160, 232, 0.1), transparent 26rem),
     var(--senda-bg);
 }
 
@@ -690,25 +690,25 @@ body {
   top: 0;
   width: 1px;
   height: 100%;
-  background: linear-gradient(to bottom, transparent, rgba(23, 38, 58, 0.08) 16%, rgba(23, 38, 58, 0.08) 84%, transparent);
+  background: linear-gradient(to bottom, transparent, rgba(29, 23, 44, 0.08) 16%, rgba(29, 23, 44, 0.08) 84%, transparent);
   pointer-events: none;
 }
 
 .dark .senda-home > section:not(.senda-night)::before {
-  background: linear-gradient(to bottom, transparent, rgba(230, 237, 240, 0.08) 16%, rgba(230, 237, 240, 0.08) 84%, transparent);
+  background: linear-gradient(to bottom, transparent, rgba(245, 242, 247, 0.08) 16%, rgba(245, 242, 247, 0.08) 84%, transparent);
 }
 
 .wati-page-shell {
   background:
-    radial-gradient(circle at 90% 12%, rgba(137, 169, 189, 0.11), transparent 28rem),
-    linear-gradient(180deg, #f7f4ed, #f0f0eb 58%, #f6f2ea);
+    radial-gradient(circle at 90% 12%, rgba(184, 160, 232, 0.11), transparent 28rem),
+    linear-gradient(180deg, #f7f4f9, #efeaf3 58%, #f5f1f8);
 }
 
 .wati-page-shell::before {
   opacity: 0.42;
   background-image:
-    linear-gradient(rgba(23, 38, 58, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 38, 58, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(29, 23, 44, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29, 23, 44, 0.05) 1px, transparent 1px);
   background-size: 6rem 6rem;
   mask-image: linear-gradient(to bottom, black, transparent 58%);
 }
@@ -732,7 +732,7 @@ body {
 .wati-page-shell [data-cursor-glow]:not(.senda-night) {
   border-color: color-mix(in srgb, var(--senda-border) 82%, transparent);
   background: color-mix(in srgb, var(--senda-paper) 95%, transparent);
-  box-shadow: 0 30px 74px -58px rgba(10, 20, 34, 0.72);
+  box-shadow: 0 30px 74px -58px rgba(20, 14, 30, 0.72);
 }
 
 .initial-diagnostic-page,
@@ -742,15 +742,15 @@ body {
 }
 
 .career-quiz {
-  --background: 180 5% 93%;
-  --foreground: 225 20% 23%;
-  --card: 40 31% 97%;
-  --card-foreground: 225 20% 23%;
-  --muted: 30 28% 88%;
-  --muted-foreground: 225 12% 39%;
-  --border: 30 27% 76%;
-  --input: 30 27% 76%;
-  --ring: 13 40% 41%;
+  --background: 264 17% 94%;
+  --foreground: 264 32% 15%;
+  --card: 315 33% 98%;
+  --card-foreground: 264 32% 15%;
+  --muted: 319 40% 92%;
+  --muted-foreground: 257 14% 38%;
+  --border: 317 38% 84%;
+  --input: 317 38% 84%;
+  --ring: 321 82% 44%;
 }
 
 .career-quiz__background {
@@ -760,27 +760,27 @@ body {
 }
 
 .dark .career-quiz {
-  --background: 216 47% 10%;
-  --foreground: 204 16% 94%;
-  --card: 216 35% 15%;
-  --card-foreground: 204 16% 94%;
-  --muted: 215 35% 17%;
-  --muted-foreground: 207 13% 73%;
-  --border: 214 25% 26%;
-  --input: 214 25% 26%;
-  --ring: 16 45% 63%;
+  --background: 257 31% 13%;
+  --foreground: 276 24% 96%;
+  --card: 256 32% 17%;
+  --card-foreground: 276 24% 96%;
+  --muted: 257 32% 19%;
+  --muted-foreground: 258 35% 81%;
+  --border: 268 23% 29%;
+  --input: 268 23% 29%;
+  --ring: 327 78% 59%;
 }
 
 .career-quiz > div:first-child {
   background-image:
-    radial-gradient(circle at 82% 10%, rgba(137, 169, 189, 0.16), transparent 32%),
+    radial-gradient(circle at 82% 10%, rgba(184, 160, 232, 0.16), transparent 32%),
     linear-gradient(180deg, var(--senda-bg) 0%, var(--quiz-bg) 48%, var(--senda-stone) 100%);
 }
 
 .dark .career-quiz > div:first-child {
   background-image:
-    radial-gradient(circle at 82% 10%, rgba(137, 169, 189, 0.1), transparent 32%),
-    linear-gradient(180deg, #0d1725 0%, #101d2c 48%, #0d1725 100%);
+    radial-gradient(circle at 82% 10%, rgba(184, 160, 232, 0.1), transparent 32%),
+    linear-gradient(180deg, #1d172c 0%, #241d38 48%, #1d172c 100%);
 }
 
 .career-quiz > div:nth-child(2),
@@ -791,8 +791,8 @@ body {
 
 .dark .wati-page-shell {
   background:
-    radial-gradient(circle at 90% 12%, rgba(137, 169, 189, 0.1), transparent 28rem),
-    linear-gradient(180deg, #0d1725, #101d2c 58%, #0d1725);
+    radial-gradient(circle at 90% 12%, rgba(184, 160, 232, 0.1), transparent 28rem),
+    linear-gradient(180deg, #1d172c, #241d38 58%, #1d172c);
 }
 
 @media (max-width: 767px) {

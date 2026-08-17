@@ -5,8 +5,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { useTheme } from "next-themes";
 
 const THEME_COLORS = {
-  light: "#f4f1ea",
-  dark: "#0d1725",
+  light: "#f5f5f5",
+  dark: "#1d172c",
 } as const;
 
 function ResolvedThemeColor() {

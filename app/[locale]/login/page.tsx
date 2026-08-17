@@ -75,7 +75,7 @@ export default function LoginPage() {
 
   return (
     <div className="wati-page-shell flex min-h-screen flex-col justify-center pb-16 pt-28">
-      <UniverseField compact className="left-[34%] text-[#5c7776] opacity-10 dark:text-[#89a9bd] dark:opacity-15" />
+      <UniverseField compact className="left-[34%] text-[#6b3fa0] opacity-10 dark:text-[#b8a0e8] dark:opacity-15" />
       <Container className="relative z-10">
         <div className="max-w-md mx-auto w-full">
           <FadeIn>

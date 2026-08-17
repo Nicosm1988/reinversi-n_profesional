@@ -189,7 +189,7 @@ export function Header() {
         "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500",
         transparent
           ? "border-transparent bg-transparent"
-          : "border-[var(--senda-border)] bg-[rgba(247,244,237,.94)] shadow-[0_18px_48px_-40px_rgba(10,20,34,.75)] backdrop-blur-xl dark:border-white/10 dark:bg-[rgba(10,20,34,.92)]",
+          : "border-[var(--senda-border)] bg-[rgba(245,245,245,.94)] shadow-[0_18px_48px_-40px_rgba(20,14,30,.75)] backdrop-blur-xl dark:border-white/10 dark:bg-[rgba(29,23,44,.92)]",
       )}
     >
       <div className="mx-auto flex h-[88px] max-w-[1720px] items-center justify-between px-3 min-[360px]:px-5 sm:px-8 lg:px-10 min-[1600px]:px-8 min-[1760px]:px-12">
@@ -202,7 +202,7 @@ export function Header() {
           }}
           className={cn(
             "group relative z-10 flex shrink-0 items-center gap-2 min-[360px]:gap-3 transition-colors",
-            transparent ? "text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-ink)] dark:text-[#f5f1e8]",
+            transparent ? "text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-ink)] dark:text-[#f5f2f7]",
           )}
           aria-label={t("homeLabel")}
         >
@@ -226,7 +226,7 @@ export function Header() {
                       ? active ? "text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)]"
                       : active
                         ? "text-[var(--senda-ink)] dark:text-white"
-                        : "text-[var(--senda-ink)]/68 hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:text-white",
+                        : "text-[var(--senda-ink)]/68 hover:text-[var(--senda-ink)] dark:text-[#f5f2f7]/70 dark:hover:text-white",
                   )}
                 >
                   <span className="inline-block translate-y-0.5">{link.name}</span>
@@ -264,7 +264,7 @@ export function Header() {
                       "ml-0.5 inline-flex h-8 w-7 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] focus-visible:ring-offset-2",
                       transparent
                         ? "text-[var(--senda-atmosphere-muted)] hover:bg-[var(--senda-atmosphere-control)] hover:text-[var(--senda-atmosphere-ink)]"
-                        : "text-[var(--senda-ink)]/65 hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:bg-white/10 dark:hover:text-white",
+                        : "text-[var(--senda-ink)]/65 hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] dark:text-[#f5f2f7]/70 dark:hover:bg-white/10 dark:hover:text-white",
                     )}
                   >
                     <ChevronDown className={cn("h-3.5 w-3.5 translate-y-px transition-transform", journeysOpen && "rotate-180")} aria-hidden="true" />
@@ -272,7 +272,7 @@ export function Header() {
                   {journeysOpen ? (
                     <div
                       id="senda-services-menu"
-                      className="absolute left-1/2 top-full mt-2 grid w-[36rem] -translate-x-1/2 grid-cols-2 gap-1 rounded-2xl border border-[var(--senda-border)] bg-[#faf7ef] p-2 shadow-[0_28px_65px_-30px_rgba(35,39,29,.55)] dark:border-white/15 dark:bg-[#172538]"
+                      className="absolute left-1/2 top-full mt-2 grid w-[36rem] -translate-x-1/2 grid-cols-2 gap-1 rounded-2xl border border-[var(--senda-border)] bg-[#fbf9fc] p-2 shadow-[0_28px_65px_-30px_rgba(20,14,30,.55)] dark:border-white/15 dark:bg-[#241d38]"
                     >
                       {serviceLinks.map((service, index) => {
                         const serviceCurrent = isCurrentPath(pathname, service.href);
@@ -287,7 +287,7 @@ export function Header() {
                               "block rounded-xl px-4 py-3 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)]",
                               serviceCurrent
                                 ? "bg-[var(--senda-stone)] text-[var(--senda-ink)] dark:bg-white/10 dark:text-white"
-                                : "text-[var(--senda-ink)]/75 hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/80 dark:hover:bg-white/10 dark:hover:text-white",
+                                : "text-[var(--senda-ink)]/75 hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] dark:text-[#f5f2f7]/80 dark:hover:bg-white/10 dark:hover:text-white",
                             )}
                           >
                             {service.name}
@@ -298,7 +298,7 @@ export function Header() {
                         href="/brujulas"
                         aria-current={isCurrentPath(pathname, "/brujulas") ? "page" : undefined}
                         onClick={() => setJourneysOpen(false)}
-                        className="col-span-2 mt-1 block rounded-xl border-t border-[var(--senda-border)] px-4 py-3 text-sm font-semibold text-[var(--senda-muted)] hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/10 dark:text-[#f4efe4]/70 dark:hover:bg-white/10 dark:hover:text-white"
+                        className="col-span-2 mt-1 block rounded-xl border-t border-[var(--senda-border)] px-4 py-3 text-sm font-semibold text-[var(--senda-muted)] hover:bg-[var(--senda-stone)] hover:text-[var(--senda-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/10 dark:text-[#f5f2f7]/70 dark:hover:bg-white/10 dark:hover:text-white"
                       >
                         {t("navCompass")}
                       </Link>
@@ -321,26 +321,26 @@ export function Header() {
                 aria-expanded={accountOpen}
                 aria-haspopup="menu"
                 onClick={() => setAccountOpen((current) => !current)}
-                className="flex h-10 shrink-0 items-center gap-2 rounded-full border border-[var(--senda-ink)]/15 bg-white/45 pl-1.5 pr-3 text-xs font-bold text-[var(--senda-ink)] backdrop-blur-sm hover:bg-white/70 dark:border-white/15 dark:bg-white/5 dark:text-[#f4efe4] dark:hover:bg-white/10"
+                className="flex h-10 shrink-0 items-center gap-2 rounded-full border border-[var(--senda-ink)]/15 bg-white/45 pl-1.5 pr-3 text-xs font-bold text-[var(--senda-ink)] backdrop-blur-sm hover:bg-white/70 dark:border-white/15 dark:bg-white/5 dark:text-[#f5f2f7] dark:hover:bg-white/10"
               >
                 {authState.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={authState.avatarUrl} alt="" className="h-7 w-7 rounded-full object-cover" referrerPolicy="no-referrer" />
                 ) : (
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--senda-ink)] text-[10px] text-white dark:bg-[#f4efe4] dark:text-[#252a22]">{userInitials(authState.fullName, authState.email)}</span>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--senda-ink)] text-[10px] text-white dark:bg-[#f5f2f7] dark:text-[#1d172c]">{userInitials(authState.fullName, authState.email)}</span>
                 )}
                 <span className="hidden whitespace-nowrap min-[1760px]:inline">{t("ctaAccount")}</span>
                 <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", accountOpen && "rotate-180")} />
               </button>
               {accountOpen ? (
-                <div role="menu" className="absolute right-0 top-full mt-3 w-64 rounded-2xl border border-[var(--senda-border)] bg-[#faf7ef] p-2 shadow-[0_28px_65px_-30px_rgba(35,39,29,.55)] dark:border-white/15 dark:bg-[#30362d]">
+                <div role="menu" className="absolute right-0 top-full mt-3 w-64 rounded-2xl border border-[var(--senda-border)] bg-[#fbf9fc] p-2 shadow-[0_28px_65px_-30px_rgba(20,14,30,.55)] dark:border-white/15 dark:bg-[#241d38]">
                   <p className="truncate px-3 pb-2 pt-1 text-xs text-[var(--senda-muted)]">{authState.email}</p>
                   {[
                     { href: "/panel#resumen", label: t("accountOverview"), icon: LayoutDashboard },
                     { href: "/panel#resultado", label: t("accountLatestResult"), icon: Compass },
                     { href: "/panel#perfil", label: t("accountPersonalData"), icon: UserRound },
                   ].map((item) => (
-                    <Link key={item.href} href={item.href} role="menuitem" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[var(--senda-ink)] hover:bg-[var(--senda-stone)] dark:text-[#f4efe4] dark:hover:bg-white/10">
+                    <Link key={item.href} href={item.href} role="menuitem" onClick={() => setAccountOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-[var(--senda-ink)] hover:bg-[var(--senda-stone)] dark:text-[#f5f2f7] dark:hover:bg-white/10">
                       <item.icon className="h-4 w-4 text-[var(--senda-terracotta)]" /> {item.label}
                     </Link>
                   ))}
@@ -352,11 +352,11 @@ export function Header() {
               ) : null}
             </div>
           ) : authState.status === "anonymous" ? (
-            <Link href="/login" className={cn("px-2 text-xs font-bold", transparent ? "text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-ink)]/65 hover:text-[var(--senda-ink)] dark:text-[#f4efe4]/70 dark:hover:text-white")}>{t("ctaLogin")}</Link>
+            <Link href="/login" className={cn("px-2 text-xs font-bold", transparent ? "text-[var(--senda-atmosphere-muted)] hover:text-[var(--senda-atmosphere-ink)]" : "text-[var(--senda-ink)]/65 hover:text-[var(--senda-ink)] dark:text-[#f5f2f7]/70 dark:hover:text-white")}>{t("ctaLogin")}</Link>
           ) : (
             <span className="h-3 w-14 animate-pulse rounded-full bg-[var(--senda-border)]" aria-label={t("authLoading")} />
           )}
-          <Link href="/encontrar-mi-recorrido" className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(6,14,25,.85)] hover:bg-[var(--senda-action-hover)]">
+          <Link href="/encontrar-mi-recorrido" className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-action)] px-5 text-xs font-bold text-white shadow-[0_16px_34px_-24px_rgba(20,14,30,.85)] hover:bg-[var(--senda-action-hover)]">
             {t("ctaDiagnostic")}
           </Link>
         </div>
@@ -374,7 +374,7 @@ export function Header() {
             aria-label={mobileMenuOpen ? t("closeMenu") : t("mobileMenu")}
             aria-expanded={mobileMenuOpen}
             aria-controls="senda-mobile-menu"
-            className={cn("inline-flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)]", transparent ? "border-[var(--senda-atmosphere-border)] bg-[var(--senda-atmosphere-control)] text-[var(--senda-atmosphere-ink)] hover:bg-[var(--senda-atmosphere-control-hover)]" : "border-[var(--senda-ink)]/15 bg-white/60 text-[var(--senda-ink)] hover:bg-white/80 dark:border-white/15 dark:bg-white/10 dark:text-[#f4efe4]")}
+            className={cn("inline-flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)]", transparent ? "border-[var(--senda-atmosphere-border)] bg-[var(--senda-atmosphere-control)] text-[var(--senda-atmosphere-ink)] hover:bg-[var(--senda-atmosphere-control-hover)]" : "border-[var(--senda-ink)]/15 bg-white/60 text-[var(--senda-ink)] hover:bg-white/80 dark:border-white/15 dark:bg-white/10 dark:text-[#f5f2f7]")}
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -382,7 +382,7 @@ export function Header() {
       </div>
 
       {mobileMenuOpen ? (
-        <div id="senda-mobile-menu" className="h-[calc(100svh-88px)] overscroll-contain overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f4ed] dark:border-white/10 dark:bg-[#0d1725] min-[1600px]:hidden">
+        <div id="senda-mobile-menu" className="h-[calc(100svh-88px)] overscroll-contain overflow-y-auto border-t border-[var(--senda-border)] bg-[#f7f4f9] dark:border-white/10 dark:bg-[#1d172c] min-[1600px]:hidden">
           <div className="mx-auto flex min-h-full max-w-xl flex-col px-5 py-8 sm:px-8">
             <nav aria-label={t("mobileNavigation")}>
               <ul className="divide-y divide-[var(--senda-border)] border-y border-[var(--senda-border)] dark:divide-white/10 dark:border-white/10">
@@ -401,8 +401,8 @@ export function Header() {
                             setMobileJourneysOpen(false);
                           }}
                           className={cn(
-                            "flex min-w-0 flex-1 items-center gap-5 py-4 font-heading text-[clamp(1.55rem,7vw,2rem)] leading-tight text-[var(--senda-ink)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:text-[#f4efe4]",
-                            active && "text-[var(--senda-terracotta)] dark:text-[#e4a285]",
+                            "flex min-w-0 flex-1 items-center gap-5 py-4 font-heading text-[clamp(1.55rem,7vw,2rem)] leading-tight text-[var(--senda-ink)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:text-[#f5f2f7]",
+                            active && "text-[var(--senda-terracotta)] dark:text-[#f0a8d2]",
                           )}
                         >
                           <span className="text-[10px] font-sans font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">
@@ -417,7 +417,7 @@ export function Header() {
                             aria-expanded={mobileJourneysOpen}
                             aria-controls="senda-mobile-services-menu"
                             onClick={() => setMobileJourneysOpen((currentOpen) => !currentOpen)}
-                            className="ml-3 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--senda-border)] text-[var(--senda-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/15 dark:text-[#f4efe4]"
+                            className="ml-3 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--senda-border)] text-[var(--senda-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/15 dark:text-[#f5f2f7]"
                           >
                             <ChevronDown className={cn("h-5 w-5 transition-transform", mobileJourneysOpen && "rotate-180")} aria-hidden="true" />
                           </button>
@@ -437,7 +437,7 @@ export function Header() {
                                   setMobileJourneysOpen(false);
                                 }}
                                 className={cn(
-                                  "rounded-lg px-3 py-3 text-base font-semibold text-[var(--senda-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:text-[#f4efe4]/75",
+                                  "rounded-lg px-3 py-3 text-base font-semibold text-[var(--senda-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:text-[#f5f2f7]/75",
                                   serviceCurrent && "bg-[var(--senda-stone)] text-[var(--senda-ink)] dark:bg-white/10 dark:text-white",
                                 )}
                               >
@@ -452,7 +452,7 @@ export function Header() {
                               setMobileMenuOpen(false);
                               setMobileJourneysOpen(false);
                             }}
-                            className="mt-1 rounded-lg border-t border-[var(--senda-border)] px-3 py-3 text-base font-semibold text-[var(--senda-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/10 dark:text-[#f4efe4]/75"
+                            className="mt-1 rounded-lg border-t border-[var(--senda-border)] px-3 py-3 text-base font-semibold text-[var(--senda-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-terracotta)] dark:border-white/10 dark:text-[#f5f2f7]/75"
                           >
                             {t("navCompass")}
                           </Link>
@@ -463,7 +463,7 @@ export function Header() {
                 })}
               </ul>
             </nav>
-            <Link href="/encontrar-mi-recorrido" onClick={() => setMobileMenuOpen(false)} className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--senda-ink)] px-6 py-3.5 text-sm font-bold text-white dark:bg-[#f4efe4] dark:text-[#252a22]">
+            <Link href="/encontrar-mi-recorrido" onClick={() => setMobileMenuOpen(false)} className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--senda-ink)] px-6 py-3.5 text-sm font-bold text-white dark:bg-[#f5f2f7] dark:text-[#1d172c]">
               {t("ctaDiagnostic")}
             </Link>
             <div className="mt-auto pt-10">

@@ -67,7 +67,7 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
 
   return (
     <div className="wati-page-shell min-h-screen pb-20 pt-28 md:pt-32">
-      <UniverseField compact className="left-[42%] text-[#5c7776] opacity-[0.08] dark:text-[#89a9bd] dark:opacity-10" />
+      <UniverseField compact className="left-[42%] text-[#6b3fa0] opacity-[0.08] dark:text-[#9b7fd1] dark:opacity-10" />
       <Container className="relative z-10 max-w-5xl">
         <div id="resumen" className="mb-10 max-w-3xl scroll-mt-28">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm font-semibold text-secondary">
@@ -110,7 +110,7 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
                   </>
                 )}
               </div>
-              <Link href="/test-anclas-de-carrera" className="inline-flex flex-none items-center gap-2 rounded-full bg-[#bd5734] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a84729]">
+              <Link href="/test-anclas-de-carrera" className="inline-flex flex-none items-center gap-2 rounded-full bg-[#cc148c] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a80e70]">
                 {savedResult ? t("viewFullResult") : t("startTest")}
                 <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>

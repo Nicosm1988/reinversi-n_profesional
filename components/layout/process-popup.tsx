@@ -66,7 +66,7 @@ export function ProcessPopup() {
         role="dialog"
         aria-modal="false"
         aria-label={t("title")}
-        className="senda-editorial-card pointer-events-auto w-full max-w-sm animate-in fade-in slide-in-from-bottom-4 rounded-[1.2rem] p-5 text-[var(--senda-ink)] shadow-[0_28px_74px_-32px_rgba(10,20,34,.72)] duration-300 motion-reduce:animate-none sm:p-6 dark:border-white/15 dark:shadow-[0_28px_74px_-32px_rgba(0,0,0,.9)]"
+        className="senda-editorial-card pointer-events-auto w-full max-w-sm animate-in fade-in slide-in-from-bottom-4 rounded-[1.2rem] p-5 text-[var(--senda-ink)] shadow-[0_28px_74px_-32px_rgba(20,14,30,.72)] duration-300 motion-reduce:animate-none sm:p-6 dark:border-white/15 dark:shadow-[0_28px_74px_-32px_rgba(10,6,16,.9)]"
       >
         <div className="flex items-start justify-between gap-4">
           <h3 className="font-heading text-2xl leading-tight tracking-[-0.02em]">{t("title")}</h3>
@@ -85,7 +85,7 @@ export function ProcessPopup() {
           <Link
             href="/test-anclas-de-carrera"
             onClick={() => setVisible(false)}
-            className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--senda-ink)] px-6 py-2.5 text-sm font-bold text-white hover:bg-[var(--senda-olive)] dark:bg-[#f4efe4] dark:text-[#272b23] dark:hover:bg-white"
+            className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--senda-ink)] px-6 py-2.5 text-sm font-bold text-white hover:bg-[var(--senda-olive)] dark:bg-[#f5f2f7] dark:text-[#1d172c] dark:hover:bg-white"
           >
             {t("cta")}
           </Link>

@@ -120,11 +120,11 @@ export function ProfileForm({ initialProfile }: { initialProfile: PersonalProfil
             // eslint-disable-next-line @next/next/no-img-element
             <img src={avatarSrc} alt={t("avatarAlt")} className="h-28 w-28 rounded-full border-4 border-background object-cover shadow-md" />
           ) : (
-            <div className="flex h-28 w-28 items-center justify-center rounded-full border-4 border-background bg-[#2f3647] font-heading text-3xl font-bold text-[#f6efe7] shadow-md">
+            <div className="flex h-28 w-28 items-center justify-center rounded-full border-4 border-background bg-[#241d38] font-heading text-3xl font-bold text-[#f5f2f7] shadow-md">
               {initials}
             </div>
           )}
-          <label className="absolute bottom-0 right-0 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-background bg-[#bd5734] text-white shadow-md hover:bg-[#a84729] focus-within:outline-none focus-within:ring-2 focus-within:ring-secondary focus-within:ring-offset-2" aria-label={t("changePhoto")}>
+          <label className="absolute bottom-0 right-0 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 border-background bg-[#cc148c] text-white shadow-md hover:bg-[#a80e70] focus-within:outline-none focus-within:ring-2 focus-within:ring-secondary focus-within:ring-offset-2" aria-label={t("changePhoto")}>
             <Camera aria-hidden="true" className="h-4 w-4" />
             <input type="file" accept="image/jpeg,image/png,image/webp" onChange={selectAvatar} className="sr-only" />
           </label>
@@ -156,7 +156,7 @@ export function ProfileForm({ initialProfile }: { initialProfile: PersonalProfil
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Button type="submit" disabled={status === "saving"} className="h-12 rounded-full bg-[#bd5734] px-8 text-white hover:bg-[#a84729]">
+        <Button type="submit" disabled={status === "saving"} className="h-12 rounded-full bg-[#cc148c] px-8 text-white hover:bg-[#a80e70]">
           {status === "saving" ? <><Loader2 aria-hidden="true" className="mr-2 h-4 w-4 animate-spin" />{t("saving")}</> : t("save")}
         </Button>
         {message && (

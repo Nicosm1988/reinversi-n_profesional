@@ -31,7 +31,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
   return (
     <nav
       aria-label={t("label")}
-      className="inline-flex items-center rounded-full border border-[#ccd2d5] bg-[#fbf9f4] p-1 shadow-[0_10px_24px_-20px_rgba(10,20,34,.65)] dark:border-white/15 dark:bg-white/10"
+      className="inline-flex items-center rounded-full border border-[#d6cfe0] bg-[#fbf9fc] p-1 shadow-[0_10px_24px_-20px_rgba(29,23,44,.65)] dark:border-white/15 dark:bg-white/10"
     >
       {languages.map((language) => {
         const isActive = locale === language.locale;
@@ -45,10 +45,10 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
             aria-current={isActive ? "page" : undefined}
             aria-label={t(language.translationKey)}
             className={cn(
-              "inline-flex min-h-8 items-center justify-center rounded-full px-2.5 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b86d54] focus-visible:ring-offset-2",
+              "inline-flex min-h-8 items-center justify-center rounded-full px-2.5 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cc148c] focus-visible:ring-offset-2",
               isActive
-                ? "bg-[#17263a] text-[#fbf9f4] dark:bg-[#f5f1e8] dark:text-[#17263a]"
-                : "text-[#667281] hover:bg-[#e8eceb] hover:text-[#17263a] dark:text-[#d8e0e5] dark:hover:bg-white/10 dark:hover:text-white",
+                ? "bg-[#1d172c] text-[#fbf9fc] dark:bg-[#f5f2f7] dark:text-[#1d172c]"
+                : "text-[#57506b] hover:bg-[#ece8ef] hover:text-[#1d172c] dark:text-[#c9bfe0] dark:hover:bg-white/10 dark:hover:text-white",
               compact ? "min-w-8 px-2" : "min-w-9",
             )}
           >
