@@ -1,4 +1,4 @@
-import { ArrowLeft, Check, Clock3 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Clock3 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { getSendaProcess } from "@/lib/data/senda-processes";
 import { Link } from "@/navigation";
@@ -33,6 +33,11 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
                   <Clock3 className="h-4 w-4" aria-hidden="true" /> {t(`items.${process.key}.duration`, { count: process.durationMeetings })}
                 </p>
               ) : null}
+              {process.key === "compass" ? (
+                <Link href="/contacto" className="mt-7 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-6 py-2.5 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]">
+                  {t(`items.${process.key}.contactCta`)} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              ) : null}
             </div>
           </div>
         </div>
@@ -51,50 +56,72 @@ export function ProcessDetail({ process }: { process: SendaProcess }) {
               <p className="mt-5 text-base leading-7 text-[var(--senda-muted)]">{t(`items.${process.key}.forWhom`)}</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="border-y border-[var(--senda-border)] bg-[var(--senda-stone)] px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
-        <div className="mx-auto max-w-[1080px]">
-          <div className="flex flex-col justify-between gap-7 border-b border-[var(--senda-border)] pb-8 sm:flex-row sm:items-end">
-            <div>
-              <p className="senda-kicker">{t("journey.eyebrow")}</p>
-              <h2 className="mt-4 text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("journey.title")}</h2>
+          {process.key === "compass" ? (
+            <div className="lg:col-start-2">
+              <Link href="/contacto" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-action)] px-7 py-3 text-sm font-bold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)]">
+                {t(`items.${process.key}.contactCta`)} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
             </div>
-            <p className="max-w-sm text-base leading-7 text-[var(--senda-muted)]">{t("journey.note")}</p>
-          </div>
-
-          <ol>
-            {process.stageKeys.map((stageKey, index) => (
-              <li key={stageKey} className="grid gap-4 border-b border-[var(--senda-border)] py-7 sm:grid-cols-[4rem_0.8fr_1.2fr] sm:gap-6 sm:py-9">
-                <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">{String(index + 1).padStart(2, "0")}</span>
-                <h3 className="text-pretty font-heading text-2xl leading-tight sm:text-3xl">{t(`items.${process.key}.stages.${stageKey}.title`)}</h3>
-                <p className="max-w-xl text-base leading-7 text-[var(--senda-muted)] sm:justify-self-end">{t(`items.${process.key}.stages.${stageKey}.description`)}</p>
-              </li>
-            ))}
-          </ol>
+          ) : null}
         </div>
       </section>
 
-      <section className="px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
-        <div data-cursor-glow className="senda-editorial-card mx-auto grid max-w-[1080px] gap-10 overflow-hidden rounded-[1.35rem] p-7 sm:p-10 lg:grid-cols-[0.7fr_1fr] lg:p-12">
-          <div className="relative z-10">
-            <p className="senda-kicker">{t("takeaways.eyebrow")}</p>
-            <h2 className="mt-4 max-w-[14ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("takeaways.title")}</h2>
-          </div>
-          <ul className="relative z-10 divide-y divide-[var(--senda-border)] border-y border-[var(--senda-border)]">
-            {process.takeawayKeys.map((takeawayKey) => (
-              <li key={takeawayKey} className="flex items-start gap-4 py-4 text-base leading-7">
-                <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--senda-olive)] text-[var(--senda-on-olive)]"><Check className="h-3 w-3" aria-hidden="true" /></span>
-                {t(`items.${process.key}.takeaways.${takeawayKey}`)}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {process.stageKeys.length > 0 ? (
+        <section className="border-y border-[var(--senda-border)] bg-[var(--senda-stone)] px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+          <div className="mx-auto max-w-[1080px]">
+            <div className="flex flex-col justify-between gap-7 border-b border-[var(--senda-border)] pb-8 sm:flex-row sm:items-end">
+              <div>
+                <p className="senda-kicker">{t("journey.eyebrow")}</p>
+                <h2 className="mt-4 text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("journey.title")}</h2>
+              </div>
+              <p className="max-w-sm text-base leading-7 text-[var(--senda-muted)]">{t("journey.note")}</p>
+            </div>
 
-      {/* Cierre "Reconocer en qué momento estoy" retirado de toda la web; el finder se revisa
-          con preguntas nuevas antes de volver a mostrarse. */}
+            <ol>
+              {process.stageKeys.map((stageKey, index) => (
+                <li key={stageKey} className="grid gap-4 border-b border-[var(--senda-border)] py-7 sm:grid-cols-[4rem_0.8fr_1.2fr] sm:gap-6 sm:py-9">
+                  <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">{String(index + 1).padStart(2, "0")}</span>
+                  <h3 className="text-pretty font-heading text-2xl leading-tight sm:text-3xl">{t(`items.${process.key}.stages.${stageKey}.title`)}</h3>
+                  <p className="max-w-xl text-base leading-7 text-[var(--senda-muted)] sm:justify-self-end">{t(`items.${process.key}.stages.${stageKey}.description`)}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      ) : null}
+
+      {process.takeawayKeys.length > 0 ? (
+        <section className="px-5 py-20 sm:px-8 md:py-28 lg:px-12 xl:px-20">
+          <div data-cursor-glow className="senda-editorial-card mx-auto grid max-w-[1080px] gap-10 overflow-hidden rounded-[1.35rem] p-7 sm:p-10 lg:grid-cols-[0.7fr_1fr] lg:p-12">
+            <div className="relative z-10">
+              <p className="senda-kicker">{t("takeaways.eyebrow")}</p>
+              <h2 className="mt-4 max-w-[14ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("takeaways.title")}</h2>
+            </div>
+            <ul className="relative z-10 divide-y divide-[var(--senda-border)] border-y border-[var(--senda-border)]">
+              {process.takeawayKeys.map((takeawayKey) => (
+                <li key={takeawayKey} className="flex items-start gap-4 py-4 text-base leading-7">
+                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--senda-olive)] text-[var(--senda-on-olive)]"><Check className="h-3 w-3" aria-hidden="true" /></span>
+                  {t(`items.${process.key}.takeaways.${takeawayKey}`)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
+
+      {process.key === "compass" ? (
+        <section className="px-5 pb-10 pt-14 sm:px-8 sm:pt-16 lg:px-12 lg:pt-20 xl:px-20">
+          <div className="senda-night relative mx-auto max-w-[1080px] overflow-hidden rounded-[1.4rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16">
+            <UniverseField compact className="left-[35%] text-[var(--senda-atmosphere-sky)] opacity-20" />
+            <div className="relative mx-auto max-w-3xl">
+              <h2 className="max-w-[18ch] text-pretty font-heading text-[clamp(2rem,4vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t(`items.${process.key}.lead`)}</h2>
+              <Link href="/contacto" className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]">
+                {t(`items.${process.key}.contactCta`)} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      ) : null}
     </article>
   );
 }

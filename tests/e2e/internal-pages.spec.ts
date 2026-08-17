@@ -51,7 +51,7 @@ const targetRoutes = [
     path: "/brujulas",
     active: { es: "Brújulas", en: "Compass" },
     servicesMenu: true,
-    stages: 6,
+    stages: 0,
   },
   {
     path: "/como-trabajamos",

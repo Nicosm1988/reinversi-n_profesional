@@ -75,7 +75,7 @@ export function SendaHome() {
         </div>
       </section>
 
-      <section className="px-5 pb-10 sm:px-8 lg:px-12 xl:px-20">
+      <section className="px-5 pb-10 pt-14 sm:px-8 sm:pt-16 lg:px-12 lg:pt-20 xl:px-20">
         <div className="senda-night relative mx-auto max-w-[1180px] overflow-hidden rounded-[1.5rem] border border-[var(--senda-atmosphere-border)] px-7 py-14 text-[var(--senda-atmosphere-ink)] sm:px-12 sm:py-16 lg:px-16 lg:py-20">
           <UniverseField compact className="left-[38%] text-[var(--senda-atmosphere-sky)] opacity-20" />
           <div className="relative mx-auto max-w-3xl">

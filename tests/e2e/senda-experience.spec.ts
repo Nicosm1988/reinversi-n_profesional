@@ -48,7 +48,7 @@ for (const locale of [{ prefix: "" }, { prefix: "/en" }] as const) {
       { path: "/transiciones-laborales/liderazgo-empresa", stages: 9 },
       { path: "/transiciones-laborales/desafio-puntual", stages: 6 },
       { path: "/transiciones-laborales/elegir-formacion", stages: 9 },
-      { path: "/brujulas", stages: 6 },
+      { path: "/brujulas", stages: 0 },
     ] as const) {
       await page.goto(`${locale.prefix}${service.path}`);
 

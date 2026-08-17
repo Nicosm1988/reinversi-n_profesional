@@ -537,7 +537,7 @@
     "compass": {
       "eyebrow": "First decisions",
       "title": "Compass",
-      "description": "A secondary proposal for <strong>teenagers and young adults</strong> who are beginning to explore study, learning, and work options.",
+      "description": "A space for <strong>teenagers and young adults</strong> taking their first steps, exploring their inner world and the study, training, and work options ahead of them.",
       "cta": "Explore Compass"
     },
     "final": {
@@ -708,7 +708,7 @@
         "eyebrow": "First decisions",
         "title": "Compass",
         "lead": "It is not about choosing for life, but about beginning to recognize a direction of your own.",
-        "description": "A secondary proposal for teenagers and young adults beginning to explore study, learning, and work options.",
+        "description": "A space for teenagers and young adults beginning to explore their inner world and the study, training, and work options ahead of them.",
         "cta": "Explore Compass"
       }
     },
@@ -1041,45 +1041,13 @@
       },
       "compass": {
         "title": "Compass",
-        "lead": "It is not about choosing for life, but about beginning to recognize a direction of your own.",
-        "cardDescription": "Explore interests, experiences, and possibilities to build criteria and a first direction of your own.",
-        "metaDescription": "Compass is Senda's secondary proposal for teenagers and young adults exploring study, learning, and work and building their own criteria.",
+        "lead": "A space for each young person to listen to themselves, explore their inner world, and begin to sense their own calling.",
+        "cardDescription": "A space for search and reflection where young people can recognize their inner world and take their first steps in a direction of their own.",
+        "metaDescription": "Compass is Senda's space for teenagers and young adults to explore their inner world, recognize their own desires and possibilities, and take their first steps in a direction of their own.",
         "duration": "{count} individual meetings",
-        "objective": "Turn a broad question about what to study or how to approach work into researched alternatives, personal criteria, and possible next steps.",
-        "forWhom": "For young people finishing school, starting a course of study, revisiting a recent choice, or looking for a first direction in study and work.",
-        "stages": {
-          "question": {
-            "title": "Name the question",
-            "description": "We begin with your present moment: doubts, expectations, educational experiences, external pressures, and questions that do not yet have answers."
-          },
-          "signals": {
-            "title": "Recognize your own signals",
-            "description": "We explore interests, motivations, abilities, values, and experiences that help reveal which activities and environments make sense for you."
-          },
-          "worlds": {
-            "title": "Discover possible worlds",
-            "description": "We connect the exploration with real degrees, training paths, occupations, and ways of working without reducing the search to one option."
-          },
-          "criteria": {
-            "title": "Build criteria",
-            "description": "We organize what you need to consider when choosing: content, ways of learning, context, concrete possibilities, and life plans."
-          },
-          "alternatives": {
-            "title": "Research alternatives",
-            "description": "We compare options and design small validation actions: talk, observe, try, research, and ask better questions."
-          },
-          "direction": {
-            "title": "Recognize a direction",
-            "description": "We integrate the work into prioritized alternatives and a plan for exploration or decision-making over the coming months."
-          }
-        },
-        "takeaways": {
-          "signals": "An understanding of your interests, motivations, and strengths.",
-          "map": "A map of study and work options.",
-          "criteria": "Personal criteria for comparing alternatives.",
-          "alternatives": "Prioritized alternatives and questions to validate them.",
-          "plan": "A plan for exploration and next steps."
-        }
+        "objective": "Accompany them in exploring their inner world and recognizing, within it, the fears, desires, possibilities, family and social mandates, longings, expectations, and questions that inhabit each of them today.",
+        "forWhom": "For teenagers and young adults taking their first steps, with a current, close approach: a work of search, reflection, and discovery of their own inner calling and its power.",
+        "contactCta": "Talk with Senda"
       }
     }
   },

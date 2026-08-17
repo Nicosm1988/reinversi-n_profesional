@@ -537,7 +537,7 @@
     "compass": {
       "eyebrow": "Primeras decisiones",
       "title": "Brújulas",
-      "description": "Una propuesta secundaria para <strong>adolescentes y jóvenes</strong> que están comenzando a explorar opciones de estudio, formación y trabajo.",
+      "description": "Un espacio para <strong>adolescentes y jóvenes</strong> que están dando sus primeros pasos, explorando su mundo interno y las opciones de estudio, formación y trabajo que tienen por delante.",
       "cta": "Explorar Brújulas"
     },
     "final": {
@@ -708,7 +708,7 @@
         "eyebrow": "Primeras decisiones",
         "title": "Brújulas",
         "lead": "No se trata de elegir para toda la vida, sino de empezar a reconocer una dirección propia.",
-        "description": "Una propuesta secundaria para adolescentes y jóvenes que comienzan a explorar opciones de estudio, formación y trabajo.",
+        "description": "Un espacio para adolescentes y jóvenes que comienzan a explorar su mundo interno y las opciones de estudio, formación y trabajo que tienen por delante.",
         "cta": "Explorar Brújulas"
       }
     },
@@ -1041,45 +1041,13 @@
       },
       "compass": {
         "title": "Brújulas",
-        "lead": "No se trata de elegir para toda la vida, sino de empezar a reconocer una dirección propia.",
-        "cardDescription": "Explorá intereses, experiencias y posibilidades para construir criterios y una primera dirección propia.",
-        "metaDescription": "Brújulas es la propuesta secundaria de Senda para que adolescentes y jóvenes exploren estudio, formación y trabajo y construyan criterios propios.",
+        "lead": "Un espacio para que cada joven se escuche, explore su mundo interno y empiece a intuir su propio llamado.",
+        "cardDescription": "Un espacio de búsqueda y reflexión para que los jóvenes reconozcan su mundo interno y den sus primeros pasos con dirección propia.",
+        "metaDescription": "Brújulas es el espacio de Senda para que adolescentes y jóvenes exploren su mundo interno, reconozcan sus propios deseos y posibilidades, y den sus primeros pasos con una dirección propia.",
         "duration": "{count} encuentros individuales",
-        "objective": "Convertir una pregunta amplia sobre qué estudiar o cómo acercarte al trabajo en alternativas investigadas, criterios personales y próximos pasos posibles.",
-        "forWhom": "Para jóvenes que están terminando la escuela, comenzando una formación, revisando una elección reciente o buscando una primera dirección de estudio y trabajo.",
-        "stages": {
-          "question": {
-            "title": "Nombrar la pregunta",
-            "description": "Empezamos por tu momento actual: dudas, expectativas, experiencias educativas, presiones externas y preguntas que todavía no tienen respuesta."
-          },
-          "signals": {
-            "title": "Reconocer señales propias",
-            "description": "Exploramos intereses, motivaciones, habilidades, valores y experiencias que ayudan a entender qué actividades y entornos tienen sentido para vos."
-          },
-          "worlds": {
-            "title": "Conocer mundos posibles",
-            "description": "Acercamos la exploración a carreras, formaciones, ocupaciones y formas de trabajo reales, sin reducir la búsqueda a una única opción."
-          },
-          "criteria": {
-            "title": "Construir criterios",
-            "description": "Ordenamos qué necesitás considerar para elegir: contenidos, formas de aprender, contexto, posibilidades concretas y proyecto de vida."
-          },
-          "alternatives": {
-            "title": "Investigar alternativas",
-            "description": "Comparamos opciones y diseñamos pequeñas acciones de validación: conversar, observar, probar, investigar y hacer preguntas mejores."
-          },
-          "direction": {
-            "title": "Reconocer una dirección",
-            "description": "Integramos lo trabajado en alternativas priorizadas y un plan de exploración o decisión para los próximos meses."
-          }
-        },
-        "takeaways": {
-          "signals": "Una lectura de tus intereses, motivaciones y fortalezas.",
-          "map": "Un mapa de opciones de estudio y trabajo.",
-          "criteria": "Criterios personales para comparar alternativas.",
-          "alternatives": "Alternativas priorizadas y preguntas para validarlas.",
-          "plan": "Un plan de exploración y próximos pasos."
-        }
+        "objective": "Acompañarlos a explorar su mundo interno y a reconocer ahí miedos, deseos, posibilidades, mandatos familiares y sociales, anhelos, expectativas e interrogantes que hoy los habitan.",
+        "forWhom": "Para adolescentes y jóvenes que están dando sus primeros pasos, con una mirada actual y cercana: un trabajo de búsqueda, reflexión y descubrimiento del propio llamado interior y su potencia.",
+        "contactCta": "Conversar con Senda"
       }
     }
   },

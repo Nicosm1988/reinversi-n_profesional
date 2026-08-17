@@ -105,7 +105,6 @@ describe("translation catalogs", () => {
       "education",
       "compass",
     ]);
-    expect(Object.keys(spanishMessages.Processes.items.compass.stages)).toHaveLength(6);
     expect(Object.keys(spanishMessages.Processes.items.direction.stages)).toHaveLength(7);
     expect(Object.keys(spanishMessages.Processes.items.jobChange.stages)).toHaveLength(8);
     expect(Object.keys(spanishMessages.Processes.items.project.stages)).toHaveLength(9);

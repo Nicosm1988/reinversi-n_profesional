@@ -98,8 +98,8 @@ export const compassProcess = {
   durationMeetings: 5,
   accent: "olive",
   secondary: true,
-  stageKeys: ["question", "signals", "worlds", "criteria", "alternatives", "direction"],
-  takeawayKeys: ["signals", "map", "criteria", "alternatives", "plan"],
+  stageKeys: [],
+  takeawayKeys: [],
 } as const satisfies SendaProcessDefinition;
 
 export const sendaProcesses = [...transitionServices, compassProcess] as const;
