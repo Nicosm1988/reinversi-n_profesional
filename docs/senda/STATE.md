@@ -30,6 +30,11 @@
 - El dominio heredado de producción contiene `reinvension-profesional`; la comunicación y rutas visibles ya no usan “reinvención”, pero cambiar el hostname requiere un dominio/alias confirmado.
 - Sin Upstash válido, el rate limit degrada a memoria por instancia; verificar sus credenciales en cada entorno productivo.
 
+## Base de datos (Supabase, actualizado 2026-08-17)
+
+- Proyecto productivo `reinvension-profesional-prod`. Esquema activo reducido a 4 tablas: `profiles`, `initial_diagnostics`, `user_diagnostics`, `lead_requests` — únicas consultadas por el código actual.
+- El esquema legado "direct to provider" (`applications`, `diagnostics`, `diagnostic_sessions`, `diagnostic_results`, `providers`, `provider_credentials`, `orders`, `transactions`, `ledger`) fue eliminado; ver decisión 010 en `DECISIONS.md`.
+
 ## Siguiente paso verificable
 
 Completar `SMTP_PASSWORD` en Vercel Production, redesplegar y confirmar una consulta real aceptada y recibida. Después de cada cambio, ejecutar `npm run release:check`, publicar con `push-and-deploy.sh` y recorrer la versión productiva en una sesión limpia.
