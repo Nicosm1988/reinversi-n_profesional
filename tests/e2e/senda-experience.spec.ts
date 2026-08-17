@@ -76,8 +76,17 @@ test("contact form validates locally and preserves every value after a controlle
   });
 
   await page.goto("/contacto");
-  const mailLink = page.locator('main a[href="mailto:hola@universosenda.com"]');
-  await expect(mailLink).toBeVisible();
+  const gmailLink = page.locator('main a[href^="https://mail.google.com/mail/"]');
+  await expect(gmailLink).toBeVisible();
+  const gmailUrl = new URL((await gmailLink.getAttribute("href")) ?? "");
+  expect(gmailUrl.origin).toBe("https://mail.google.com");
+  expect(gmailUrl.pathname).toBe("/mail/");
+  expect(gmailUrl.searchParams.get("view")).toBe("cm");
+  expect(gmailUrl.searchParams.get("fs")).toBe("1");
+  expect(gmailUrl.searchParams.get("to")).toBe("hola@universosenda.com");
+  await expect(gmailLink).toHaveAttribute("target", "_blank");
+  await expect(gmailLink).toHaveAttribute("rel", "noopener noreferrer");
+  await expect(gmailLink).toHaveAttribute("referrerpolicy", "no-referrer");
   await expect(page.locator("main").getByText("+54 9 11 3673-6778", { exact: true })).toBeVisible();
 
   await page.getByRole("button", { name: "Enviar consulta" }).click();
@@ -160,10 +169,10 @@ test("contact form confirms success only after the API accepts a valid submissio
   });
 
   await page.goto("/en/contacto");
-  const mailLink = page.locator('main a[href="mailto:hola@universosenda.com"]');
-  await expect(mailLink).toHaveAttribute(
+  const gmailLink = page.locator('main a[href^="https://mail.google.com/mail/"]');
+  await expect(gmailLink).toHaveAttribute(
     "aria-label",
-    "Write an email to Senda: hola@universosenda.com",
+    "Open Gmail to write to Senda (opens in a new tab): hola@universosenda.com",
   );
   await expect(page.locator("main").getByText("+54 9 11 3673-6778", { exact: true })).toBeVisible();
   await page.getByLabel("Full name").fill("Grace Hopper");

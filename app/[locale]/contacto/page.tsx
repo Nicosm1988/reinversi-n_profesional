@@ -67,6 +67,8 @@ const API_ERROR_CODES = new Set<ContactApiError>([
   "unexpected",
 ]);
 
+const GMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT_EMAIL)}`;
+
 function parseApiError(value: unknown): ContactApiError {
   if (!value || typeof value !== "object" || !("code" in value)) return "unexpected";
   const code = (value as { code?: unknown }).code;
@@ -364,7 +366,10 @@ export default function ContactoPage() {
                 <h2 className="mb-4 font-heading text-lg font-medium text-foreground">{t("sidebarTitle")}</h2>
                 <div className="space-y-5">
                   <a
-                    href={`mailto:${CONTACT_EMAIL}`}
+                    href={GMAIL_COMPOSE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    referrerPolicy="no-referrer"
                     className="group flex items-start gap-4 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/60"
                     aria-label={`${t("directGmail")}: ${CONTACT_EMAIL}`}
                   >
