@@ -5,7 +5,7 @@
     "primaryNavigation": "Primary navigation",
     "mobileNavigation": "Mobile navigation",
     "navHome": "Home",
-    "navAbout": "Team",
+    "navAbout": "Who we are",
     "navTransitions": "Career transitions",
     "navHow": "How we work",
     "navTeam": "Team",
@@ -46,7 +46,7 @@
     "serviceLeadership": "Leadership and business continuity",
     "serviceFocused": "A focused professional challenge",
     "serviceEducation": "Choose learning for your next step",
-    "linkAbout": "Team",
+    "linkAbout": "Who we are",
     "linkTeam": "Team",
     "linkLaboratory": "Laboratory",
     "linkContact": "Contact",
@@ -765,7 +765,7 @@
     },
     "closing": {
       "title": "Discover the journey that best supports your moment.",
-      "description": "Different proposals for different moments, with a shared methodology and deeply personal work.",
+      "description": "Different proposals for different moments, with professional support.",
       "cta": "Explore career transitions"
     }
   },
@@ -797,53 +797,69 @@
   },
   "AboutMe": {
     "meta": {
-      "title": "Team",
-      "description": "Who accompanies transformation processes at Senda."
+      "title": "Who we are",
+      "description": "Who is part of Senda and why we accompany professional transitions."
     },
     "hero": {
-      "eyebrow": "Team",
-      "title": "Accompanying a transformation means putting the person going through it at the center.",
-      "description": "I'm a project consultant specialized in talent and transformation management, with more than fifteen years of experience accompanying people, teams, and organizations."
+      "eyebrow": "Who we are",
+      "title": "We accompany professional changes by putting the people going through them at the center.",
+      "description": "Senda is a space of support for people going through questions, changes, or transitions in their professional life."
+    },
+    "origin": {
+      "eyebrow": "Where we come from",
+      "title": "We come from a simple idea.",
+      "paragraph1": "Work takes up an important part of our lives, and when something changes, it's not enough to look only at a résumé, a role, or a job opportunity. Our interests, expectations, priorities, bonds, and ways of imagining what comes next change too.",
+      "paragraph2": "That's why we created a space to pause, gain perspective, revisit the journey so far, and open possibilities to choose how to continue."
+    },
+    "outlook": {
+      "eyebrow": "Our outlook",
+      "title": "Accompanying processes, not imposing answers.",
+      "paragraph1": "We don't believe in a single professional path, or in answers that apply the same way to every person. Nor do we believe every change has to immediately become a complete overhaul, a new goal, or a demand to move forward.",
+      "principles": [
+        "We believe in accompanying processes.",
+        "In making room for questions before looking for answers.",
+        "In understanding the journey before defining the next step.",
+        "In exploring possibilities before choosing."
+      ],
+      "paragraph2": "We work with listening, judgment, and tools that let us approach each process from its own singularity, integrating the professional dimension with the person going through that moment. Accompanying a transformation means putting the person going through it at the center."
     },
     "story": {
-      "eyebrow": "My journey",
+      "eyebrow": "Tania Sardella, Senda's spokesperson",
       "title": "How do you accompany transformation processes while keeping the person going through them at the center?",
-      "photoAlt": "Tania, consultant specialized in talent and digital transformation",
-      "paragraph1": "Throughout my career I worked in talent management, and led and supported teams in science, technology, and education. That path let me see up close many different ways of navigating professional life: people looking for new opportunities, professionals starting to ask how to move forward, teams going through change, and organizations that need to review and transform how they work.",
-      "paragraph2": "Thousands of interviews with diverse people, years working alongside professionals from different fields, and the experience of supporting individual and collective processes gradually shaped a question that runs through my whole journey.",
+      "photoAlt": "Tania Sardella, Senda's spokesperson",
+      "paragraph1": "Tania is a project consultant specialized in talent and transformation management, with more than fifteen years of experience accompanying people, teams, and organizations. Throughout her career she worked in talent management and development, and led and supported teams in science, technology, and education.",
+      "paragraph2": "Thousands of interviews, working alongside professionals from different backgrounds, and the experience of accompanying individual and collective processes gradually shaped a question that now runs through Senda.",
+      "paragraph3": "That question gave rise to the project and continues to guide how we work. Tania is now Senda's spokesperson: the person who communicates our outlook, brings forward the conversations we want to open about work and professional transitions, and coordinates the work of the professionals who are part of each process.",
       "highlights": [
-        "+15 years accompanying people, teams, and organizations",
-        "Thousands of interviews and processes tied to talent development",
-        "Experience in science, technology, and education",
-        "Team management and transformation processes"
+        { "headline": "+15 years", "description": "accompanying people, teams, and organizations" },
+        { "headline": "Thousands of interviews", "description": "and processes tied to talent development" },
+        { "headline": "Science, technology, and education", "description": "as part of our journey" },
+        { "headline": "People, teams, and organizations", "description": "going through processes of change and transformation" }
       ]
     },
-    "structure": {
-      "eyebrow": "Our approach",
-      "title": "How we accompany, and how Senda was born.",
-      "description": "Two ways of looking at the same journey: how we work, and where the project comes from.",
-      "items": {
-        "experience": {
-          "number": "01",
-          "title": "Trajectory",
-          "description": "Education, experiences, and moments that gradually shaped my professional perspective."
-        },
-        "practice": {
-          "number": "01",
-          "title": "How we accompany",
-          "description": "Professional changes don't happen only in a résumé, a role, or an organization. They involve interests, expectations, journeys, bonds, questions, and ways of imagining what comes next. That's why our work starts by creating spaces where it's possible to gain perspective, revisit your own path, recognize what genuinely interests you today, and explore alternatives to choose how to move forward. It's not about pointing to a single path or offering ready-made answers. It's about accompanying each process with listening, judgment, and tools that widen the field of possibilities and help build a direction of your own."
-        },
-        "senda": {
-          "number": "02",
-          "title": "Senda is born from that journey",
-          "description": "Senda brings together lessons built over more than fifteen years working with talent, people, teams, and change processes. It was born as a space to accompany people in thinking through their career with depth, perspective, and concrete tools, understanding that career changes are also significant life transformations. A space to pause, look at the journey so far, recognize what matters today, and open new possibilities to choose how to continue."
-        }
-      }
+    "team": {
+      "eyebrow": "Our team",
+      "title": "A team to accompany different processes.",
+      "paragraph1": "Senda isn't built around a single professional perspective. We build our support by bringing together professionals with complementary backgrounds, tools, and perspectives, according to the traits and needs of each process.",
+      "paragraph2": "A professional transition can involve questions about interests, professional identity, abilities, opportunities, positioning, employability, context, or next steps, and not all of those questions need the same answer or the same professional. That's why we want each person to find the support and tools that make sense for the moment they're going through.",
+      "premise": "Our work as a team starts from one same premise: not to decide for the person, but to widen the possibilities they can choose from."
+    },
+    "practice": {
+      "eyebrow": "How we accompany",
+      "title": "Listening, perspective, and tools.",
+      "paragraph1": "Professional changes don't happen only in a résumé, a role, or an organization. They involve interests, expectations, journeys, bonds, questions, and ways of imagining what comes next. That's why we create spaces to gain perspective, revisit your own path, recognize what genuinely interests you today, and explore alternatives to choose how to move forward.",
+      "paragraph2": "It's not about pointing to a single path or offering ready-made answers. It's about accompanying each process with listening, perspective, and tools, respecting each person's timing, questions, and singularity."
+    },
+    "senda": {
+      "eyebrow": "This is Senda",
+      "title": "Opening possibilities to choose.",
+      "paragraph1": "A space born from years of work with talent, people, teams, and transformation processes. A team that understands there's a person behind every professional change.",
+      "paragraph2": "And a way of accompanying that aims to do something fundamental: open possibilities to choose."
     },
     "closing": {
-      "title": "While I finish telling this story, we can talk.",
-      "description": "If you would like to know more about Senda or tell me about the moment you are navigating, you can write to me.",
-      "cta": "Write to me"
+      "title": "Contact us",
+      "description": "If you'd like to know more about Senda or tell us about the moment you're going through, you can write to us.",
+      "cta": "Write to us"
     }
   },
   "Faq": {

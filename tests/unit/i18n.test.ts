@@ -60,9 +60,8 @@ describe("translation catalogs", () => {
     expect(spanishMessages.Home.compass.title).toBe("Brújulas");
     expect(spanishMessages.Header.navTransitions).toBe("Transiciones laborales");
     expect(spanishMessages.Header.navCompass).toBe("Brújulas");
-    expect(spanishMessages.Header.navAbout).toBe("Equipo");
-    expect(spanishMessages.AboutMe.structure.items).toHaveProperty("experience");
-    expect(Object.keys(spanishMessages.AboutMe.structure.items)).toHaveLength(3);
+    expect(spanishMessages.Header.navAbout).toBe("Quiénes somos");
+    expect(spanishMessages.AboutMe.story.highlights).toHaveLength(4);
     expect(spanishMessages.Header.navLaboratory).toBe("Laboratorio");
     expect(spanishMessages.Home.laboratory.status).toBe("Próximamente");
     expect(spanishMessages.NarrativesLab.hero.title).toBe(

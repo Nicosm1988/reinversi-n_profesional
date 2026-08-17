@@ -5,7 +5,7 @@
     "primaryNavigation": "Navegación principal",
     "mobileNavigation": "Navegación móvil",
     "navHome": "Inicio",
-    "navAbout": "Equipo",
+    "navAbout": "Quiénes somos",
     "navTransitions": "Transiciones laborales",
     "navHow": "Cómo trabajamos",
     "navTeam": "Equipo",
@@ -46,7 +46,7 @@
     "serviceLeadership": "Liderazgo y continuidad de empresa",
     "serviceFocused": "Desafío profesional puntual",
     "serviceEducation": "Elegir una formación",
-    "linkAbout": "Equipo",
+    "linkAbout": "Quiénes somos",
     "linkTeam": "Equipo",
     "linkLaboratory": "Laboratorio",
     "linkContact": "Contacto",
@@ -765,7 +765,7 @@
     },
     "closing": {
       "title": "Conocé el recorrido que mejor acompaña tu momento.",
-      "description": "Propuestas diferentes para momentos distintos, con una metodología común y un trabajo profundamente personal.",
+      "description": "Propuestas diferentes para momentos distintos, con acompañamiento profesional.",
       "cta": "Explorar transiciones laborales"
     }
   },
@@ -797,53 +797,69 @@
   },
   "AboutMe": {
     "meta": {
-      "title": "Equipo",
-      "description": "Quién acompaña los procesos de transformación en Senda."
+      "title": "Quiénes somos",
+      "description": "Quiénes formamos parte de Senda y por qué acompañamos transiciones profesionales."
     },
     "hero": {
-      "eyebrow": "Equipo",
-      "title": "Acompañar una transformación implica poner en el centro a quien la está atravesando.",
-      "description": "Soy consultora de proyectos, especializada en gestión de talento y transformación, con más de quince años de experiencia acompañando personas, equipos y organizaciones."
+      "eyebrow": "Quiénes somos",
+      "title": "Acompañamos cambios profesionales poniendo en el centro a las personas que los atraviesan.",
+      "description": "Senda es un espacio de acompañamiento para personas que están atravesando preguntas, cambios o transiciones en su vida profesional."
+    },
+    "origin": {
+      "eyebrow": "Nuestro origen",
+      "title": "Nacemos de una idea sencilla.",
+      "paragraph1": "El trabajo ocupa una parte importante de nuestra vida y, cuando algo cambia, no alcanza con mirar únicamente un currículum, un puesto o una oportunidad laboral. Cambian también nuestros intereses, expectativas, prioridades, vínculos y formas de imaginar lo que viene.",
+      "paragraph2": "Por eso creamos un espacio donde sea posible hacer una pausa, tomar perspectiva, revisar el recorrido y abrir posibilidades para poder elegir cómo seguir."
+    },
+    "outlook": {
+      "eyebrow": "Nuestra mirada",
+      "title": "Acompañar procesos, no imponer respuestas.",
+      "paragraph1": "No creemos en caminos profesionales únicos ni en respuestas que puedan aplicarse de la misma manera a todas las personas. Tampoco creemos que cada cambio tenga que convertirse inmediatamente en un cambio radical, un nuevo objetivo o una exigencia por avanzar.",
+      "principles": [
+        "Creemos en acompañar procesos.",
+        "En dar lugar a las preguntas antes de buscar respuestas.",
+        "En comprender el recorrido antes de definir el próximo paso.",
+        "En explorar posibilidades antes de elegir."
+      ],
+      "paragraph2": "Trabajamos con escucha, criterio y herramientas que permiten abordar cada proceso desde su singularidad, integrando la dimensión profesional con la persona que está atravesando ese momento. Acompañar una transformación implica poner en el centro a quien la está atravesando."
     },
     "story": {
-      "eyebrow": "Mi recorrido",
+      "eyebrow": "Tania Sardella, portavoz de Senda",
       "title": "¿Cómo acompañar procesos de transformación poniendo en el centro a la persona que los atraviesa?",
-      "photoAlt": "Tania, consultora especializada en talento y transformación digital",
-      "paragraph1": "A lo largo de mi trayectoria trabajé en gestión de talento, lideré y acompañé equipos en los ámbitos de la ciencia, la tecnología y la educación. Ese recorrido me permitió conocer de cerca distintas formas de transitar la vida profesional: personas que buscan nuevas oportunidades, profesionales que empiezan a preguntarse cómo seguir, equipos que atraviesan procesos de cambio y organizaciones que necesitan revisar y transformar sus maneras de trabajar.",
-      "paragraph2": "Miles de entrevistas con personas diversas, años de trabajo junto a profesionales de distintos ámbitos y la experiencia de acompañar procesos individuales y colectivos fueron consolidando una pregunta que atraviesa todo mi recorrido.",
+      "photoAlt": "Tania Sardella, portavoz de Senda",
+      "paragraph1": "Tania es consultora de proyectos, especializada en gestión de talento y transformación, con más de quince años de experiencia acompañando personas, equipos y organizaciones. A lo largo de su trayectoria trabajó en gestión y desarrollo de talento, lideró y acompañó equipos en los ámbitos de la ciencia, la tecnología y la educación.",
+      "paragraph2": "Miles de entrevistas, el trabajo junto a profesionales de distintos recorridos y la experiencia acompañando procesos individuales, equipos y organizaciones fueron dando forma a una pregunta que hoy atraviesa a Senda.",
+      "paragraph3": "Esa pregunta dio origen al proyecto y continúa orientando nuestra forma de trabajar. Tania es hoy la portavoz de Senda: la persona que comunica nuestra mirada, acerca las conversaciones que queremos abrir sobre el trabajo y las transiciones profesionales y articula el trabajo de los profesionales que forman parte de cada proceso.",
       "highlights": [
-        "+15 años acompañando personas, equipos y organizaciones",
-        "Miles de entrevistas y procesos vinculados al desarrollo de talento",
-        "Experiencia en ciencia, tecnología y educación",
-        "Gestión de equipos y procesos de transformación"
+        { "headline": "+15 años", "description": "acompañando personas, equipos y organizaciones" },
+        { "headline": "Miles de entrevistas", "description": "y procesos vinculados al desarrollo de talento" },
+        { "headline": "Ciencia, tecnología y educación", "description": "como parte de nuestro recorrido" },
+        { "headline": "Personas, equipos y organizaciones", "description": "atravesando procesos de cambio y transformación" }
       ]
     },
-    "structure": {
-      "eyebrow": "Nuestro enfoque",
-      "title": "Así acompañamos, y así nació Senda.",
-      "description": "Dos maneras de mirar el mismo recorrido: la forma de trabajar y el origen del proyecto.",
-      "items": {
-        "experience": {
-          "number": "01",
-          "title": "Trayectoria",
-          "description": "Formación, experiencias y momentos que fueron dando forma a mi mirada profesional."
-        },
-        "practice": {
-          "number": "01",
-          "title": "Nuestra forma de acompañar",
-          "description": "Los cambios profesionales no suceden únicamente en un currículum, un puesto o una organización. Involucran intereses, expectativas, recorridos, vínculos, preguntas y formas de imaginar lo que viene. Por eso, nuestro trabajo parte de crear espacios donde sea posible tomar perspectiva, revisar el propio recorrido, reconocer aquello que hoy genera interés y explorar alternativas para poder elegir cómo seguir. No se trata de indicar un camino ni de ofrecer respuestas prefabricadas. Se trata de acompañar cada proceso con escucha, criterio y herramientas que permitan ampliar el campo de posibilidades y construir una dirección propia."
-        },
-        "senda": {
-          "number": "02",
-          "title": "De ese recorrido nace Senda",
-          "description": "Senda reúne aprendizajes construidos durante más de quince años trabajando con talento, personas, equipos y procesos de cambio. Nace como un espacio para acompañar a las personas a pensar su trayectoria profesional con profundidad, perspectiva y herramientas concretas, entendiendo que los cambios de carrera también son transformaciones importantes de la vida. Un espacio para hacer una pausa, mirar el recorrido, reconocer lo que hoy importa y abrir nuevas posibilidades para elegir cómo continuar."
-        }
-      }
+    "team": {
+      "eyebrow": "Nuestro equipo",
+      "title": "Un equipo para acompañar procesos diferentes.",
+      "paragraph1": "Senda no está pensada alrededor de una única mirada profesional. Construimos nuestros acompañamientos integrando profesionales con recorridos, herramientas y perspectivas complementarias, según las características y necesidades de cada proceso.",
+      "paragraph2": "Porque una transición profesional puede involucrar preguntas sobre intereses, identidad laboral, capacidades, oportunidades, posicionamiento, empleabilidad, contexto o próximos pasos, y no todas esas preguntas necesitan la misma respuesta ni el mismo profesional. Por eso buscamos que cada persona pueda encontrarse con el acompañamiento y las herramientas que tengan sentido para el momento que está atravesando.",
+      "premise": "Nuestro trabajo en equipo parte de una misma premisa: no decidir por la persona, sino ampliar las posibilidades desde las que pueda elegir."
+    },
+    "practice": {
+      "eyebrow": "Nuestra forma de acompañar",
+      "title": "Escucha, perspectiva y herramientas.",
+      "paragraph1": "Los cambios profesionales no suceden únicamente en un currículum, un puesto o una organización. Involucran intereses, expectativas, recorridos, vínculos, preguntas y formas de imaginar lo que viene. Por eso creamos espacios donde sea posible tomar perspectiva, revisar el propio recorrido, reconocer aquello que hoy genera interés y explorar alternativas para elegir cómo seguir.",
+      "paragraph2": "No se trata de indicar un camino ni de ofrecer respuestas prefabricadas. Se trata de acompañar cada proceso con escucha, perspectiva y herramientas, respetando los tiempos, las preguntas y la singularidad de cada persona."
+    },
+    "senda": {
+      "eyebrow": "Esto es Senda",
+      "title": "Abrir posibilidades para poder elegir.",
+      "paragraph1": "Un espacio nacido de años de trabajo con talento, personas, equipos y procesos de transformación. Un equipo que entiende que detrás de cada cambio profesional hay una persona atravesándolo.",
+      "paragraph2": "Y una manera de acompañar que busca hacer algo fundamental: abrir posibilidades para poder elegir."
     },
     "closing": {
-      "title": "Mientras termino de contar este recorrido, podemos conversar.",
-      "description": "Si querés conocer más sobre Senda o contarme el momento que estás atravesando, podés escribirme.",
-      "cta": "Escribirme"
+      "title": "Contáctanos",
+      "description": "Si querés conocer más sobre Senda o contarnos el momento que estás atravesando, podés escribirnos.",
+      "cta": "Escribinos"
     }
   },
   "Faq": {

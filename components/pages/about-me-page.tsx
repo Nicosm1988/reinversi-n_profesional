@@ -1,19 +1,49 @@
 import { useTranslations } from "next-intl";
 import { ClosingCta, PageHero, PageSection } from "@/components/pages/page-primitives";
 
-const dimensions = ["practice", "senda"] as const;
-
 export function AboutMePage() {
   const t = useTranslations("AboutMe");
-  const highlights = t.raw("story.highlights") as string[];
+  const principles = t.raw("outlook.principles") as string[];
+  const highlights = t.raw("story.highlights") as { headline: string; description: string }[];
 
   return (
     <div className="overflow-hidden bg-[var(--senda-bg)] text-[var(--senda-ink)]">
-      <PageHero
-        eyebrow={t("hero.eyebrow")}
-        title={t("hero.title")}
-        description={t("hero.description")}
-      />
+      <PageHero eyebrow={t("hero.eyebrow")} title={t("hero.title")} description={t("hero.description")} />
+
+      <PageSection>
+        <div className="grid gap-7 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+          <div>
+            <p className="senda-kicker">{t("origin.eyebrow")}</p>
+            <h2 className="mt-4 max-w-[16ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
+              {t("origin.title")}
+            </h2>
+          </div>
+          <div className="max-w-2xl space-y-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">
+            <p>{t("origin.paragraph1")}</p>
+            <p>{t("origin.paragraph2")}</p>
+          </div>
+        </div>
+      </PageSection>
+
+      <PageSection tone="muted">
+        <div className="grid gap-7 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+          <div>
+            <p className="senda-kicker">{t("outlook.eyebrow")}</p>
+            <h2 className="mt-4 max-w-[18ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
+              {t("outlook.title")}
+            </h2>
+          </div>
+          <div className="max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">
+            <p>{t("outlook.paragraph1")}</p>
+            <ul className="mt-5 space-y-2 border-l border-[var(--senda-accent)] pl-5">
+              {principles.map((principle) => (
+                <li key={principle} className="font-semibold text-[var(--senda-ink)]">{principle}</li>
+              ))}
+            </ul>
+            <p className="mt-5">{t("outlook.paragraph2")}</p>
+          </div>
+        </div>
+      </PageSection>
 
       <PageSection>
         <div className="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:items-start lg:gap-14">
@@ -33,11 +63,13 @@ export function AboutMePage() {
             <div className="mt-6 max-w-2xl space-y-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">
               <p>{t("story.paragraph1")}</p>
               <p>{t("story.paragraph2")}</p>
+              <p>{t("story.paragraph3")}</p>
             </div>
             <ul className="mt-7 grid gap-3 sm:grid-cols-2">
               {highlights.map((highlight) => (
-                <li key={highlight} className="rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] px-4 py-3 text-sm font-semibold leading-6 text-[var(--senda-ink)]">
-                  {highlight}
+                <li key={highlight.headline} className="rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] px-4 py-3">
+                  <span className="block text-sm font-bold text-[var(--senda-ink)]">{highlight.headline}</span>
+                  <span className="block text-sm leading-6 text-[var(--senda-muted)]">{highlight.description}</span>
                 </li>
               ))}
             </ul>
@@ -46,31 +78,49 @@ export function AboutMePage() {
       </PageSection>
 
       <PageSection tone="muted">
-        <div className="max-w-3xl">
-          <p className="senda-kicker">{t("structure.eyebrow")}</p>
-          <h2 className="mt-5 max-w-[18ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
-            {t("structure.title")}
-          </h2>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">
-            {t("structure.description")}
-          </p>
+        <div className="grid gap-7 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+          <div>
+            <p className="senda-kicker">{t("team.eyebrow")}</p>
+            <h2 className="mt-4 max-w-[18ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
+              {t("team.title")}
+            </h2>
+          </div>
+          <div className="max-w-2xl space-y-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">
+            <p>{t("team.paragraph1")}</p>
+            <p>{t("team.paragraph2")}</p>
+            <p className="font-semibold text-[var(--senda-ink)]">{t("team.premise")}</p>
+          </div>
         </div>
+      </PageSection>
 
-        <ol className="mt-10 grid gap-5 md:grid-cols-2">
-          {dimensions.map((dimension) => (
-            <li key={dimension} className="senda-editorial-card rounded-[1.2rem] p-7 sm:p-8">
-              <span className="text-xs font-bold tracking-[0.18em] text-[var(--senda-terracotta)]">
-                {t(`structure.items.${dimension}.number`)}
-              </span>
-              <h3 className="mt-8 font-heading text-2xl leading-tight">
-                {t(`structure.items.${dimension}.title`)}
-              </h3>
-              <p className="mt-4 text-base leading-7 text-[var(--senda-muted)]">
-                {t(`structure.items.${dimension}.description`)}
-              </p>
-            </li>
-          ))}
-        </ol>
+      <PageSection>
+        <div className="grid gap-7 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+          <div>
+            <p className="senda-kicker">{t("practice.eyebrow")}</p>
+            <h2 className="mt-4 max-w-[18ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
+              {t("practice.title")}
+            </h2>
+          </div>
+          <div className="max-w-2xl space-y-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">
+            <p>{t("practice.paragraph1")}</p>
+            <p>{t("practice.paragraph2")}</p>
+          </div>
+        </div>
+      </PageSection>
+
+      <PageSection tone="muted">
+        <div className="grid gap-7 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+          <div>
+            <p className="senda-kicker">{t("senda.eyebrow")}</p>
+            <h2 className="mt-4 max-w-[18ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
+              {t("senda.title")}
+            </h2>
+          </div>
+          <div className="max-w-2xl space-y-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">
+            <p>{t("senda.paragraph1")}</p>
+            <p>{t("senda.paragraph2")}</p>
+          </div>
+        </div>
       </PageSection>
 
       <ClosingCta

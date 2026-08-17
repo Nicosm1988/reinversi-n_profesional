@@ -5,7 +5,7 @@ const retiredPublicTerms =
 
 const targetRoutes = [
   { path: "/", active: { es: "Inicio", en: "Home" } },
-  { path: "/sobre-mi", active: { es: "Equipo", en: "Team" }, aboutCards: 2 },
+  { path: "/sobre-mi", active: { es: "Quiénes somos", en: "Who we are" }, aboutCards: 0 },
   {
     path: "/transiciones-laborales",
     active: { es: "Transiciones laborales", en: "Career transitions" },
@@ -286,7 +286,7 @@ test("desktop services dropdown opens from the keyboard, focuses its first route
 });
 
 for (const locale of locales) {
-  test(`${locale.id.toUpperCase()} places Team between Home and Career transitions`, async ({ page }) => {
+  test(`${locale.id.toUpperCase()} places Who we are between Home and Career transitions`, async ({ page }) => {
     await page.setViewportSize({ width: 1720, height: 900 });
     await page.goto(locale.prefix || "/");
 
@@ -297,8 +297,8 @@ for (const locale of locales) {
 
     expect(labels.slice(0, 3).map((label) => label.trim())).toEqual(
       locale.id === "es"
-        ? ["Inicio", "Equipo", "Transiciones laborales"]
-        : ["Home", "Team", "Career transitions"],
+        ? ["Inicio", "Quiénes somos", "Transiciones laborales"]
+        : ["Home", "Who we are", "Career transitions"],
     );
   });
 }
@@ -433,7 +433,7 @@ test("mobile menu is focus-managed, marks the current page and preserves locale 
 
   const mobileNavigation = page.getByRole("navigation", { name: "Mobile navigation" });
   await expect(mobileNavigation.getByRole("link", { name: /Home$/ })).toBeFocused();
-  await expect(mobileNavigation.getByRole("link", { name: /Team$/ })).toHaveAttribute(
+  await expect(mobileNavigation.getByRole("link", { name: /Who we are$/ })).toHaveAttribute(
     "aria-current",
     "page",
   );

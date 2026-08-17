@@ -54,9 +54,8 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="grid gap-7 py-8 text-xs leading-6 text-[var(--senda-atmosphere-muted)] md:grid-cols-[1fr_2fr] md:items-start">
+        <div className="py-8 text-xs leading-6 text-[var(--senda-atmosphere-muted)]">
           <p>{t("copyright", { year: new Date().getFullYear() })}</p>
-          <p className="md:text-right"><strong className="font-semibold text-[var(--senda-atmosphere-ink)]">{t("disclaimerTitle")}</strong> {t("disclaimerText")}</p>
         </div>
       </div>
     </footer>
