@@ -252,4 +252,21 @@ test("SEO metadata: Open Graph image, Organization and FAQPage structured data a
   expect(faqData["@type"]).toBe("FAQPage");
   expect(faqData.mainEntity.length).toBe(7);
   expect(faqData.mainEntity[0].name).toContain("¿");
+
+  await page.goto("/transiciones-laborales/cambiar-empleo");
+  const breadcrumbJsonLd = await page
+    .locator('script[type="application/ld+json"]')
+    .last()
+    .textContent();
+  expect(breadcrumbJsonLd).not.toBeNull();
+  const breadcrumbData = JSON.parse(breadcrumbJsonLd ?? "{}");
+  expect(breadcrumbData["@type"]).toBe("BreadcrumbList");
+  expect(breadcrumbData.itemListElement.map((item: { name: string }) => item.name)).toEqual([
+    "Inicio",
+    "Transiciones laborales",
+    "Preparar un cambio de empleo",
+  ]);
+  expect(breadcrumbData.itemListElement[2].item).toBe(
+    "https://universosenda.com/transiciones-laborales/cambiar-empleo",
+  );
 });

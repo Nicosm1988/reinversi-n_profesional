@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ClosingCta, PageHero, PageSection } from "@/components/pages/page-primitives";
 
@@ -47,12 +48,14 @@ export function AboutMePage() {
 
       <PageSection>
         <div className="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:items-start lg:gap-14">
-          <div className="mx-auto w-full max-w-[24rem] lg:mx-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+          <div className="relative mx-auto w-full max-w-[24rem] [aspect-ratio:4/5] lg:mx-0">
+            <Image
               src="/tania-marquez.jpg"
               alt={t("story.photoAlt")}
-              className="w-full rounded-[1.5rem] object-cover grayscale [aspect-ratio:4/5]"
+              fill
+              sizes="(min-width: 1024px) 24rem, 90vw"
+              priority
+              className="rounded-[1.5rem] object-cover grayscale"
             />
           </div>
           <div>

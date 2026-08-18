@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { ProcessDetail } from "@/components/processes/process-detail";
 import { compassProcess } from "@/lib/data/senda-processes";
+import { buildBreadcrumbJsonLd } from "@/lib/seo/breadcrumb-json-ld";
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -27,6 +28,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function BrujulasPage() {
-  return <ProcessDetail process={compassProcess} />;
+export default async function BrujulasPage({ params }: PageProps) {
+  const { locale } = await params;
+  const [header, processes] = await Promise.all([
+    getTranslations({ locale, namespace: "Header" }),
+    getTranslations({ locale, namespace: "Processes" }),
+  ]);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(
+    [
+      { name: header("navHome"), path: "" },
+      { name: processes("items.compass.title"), path: COMPASS_PATH },
+    ],
+    locale,
+  );
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <ProcessDetail process={compassProcess} />
+    </>
+  );
 }

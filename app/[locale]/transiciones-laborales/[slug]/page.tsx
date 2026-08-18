@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { ProcessDetail } from "@/components/processes/process-detail";
 import { getTransitionService } from "@/lib/data/senda-processes";
+import { buildBreadcrumbJsonLd } from "@/lib/seo/breadcrumb-json-ld";
 
 type PageProps = { params: Promise<{ locale: string; slug: string }> };
 
@@ -31,9 +32,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function TransitionServicePage({ params }: PageProps) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const process = getTransitionService(slug);
   if (!process) notFound();
 
-  return <ProcessDetail process={process} />;
+  const [header, processes] = await Promise.all([
+    getTranslations({ locale, namespace: "Header" }),
+    getTranslations({ locale, namespace: "Processes" }),
+  ]);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(
+    [
+      { name: header("navHome"), path: "" },
+      { name: header("navTransitions"), path: "/transiciones-laborales" },
+      { name: processes(`items.${process.key}.title`), path: `/transiciones-laborales/${process.slug}` },
+    ],
+    locale,
+  );
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <ProcessDetail process={process} />
+    </>
+  );
 }
