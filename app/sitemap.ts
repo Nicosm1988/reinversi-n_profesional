@@ -12,7 +12,7 @@ const routes = [
   "/transiciones-laborales/elegir-formacion",
   "/brujulas",
   "/como-trabajamos",
-  "/equipo",
+  "/sobre-mi",
   "/test-anclas-de-carrera",
   "/encontrar-mi-recorrido",
   "/laboratorio-narrativas-laborales-alternativas",

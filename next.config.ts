@@ -73,7 +73,7 @@ const nextConfig: NextConfig = {
       ["/diagnostico/ancla-de-carrera", "/test-anclas-de-carrera"],
       ["/diagnostico", "/encontrar-mi-recorrido"],
       ["/laboratorio-nuevas-narrativas", "/laboratorio-narrativas-laborales-alternativas"],
-      ["/quienes-somos", "/equipo"],
+      ["/quienes-somos", "/sobre-mi"],
     ] as const;
 
     return legacyRoutes.flatMap(([source, destination]) => [

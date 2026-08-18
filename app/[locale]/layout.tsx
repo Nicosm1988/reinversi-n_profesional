@@ -14,6 +14,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { PointerIllumination } from "@/components/effects/pointer-illumination";
 import { getSiteUrl } from "@/lib/site-url";
+import { CONTACT_EMAIL } from "@/lib/contact-config";
 
 // One local variable font powers body and display text. Keeping the licensed
 // asset in the repository makes production builds independent from Google
@@ -72,6 +73,19 @@ export default async function RootLayout(
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
+  const siteUrl = getSiteUrl();
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Senda",
+    url: siteUrl,
+    logo: `${siteUrl}/senda-mark.svg`,
+    email: CONTACT_EMAIL,
+    description:
+      locale === "en"
+        ? "Senda accompanies career transitions with psychometric science, editorial content, AI as a copilot, and expert human support."
+        : "Senda acompaña transiciones laborales combinando ciencia psicométrica, contenido editorial, IA como copiloto y acompañamiento humano experto.",
+  };
 
   return (
     <html lang={locale} className="scroll-smooth" suppressHydrationWarning>
@@ -81,6 +95,10 @@ export default async function RootLayout(
           raleway.variable,
         )}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <ThemeProvider>
           <PointerIllumination />
           <NextIntlClientProvider messages={messages}>

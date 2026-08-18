@@ -205,6 +205,8 @@ test("technical discovery files are valid and public", async ({ request }) => {
   }
   expect(sitemapContent).not.toContain("/recorridos/brujula");
   expect(sitemapContent).not.toContain("/laboratorio-nuevas-narrativas");
+  expect(sitemapContent).toContain("<loc>https://universosenda.com/sobre-mi</loc>");
+  expect(sitemapContent).not.toContain("<loc>https://universosenda.com/equipo</loc>");
 
   const llms = await request.get("/llms.txt");
   expect(llms.ok()).toBe(true);
@@ -213,4 +215,41 @@ test("technical discovery files are valid and public", async ({ request }) => {
   expect(llmsContent).toContain("/transiciones-laborales");
   expect(llmsContent).toContain("/laboratorio-narrativas-laborales-alternativas");
   expect(llmsContent).not.toContain("/laboratorio-nuevas-narrativas");
+});
+
+test("SEO metadata: Open Graph image, Organization and FAQPage structured data are present", async ({ page, request }) => {
+  const ogImageResponse = await request.get("/opengraph-image");
+  expect(ogImageResponse.ok()).toBe(true);
+  expect(ogImageResponse.headers()["content-type"]).toContain("image/png");
+  expect((await ogImageResponse.body()).byteLength).toBeGreaterThan(1000);
+
+  await page.goto("/");
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    "content",
+    /\/opengraph-image/,
+  );
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
+    "content",
+    /\/opengraph-image/,
+  );
+
+  const organizationJsonLd = await page
+    .locator('script[type="application/ld+json"]')
+    .first()
+    .textContent();
+  expect(organizationJsonLd).not.toBeNull();
+  const organizationData = JSON.parse(organizationJsonLd ?? "{}");
+  expect(organizationData["@type"]).toBe("Organization");
+  expect(organizationData.name).toBe("Senda");
+
+  await page.goto("/preguntas-frecuentes");
+  const faqJsonLd = await page
+    .locator('script[type="application/ld+json"]')
+    .last()
+    .textContent();
+  expect(faqJsonLd).not.toBeNull();
+  const faqData = JSON.parse(faqJsonLd ?? "{}");
+  expect(faqData["@type"]).toBe("FAQPage");
+  expect(faqData.mainEntity.length).toBe(7);
+  expect(faqData.mainEntity[0].name).toContain("¿");
 });

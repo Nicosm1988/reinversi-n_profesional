@@ -112,7 +112,7 @@ const legacyRedirects = [
   { source: "/diagnostico/ancla-de-carrera", destination: "/test-anclas-de-carrera" },
   { source: "/diagnostico/ancla-de-carrera/test", destination: "/test-anclas-de-carrera" },
   { source: "/laboratorio-nuevas-narrativas", destination: "/laboratorio-narrativas-laborales-alternativas" },
-  { source: "/quienes-somos", destination: "/equipo" },
+  { source: "/quienes-somos", destination: "/sobre-mi" },
 ] as const;
 
 test.beforeEach(async ({ page }) => {
@@ -200,10 +200,11 @@ for (const locale of locales) {
       }
       if ("teamCards" in route) {
         await expect(page.locator("main article")).toHaveCount(route.teamCards);
+        await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
       }
       if ("aboutCards" in route) {
         await expect(page.locator("main ol > li")).toHaveCount(route.aboutCards);
-        await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+        await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index, follow");
       }
       if ("questions" in route) {
         await expect(page.locator("main details")).toHaveCount(route.questions);

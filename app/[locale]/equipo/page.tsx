@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: localizedPath,
       languages: { es: path, en: `/en${path}`, "x-default": path },
     },
+    robots: { index: false, follow: true },
   };
 }
 
