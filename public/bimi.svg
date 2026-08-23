@@ -1,0 +1,17 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="512" height="512">
+  <title>Senda</title>
+  <desc>Isotipo orbital original de Senda</desc>
+  <rect width="64" height="64" fill="#fbf9fc"/>
+  <g transform="translate(6 6)" fill="none">
+    <circle cx="26" cy="26" r="22.5" stroke="#1d172c" stroke-width="0.9"/>
+    <g transform="rotate(-18 26 26)">
+      <ellipse cx="26" cy="26" rx="23.5" ry="13.5" stroke="#1d172c" stroke-width="0.9" stroke-opacity="0.62"/>
+      <circle cx="48" cy="22" r="1.75" fill="#1d172c" fill-opacity="0.62"/>
+    </g>
+    <g transform="rotate(31 26 26)">
+      <ellipse cx="26" cy="26" rx="16" ry="23" stroke="#1d172c" stroke-width="0.9" stroke-opacity="0.42"/>
+      <circle cx="21" cy="3.8" r="1.35" fill="#d50034" fill-opacity="0.42"/>
+    </g>
+    <circle cx="26" cy="26" r="3.6" fill="#cc148c"/>
+  </g>
+</svg>
