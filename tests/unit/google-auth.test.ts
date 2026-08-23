@@ -58,7 +58,7 @@ describe("Google ID-token authentication", () => {
     const [firstResult, activeResult] = await Promise.all([firstMount, activeMount]);
 
     expect(googleIdentity.initialize).toHaveBeenCalledTimes(1);
-    expect(googleIdentity.disableAutoSelect).toHaveBeenCalledTimes(1);
+    expect(googleIdentity.disableAutoSelect).not.toHaveBeenCalled();
     expect(firstResult.nonce).toBe(activeResult.nonce);
     expect(googleIdentity.initialize).toHaveBeenCalledWith(expect.objectContaining({
       client_id: "client.apps.googleusercontent.com",

@@ -68,7 +68,6 @@ export function createGoogleIdentityInitializer() {
     nextState.promise = (async () => {
       const { nonce, hashedNonce } = await createGoogleNonce();
 
-      googleIdentity.disableAutoSelect();
       googleIdentity.initialize({
         client_id: clientId,
         callback: (response) => nextState.handler(response),
