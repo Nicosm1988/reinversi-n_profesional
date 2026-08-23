@@ -7,6 +7,7 @@ const mocks = vi.hoisted(() => ({
   limitRequest: vi.fn(),
   logEvent: vi.fn(),
   processCareerAnchorReportEmails: vi.fn(),
+  notifyInternalActivity: vi.fn(),
 }));
 
 vi.mock("@/lib/supabase/auth", () => ({
@@ -16,6 +17,9 @@ vi.mock("@/lib/rate-limit", () => ({ limitRequest: mocks.limitRequest }));
 vi.mock("@/lib/observability/logger", () => ({ logEvent: mocks.logEvent }));
 vi.mock("@/lib/diagnostics/career-anchor-report-delivery", () => ({
   processCareerAnchorReportEmails: mocks.processCareerAnchorReportEmails,
+}));
+vi.mock("@/lib/internal-notifications/service", () => ({
+  notifyInternalActivity: mocks.notifyInternalActivity,
 }));
 
 import { POST } from "@/app/api/diagnostics/complete-public/route";
@@ -53,6 +57,12 @@ describe("POST /api/diagnostics/complete-public", () => {
       sent: 1,
       retryScheduled: 0,
       permanentFailures: 0,
+      unavailable: false,
+    });
+    mocks.notifyInternalActivity.mockReset().mockResolvedValue({
+      sent: 2,
+      duplicates: 0,
+      failed: 0,
       unavailable: false,
     });
     mocks.limitRequest.mockReset().mockResolvedValue({
@@ -114,6 +124,28 @@ describe("POST /api/diagnostics/complete-public", () => {
       diagnosticId: "diagnostic-id",
       maxDeliveries: 1,
     });
+    expect(mocks.notifyInternalActivity).toHaveBeenCalledWith({
+      type: "career_anchor_completed",
+      eventId: "diagnostic-id",
+      occurredAt: expect.any(Date),
+      audience: "authenticated",
+    });
+  });
+
+  it("keeps completion successful when the internal notification throws unexpectedly", async () => {
+    mocks.rpc
+      .mockResolvedValueOnce({ data: "diagnostic-id", error: null })
+      .mockResolvedValueOnce({ data: true, error: null });
+    mocks.notifyInternalActivity.mockRejectedValueOnce(new Error("notification unavailable"));
+
+    const response = await POST(completionRequest(validBody()));
+
+    expect(response.status).toBe(200);
+    expect(mocks.logEvent).toHaveBeenCalledWith(
+      "error",
+      "diagnostics.public_completion.internal_notification_unexpected",
+      expect.objectContaining({ reason: "Error" }),
+    );
   });
 
   it("keeps report completion successful when immediate mail delivery fails", async () => {

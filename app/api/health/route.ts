@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { getRequestId } from "@/lib/http/request-context";
 import { hasSupabaseAdminConfig, hasSupabasePublicConfig } from "@/lib/supabase/config";
+import {
+  readInternalNotificationConfig,
+  readInternalNotificationReconciliationConfig,
+} from "@/lib/internal-notifications/config";
 
 function hasSecret(name: string) {
   const value = process.env[name]?.trim();
@@ -29,6 +33,10 @@ export async function GET(req: Request) {
         && hasSecret("SMTP_PASSWORD")
         && hasSecret("CONTACT_TO_EMAIL"),
     ),
+    internalNotifications: Boolean(readInternalNotificationConfig()),
+    completionNotificationReconciliation: Boolean(
+      readInternalNotificationReconciliationConfig(),
+    ),
     reportEmailCron: Boolean(
       hasSecret("CRON_SECRET") && (process.env.CRON_SECRET?.trim().length ?? 0) >= 16,
     ),
@@ -40,6 +48,8 @@ export async function GET(req: Request) {
     openai: checks.openai,
     turnstile: turnstileEnforced ? checks.turnstile : true,
     contactSmtp: checks.contactSmtp,
+    internalNotifications: checks.internalNotifications,
+    completionNotificationReconciliation: checks.completionNotificationReconciliation,
     reportEmailCron: checks.reportEmailCron,
   };
 
@@ -49,6 +59,8 @@ export async function GET(req: Request) {
     && readiness.openai
     && readiness.turnstile
     && readiness.contactSmtp
+    && readiness.internalNotifications
+    && readiness.completionNotificationReconciliation
     && readiness.reportEmailCron;
   const payload: Record<string, unknown> = {
     status: healthy ? "ok" : "degraded",

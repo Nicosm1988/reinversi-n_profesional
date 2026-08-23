@@ -10,6 +10,7 @@ import {
   replaceSessionWithGoogleIdToken,
 } from "@/lib/supabase/google";
 import { sanitizeNextPath } from "@/lib/security/navigation";
+import { requestLoginNotification } from "@/lib/internal-notifications/client";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
@@ -47,6 +48,10 @@ export default function LoginPage() {
       setLoginError("");
       setIsLoading(true);
       await replaceSessionWithGoogleIdToken(supabase, response.credential, nonceRef.current);
+      await Promise.race([
+        requestLoginNotification(),
+        new Promise((resolve) => window.setTimeout(resolve, 5_000)),
+      ]);
       window.location.replace(getNextPath());
     } catch (error) {
       console.error("Error logging in with Google:", error);

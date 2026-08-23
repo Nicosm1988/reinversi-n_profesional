@@ -16,6 +16,13 @@ function looksLikeRedactedValue(value) {
   return /^\[(?:sensitive|redacted|hidden)\]$/i.test(value.trim());
 }
 
+function isIsoDateTime(value) {
+  return (
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value)
+    && Number.isFinite(Date.parse(value))
+  );
+}
+
 function getMode() {
   const strict = process.argv.includes("--strict");
   return { strict };
@@ -58,10 +65,17 @@ function main() {
     }
   }
 
-  const hasUpstashUrl = isPresent(process.env.UPSTASH_REDIS_REST_URL);
-  const hasUpstashToken = isPresent(process.env.UPSTASH_REDIS_REST_TOKEN);
+  const hasUpstashUrl =
+    isPresent(process.env.UPSTASH_REDIS_REST_URL)
+    && !looksLikeRedactedValue(process.env.UPSTASH_REDIS_REST_URL);
+  const hasUpstashToken =
+    isPresent(process.env.UPSTASH_REDIS_REST_TOKEN)
+    && !looksLikeRedactedValue(process.env.UPSTASH_REDIS_REST_TOKEN);
   if (hasUpstashUrl !== hasUpstashToken) {
     errors.push("UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN must be set together.");
+  }
+  if (hasUpstashUrl) {
+    validateUrl("UPSTASH_REDIS_REST_URL", process.env.UPSTASH_REDIS_REST_URL, errors);
   }
 
   const hasTurnstileSite = isPresent(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
@@ -114,6 +128,65 @@ function main() {
     const smtpPort = Number(process.env.SMTP_PORT);
     if (!Number.isInteger(smtpPort) || smtpPort < 1 || smtpPort > 65_535) {
       errors.push("SMTP_PORT must be an integer between 1 and 65535.");
+    }
+  }
+
+  if (isPresent(process.env.INTERNAL_NOTIFICATION_BATCH_SIZE)) {
+    const notificationBatchSize = Number(process.env.INTERNAL_NOTIFICATION_BATCH_SIZE);
+    if (
+      !Number.isInteger(notificationBatchSize)
+      || notificationBatchSize < 1
+      || notificationBatchSize > 25
+    ) {
+      errors.push("INTERNAL_NOTIFICATION_BATCH_SIZE must be an integer between 1 and 25.");
+    }
+  }
+
+  if (!isPresent(process.env.INTERNAL_NOTIFICATION_EMAILS)) {
+    const message =
+      "INTERNAL_NOTIFICATION_EMAILS missing: login and test-completion notifications are disabled.";
+    if (strict) {
+      errors.push(message);
+    } else {
+      warnings.push(message);
+    }
+  } else {
+    const rawNotificationEmails = process.env.INTERNAL_NOTIFICATION_EMAILS
+      .split(",")
+      .map((email) => email.trim().toLowerCase());
+    const notificationEmails = [...new Set(rawNotificationEmails)];
+    const requiredNotificationEmails = [
+      "hola@universosenda.com",
+      "tanisardella@gmail.com",
+    ];
+    if (
+      rawNotificationEmails.some((email) => email.length === 0)
+      || notificationEmails.length < 1
+      || notificationEmails.length > 5
+      || notificationEmails.some((email) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    ) {
+      errors.push("INTERNAL_NOTIFICATION_EMAILS must contain between 1 and 5 valid comma-separated emails.");
+    } else if (requiredNotificationEmails.some((email) => !notificationEmails.includes(email))) {
+      errors.push(
+        "INTERNAL_NOTIFICATION_EMAILS must include hola@universosenda.com and tanisardella@gmail.com.",
+      );
+    }
+  }
+
+  if (!isPresent(process.env.INTERNAL_NOTIFICATION_STARTED_AT)) {
+    const message =
+      "INTERNAL_NOTIFICATION_STARTED_AT missing: authenticated completion reconciliation is disabled.";
+    if (strict) {
+      errors.push(message);
+    } else {
+      warnings.push(message);
+    }
+  } else {
+    const notificationStartedAt = process.env.INTERNAL_NOTIFICATION_STARTED_AT.trim();
+    if (!isIsoDateTime(notificationStartedAt)) {
+      errors.push("INTERNAL_NOTIFICATION_STARTED_AT must be an ISO 8601 date-time with timezone.");
+    } else if (Date.parse(notificationStartedAt) > Date.now() + 5 * 60 * 1_000) {
+      errors.push("INTERNAL_NOTIFICATION_STARTED_AT cannot be in the future.");
     }
   }
 

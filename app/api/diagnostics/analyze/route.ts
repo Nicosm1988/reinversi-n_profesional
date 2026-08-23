@@ -18,6 +18,7 @@ import {
   type CareerAnchorLocale,
 } from "@/lib/diagnostics/career-anchor";
 import { processCareerAnchorReportEmails } from "@/lib/diagnostics/career-anchor-report-delivery";
+import { notifyInternalActivity } from "@/lib/internal-notifications/service";
 
 const diagnosticResultSchema = z.object({
   title: z.string().describe("Short but strong career anchor archetype."),
@@ -319,14 +320,42 @@ No menciones que sos una IA y no uses presión comercial, urgencia artificial ni
       );
     }
 
-    // Completion is authoritative even if SMTP is temporarily unavailable.
-    // The outbox keeps the delivery retryable without asking the person to retake the test.
-    try {
-      await processCareerAnchorReportEmails({ diagnosticId, maxDeliveries: 1 });
-    } catch (error) {
+    // Completion is authoritative even if either SMTP delivery is temporarily unavailable.
+    const [reportDelivery, internalNotification] = await Promise.allSettled([
+      processCareerAnchorReportEmails({ diagnosticId, maxDeliveries: 1 }),
+      notifyInternalActivity({
+        type: "career_anchor_completed",
+        eventId: diagnosticId,
+        occurredAt: new Date(),
+        audience: "authenticated",
+      }),
+    ]);
+
+    if (reportDelivery.status === "rejected") {
       logEvent("error", "diagnostics.analyze.report_email_unexpected", {
         requestId,
-        reason: error instanceof Error ? error.name : "unknown_error",
+        reason: reportDelivery.reason instanceof Error ? reportDelivery.reason.name : "unknown_error",
+      });
+    }
+
+    if (internalNotification.status === "rejected") {
+      logEvent("error", "diagnostics.analyze.internal_notification_unexpected", {
+        requestId,
+        reason:
+          internalNotification.reason instanceof Error
+            ? internalNotification.reason.name
+            : "unknown_error",
+      });
+    } else if (internalNotification.value.unavailable) {
+      logEvent("error", "diagnostics.analyze.internal_notification_unavailable", {
+        requestId,
+        reason: internalNotification.value.errorCode ?? "outbox_unavailable",
+        failed: internalNotification.value.failed,
+      });
+    } else if (internalNotification.value.failed > 0) {
+      logEvent("warn", "diagnostics.analyze.internal_notification_queued_for_retry", {
+        requestId,
+        failed: internalNotification.value.failed,
       });
     }
 

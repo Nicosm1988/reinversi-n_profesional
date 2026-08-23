@@ -4,6 +4,7 @@ import { sanitizeNextPath } from "@/lib/security/navigation";
 import { getRequestId } from "@/lib/http/request-context";
 import { logEvent } from "@/lib/observability/logger";
 import { hasSupabasePublicConfig } from "@/lib/supabase/config";
+import { notifyAuthenticatedLogin } from "@/lib/internal-notifications/login";
 
 const AUTH_RESPONSE_HEADERS = {
   "cache-control": "private, no-cache, no-store, must-revalidate, max-age=0",
@@ -39,9 +40,12 @@ export async function GET(request: Request) {
 
     if (code) {
       const supabase = await createClient();
-      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
       if (!error) {
+        if (data.user) {
+          await notifyAuthenticatedLogin({ supabase, requestId });
+        }
         logEvent("info", "auth.callback.success", { requestId, next });
         return redirectWithAuthHeaders(new URL(next, origin), requestId);
       }

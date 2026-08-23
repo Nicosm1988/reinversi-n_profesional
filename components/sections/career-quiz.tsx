@@ -38,6 +38,11 @@ import {
   type CareerAnchorRankingItem,
   type CareerStage,
 } from "@/lib/diagnostics/career-anchor";
+import {
+  requestAnonymousCareerAnchorAttempt,
+  requestAnonymousCareerAnchorCompletionNotification,
+  requestAuthenticatedCareerAnchorCompletionNotification,
+} from "@/lib/internal-notifications/client";
 
 type Step = "intro" | "questions" | "transition" | "bonus" | "pre-quiz" | "results";
 
@@ -147,6 +152,7 @@ export function CareerQuiz({
     existingDiagnostic ? "saved" : "idle",
   );
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const anonymousAttemptRequestRef = useRef<Promise<boolean> | null>(null);
   const careerStage: CareerStage = "prefer_not_to_say";
   const [interpretation, setInterpretation] = useState<CareerAnchorInterpretation | null>(null);
   const [isInterpreting, setIsInterpreting] = useState(false);
@@ -158,6 +164,10 @@ export function CareerQuiz({
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const isAnonymousAttempt = publicMode
+    && !persistAuthenticatedAttempt
+    && !existingDiagnostic;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
@@ -227,6 +237,10 @@ export function CareerQuiz({
   }, [step, calculateResults, interpretation, isInterpreting]);
 
   const handleAnswer = (questionId: number, value: number) => {
+    if (isAnonymousAttempt) {
+      anonymousAttemptRequestRef.current ??=
+        requestAnonymousCareerAnchorAttempt();
+    }
     setAnswers((previous) => ({ ...previous, [questionId]: value }));
   };
 
@@ -253,6 +267,26 @@ export function CareerQuiz({
 
     if (!persistAuthenticatedAttempt) {
       setStep("results");
+      void (async () => {
+        const initialAttemptRequest = anonymousAttemptRequestRef.current
+          ?? requestAnonymousCareerAnchorAttempt();
+        anonymousAttemptRequestRef.current = initialAttemptRequest;
+
+        let attemptReady = await initialAttemptRequest;
+        if (!attemptReady) {
+          const retryAttemptRequest = requestAnonymousCareerAnchorAttempt();
+          anonymousAttemptRequestRef.current = retryAttemptRequest;
+          attemptReady = await retryAttemptRequest;
+        }
+
+        if (!attemptReady) return;
+
+        await requestAnonymousCareerAnchorCompletionNotification({
+          locale: locale === "en" ? "en" : "es",
+          completedQuestions: 40,
+          selectedPriorities: 3,
+        });
+      })();
       return;
     }
 
@@ -289,6 +323,7 @@ export function CareerQuiz({
 
       setSaveStatus("saved");
       setStep("results");
+      void requestAuthenticatedCareerAnchorCompletionNotification();
     } catch {
       setCompletionError(t("completionUnavailable"));
     } finally {
@@ -384,6 +419,7 @@ export function CareerQuiz({
 
       setAiResult(aiData);
       setSaveStatus("saved");
+      void requestAuthenticatedCareerAnchorCompletionNotification();
     } catch (error) {
       console.error(error);
       setAnalysisError(

@@ -15,6 +15,7 @@ import { withRequestHeaders } from "@/lib/http/response-headers";
 import { logEvent } from "@/lib/observability/logger";
 import { limitRequest, type RateLimitResult } from "@/lib/rate-limit";
 import { getAuthenticatedUser } from "@/lib/supabase/auth";
+import { notifyInternalActivity } from "@/lib/internal-notifications/service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -184,14 +185,43 @@ export async function POST(req: Request) {
     );
   }
 
-  // The report is already durable at this point. Mail delivery is best-effort here;
-  // the database outbox and cron worker retain and retry any unsent message.
-  try {
-    await processCareerAnchorReportEmails({ diagnosticId, maxDeliveries: 1 });
-  } catch (error) {
+  // The report is already durable at this point. Both immediate deliveries are
+  // isolated from persistence so an SMTP outage never asks the person to retake the test.
+  const [reportDelivery, internalNotification] = await Promise.allSettled([
+    processCareerAnchorReportEmails({ diagnosticId, maxDeliveries: 1 }),
+    notifyInternalActivity({
+      type: "career_anchor_completed",
+      eventId: diagnosticId,
+      occurredAt: new Date(),
+      audience: "authenticated",
+    }),
+  ]);
+
+  if (reportDelivery.status === "rejected") {
     logEvent("error", "diagnostics.public_completion.report_email_unexpected", {
       requestId,
-      reason: error instanceof Error ? error.name : "unknown_error",
+      reason: reportDelivery.reason instanceof Error ? reportDelivery.reason.name : "unknown_error",
+    });
+  }
+
+  if (internalNotification.status === "rejected") {
+    logEvent("error", "diagnostics.public_completion.internal_notification_unexpected", {
+      requestId,
+      reason:
+        internalNotification.reason instanceof Error
+          ? internalNotification.reason.name
+          : "unknown_error",
+    });
+  } else if (internalNotification.value.unavailable) {
+    logEvent("error", "diagnostics.public_completion.internal_notification_unavailable", {
+      requestId,
+      reason: internalNotification.value.errorCode ?? "outbox_unavailable",
+      failed: internalNotification.value.failed,
+    });
+  } else if (internalNotification.value.failed > 0) {
+    logEvent("warn", "diagnostics.public_completion.internal_notification_queued_for_retry", {
+      requestId,
+      failed: internalNotification.value.failed,
     });
   }
 

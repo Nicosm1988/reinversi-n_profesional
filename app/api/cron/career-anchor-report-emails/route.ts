@@ -1,5 +1,7 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import { processCareerAnchorReportEmails } from "@/lib/diagnostics/career-anchor-report-delivery";
+import { reconcileCareerAnchorCompletionNotifications } from "@/lib/internal-notifications/reconcile-career-anchor-completions";
+import { processInternalNotificationOutbox } from "@/lib/internal-notifications/service";
 import { getRequestId } from "@/lib/http/request-context";
 import { withRequestHeaders } from "@/lib/http/response-headers";
 import { logEvent } from "@/lib/observability/logger";
@@ -31,6 +33,11 @@ function batchSize() {
   return Number.isInteger(configured) && configured >= 1 && configured <= 25 ? configured : 5;
 }
 
+function internalNotificationBatchSize() {
+  const configured = Number(process.env.INTERNAL_NOTIFICATION_BATCH_SIZE ?? "25");
+  return Number.isInteger(configured) && configured >= 1 && configured <= 25 ? configured : 25;
+}
+
 export async function GET(req: Request) {
   const requestId = getRequestId(req);
   const headers = {
@@ -43,9 +50,36 @@ export async function GET(req: Request) {
     return Response.json({ ok: false }, { status: 401, headers });
   }
 
-  const summary = await processCareerAnchorReportEmails({ maxDeliveries: batchSize() });
+  const maxDeliveries = batchSize();
+  const [summary, reconciliation, internalNotificationResult] = await Promise.all([
+    processCareerAnchorReportEmails({ maxDeliveries }),
+    reconcileCareerAnchorCompletionNotifications(),
+    processInternalNotificationOutbox({ maxDeliveries: internalNotificationBatchSize() }),
+  ]);
+  const internalNotifications = {
+    sent: internalNotificationResult.sent,
+    duplicates: internalNotificationResult.duplicates,
+    failed: internalNotificationResult.failed,
+    unavailable: internalNotificationResult.unavailable,
+    ...(internalNotificationResult.errorCode
+      ? { errorCode: internalNotificationResult.errorCode }
+      : {}),
+  };
+  const completionReconciliation = {
+    scanned: reconciliation.scanned,
+    reconciled: reconciliation.reconciled,
+    sent: reconciliation.sent,
+    duplicates: reconciliation.duplicates,
+    failed: reconciliation.failed,
+    unavailable: reconciliation.unavailable,
+  };
+  const unavailable =
+    summary.unavailable
+    || completionReconciliation.unavailable
+    || internalNotifications.unavailable;
+
   return Response.json(
-    { ok: !summary.unavailable, ...summary },
-    { status: summary.unavailable ? 503 : 200, headers },
+    { ok: !unavailable, ...summary, completionReconciliation, internalNotifications },
+    { status: unavailable ? 503 : 200, headers },
   );
 }
