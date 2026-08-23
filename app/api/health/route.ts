@@ -29,6 +29,9 @@ export async function GET(req: Request) {
         && hasSecret("SMTP_PASSWORD")
         && hasSecret("CONTACT_TO_EMAIL"),
     ),
+    reportEmailCron: Boolean(
+      hasSecret("CRON_SECRET") && (process.env.CRON_SECRET?.trim().length ?? 0) >= 16,
+    ),
   };
 
   const readiness = {
@@ -37,6 +40,7 @@ export async function GET(req: Request) {
     openai: checks.openai,
     turnstile: turnstileEnforced ? checks.turnstile : true,
     contactSmtp: checks.contactSmtp,
+    reportEmailCron: checks.reportEmailCron,
   };
 
   const healthy =
@@ -44,7 +48,8 @@ export async function GET(req: Request) {
     && readiness.supabaseAdmin
     && readiness.openai
     && readiness.turnstile
-    && readiness.contactSmtp;
+    && readiness.contactSmtp
+    && readiness.reportEmailCron;
   const payload: Record<string, unknown> = {
     status: healthy ? "ok" : "degraded",
     timestamp: new Date().toISOString(),

@@ -8,6 +8,7 @@ import {
   careerAnchorRawAnswersSchema,
   getCareerAnchorResultGroups,
 } from "@/lib/diagnostics/career-anchor";
+import { processCareerAnchorReportEmails } from "@/lib/diagnostics/career-anchor-report-delivery";
 import { getClientIp, getRequestId } from "@/lib/http/request-context";
 import { readJsonBody } from "@/lib/http/json-body";
 import { withRequestHeaders } from "@/lib/http/response-headers";
@@ -139,7 +140,7 @@ export async function POST(req: Request) {
   const { data: diagnosticId, error: claimError } = await auth.supabase.rpc(
     "claim_free_career_anchor_diagnostic",
     {
-      p_user_data: { name: "", age: "", occupation: "", city: "", country: "" },
+      p_user_data: { name: "", age: "", occupation: "", city: "", country: "", locale },
       p_raw_answers: rawAnswers,
       p_dominant_result: { name: dominantName },
     },
@@ -181,6 +182,17 @@ export async function POST(req: Request) {
       { ok: false, code: "unavailable" },
       { status: 503, headers },
     );
+  }
+
+  // The report is already durable at this point. Mail delivery is best-effort here;
+  // the database outbox and cron worker retain and retry any unsent message.
+  try {
+    await processCareerAnchorReportEmails({ diagnosticId, maxDeliveries: 1 });
+  } catch (error) {
+    logEvent("error", "diagnostics.public_completion.report_email_unexpected", {
+      requestId,
+      reason: error instanceof Error ? error.name : "unknown_error",
+    });
   }
 
   logEvent("info", "diagnostics.public_completion.success", { requestId, locale });

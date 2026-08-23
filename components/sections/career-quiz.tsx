@@ -63,8 +63,6 @@ type QuizQuestion = {
   text: string;
 };
 
-const QUESTIONS_PER_PAGE = 10;
-
 const careerStageOptions: Array<{
   value: CareerStage;
   labelKey:
@@ -87,18 +85,10 @@ const careerStageOptions: Array<{
   { value: "prefer_not_to_say", labelKey: "contextOptionPreferNot" },
 ];
 
-function chunkQuestions<T>(items: T[], size: number) {
-  const chunks: T[][] = [];
-
-  for (let index = 0; index < items.length; index += size) {
-    chunks.push(items.slice(index, index + size));
-  }
-
-  return chunks;
-}
-
 const warmCardClass =
   "overflow-hidden border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-raised)_95%,transparent)] shadow-[0_30px_82px_-54px_var(--quiz-shadow)] backdrop-blur-sm";
+const longFormCardClass =
+  "w-full max-w-full border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-raised)_95%,transparent)] shadow-[0_30px_82px_-54px_var(--quiz-shadow)] backdrop-blur-sm";
 const warmPrimaryButtonClass =
   "rounded-full border-[var(--senda-action)] bg-[var(--senda-action)] text-white shadow-[0_18px_40px_-20px_var(--quiz-shadow)] hover:border-[var(--senda-action-hover)] hover:bg-[var(--senda-action-hover)]";
 const warmSecondaryButtonClass =
@@ -136,10 +126,6 @@ export function CareerQuiz({
   const t = useTranslations("CareerQuiz");
   const reduceMotion = useReducedMotion();
   const quizData = locale === "en" ? englishQuizData : spanishQuizData;
-  const questionPages = useMemo(
-    () => chunkQuestions(quizData.questions, QUESTIONS_PER_PAGE),
-    [quizData.questions],
-  );
   const storedAnswers = existingDiagnostic
     ? Object.fromEntries(
         Object.entries(existingDiagnostic.rawAnswers.answers).map(([questionId, value]) => [Number(questionId), value]),
@@ -161,8 +147,6 @@ export function CareerQuiz({
     existingDiagnostic ? "saved" : "idle",
   );
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [questionPageIndex, setQuestionPageIndex] = useState(0);
-  const [bonusPageIndex, setBonusPageIndex] = useState(0);
   const careerStage: CareerStage = "prefer_not_to_say";
   const [interpretation, setInterpretation] = useState<CareerAnchorInterpretation | null>(null);
   const [isInterpreting, setIsInterpreting] = useState(false);
@@ -177,7 +161,7 @@ export function CareerQuiz({
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
-  }, [step, questionPageIndex, bonusPageIndex, reduceMotion]);
+  }, [step, reduceMotion]);
 
   useEffect(() => {
     if (saveStatus === "saved") {
@@ -193,14 +177,8 @@ export function CareerQuiz({
 
   const answeredCount = Object.keys(answers).length;
   const allAnswered = answeredCount >= quizData.questions.length;
-  const currentQuestionPage = questionPages[questionPageIndex] ?? [];
-  const currentBonusPage = questionPages[bonusPageIndex] ?? [];
-  const isLastQuestionPage = questionPageIndex === questionPages.length - 1;
-  const isLastBonusPage = bonusPageIndex === questionPages.length - 1;
-
-  const currentQuestionPageComplete = currentQuestionPage.every(
-    (question) => answers[question.id] !== undefined,
-  );
+  const unansweredCount = Math.max(quizData.questions.length - answeredCount, 0);
+  const completionPercentage = Math.round((answeredCount / quizData.questions.length) * 100);
 
   const calculateResults = useMemo<CareerAnchorRankingItem[] | null>(() => {
     if (!allAnswered || bonusQuestions.length !== 3) return null;
@@ -226,6 +204,9 @@ export function CareerQuiz({
     const thirdVisibleRank = calculateResults[Math.min(2, calculateResults.length - 1)]?.rank;
     return calculateResults.filter((anchor) => anchor.rank <= thirdVisibleRank);
   }, [calculateResults]);
+
+  const leadingResults = calculateResults?.slice(0, 3) ?? [];
+  const remainingResults = calculateResults?.slice(3) ?? [];
 
   const fallbackInterpretation = useMemo(
     () =>
@@ -413,16 +394,12 @@ export function CareerQuiz({
     }
   };
 
-  const questionBlockStart = questionPageIndex * QUESTIONS_PER_PAGE + 1;
-  const questionBlockEnd = Math.min(questionBlockStart + QUESTIONS_PER_PAGE - 1, quizData.questions.length);
-  const bonusBlockStart = bonusPageIndex * QUESTIONS_PER_PAGE + 1;
-  const bonusBlockEnd = Math.min(bonusBlockStart + QUESTIONS_PER_PAGE - 1, quizData.questions.length);
   const focusStepHeading = () => {
     document.getElementById("career-quiz-step-heading")?.focus({ preventScroll: true });
   };
 
   return (
-    <div className="career-quiz relative min-h-screen overflow-hidden bg-[var(--quiz-bg)] transition-colors">
+    <div className="career-quiz relative min-h-screen max-w-full overflow-x-clip bg-[var(--quiz-bg)] transition-colors">
       <div className="career-quiz__background pointer-events-none absolute inset-0" />
       <UniverseField className="left-[36%] text-[var(--senda-olive)] opacity-10 dark:opacity-15" />
       <div className="pointer-events-none absolute left-[-8%] top-16 h-80 w-80 rounded-full bg-[color-mix(in_srgb,var(--quiz-accent)_12%,transparent)] blur-3xl" />
@@ -430,7 +407,7 @@ export function CareerQuiz({
       <div className="pointer-events-none absolute bottom-0 left-1/2 h-72 w-[44rem] -translate-x-1/2 rounded-full bg-[color-mix(in_srgb,var(--quiz-surface)_8%,transparent)] blur-3xl" />
 
       <Container className="relative z-10">
-        <div className={`mx-auto max-w-5xl pt-28 md:pt-32 ${step === "results" ? "pb-28 md:pb-32" : "pb-12 md:pb-20"}`}>
+        <div className={`mx-auto min-w-0 max-w-5xl pt-28 md:pt-32 ${step === "results" ? "pb-28 md:pb-32" : "pb-12 md:pb-20"}`}>
           <h1 className="sr-only">{t("metadataTitle")}</h1>
           <MotionConfig reducedMotion="user">
             <AnimatePresence mode="wait">
@@ -536,10 +513,7 @@ export function CareerQuiz({
                     size="lg"
                     variant="default"
                     className={`h-14 px-12 text-lg ${warmPrimaryButtonClass}`}
-                    onClick={() => {
-                      setQuestionPageIndex(0);
-                      setStep("questions");
-                    }}
+                    onClick={() => setStep("questions")}
                   >
                     {t("introCta")}
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -550,81 +524,110 @@ export function CareerQuiz({
 
             {step === "questions" && (
               <motion.div
-                key={`questions-${questionPageIndex}`}
+                key="questions"
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -24 }}
                 onAnimationComplete={focusStepHeading}
+                className="w-full min-w-0 max-w-full"
               >
-                <Card className={warmCardClass}>
+                <Card className={longFormCardClass}>
                   <CardHeader className="space-y-4 border-b border-[var(--quiz-border-soft)] bg-gradient-to-r from-[var(--quiz-surface-soft)] via-[var(--quiz-surface-raised)] to-[var(--quiz-surface-warm)] pb-6">
-                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                      <div className="space-y-2">
+                    <div className="flex min-w-0 flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                      <div className="min-w-0 space-y-2">
                         <Text variant="small" className={warmSectionEyebrowClass}>
-                          {t("questionsBlock", {
-                            current: questionPageIndex + 1,
-                            total: questionPages.length,
-                          })}
+                          {t("questionsBlock")}
                         </Text>
                         <CardTitle
                           id="career-quiz-step-heading"
                           tabIndex={-1}
-                          className="text-2xl outline-none md:text-3xl"
+                          className="max-w-full text-2xl outline-none [overflow-wrap:anywhere] md:text-3xl"
                         >
-                          {t("questionsRange", {
-                            start: questionBlockStart,
-                            end: questionBlockEnd,
-                          })}
+                          {t("questionsRange")}
                         </CardTitle>
-                        <CardDescription className="text-base">
+                        <CardDescription className="max-w-2xl text-base [overflow-wrap:anywhere]">
                           {t("questionsScaleDesc")}
                         </CardDescription>
-                      </div>
-
-                      <div className="min-w-[220px] rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface)] p-4">
-                        <div className="mb-2 flex items-center justify-between text-sm font-medium text-foreground/70">
-                          <span>{t("questionsGeneralProgress")}</span>
-                          <span>
-                            {answeredCount}/{quizData.questions.length}
-                          </span>
-                        </div>
-                        <div className="h-2 overflow-hidden rounded-full bg-[var(--quiz-accent-soft)]">
-                          <motion.div
-                            className="h-full bg-gradient-to-r from-[var(--quiz-accent)] to-[var(--senda-accent-soft)]"
-                            initial={{ width: 0 }}
-                            animate={{ width: `${(answeredCount / quizData.questions.length) * 100}%` }}
-                          />
-                        </div>
                       </div>
                     </div>
                   </CardHeader>
 
-                  <CardContent className="space-y-5 p-6 md:p-8">
-                    {currentQuestionPage.map((question: QuizQuestion) => (
+                  <div
+                    className="sticky top-[88px] z-30 mx-3 mt-3 max-w-full rounded-2xl border border-[color-mix(in_srgb,var(--quiz-accent)_45%,var(--quiz-border))] bg-[color-mix(in_srgb,var(--quiz-surface-raised)_94%,transparent)] p-4 shadow-[0_18px_42px_-28px_var(--quiz-shadow)] backdrop-blur-xl sm:mx-6 md:mx-8"
+                    data-testid="career-anchor-progress"
+                  >
+                    <div className="mb-2 flex min-w-0 items-center justify-between gap-3 text-sm font-semibold text-[var(--quiz-ink)]">
+                      <span className="min-w-0 [overflow-wrap:anywhere]">{t("questionsGeneralProgress")}</span>
+                      <span className="shrink-0 tabular-nums" aria-live="polite">
+                        {t("questionsProgress", {
+                          answered: answeredCount,
+                          total: quizData.questions.length,
+                        })}
+                      </span>
+                    </div>
+                    <div
+                      role="progressbar"
+                      aria-label={t("questionsGeneralProgress")}
+                      aria-valuemin={0}
+                      aria-valuemax={quizData.questions.length}
+                      aria-valuenow={answeredCount}
+                      aria-valuetext={`${completionPercentage}%`}
+                      className="h-3 overflow-hidden rounded-full border border-[color-mix(in_srgb,var(--quiz-accent)_18%,transparent)] bg-[var(--quiz-accent-soft)]"
+                    >
+                      <motion.div
+                        className="h-full rounded-full bg-gradient-to-r from-[var(--quiz-accent-strong)] via-[var(--quiz-accent)] to-[var(--senda-accent-soft)] shadow-[0_0_18px_color-mix(in_srgb,var(--quiz-accent)_48%,transparent)]"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${completionPercentage}%` }}
+                        transition={{ duration: reduceMotion ? 0 : 0.35, ease: "easeOut" }}
+                      />
+                    </div>
+                    <div className="mt-2 flex items-center justify-between gap-3 text-xs text-[var(--quiz-muted)]">
+                      <span aria-live="polite">
+                        {allAnswered
+                          ? t("questionsComplete")
+                          : t("questionsRemaining", { count: unansweredCount })}
+                      </span>
+                      <span className="shrink-0 font-bold tabular-nums text-[var(--quiz-accent)]">
+                        {completionPercentage}%
+                      </span>
+                    </div>
+                  </div>
+
+                  <CardContent
+                    className="space-y-5 p-4 pt-6 sm:p-6 sm:pt-6 md:p-8 md:pt-8"
+                    data-testid="career-anchor-question-list"
+                  >
+                    {quizData.questions.map((question: QuizQuestion) => (
                       <fieldset
                         key={question.id}
-                        className="rounded-[24px] border border-[var(--quiz-border-soft)] bg-gradient-to-br from-[var(--quiz-surface)] to-[var(--quiz-surface-soft)] p-5 shadow-sm"
+                        className="m-0 min-w-0 max-w-full overflow-hidden rounded-[24px] border border-[var(--quiz-border-soft)] bg-gradient-to-br from-[var(--quiz-surface)] to-[var(--quiz-surface-soft)] p-4 shadow-sm sm:p-5"
                       >
-                        <legend className="mb-4 w-full">
-                          <span className="flex gap-4">
-                            <span
-                              className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                                answers[question.id] !== undefined
-                                  ? "bg-[var(--senda-dark)] text-[var(--senda-light)]"
-                                  : "bg-[var(--quiz-accent-soft)] text-[var(--quiz-ink)]"
-                              }`}
-                            >
-                              {question.id}
-                            </span>
-                            <Text as="span" className="text-lg font-medium leading-relaxed">{question.text}</Text>
-                          </span>
+                        <legend className="sr-only">
+                          {question.id}. {question.text}
                         </legend>
+                        <div className="mb-4 flex min-w-0 max-w-full items-start gap-3 sm:gap-4" aria-hidden="true">
+                          <span
+                            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold transition-colors ${
+                              answers[question.id] !== undefined
+                                ? "bg-[var(--senda-dark)] text-[var(--senda-light)]"
+                                : "bg-[var(--quiz-accent-soft)] text-[var(--quiz-ink)]"
+                            }`}
+                          >
+                            {question.id}
+                          </span>
+                          <Text
+                            as="span"
+                            className="min-w-0 max-w-full flex-1 text-base font-medium leading-relaxed text-[var(--quiz-ink)] [overflow-wrap:anywhere] sm:text-lg"
+                          >
+                            {question.text}
+                          </Text>
+                        </div>
 
-                        <div className="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3">
+                        <div className="grid min-w-0 max-w-full grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3">
                           {[1, 2, 3, 4, 5, 6].map((value) => (
                             <label
                               key={value}
-                              className={`flex h-12 cursor-pointer items-center justify-center rounded-2xl border text-sm font-bold transition-[color,background-color,border-color,box-shadow,transform] duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--quiz-accent)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--quiz-surface)] ${
+                              className={`flex h-12 min-w-0 cursor-pointer items-center justify-center rounded-2xl border text-sm font-bold transition-[color,background-color,border-color,box-shadow,transform] duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--quiz-accent)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--quiz-surface)] ${
                                 answers[question.id] === value
                                   ? "scale-[1.03] border-[var(--quiz-accent)] bg-[var(--senda-dark)] text-[var(--senda-light)] shadow-md"
                                   : "border-[var(--quiz-border-soft)] bg-[var(--quiz-surface)] text-[var(--quiz-ink)] hover:border-[var(--quiz-accent)] hover:bg-[var(--quiz-choice-hover)]"
@@ -643,9 +646,9 @@ export function CareerQuiz({
                           ))}
                         </div>
 
-                        <div className="mt-3 flex justify-between text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                          <span>{t("scaleNever")}</span>
-                          <span>{t("scaleAlways")}</span>
+                        <div className="mt-3 flex min-w-0 justify-between gap-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground sm:text-[11px] sm:tracking-[0.2em]">
+                          <span className="min-w-0 [overflow-wrap:anywhere]">{t("scaleNever")}</span>
+                          <span className="min-w-0 text-right [overflow-wrap:anywhere]">{t("scaleAlways")}</span>
                         </div>
                       </fieldset>
                     ))}
@@ -657,44 +660,29 @@ export function CareerQuiz({
                         variant="outline"
                         className={warmSecondaryButtonClass}
                         onClick={() => {
-                          if (questionPageIndex === 0) {
-                            if (startAtQuestions) {
-                              router.push("/");
-                              return;
-                            }
-                            setStep("intro");
+                          if (startAtQuestions) {
+                            router.push("/");
                             return;
                           }
-
-                          setQuestionPageIndex((previous) => previous - 1);
+                          setStep("intro");
                         }}
                       >
                         <ArrowLeft className="mr-2 h-4 w-4" />
-                        {questionPageIndex === 0
-                          ? t("questionsBackToStart")
-                          : t("questionsBackBlock")}
+                        {t("questionsBackToStart")}
                       </Button>
 
                       <Button
                         variant="default"
                         className={`px-8 ${warmPrimaryButtonClass}`}
-                        disabled={!currentQuestionPageComplete}
-                        onClick={() => {
-                          if (isLastQuestionPage) {
-                            setBonusPageIndex(0);
-                            setStep("transition");
-                            return;
-                          }
-
-                          setQuestionPageIndex((previous) => previous + 1);
-                        }}
+                        disabled={!allAnswered}
+                        onClick={() => setStep("transition")}
                       >
-                        {isLastQuestionPage ? t("questionsContinue") : t("questionsNextBlock")}
+                        {t("questionsContinue")}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
 
-                    {!currentQuestionPageComplete && (
+                    {!allAnswered && (
                       <Text variant="small" className="text-center text-muted-foreground">
                         {t("questionsIncomplete")}
                       </Text>
@@ -749,10 +737,7 @@ export function CareerQuiz({
                   size="lg"
                   variant="default"
                   className={`h-14 px-12 text-lg ${warmPrimaryButtonClass}`}
-                  onClick={() => {
-                    setBonusPageIndex(0);
-                    setStep("bonus");
-                  }}
+                  onClick={() => setStep("bonus")}
                 >
                   {t("transitionCta")}
                   <ChevronRight className="ml-2 h-5 w-5" />
@@ -762,45 +747,65 @@ export function CareerQuiz({
 
             {step === "bonus" && (
               <motion.div
-                key={`bonus-${bonusPageIndex}`}
+                key="bonus"
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -24 }}
                 onAnimationComplete={focusStepHeading}
+                className="w-full min-w-0 max-w-full"
               >
-                <Card className={warmCardClass}>
+                <Card className={longFormCardClass}>
                   <CardHeader className="space-y-4 border-b border-[var(--quiz-border-soft)] bg-gradient-to-r from-[var(--quiz-surface-soft)] via-[var(--quiz-surface-raised)] to-[var(--quiz-surface-warm)] pb-6">
-                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                      <div className="space-y-2">
+                    <div className="flex min-w-0 flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                      <div className="min-w-0 space-y-2">
                         <Text variant="small" className={warmSectionEyebrowClass}>
                           {t("bonusTitle")}
                         </Text>
                         <CardTitle
                           id="career-quiz-step-heading"
                           tabIndex={-1}
-                          className="text-2xl outline-none md:text-3xl"
+                          className="max-w-full text-2xl outline-none [overflow-wrap:anywhere] md:text-3xl"
                         >
-                          {t("bonusRange", {
-                            start: bonusBlockStart,
-                            end: bonusBlockEnd,
-                          })}
+                          {t("bonusRange")}
                         </CardTitle>
-                        <CardDescription className="text-base">
+                        <CardDescription className="max-w-2xl text-base [overflow-wrap:anywhere]">
                           {t("bonusSubtitle")}
                         </CardDescription>
-                      </div>
-
-                      <div className="rounded-2xl border border-[var(--quiz-border-soft)] bg-[var(--quiz-surface)] p-4 text-left">
-                        <Text variant="small" className="font-semibold text-[var(--quiz-ink)]">
-                          {t("bonusSelectedLabel")}
-                        </Text>
-                        <Text className="mt-1 text-2xl font-bold text-foreground">{bonusQuestions.length} / 3</Text>
                       </div>
                     </div>
                   </CardHeader>
 
-                  <CardContent className="space-y-4 p-6 md:p-8">
-                    {currentBonusPage.map((question: QuizQuestion) => {
+                  <div
+                    className="sticky top-[88px] z-30 mx-3 mt-3 flex min-w-0 max-w-full items-center justify-between gap-4 rounded-2xl border border-[color-mix(in_srgb,var(--quiz-accent)_45%,var(--quiz-border))] bg-[color-mix(in_srgb,var(--quiz-surface-raised)_94%,transparent)] p-4 shadow-[0_18px_42px_-28px_var(--quiz-shadow)] backdrop-blur-xl sm:mx-6 md:mx-8"
+                    data-testid="career-anchor-priority-progress"
+                  >
+                    <div className="min-w-0">
+                      <Text variant="small" className="font-semibold text-[var(--quiz-ink)]">
+                        {t("bonusSelectedLabel")}
+                      </Text>
+                      <Text variant="small" className="mt-0.5 max-w-2xl text-[var(--quiz-muted)] [overflow-wrap:anywhere]" aria-live="polite">
+                        {bonusQuestions.length === 3
+                          ? t("bonusSelectionComplete")
+                          : t("bonusRemaining", { count: 3 - bonusQuestions.length })}
+                      </Text>
+                    </div>
+                    <div
+                      className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 text-lg font-bold tabular-nums transition-colors ${
+                        bonusQuestions.length === 3
+                          ? "border-[var(--quiz-accent)] bg-[var(--quiz-accent)] text-white"
+                          : "border-[var(--quiz-border)] bg-[var(--quiz-surface)] text-[var(--quiz-ink)]"
+                      }`}
+                      aria-label={t("bonusSelectedDetail", { count: bonusQuestions.length })}
+                    >
+                      {bonusQuestions.length}/3
+                    </div>
+                  </div>
+
+                  <CardContent
+                    className="space-y-4 p-4 pt-6 sm:p-6 sm:pt-6 md:p-8 md:pt-8"
+                    data-testid="career-anchor-priority-list"
+                  >
+                    {quizData.questions.map((question: QuizQuestion) => {
                       const selected = bonusQuestions.includes(question.id);
                       const disabled = !selected && bonusQuestions.length >= 3;
 
@@ -811,9 +816,9 @@ export function CareerQuiz({
                           onClick={() => handleBonusToggle(question.id)}
                           disabled={disabled}
                           aria-pressed={selected}
-                          className={`flex w-full items-start gap-4 rounded-[24px] border p-5 text-left transition-[color,background-color,border-color,box-shadow,transform] ${
+                          className={`flex min-w-0 max-w-full items-start gap-3 overflow-hidden rounded-[24px] border p-4 text-left transition-[color,background-color,border-color,box-shadow,transform] sm:gap-4 sm:p-5 ${
                             selected
-                              ? "border-[var(--quiz-accent)] bg-[var(--quiz-surface-warm)] shadow-sm"
+                              ? "border-[var(--quiz-accent)] bg-[var(--quiz-surface-warm)] shadow-[0_16px_34px_-28px_var(--quiz-shadow)]"
                               : "border-[var(--quiz-border-soft)] bg-gradient-to-br from-[var(--quiz-surface)] to-[var(--quiz-surface-soft)] hover:border-[var(--quiz-accent)]"
                           } ${disabled ? "cursor-not-allowed opacity-70" : ""}`}
                         >
@@ -826,7 +831,7 @@ export function CareerQuiz({
                           >
                             {selected ? <CheckCircle2 className="h-4 w-4" /> : <span className="text-xs font-bold">{question.id}</span>}
                           </div>
-                          <Text variant="small" className="leading-relaxed text-foreground/85">
+                          <Text variant="small" className="min-w-0 max-w-full flex-1 leading-relaxed text-foreground/85 [overflow-wrap:anywhere]">
                             {question.text}
                           </Text>
                         </button>
@@ -839,39 +844,21 @@ export function CareerQuiz({
                       <Button
                         variant="outline"
                         className={warmSecondaryButtonClass}
-                        onClick={() => {
-                          if (bonusPageIndex === 0) {
-                            setStep("transition");
-                            return;
-                          }
-
-                          setBonusPageIndex((previous) => previous - 1);
-                        }}
+                        onClick={() => setStep("transition")}
                       >
                         <ArrowLeft className="mr-2 h-4 w-4" />
-                        {bonusPageIndex === 0 ? t("bonusBack") : t("bonusPreviousBlock")}
+                        {t("bonusBack")}
                       </Button>
 
-                      {isLastBonusPage ? (
-                        <Button
-                          variant="default"
-                          className={`px-8 ${warmPrimaryButtonClass}`}
-                          disabled={bonusQuestions.length !== 3 || isRecordingAttempt}
-                          onClick={() => void finishBonusSelection()}
-                        >
-                          {isRecordingAttempt ? t("recordingAttempt") : t("bonusCta")}
-                          <ChevronRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="default"
-                          className={`px-8 ${warmPrimaryButtonClass}`}
-                          onClick={() => setBonusPageIndex((previous) => previous + 1)}
-                        >
-                          {t("bonusNextBlock")}
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      )}
+                      <Button
+                        variant="default"
+                        className={`px-8 ${warmPrimaryButtonClass}`}
+                        disabled={bonusQuestions.length !== 3 || isRecordingAttempt}
+                        onClick={() => void finishBonusSelection()}
+                      >
+                        {isRecordingAttempt ? t("recordingAttempt") : t("bonusCta")}
+                        <ChevronRight className="ml-2 h-4 w-4" />
+                      </Button>
                     </div>
 
                     <Text variant="small" className="text-center text-muted-foreground">
@@ -955,56 +942,148 @@ export function CareerQuiz({
                   </Card>
                 ) : null}
 
-                <Card className="border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-soft)_95%,transparent)] shadow-[0_28px_80px_-42px_var(--quiz-shadow)]">
+                <Card
+                  className="min-w-0 max-w-full border-[var(--quiz-border)] bg-[color-mix(in_srgb,var(--quiz-surface-soft)_95%,transparent)] shadow-[0_28px_80px_-42px_var(--quiz-shadow)]"
+                  data-testid="career-anchor-ranking"
+                >
                   <CardHeader>
                     <CardTitle>{t("resultsRankingTitle")}</CardTitle>
                     <CardDescription>{t("resultsRankingDescription")}</CardDescription>
                   </CardHeader>
-                  <CardContent className="grid gap-4">
-                    {calculateResults.map((result, index) => (
-                      <div
-                        key={result.id}
-                        className={`flex items-center gap-4 rounded-2xl border p-5 ${
-                          index === 0
-                            ? "border-[color-mix(in_srgb,var(--quiz-ink)_36%,transparent)] bg-[var(--quiz-surface-warm)] shadow-sm"
-                            : index === 1
-                              ? "border-[var(--quiz-accent)] bg-[var(--quiz-surface-accent)]"
-                              : "border-[var(--quiz-border-soft)] bg-[var(--quiz-surface)]"
-                        }`}
-                      >
-                        <div
-                          className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-lg font-bold ${
-                            index === 0
-                              ? "bg-[var(--senda-dark)] text-[var(--senda-light)]"
-                              : index === 1
-                                ? "bg-[var(--senda-action)] text-white"
-                                : "bg-[var(--quiz-accent-soft)] text-[var(--quiz-ink)]"
-                          }`}
+                  <CardContent className="min-w-0 space-y-8 p-4 pt-0 sm:p-7 sm:pt-0">
+                    <section
+                      aria-labelledby="career-anchor-top-three-title"
+                      className="min-w-0 max-w-full overflow-hidden rounded-[28px] border-2 border-[color-mix(in_srgb,var(--quiz-accent)_60%,var(--quiz-border))] bg-gradient-to-br from-[var(--quiz-surface-warm)] via-[var(--quiz-surface-accent)] to-[var(--quiz-surface-soft)] p-4 shadow-[0_24px_58px_-38px_var(--quiz-shadow)] sm:p-6"
+                      data-testid="career-anchor-top-three"
+                    >
+                      <div className="mb-5 min-w-0 sm:mb-6">
+                        <div className="mb-3 inline-flex max-w-full items-center gap-2 rounded-full border border-[var(--quiz-accent)] bg-[var(--quiz-surface-raised)] px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-[var(--quiz-accent)]">
+                          <Sparkles className="h-4 w-4 shrink-0" aria-hidden="true" />
+                          <span className="min-w-0 [overflow-wrap:anywhere]">{t("resultsTopThreeBadge")}</span>
+                        </div>
+                        <h3
+                          id="career-anchor-top-three-title"
+                          className="font-heading text-2xl font-semibold leading-tight text-[var(--quiz-ink)] [overflow-wrap:anywhere] sm:text-3xl"
                         >
-                          {result.rank}
-                        </div>
-
-                        <div className="flex-1">
-                          <div className="mb-2 flex items-center justify-between gap-4">
-                            <span className="font-bold text-foreground">{result.name}</span>
-                          </div>
-                          <div className="h-2.5 overflow-hidden rounded-full bg-muted">
-                            <motion.div
-                              className={`h-full rounded-full ${
-                                index === 0
-                                  ? "bg-[var(--senda-dark)]"
-                                  : index === 1
-                                    ? "bg-[var(--quiz-accent)]"
-                                    : "bg-[var(--senda-gold)]"
-                              }`}
-                              initial={{ width: 0 }}
-                              animate={{ width: `${(result.score / (calculateResults[0]?.score || 1)) * 100}%` }}
-                              transition={{ duration: 0.8, delay: 0.1 + index * 0.08 }}
-                            />
-                          </div>
-                        </div>
+                          {t("resultsTopThreeTitle")}
+                        </h3>
+                        <Text className="mt-2 max-w-3xl text-[var(--quiz-muted)] [overflow-wrap:anywhere]">
+                          {t("resultsTopThreeDescription")}
+                        </Text>
                       </div>
-                    ))}
+
+                      <div className="grid min-w-0 gap-4">
+                        {leadingResults.map((result, index) => {
+                          const positionLabel =
+                            index === 0
+                              ? t("resultsDominant")
+                              : index === 1
+                                ? t("resultsSecondary")
+                                : t("resultsThird");
+
+                          return (
+                            <div
+                              key={result.id}
+                              data-career-anchor-priority={result.rank}
+                              className={`flex min-w-0 max-w-full items-start gap-3 overflow-hidden rounded-2xl border p-4 sm:items-center sm:gap-5 sm:p-5 ${
+                                index === 0
+                                  ? "border-[color-mix(in_srgb,var(--quiz-ink)_45%,transparent)] bg-[var(--quiz-surface-raised)] shadow-md"
+                                  : index === 1
+                                    ? "border-[var(--quiz-accent)] bg-[color-mix(in_srgb,var(--quiz-surface-accent)_82%,var(--quiz-surface-raised))] shadow-sm"
+                                    : "border-[color-mix(in_srgb,var(--senda-gold)_72%,var(--quiz-border))] bg-[color-mix(in_srgb,var(--senda-gold)_10%,var(--quiz-surface-raised))] shadow-sm"
+                              }`}
+                            >
+                              <div
+                                className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full text-lg font-bold shadow-sm sm:h-14 sm:w-14 ${
+                                  index === 0
+                                    ? "bg-[var(--senda-dark)] text-[var(--senda-light)]"
+                                    : index === 1
+                                      ? "bg-[var(--senda-action)] text-white"
+                                      : "bg-[var(--senda-gold)] text-[var(--senda-dark)]"
+                                }`}
+                                aria-hidden="true"
+                              >
+                                {result.rank}
+                              </div>
+
+                              <div className="min-w-0 flex-1">
+                                <div className="mb-2 flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                                  <div className="min-w-0">
+                                    <span className="block text-xs font-bold uppercase tracking-[0.14em] text-[var(--quiz-accent)] [overflow-wrap:anywhere]">
+                                      {positionLabel}
+                                    </span>
+                                    <span className="mt-0.5 block font-bold text-[var(--quiz-ink)] [overflow-wrap:anywhere] sm:text-lg">
+                                      {result.name}
+                                    </span>
+                                  </div>
+                                  <span className="shrink-0 text-sm font-semibold tabular-nums text-[var(--quiz-muted)]">
+                                    {t("resultsScore", { score: result.score })}
+                                  </span>
+                                </div>
+                                <div className="h-2.5 overflow-hidden rounded-full bg-[var(--quiz-accent-soft)]">
+                                  <motion.div
+                                    className={`h-full rounded-full ${
+                                      index === 0
+                                        ? "bg-[var(--senda-dark)]"
+                                        : index === 1
+                                          ? "bg-[var(--quiz-accent)]"
+                                          : "bg-[var(--senda-gold)]"
+                                    }`}
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${(result.score / (calculateResults[0]?.score || 1)) * 100}%` }}
+                                    transition={{ duration: 0.8, delay: 0.1 + index * 0.08 }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </section>
+
+                    <section aria-labelledby="career-anchor-remaining-title" className="min-w-0 max-w-full">
+                      <div className="mb-4">
+                        <h3
+                          id="career-anchor-remaining-title"
+                          className="font-heading text-xl font-semibold text-[var(--quiz-ink)]"
+                        >
+                          {t("resultsRemainingTitle")}
+                        </h3>
+                        <Text variant="small" className="mt-1 text-[var(--quiz-muted)]">
+                          {t("resultsRemainingDescription")}
+                        </Text>
+                      </div>
+                      <div className="grid min-w-0 gap-3">
+                        {remainingResults.map((result, index) => (
+                          <div
+                            key={result.id}
+                            className="flex min-w-0 max-w-full items-center gap-3 overflow-hidden rounded-2xl border border-[var(--quiz-border-soft)] bg-[var(--quiz-surface)] p-4 sm:gap-4"
+                          >
+                            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--quiz-accent-soft)] text-sm font-bold text-[var(--quiz-ink)]">
+                              {result.rank}
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="mb-2 flex min-w-0 flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                                <span className="min-w-0 font-semibold text-[var(--quiz-ink)] [overflow-wrap:anywhere]">
+                                  {result.name}
+                                </span>
+                                <span className="shrink-0 text-xs font-medium tabular-nums text-[var(--quiz-muted)]">
+                                  {t("resultsScore", { score: result.score })}
+                                </span>
+                              </div>
+                              <div className="h-2 overflow-hidden rounded-full bg-[var(--quiz-accent-soft)]">
+                                <motion.div
+                                  className="h-full rounded-full bg-[color-mix(in_srgb,var(--quiz-accent)_50%,var(--quiz-muted))]"
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${(result.score / (calculateResults[0]?.score || 1)) * 100}%` }}
+                                  transition={{ duration: 0.7, delay: 0.25 + index * 0.06 }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
                   </CardContent>
                 </Card>
 
@@ -1109,11 +1188,6 @@ export function CareerQuiz({
                       <Heading level="h3" className="text-[var(--quiz-ink)]">
                         {t("interpretationTitle")}
                       </Heading>
-                      {interpretation.mode === "fallback" ? (
-                        <Text variant="small" className="mt-2 text-[var(--quiz-muted)]">
-                          {t("interpretationFallbackNotice")}
-                        </Text>
-                      ) : null}
                     </div>
 
                     <Card className="overflow-hidden border-[var(--quiz-border)] bg-[var(--quiz-surface-soft)] shadow-xl">

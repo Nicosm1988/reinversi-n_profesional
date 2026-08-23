@@ -1,10 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Script from "next/script";
+import { useCallback, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import {
+  createGoogleNonce,
+  readGoogleClientId,
+  replaceSessionWithGoogleIdToken,
+} from "@/lib/supabase/google";
 import { sanitizeNextPath } from "@/lib/security/navigation";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
@@ -13,65 +18,84 @@ import { UniverseField } from "@/components/visual/universe-field";
 
 export default function LoginPage() {
   const t = useTranslations("Login");
-  const [isLoading, setIsLoading] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const buttonContainerRef = useRef<HTMLDivElement>(null);
+  const nonceRef = useRef("");
+  const credentialInFlightRef = useRef(false);
+  const googleInitializedRef = useRef(false);
   const supabase = createClient();
+  const googleClientId = readGoogleClientId();
   const isAuthAvailable = Boolean(supabase);
 
-  function getNextPath() {
+  const getNextPath = useCallback(() => {
     const fallback = window.location.pathname.startsWith("/en")
       ? "/en/test-anclas-de-carrera"
       : "/test-anclas-de-carrera";
     const params = new URLSearchParams(window.location.search);
     return sanitizeNextPath(params.get("next"), fallback);
-  }
+  }, []);
 
-  useEffect(() => {
-    if (!supabase) return;
-
-    let active = true;
-    void (async () => {
-      const { data } = await supabase.auth.getUser();
-      if (active && data.user) {
-        window.location.replace(getNextPath());
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [supabase]);
-
-  const handleOAuthLogin = async () => {
-    if (!supabase) {
-      setLoginError(t("unavailable"));
+  const handleGoogleCredential = useCallback(async (response: GoogleCredentialResponse) => {
+    if (!supabase || !response.credential || !nonceRef.current || credentialInFlightRef.current) {
+      if (!credentialInFlightRef.current) setLoginError(t("oauthError"));
       return;
     }
 
+    credentialInFlightRef.current = true;
     try {
       setLoginError("");
-      setIsLoading("google");
-      const nextPath = getNextPath();
-      const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
-
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo,
-          queryParams: {
-            access_type: "offline",
-            prompt: "consent",
-          },
-        },
-      });
-
-      if (error) throw error;
+      setIsLoading(true);
+      await replaceSessionWithGoogleIdToken(supabase, response.credential, nonceRef.current);
+      window.location.replace(getNextPath());
     } catch (error) {
       console.error("Error logging in with Google:", error);
-      setIsLoading(null);
+      setLoginError(t("oauthError"));
+      setIsLoading(false);
+      credentialInFlightRef.current = false;
+    }
+  }, [getNextPath, supabase, t]);
+
+  const initializeGoogleButton = useCallback(async () => {
+    const buttonContainer = buttonContainerRef.current;
+    const googleIdentity = window.google?.accounts.id;
+
+    if (!buttonContainer || !googleIdentity || !supabase || googleInitializedRef.current) return;
+    googleInitializedRef.current = true;
+
+    try {
+      const { nonce, hashedNonce } = await createGoogleNonce();
+      nonceRef.current = nonce;
+
+      googleIdentity.disableAutoSelect();
+      googleIdentity.initialize({
+        client_id: googleClientId,
+        callback: (response) => void handleGoogleCredential(response),
+        nonce: hashedNonce,
+        auto_select: false,
+        button_auto_select: false,
+        cancel_on_tap_outside: true,
+        context: "signin",
+        ux_mode: "popup",
+      });
+
+      buttonContainer.replaceChildren();
+      googleIdentity.renderButton(buttonContainer, {
+        type: "standard",
+        theme: "outline",
+        size: "large",
+        text: "continue_with",
+        shape: "pill",
+        logo_alignment: "left",
+        locale: window.location.pathname.startsWith("/en") ? "en" : "es",
+        width: Math.min(400, Math.max(240, Math.floor(buttonContainer.getBoundingClientRect().width))),
+      });
+    } catch (error) {
+      console.error("Error initializing Google Identity Services:", error);
+      googleInitializedRef.current = false;
       setLoginError(t("oauthError"));
     }
-  };
+  }, [googleClientId, handleGoogleCredential, supabase, t]);
 
   return (
     <div className="wati-page-shell flex min-h-screen flex-col justify-center pb-16 pt-28">
@@ -85,30 +109,34 @@ export default function LoginPage() {
                 <CardDescription className="text-base">{t("description")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4 pb-8">
-                <Button
-                  variant="outline"
-                  className="relative h-14 w-full overflow-hidden rounded-full text-base font-medium transition-[color,background-color,border-color,box-shadow]"
-                  onClick={handleOAuthLogin}
-                  disabled={isLoading !== null || !isAuthAvailable}
-                  aria-busy={isLoading === "google"}
-                  aria-describedby={!isAuthAvailable || loginError ? "login-status" : undefined}
-                >
-                  <span className={`flex items-center justify-center gap-3 transition-transform duration-300 ${isLoading === "google" ? "translate-y-[-150%]" : "translate-y-0"}`}>
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="h-5 w-5">
-                      <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
-                      <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
-                      <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
-                      <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
-                    </svg>
-                    {t("continueGoogle")}
-                  </span>
-                  {isLoading === "google" && (
-                    <div className="absolute inset-0 flex items-center justify-center text-blue-500">
-                      <div aria-hidden="true" className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
-                      <span className="sr-only">{t("loading")}</span>
+                {isAuthAvailable ? (
+                  <>
+                    <Script
+                      src="https://accounts.google.com/gsi/client"
+                      strategy="afterInteractive"
+                      onReady={() => void initializeGoogleButton()}
+                      onError={() => setLoginError(t("oauthError"))}
+                    />
+                    <div
+                      className="relative flex min-h-11 w-full items-center justify-center"
+                      role="group"
+                      aria-label={t("continueGoogle")}
+                      aria-busy={isLoading}
+                      aria-describedby={loginError ? "login-status" : undefined}
+                    >
+                      <div
+                        ref={buttonContainerRef}
+                        className={isLoading ? "pointer-events-none opacity-40" : undefined}
+                      />
+                      {isLoading ? (
+                        <div className="absolute inset-0 flex items-center justify-center text-blue-500">
+                          <div aria-hidden="true" className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+                          <span className="sr-only">{t("loading")}</span>
+                        </div>
+                      ) : null}
                     </div>
-                  )}
-                </Button>
+                  </>
+                ) : null}
 
                 <div className="mt-8 text-center px-4">
                   {!isAuthAvailable && (

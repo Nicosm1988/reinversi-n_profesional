@@ -16,12 +16,21 @@ function buildCspHeader() {
   const isDev = process.env.NODE_ENV !== "production";
   const supabaseOrigin = safeOrigin(process.env.NEXT_PUBLIC_SUPABASE_URL);
 
-  const scriptSrc = ["'self'", "'unsafe-inline'", "https://challenges.cloudflare.com"];
+  const scriptSrc = [
+    "'self'",
+    "'unsafe-inline'",
+    "https://challenges.cloudflare.com",
+    "https://accounts.google.com/gsi/client",
+  ];
   if (isDev) {
     scriptSrc.push("'unsafe-eval'");
   }
 
-  const connectSrc = ["'self'", "https://challenges.cloudflare.com"];
+  const connectSrc = [
+    "'self'",
+    "https://challenges.cloudflare.com",
+    "https://accounts.google.com/gsi/",
+  ];
   if (supabaseOrigin) {
     connectSrc.push(supabaseOrigin);
   }
@@ -32,11 +41,11 @@ function buildCspHeader() {
   return [
     "default-src 'self'",
     `script-src ${scriptSrc.join(" ")}`,
-    "style-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
     `connect-src ${connectSrc.join(" ")}`,
-    "frame-src https://challenges.cloudflare.com",
+    "frame-src https://challenges.cloudflare.com https://accounts.google.com/gsi/",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -49,7 +58,7 @@ const securityHeaders = [
   { key: "x-frame-options", value: "DENY" },
   { key: "referrer-policy", value: "strict-origin-when-cross-origin" },
   { key: "permissions-policy", value: "camera=(), microphone=(), geolocation=()" },
-  { key: "cross-origin-opener-policy", value: "same-origin" },
+  { key: "cross-origin-opener-policy", value: "same-origin-allow-popups" },
   { key: "strict-transport-security", value: "max-age=63072000; includeSubDomains; preload" },
   { key: "content-security-policy", value: buildCspHeader() },
 ];

@@ -175,7 +175,8 @@ export function Header() {
   async function handleSignOut() {
     const supabase = createClient();
     if (!supabase) return;
-    await supabase.auth.signOut();
+    window.google?.accounts.id.disableAutoSelect();
+    await supabase.auth.signOut({ scope: "local" });
     setAuthState({ status: "anonymous" });
     window.location.assign(locale === "en" ? "/en" : "/");
   }

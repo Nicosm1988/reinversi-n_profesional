@@ -263,29 +263,29 @@ type CareerLocale = "es" | "en";
 const careerLabels = {
   es: {
     route: "/test-anclas-de-carrera",
-    nextBlock: "Siguiente bloque",
     continue: "Continuar",
     transition: "Elegir las 3 más importantes",
     resultButton: "Conocer mi resultado",
     result: "Tu mapa de anclas de carrera",
     tie: "Ancla principal compartida",
+    progress: "Progreso general",
+    topThree: "Estas son tus 3 anclas principales",
     contextLabel: "¿Qué situación profesional estás atravesando?",
     contextButton: "Preparar mi lectura orientativa",
-    fallback: "La generación asistida no estuvo disponible. Esta devolución completa fue preparada con la lógica determinística de Senda.",
     shareTitle: "Quiero que Senda reciba mi resultado y se contacte conmigo",
     shareSubmit: "Compartir mi resultado",
   },
   en: {
     route: "/en/test-anclas-de-carrera",
-    nextBlock: "Next block",
     continue: "Continue",
     transition: "Choose the 3 most important",
     resultButton: "View my result",
     result: "Your career anchor map",
     tie: "Shared primary anchor",
+    progress: "Overall progress",
+    topThree: "These are your 3 primary anchors",
     contextLabel: "What professional situation are you navigating?",
     contextButton: "Prepare my initial interpretation",
-    fallback: "Assisted generation was unavailable. This complete interpretation was prepared through Senda's deterministic logic.",
     shareTitle: "I want Senda to receive my result and contact me",
     shareSubmit: "Share my result",
   },
@@ -302,26 +302,42 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
   await expect(page).not.toHaveURL(/\/login/);
   await expect(page.locator('iframe[src*="challenges.cloudflare.com"]')).toHaveCount(0);
 
-  for (let block = 0; block < 4; block += 1) {
-    const firstQuestionId = block * 10 + 1;
-    await expect(page.locator(`input[name="question-${firstQuestionId}"]`).first()).toBeAttached();
-    const navigationLabel = block === 3 ? labels.continue : labels.nextBlock;
-    const navigationButton = page.getByRole("button", { name: navigationLabel, exact: true });
-    if (block === 0) await expect(navigationButton).toBeDisabled();
+  const questionList = page.getByTestId("career-anchor-question-list");
+  await expect(questionList.locator("fieldset")).toHaveCount(40);
+  await expect(page.locator('input[name="question-1"]')).toHaveCount(6);
+  await expect(page.locator('input[name="question-40"]')).toHaveCount(6);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    ),
+  ).toBeLessThanOrEqual(1);
 
-    for (let questionId = firstQuestionId; questionId < firstQuestionId + 10; questionId += 1) {
-      const score = questionId === 9 || questionId === 10 ? 2 : 1;
-      const answer = page.locator(`input[name="question-${questionId}"][value="${score}"]`);
-      await answer.locator("..").click();
-      await expect(answer).toBeChecked();
-    }
-    await expect(navigationButton).toBeEnabled();
-    await navigationButton.click();
-    await expect(page.locator("#career-quiz-step-heading")).toBeFocused();
+  const progress = page.getByRole("progressbar", { name: labels.progress });
+  const continueButton = page.getByRole("button", { name: labels.continue, exact: true });
+  await expect(progress).toHaveAttribute("aria-valuenow", "0");
+  await expect(continueButton).toBeDisabled();
+
+  for (let questionId = 1; questionId <= 40; questionId += 1) {
+    const score = questionId === 9 || questionId === 10 ? 2 : 1;
+    const answer = page.locator(`input[name="question-${questionId}"][value="${score}"]`);
+    await answer.locator("..").click();
+    await expect(answer).toBeChecked();
   }
+  await expect(progress).toHaveAttribute("aria-valuenow", "40");
+  await expect(progress).toHaveAttribute("aria-valuetext", "100%");
+  await expect(continueButton).toBeEnabled();
+  await continueButton.click();
+  await expect(page.locator("#career-quiz-step-heading")).toBeFocused();
 
   await page.getByRole("button", { name: labels.transition, exact: true }).click();
   await expect(page.locator("#career-quiz-step-heading")).toBeFocused();
+  const priorityList = page.getByTestId("career-anchor-priority-list");
+  await expect(priorityList.getByRole("button")).toHaveCount(40);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    ),
+  ).toBeLessThanOrEqual(1);
   const bonusQuestions = quizData.questions.slice(0, 3);
   for (const [index, question] of bonusQuestions.entries()) {
     const option = page.getByRole("button", { name: new RegExp(escapeRegex(question.text)) });
@@ -334,16 +350,16 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
     await expect(option).toHaveAttribute("aria-pressed", "true");
   }
 
-  for (let block = 0; block < 3; block += 1) {
-    await page.getByRole("button", { name: labels.nextBlock, exact: true }).click();
-    await expect(page.locator("#career-quiz-step-heading")).toBeFocused();
-  }
   await page.getByRole("button", { name: labels.resultButton, exact: true }).click();
 
   const resultHeading = page.getByRole("heading", { name: labels.result, exact: true });
   await expect(resultHeading).toBeVisible();
   await expect(resultHeading).toBeFocused();
   await expect(page.getByText(labels.tie, { exact: true })).toHaveCount(0);
+  const topThree = page.getByTestId("career-anchor-top-three");
+  await expect(topThree.getByRole("heading", { name: labels.topThree, exact: true })).toBeVisible();
+  await expect(topThree.locator("[data-career-anchor-priority]")).toHaveCount(3);
+  await expect(page.getByText(/generación asistida|lógica determinística|assisted generation|deterministic logic/i)).toHaveCount(0);
 }
 
 test("complete Spanish Career Anchors flow breaks ties into unique positions, auto-generates a reading and allows consented sharing", async ({ page }) => {

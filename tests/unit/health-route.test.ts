@@ -13,6 +13,7 @@ const smtpEnvironment = {
   SMTP_USER: "hola@universosenda.com",
   SMTP_PASSWORD: "test-only-password",
   CONTACT_TO_EMAIL: "hola@universosenda.com",
+  CRON_SECRET: "test-cron-secret-long-value",
 };
 
 describe("GET /api/health", () => {
@@ -35,6 +36,7 @@ describe("GET /api/health", () => {
     expect(response.status).toBe(200);
     expect(body.status).toBe("ok");
     expect(body.checks.contactSmtp).toBe(true);
+    expect(body.checks.reportEmailCron).toBe(true);
   });
 
   it("reports degraded when contact SMTP is incomplete", async () => {

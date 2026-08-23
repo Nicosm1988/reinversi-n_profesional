@@ -5,6 +5,21 @@ import { getRequestId } from "@/lib/http/request-context";
 import { logEvent } from "@/lib/observability/logger";
 import { hasSupabasePublicConfig } from "@/lib/supabase/config";
 
+const AUTH_RESPONSE_HEADERS = {
+  "cache-control": "private, no-cache, no-store, must-revalidate, max-age=0",
+  expires: "0",
+  pragma: "no-cache",
+};
+
+function redirectWithAuthHeaders(url: URL, requestId: string) {
+  return NextResponse.redirect(url, {
+    headers: {
+      ...AUTH_RESPONSE_HEADERS,
+      "x-request-id": requestId,
+    },
+  });
+}
+
 export async function GET(request: Request) {
   const requestId = getRequestId(request);
   const { searchParams, origin } = new URL(request.url);
@@ -16,9 +31,10 @@ export async function GET(request: Request) {
   try {
     if (!hasSupabasePublicConfig()) {
       logEvent("error", "auth.callback.supabase_missing", { requestId, next });
-      return NextResponse.redirect(new URL(`${loginErrorPath}&reason=supabase-unavailable`, origin), {
-        headers: { "x-request-id": requestId },
-      });
+      return redirectWithAuthHeaders(
+        new URL(`${loginErrorPath}&reason=supabase-unavailable`, origin),
+        requestId,
+      );
     }
 
     if (code) {
@@ -27,9 +43,7 @@ export async function GET(request: Request) {
 
       if (!error) {
         logEvent("info", "auth.callback.success", { requestId, next });
-        return NextResponse.redirect(new URL(next, origin), {
-          headers: { "x-request-id": requestId },
-        });
+        return redirectWithAuthHeaders(new URL(next, origin), requestId);
       }
 
       logEvent("warn", "auth.callback.exchange_failed", {
@@ -46,7 +60,5 @@ export async function GET(request: Request) {
     });
   }
 
-  return NextResponse.redirect(new URL(loginErrorPath, origin), {
-    headers: { "x-request-id": requestId },
-  });
+  return redirectWithAuthHeaders(new URL(loginErrorPath, origin), requestId);
 }

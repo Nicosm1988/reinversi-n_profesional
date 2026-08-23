@@ -25,7 +25,9 @@ test("smoke: multipage gateway, public intake and protected account routes are a
   // should be required to take it and see a result.
   await page.goto("/test-anclas-de-carrera");
   await expect(page).not.toHaveURL(/\/login/);
-  await expect(page.getByText(/Preguntas 1 a 10|Questions 1 to 10/i)).toBeVisible();
+  await expect(
+    page.getByText(/Respondé las 40 afirmaciones a tu ritmo|Answer all 40 statements at your own pace/i),
+  ).toBeVisible();
 
   await page.goto("/panel");
   await expect(page).toHaveURL(/\/login\?next=%2Fpanel/);

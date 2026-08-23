@@ -117,6 +117,27 @@ function main() {
     }
   }
 
+  const hasCronSecret =
+    isPresent(process.env.CRON_SECRET)
+    && !looksLikeRedactedValue(process.env.CRON_SECRET);
+  if (!hasCronSecret) {
+    const message = "CRON_SECRET missing: queued report-email retries will not run securely.";
+    if (strict) {
+      errors.push(message);
+    } else {
+      warnings.push(message);
+    }
+  } else if (process.env.CRON_SECRET.trim().length < 16) {
+    errors.push("CRON_SECRET must contain at least 16 characters.");
+  }
+
+  if (isPresent(process.env.REPORT_EMAIL_BATCH_SIZE)) {
+    const batchSize = Number(process.env.REPORT_EMAIL_BATCH_SIZE);
+    if (!Number.isInteger(batchSize) || batchSize < 1 || batchSize > 25) {
+      errors.push("REPORT_EMAIL_BATCH_SIZE must be an integer between 1 and 25.");
+    }
+  }
+
   if (!hasTurnstileSite || !hasTurnstileSecret) {
     const message = "Turnstile not configured: captcha protection will be unavailable.";
     if (strict) {

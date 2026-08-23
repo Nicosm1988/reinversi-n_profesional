@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
   maybeSingle: vi.fn(),
   limitRequest: vi.fn(),
   logEvent: vi.fn(),
+  processCareerAnchorReportEmails: vi.fn(),
 }));
 
 vi.mock("@/lib/supabase/auth", () => ({
@@ -13,6 +14,9 @@ vi.mock("@/lib/supabase/auth", () => ({
 }));
 vi.mock("@/lib/rate-limit", () => ({ limitRequest: mocks.limitRequest }));
 vi.mock("@/lib/observability/logger", () => ({ logEvent: mocks.logEvent }));
+vi.mock("@/lib/diagnostics/career-anchor-report-delivery", () => ({
+  processCareerAnchorReportEmails: mocks.processCareerAnchorReportEmails,
+}));
 
 import { POST } from "@/app/api/diagnostics/complete-public/route";
 
@@ -44,6 +48,13 @@ describe("POST /api/diagnostics/complete-public", () => {
     mocks.rpc.mockReset();
     mocks.maybeSingle.mockReset().mockResolvedValue({ data: null, error: null });
     mocks.logEvent.mockReset();
+    mocks.processCareerAnchorReportEmails.mockReset().mockResolvedValue({
+      claimed: 1,
+      sent: 1,
+      retryScheduled: 0,
+      permanentFailures: 0,
+      unavailable: false,
+    });
     mocks.limitRequest.mockReset().mockResolvedValue({
       limited: false,
       remaining: 4,
@@ -78,7 +89,7 @@ describe("POST /api/diagnostics/complete-public", () => {
       1,
       "claim_free_career_anchor_diagnostic",
       expect.objectContaining({
-        p_user_data: { name: "", age: "", occupation: "", city: "", country: "" },
+        p_user_data: { name: "", age: "", occupation: "", city: "", country: "", locale: "es" },
         p_raw_answers: validBody().rawAnswers,
       }),
     );
@@ -99,6 +110,27 @@ describe("POST /api/diagnostics/complete-public", () => {
     expect(logs).not.toContain("person@example.com");
     expect(logs).not.toContain("203.0.113.18");
     expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(mocks.processCareerAnchorReportEmails).toHaveBeenCalledWith({
+      diagnosticId: "diagnostic-id",
+      maxDeliveries: 1,
+    });
+  });
+
+  it("keeps report completion successful when immediate mail delivery fails", async () => {
+    mocks.rpc
+      .mockResolvedValueOnce({ data: "diagnostic-id", error: null })
+      .mockResolvedValueOnce({ data: true, error: null });
+    mocks.processCareerAnchorReportEmails.mockRejectedValueOnce(new Error("worker unavailable"));
+
+    const response = await POST(completionRequest(validBody()));
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true });
+    expect(mocks.logEvent).toHaveBeenCalledWith(
+      "error",
+      "diagnostics.public_completion.report_email_unexpected",
+      expect.objectContaining({ reason: "Error" }),
+    );
   });
 
   it("keeps the server-side one-attempt limit", async () => {

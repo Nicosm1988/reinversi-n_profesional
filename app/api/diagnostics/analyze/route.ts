@@ -17,6 +17,7 @@ import {
   type CareerAnchorAnalyzeRequest,
   type CareerAnchorLocale,
 } from "@/lib/diagnostics/career-anchor";
+import { processCareerAnchorReportEmails } from "@/lib/diagnostics/career-anchor-report-delivery";
 
 const diagnosticResultSchema = z.object({
   title: z.string().describe("Short but strong career anchor archetype."),
@@ -217,7 +218,7 @@ export async function POST(req: Request) {
     const { data: diagnosticId, error: claimError } = await auth.supabase.rpc(
       "claim_free_career_anchor_diagnostic",
       {
-        p_user_data: userData,
+        p_user_data: { ...userData, locale },
         p_raw_answers: rawAnswers,
         p_dominant_result: anchor,
       },
@@ -316,6 +317,17 @@ No menciones que sos una IA y no uses presión comercial, urgencia artificial ni
         { error: getLocalizedApiError(locale, "save") },
         { status: 500, headers: rateHeaders },
       );
+    }
+
+    // Completion is authoritative even if SMTP is temporarily unavailable.
+    // The outbox keeps the delivery retryable without asking the person to retake the test.
+    try {
+      await processCareerAnchorReportEmails({ diagnosticId, maxDeliveries: 1 });
+    } catch (error) {
+      logEvent("error", "diagnostics.analyze.report_email_unexpected", {
+        requestId,
+        reason: error instanceof Error ? error.name : "unknown_error",
+      });
     }
 
     logEvent("info", "diagnostics.analyze.success", {
