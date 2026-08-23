@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 import {
   DEFAULT_GOOGLE_CLIENT_ID,
+  createGoogleIdentityInitializer,
   createGoogleNonce,
   readGoogleClientId,
   replaceSessionWithGoogleIdToken,
@@ -36,6 +37,39 @@ describe("Google ID-token authentication", () => {
 
     expect(nonce).toMatch(/^[A-Za-z0-9_-]{43}$/);
     expect(hashedNonce).toBe(expectedHash);
+  });
+
+  it("initializes Google once and routes credentials to the active page mount", async () => {
+    const initializeOnce = createGoogleIdentityInitializer();
+    const firstHandler = vi.fn();
+    const activeHandler = vi.fn();
+    let credentialCallback: ((response: GoogleCredentialResponse) => void) | undefined;
+    const googleIdentity = {
+      initialize: vi.fn((configuration: GoogleIdConfiguration) => {
+        credentialCallback = configuration.callback;
+      }),
+      renderButton: vi.fn(),
+      disableAutoSelect: vi.fn(),
+      cancel: vi.fn(),
+    } satisfies GoogleIdentityServices["accounts"]["id"];
+
+    const firstMount = initializeOnce(googleIdentity, "client.apps.googleusercontent.com", firstHandler);
+    const activeMount = initializeOnce(googleIdentity, "client.apps.googleusercontent.com", activeHandler);
+    const [firstResult, activeResult] = await Promise.all([firstMount, activeMount]);
+
+    expect(googleIdentity.initialize).toHaveBeenCalledTimes(1);
+    expect(googleIdentity.disableAutoSelect).toHaveBeenCalledTimes(1);
+    expect(firstResult.nonce).toBe(activeResult.nonce);
+    expect(googleIdentity.initialize).toHaveBeenCalledWith(expect.objectContaining({
+      client_id: "client.apps.googleusercontent.com",
+      auto_select: false,
+      button_auto_select: false,
+      ux_mode: "popup",
+    }));
+
+    credentialCallback?.({ credential: "selected-id-token" });
+    expect(firstHandler).not.toHaveBeenCalled();
+    expect(activeHandler).toHaveBeenCalledWith({ credential: "selected-id-token" });
   });
 
   it("clears the local Senda session before accepting the selected Google identity", async () => {

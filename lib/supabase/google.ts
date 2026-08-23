@@ -27,6 +27,72 @@ export async function createGoogleNonce() {
   };
 }
 
+type GoogleCredentialHandler = (response: GoogleCredentialResponse) => void;
+
+type GoogleIdentityInitialization = {
+  nonce: string;
+};
+
+type GoogleIdentityInitializationState = {
+  clientId: string;
+  handler: GoogleCredentialHandler;
+  promise: Promise<GoogleIdentityInitialization>;
+};
+
+export function createGoogleIdentityInitializer() {
+  let state: GoogleIdentityInitializationState | null = null;
+
+  return function initializeGoogleIdentityOnce(
+    googleIdentity: GoogleIdentityServices["accounts"]["id"],
+    clientId: string,
+    handler: GoogleCredentialHandler,
+  ) {
+    if (state) {
+      if (state.clientId !== clientId) {
+        return Promise.reject(new Error("Google Identity Services was initialized with another client ID."));
+      }
+
+      // Client-side navigation can remount the login page. Keep Google's
+      // single initialization, but always deliver a credential to the active
+      // page instance rather than to an unmounted callback.
+      state.handler = handler;
+      return state.promise;
+    }
+
+    const nextState = {
+      clientId,
+      handler,
+      promise: Promise.resolve({ nonce: "" }),
+    } satisfies GoogleIdentityInitializationState;
+
+    nextState.promise = (async () => {
+      const { nonce, hashedNonce } = await createGoogleNonce();
+
+      googleIdentity.disableAutoSelect();
+      googleIdentity.initialize({
+        client_id: clientId,
+        callback: (response) => nextState.handler(response),
+        nonce: hashedNonce,
+        auto_select: false,
+        button_auto_select: false,
+        cancel_on_tap_outside: true,
+        context: "signin",
+        ux_mode: "popup",
+      });
+
+      return { nonce };
+    })().catch((error) => {
+      if (state === nextState) state = null;
+      throw error;
+    });
+
+    state = nextState;
+    return nextState.promise;
+  };
+}
+
+export const initializeGoogleIdentityOnce = createGoogleIdentityInitializer();
+
 export async function replaceSessionWithGoogleIdToken(
   supabase: SupabaseClient,
   credential: string,

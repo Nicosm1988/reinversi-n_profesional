@@ -5,7 +5,7 @@ import { useCallback, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import {
-  createGoogleNonce,
+  initializeGoogleIdentityOnce,
   readGoogleClientId,
   replaceSessionWithGoogleIdToken,
 } from "@/lib/supabase/google";
@@ -23,7 +23,7 @@ export default function LoginPage() {
   const buttonContainerRef = useRef<HTMLDivElement>(null);
   const nonceRef = useRef("");
   const credentialInFlightRef = useRef(false);
-  const googleInitializedRef = useRef(false);
+  const googleButtonRenderedRef = useRef(false);
   const supabase = createClient();
   const googleClientId = readGoogleClientId();
   const isAuthAvailable = Boolean(supabase);
@@ -60,24 +60,20 @@ export default function LoginPage() {
     const buttonContainer = buttonContainerRef.current;
     const googleIdentity = window.google?.accounts.id;
 
-    if (!buttonContainer || !googleIdentity || !supabase || googleInitializedRef.current) return;
-    googleInitializedRef.current = true;
+    if (!buttonContainer || !googleIdentity || !supabase || googleButtonRenderedRef.current) return;
+    googleButtonRenderedRef.current = true;
 
     try {
-      const { nonce, hashedNonce } = await createGoogleNonce();
-      nonceRef.current = nonce;
+      const { nonce } = await initializeGoogleIdentityOnce(
+        googleIdentity,
+        googleClientId,
+        (response) => void handleGoogleCredential(response),
+      );
 
-      googleIdentity.disableAutoSelect();
-      googleIdentity.initialize({
-        client_id: googleClientId,
-        callback: (response) => void handleGoogleCredential(response),
-        nonce: hashedNonce,
-        auto_select: false,
-        button_auto_select: false,
-        cancel_on_tap_outside: true,
-        context: "signin",
-        ux_mode: "popup",
-      });
+      // A locale change or a framework remount can detach the first container
+      // while the nonce is being created. Only render into the active page.
+      if (buttonContainerRef.current !== buttonContainer || !buttonContainer.isConnected) return;
+      nonceRef.current = nonce;
 
       buttonContainer.replaceChildren();
       googleIdentity.renderButton(buttonContainer, {
@@ -92,7 +88,7 @@ export default function LoginPage() {
       });
     } catch (error) {
       console.error("Error initializing Google Identity Services:", error);
-      googleInitializedRef.current = false;
+      googleButtonRenderedRef.current = false;
       setLoginError(t("oauthError"));
     }
   }, [googleClientId, handleGoogleCredential, supabase, t]);
