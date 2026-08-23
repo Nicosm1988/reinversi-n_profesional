@@ -1007,7 +1007,7 @@ export function CareerQuiz({
                               </div>
 
                               <div className="min-w-0 flex-1">
-                                <div className="mb-2 flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                                <div className="mb-2 min-w-0">
                                   <div className="min-w-0">
                                     <span className="block text-xs font-bold uppercase tracking-[0.14em] text-[var(--quiz-accent)] [overflow-wrap:anywhere]">
                                       {positionLabel}
@@ -1016,9 +1016,6 @@ export function CareerQuiz({
                                       {result.name}
                                     </span>
                                   </div>
-                                  <span className="shrink-0 text-sm font-semibold tabular-nums text-[var(--quiz-muted)]">
-                                    {t("resultsScore", { score: result.score })}
-                                  </span>
                                 </div>
                                 <div className="h-2.5 overflow-hidden rounded-full bg-[var(--quiz-accent-soft)]">
                                   <motion.div
@@ -1063,12 +1060,9 @@ export function CareerQuiz({
                               {result.rank}
                             </div>
                             <div className="min-w-0 flex-1">
-                              <div className="mb-2 flex min-w-0 flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                              <div className="mb-2 min-w-0">
                                 <span className="min-w-0 font-semibold text-[var(--quiz-ink)] [overflow-wrap:anywhere]">
                                   {result.name}
-                                </span>
-                                <span className="shrink-0 text-xs font-medium tabular-nums text-[var(--quiz-muted)]">
-                                  {t("resultsScore", { score: result.score })}
                                 </span>
                               </div>
                               <div className="h-2 overflow-hidden rounded-full bg-[var(--quiz-accent-soft)]">

@@ -87,7 +87,9 @@ async function chooseFinderAnswers(
   ] as const;
 
   for (const [index, [field, value]] of orderedAnswers.entries()) {
-    await form.locator(`input[name="${field}"][value="${value}"]`).check({ force: true });
+    const input = form.locator(`input[name="${field}"][value="${value}"]`);
+    await input.locator("..").click();
+    await expect(input).toBeChecked();
     await form
       .getByRole("button", {
         name: index === orderedAnswers.length - 1 ? labels.submit : labels.next,
@@ -359,6 +361,7 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
   const topThree = page.getByTestId("career-anchor-top-three");
   await expect(topThree.getByRole("heading", { name: labels.topThree, exact: true })).toBeVisible();
   await expect(topThree.locator("[data-career-anchor-priority]")).toHaveCount(3);
+  await expect(page.locator(".career-quiz")).not.toContainText(/\b\d+\s+(?:puntos|points)\b/i);
   await expect(page.getByText(/generación asistida|lógica determinística|assisted generation|deterministic logic/i)).toHaveCount(0);
 }
 
