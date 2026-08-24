@@ -14,7 +14,7 @@ Formato por entrada: **Contexto → Decisión → Consecuencias**. Sólo se docu
 
 **Contexto:** El test gratuito es el primer gancho de valor; permitir repetición ilimitada reduce el incentivo de continuidad y puede degradar la calidad del acompañamiento.
 **Decisión:** Cada cuenta de Google autenticada puede completar el test gratuito una sola vez. El límite se aplica en el servidor y en Supabase (RLS/migraciones), nunca sólo en la interfaz. Ante un resultado existente, se muestra con un mensaje amable y se ofrece contacto humano, sin bloqueo hostil ni upselling agresivo.
-**Consecuencias:** El endpoint `POST /api/diagnostics/save` fue retirado (410 Gone); `POST /api/diagnostics/analyze` persiste el resultado atómicamente en el mismo flujo autenticado. Migraciones relevantes: `20260531183000_require_auth_for_diagnostics.sql`, `20260718173000_single_free_career_anchor.sql`. Fuente: `AGENTS.md`, `docs/product-principles.md`.
+**Consecuencias:** Los endpoints históricos `POST /api/diagnostics/save` y `POST /api/diagnostics/analyze` fueron retirados. El flujo vigente usa autosave versionado, finalización atómica e interpretación del resultado guardado. Migraciones relevantes: `20260531183000_require_auth_for_diagnostics.sql`, `20260718173000_single_free_career_anchor.sql` y `20260824040817_career_anchor_persistent_journey.sql`. Fuente: `AGENTS.md`, `docs/product-principles.md`.
 
 ## 003 — Autenticación obligatoria para el diagnóstico (Google OAuth vía Supabase)
 
@@ -48,14 +48,14 @@ Formato por entrada: **Contexto → Decisión → Consecuencias**. Sólo se docu
 
 ## 008 — Anclas es público; las cuentas autenticadas conservan un único intento
 
-**Contexto:** La versión pública debe permitir completar las 40 preguntas y ver el resultado sin login, CAPTCHA, PII ni dependencia obligatoria de Supabase, mientras `AGENTS.md` mantiene el límite histórico para cuentas Google.
+**Contexto:** La versión pública debía permitir completar los 40 enunciados y ver el resultado sin login, CAPTCHA, PII ni dependencia obligatoria de Supabase, mientras `AGENTS.md` mantenía el límite histórico para cuentas Google.
 **Decisión (2026-08-15, reemplaza la decisión 003):** Las personas anónimas realizan el cálculo completo en el navegador. Si ya existe una sesión autenticada, se usa la misma experiencia sin PII ni CAPTCHA, pero el intento se registra atómicamente mediante las funciones server-side existentes; un resultado previo se vuelve a mostrar y no se habilita otra ejecución, salvo las cuentas técnicas ya exceptuadas por migración.
 **Consecuencias:** El acceso público no crea cuentas ni persiste respuestas. El endpoint de registro autenticado valida las 40 respuestas y las tres elecciones, no recibe datos de perfil y falla cerrado si no puede aplicar el límite. La recepción voluntaria de resultados sigue separada y usa exclusivamente el formulario consentido.
 
 ## 009 — La IA enriquece un cálculo determinístico y tiene fallback completo
 
 **Contexto:** Anclas necesita una explicación relacionada con el momento profesional sin delegar a un modelo el cálculo, el ranking ni la decisión de servicio.
-**Decisión (2026-08-15, precisa la decisión 001):** El ranking y los empates se recalculan en servidor antes de invocar `gpt-4o`. La IA recibe solo anclas, etapa no identificatoria y catálogo cerrado; no recibe nombre, correo, teléfono, ubicación ni respuestas crudas. Su salida es orientativa, estructurada y opcional. Si falta la clave, hay límite o falla el proveedor, se devuelve una explicación determinística completa.
+**Decisión (2026-08-15, precisa la decisión 001):** El ranking y los empates se calculan en servidor antes de invocar `gpt-4o` y se guardan como resultado durable; sólo los registros legados sin puntuaciones guardadas se recalculan. La IA recibe solo anclas, etapa no identificatoria y catálogo cerrado; no recibe nombre, correo, teléfono, ubicación ni respuestas crudas. Su salida es orientativa, estructurada y opcional. Si falta la clave, hay límite o falla el proveedor, se devuelve una explicación determinística completa.
 **Consecuencias:** La persona siempre ve primero un resultado útil. La interpretación no constituye diagnóstico clínico, no reemplaza acompañamiento humano y no puede inventar slugs ni alterar el ranking.
 
 ## 010 — Se retiró el esquema legado "direct to provider" de Supabase
@@ -63,3 +63,9 @@ Formato por entrada: **Contexto → Decisión → Consecuencias**. Sólo se docu
 **Contexto:** El proyecto Supabase de producción conservaba 9 tablas (`applications`, `diagnostics`, `diagnostic_sessions`, `diagnostic_results`, `providers`, `provider_credentials`, `orders`, `transactions`, `ledger`) de un producto anterior al pivot de Senda, creadas en `20260213000000_direct_to_provider_schema.sql` y `20260224000000_core_platform_schema.sql`.
 **Decisión (2026-08-17, pedido explícito del usuario):** se verificó que ninguna de esas 9 tablas tenía filas ni referencias en `app/`, `components/` o `lib/` (sólo `profiles`, `initial_diagnostics`, `lead_requests` y `user_diagnostics` se usan hoy), y se eliminaron vía `DROP TABLE ... CASCADE` ejecutado por el usuario en el SQL Editor de Supabase, con la migración `20260817000000_drop_legacy_provider_schema.sql` agregada al repo para dejarlo versionado.
 **Consecuencias:** El esquema productivo de Supabase queda reducido a las 4 tablas que Senda usa activamente. Cualquier reactivación futura de un flujo tipo "provider/orders" requiere una migración nueva, no la recuperación de estas tablas.
+
+## 011 — Anclas es un recorrido autenticado, persistente y reanudable
+
+**Contexto:** El modo público definido en la decisión 008 no podía ofrecer continuidad durable ni cumplir de forma uniforme la regla permanente de un único test gratuito por cuenta Google.
+**Decisión (2026-08-24, reemplaza la decisión 008 y restablece la 003):** El Test de Anclas requiere identidad Google validada en servidor. `POST /api/diagnostics/progress` guarda avances con revisión monotónica; `POST /api/diagnostics/complete-public` recalcula y finaliza una única vez; `POST /api/diagnostics/interpret` genera o recupera una interpretación persistida con fallback determinístico. Los RPC de escritura sólo son ejecutables por `service_role`.
+**Consecuencias:** La persona puede reanudar un intento incompleto y volver a consultar el resultado, pero no reiniciar uno completado. RLS limita la lectura a la fila propia; el navegador no escribe directamente. Los endpoints históricos `diagnostics/analyze` y `diagnostics/save` no participan del recorrido.

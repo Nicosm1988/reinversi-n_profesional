@@ -2,10 +2,6 @@ import "next/dist/compiled/server-only";
 
 import { z } from "zod";
 import {
-  calculateCareerAnchorRanking,
-  careerAnchorRawAnswersSchema,
-} from "@/lib/diagnostics/career-anchor";
-import {
   CareerAnchorReportEmailConfigurationError,
   CareerAnchorReportEmailDeliveryError,
   CareerAnchorReportEmailRecipientError,
@@ -29,17 +25,6 @@ const deliveryClaimSchema = z
 const storedReportSchema = z
   .object({
     status: z.literal("completed"),
-    raw_answers: careerAnchorRawAnswersSchema,
-    dominant_result: z.object({ name: z.string().trim().min(1).max(240) }).passthrough(),
-    ai_feedback: z
-      .object({
-        title: z.string().trim().min(1).max(500),
-        summary: z.string().trim().min(1).max(8_000),
-        frictionAreas: z.array(z.string().trim().min(1).max(2_000)).max(8).optional(),
-        idealEcosystem: z.string().trim().min(1).max(4_000).nullish(),
-        strategicQuestion: z.string().trim().min(1).max(2_000).nullish(),
-      })
-      .passthrough(),
   })
   .strict();
 
@@ -115,7 +100,7 @@ async function processClaim(
 ): Promise<"sent" | "retry" | "permanent_failure"> {
   const { data: diagnostic, error: diagnosticError } = await admin
     .from("user_diagnostics")
-    .select("status, raw_answers, dominant_result, ai_feedback")
+    .select("status")
     .eq("id", claim.diagnostic_id)
     .eq("user_id", claim.user_id)
     .eq("diagnostic_type", "career_anchor")
@@ -151,18 +136,10 @@ async function processClaim(
   }
 
   try {
-    const ranking = calculateCareerAnchorRanking(report.data.raw_answers, claim.locale);
     const delivery = await sendCareerAnchorReportEmail({
       recipient,
       deliveryId: claim.delivery_id,
       locale: claim.locale,
-      dominantAnchor: report.data.dominant_result.name,
-      ranking: ranking.map(({ rank, name }) => ({ rank, name })),
-      title: report.data.ai_feedback.title,
-      summary: report.data.ai_feedback.summary,
-      frictionAreas: report.data.ai_feedback.frictionAreas,
-      idealEcosystem: report.data.ai_feedback.idealEcosystem,
-      strategicQuestion: report.data.ai_feedback.strategicQuestion,
       reportUrl: localizedReportUrl(claim.locale),
     });
     const finalized = await finishDelivery(admin, claim, {

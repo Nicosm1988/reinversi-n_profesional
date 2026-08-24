@@ -30,26 +30,8 @@ const claim = {
   attempt_number: 1,
 };
 
-function rawAnswers() {
-  return {
-    answers: Object.fromEntries(
-      Array.from({ length: 40 }, (_, index) => [String(index + 1), (index % 6) + 1]),
-    ),
-    bonus: [1, 2, 3],
-  };
-}
-
 const storedReport = {
   status: "completed",
-  raw_answers: rawAnswers(),
-  dominant_result: { name: "Dirección General" },
-  ai_feedback: {
-    title: "Dirección General como punto de referencia",
-    summary: "Una lectura orientativa.",
-    frictionAreas: ["Una tensión posible."],
-    idealEcosystem: "Un entorno claro.",
-    strategicQuestion: "¿Qué querés preservar?",
-  },
 };
 
 function queryBuilder() {
@@ -83,7 +65,7 @@ describe("processCareerAnchorReportEmails", () => {
     });
   });
 
-  it("claims once, recalculates the complete ranking, sends, and finalizes atomically", async () => {
+  it("claims once, sends a private notification, and finalizes atomically", async () => {
     mocks.rpc
       .mockResolvedValueOnce({ data: [claim], error: null })
       .mockResolvedValueOnce({ data: true, error: null });
@@ -101,14 +83,10 @@ describe("processCareerAnchorReportEmails", () => {
     expect(mocks.sendCareerAnchorReportEmail).toHaveBeenCalledWith(
       expect.objectContaining({
         recipient: "person@example.com",
-        ranking: expect.arrayContaining([
-          expect.objectContaining({ rank: 1, name: expect.any(String) }),
-          expect.objectContaining({ rank: 8, name: expect.any(String) }),
-        ]),
         reportUrl: "https://universosenda.com/panel#resultado",
       }),
     );
-    expect(mocks.sendCareerAnchorReportEmail.mock.calls[0]?.[0].ranking).toHaveLength(8);
+    expect(mocks.sendCareerAnchorReportEmail.mock.calls[0]?.[0]).not.toHaveProperty("ranking");
     expect(mocks.rpc).toHaveBeenNthCalledWith(
       2,
       "finish_career_anchor_report_email_delivery",

@@ -2,6 +2,8 @@ import { expect, test, type Page } from "@playwright/test";
 import englishQuizData from "@/lib/data/anchors.en.json";
 import spanishQuizData from "@/lib/data/anchors.json";
 
+const authenticatedStorageState = process.env.E2E_AUTH_STORAGE_STATE;
+
 type RouteFinderAnswers = {
   situation: string;
   need: string;
@@ -265,9 +267,16 @@ type CareerLocale = "es" | "en";
 const careerLabels = {
   es: {
     route: "/test-anclas-de-carrera",
-    continue: "Continuar",
-    transition: "Elegir las 3 más importantes",
-    resultButton: "Conocer mi resultado",
+    introTitle: "Las motivaciones detrás de tus decisiones profesionales",
+    loginCta: "Ingresar con Google para continuar",
+    accountNote: "Para cuidar el intento único, el progreso y el resultado, necesitás ingresar con tu cuenta de Google.",
+    introCta: "Continuar",
+    readyCta: "Empezar el test",
+    statementNext: "Siguiente",
+    statementFinish: "Completar los enunciados",
+    transitionCta: "Hacer mi selección final",
+    selectionNext: "Página siguiente",
+    selectionFinish: "Confirmar y ver mi resultado",
     result: "Tu mapa de anclas de carrera",
     tie: "Ancla principal compartida",
     progress: "Progreso general",
@@ -279,9 +288,16 @@ const careerLabels = {
   },
   en: {
     route: "/en/test-anclas-de-carrera",
-    continue: "Continue",
-    transition: "Choose the 3 most important",
-    resultButton: "View my result",
+    introTitle: "The motivations behind your career decisions",
+    loginCta: "Sign in with Google to continue",
+    accountNote: "To protect the single attempt, progress, and result, you need to sign in with your Google account.",
+    introCta: "Continue",
+    readyCta: "Start the test",
+    statementNext: "Next",
+    statementFinish: "Complete the statements",
+    transitionCta: "Make my final selection",
+    selectionNext: "Next page",
+    selectionFinish: "Confirm and view my result",
     result: "Your career anchor map",
     tie: "Shared primary anchor",
     progress: "Overall progress",
@@ -293,8 +309,111 @@ const careerLabels = {
   },
 } as const;
 
-function escapeRegex(value: string) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+test.describe("anonymous Career Anchors entry", () => {
+  for (const locale of ["es", "en"] as const) {
+    test(`shows only the ${locale} introduction and Google sign-in path`, async ({ page }) => {
+      const labels = careerLabels[locale];
+      const mutationRequests: string[] = [];
+      page.on("request", (request) => {
+        if (
+          request.method() === "POST"
+          && /\/api\/diagnostics\/(?:progress|complete-public|interpret)$/.test(
+            new URL(request.url()).pathname,
+          )
+        ) {
+          mutationRequests.push(new URL(request.url()).pathname);
+        }
+      });
+
+      await page.goto(labels.route);
+
+      await expect(page.getByRole("heading", { level: 1, name: labels.introTitle })).toBeVisible();
+      await expect(page.getByText(labels.accountNote, { exact: true })).toBeVisible();
+      const login = page.getByRole("link", { name: labels.loginCta, exact: true });
+      await expect(login).toBeVisible();
+      await expect(login).toHaveAttribute(
+        "href",
+        new RegExp(`/login\\?next=${encodeURIComponent(labels.route).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`),
+      );
+      await expect(page.locator('input[name^="statement-"]')).toHaveCount(0);
+      await expect(page.getByTestId("career-anchor-final-dialog")).toHaveCount(0);
+      await expect(page.getByRole("heading", { name: labels.result, exact: true })).toHaveCount(0);
+      expect(mutationRequests).toEqual([]);
+    });
+  }
+});
+
+function interpretationFixture(locale: CareerLocale) {
+  return {
+    mode: "ai",
+    title: locale === "es" ? "Una lectura asistida posible" : "A possible assisted reading",
+    summary:
+      locale === "es"
+        ? "La competencia técnica aparece como referencia sin definir por sí sola una decisión."
+        : "Technical competence appears as a reference point without defining a decision on its own.",
+    tensions: [],
+    reflectionQuestions:
+      locale === "es"
+        ? ["¿Qué querés preservar?", "¿Qué falta hoy?", "¿Qué podrías probar?"]
+        : ["What do you want to preserve?", "What is missing today?", "What could you test?"],
+    stageConnection:
+      locale === "es"
+        ? "Tu momento profesional puede compararse con estos criterios."
+        : "Your current career stage can be compared against these criteria.",
+    relevantServices: [
+      {
+        slug: "/transiciones-laborales/cambiar-empleo",
+        label: locale === "es" ? "Preparar un cambio de empleo" : "Prepare for a job change",
+        reason:
+          locale === "es"
+            ? "Permite ordenar alternativas sin convertir el resultado en una prescripción."
+            : "It helps organize alternatives without turning the result into a prescription.",
+      },
+    ],
+    nextSteps:
+      locale === "es"
+        ? ["Revisar experiencias.", "Comparar una alternativa.", "Definir un experimento pequeño."]
+        : ["Review experiences.", "Compare one alternative.", "Define a small experiment."],
+  };
+}
+
+async function mockAuthenticatedCareerApis(page: Page, locale: CareerLocale) {
+  const progressPayloads: Record<string, unknown>[] = [];
+  const completionPayloads: Record<string, unknown>[] = [];
+  const interpretationPayloads: Record<string, unknown>[] = [];
+
+  await page.route("**/api/diagnostics/progress", async (route) => {
+    const payload = route.request().postDataJSON() as Record<string, unknown>;
+    progressPayloads.push(payload);
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        ok: true,
+        savedAt: "2026-08-24T12:00:00.000Z",
+        revision: payload.clientRevision,
+        accepted: true,
+      }),
+    });
+  });
+  await page.route("**/api/diagnostics/complete-public", async (route) => {
+    completionPayloads.push(route.request().postDataJSON() as Record<string, unknown>);
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ ok: true }),
+    });
+  });
+  await page.route("**/api/diagnostics/interpret", async (route) => {
+    interpretationPayloads.push(route.request().postDataJSON() as Record<string, unknown>);
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(interpretationFixture(locale)),
+    });
+  });
+
+  return { progressPayloads, completionPayloads, interpretationPayloads };
 }
 
 async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardBonus = false) {
@@ -303,11 +422,16 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
   await page.goto(labels.route);
   await expect(page).not.toHaveURL(/\/login/);
   await expect(page.locator('iframe[src*="challenges.cloudflare.com"]')).toHaveCount(0);
+  const introHeading = page.getByRole("heading", { level: 1, name: labels.introTitle });
+  test.skip(
+    !(await introHeading.isVisible()),
+    "The authenticated storage-state fixture already has saved Career Anchor progress or a completed result.",
+  );
+  await expect(page.getByRole("link", { name: labels.loginCta, exact: true })).toHaveCount(0);
+  await page.getByRole("button", { name: labels.introCta, exact: true }).click();
+  await page.getByRole("button", { name: labels.readyCta, exact: true }).click();
 
-  const questionList = page.getByTestId("career-anchor-question-list");
-  await expect(questionList.locator("fieldset")).toHaveCount(40);
-  await expect(page.locator('input[name="question-1"]')).toHaveCount(6);
-  await expect(page.locator('input[name="question-40"]')).toHaveCount(6);
+  await expect(page.getByTestId("career-anchor-statement")).toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -315,26 +439,25 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
   ).toBeLessThanOrEqual(1);
 
   const progress = page.getByRole("progressbar", { name: labels.progress });
-  const continueButton = page.getByRole("button", { name: labels.continue, exact: true });
-  await expect(progress).toHaveAttribute("aria-valuenow", "0");
-  await expect(continueButton).toBeDisabled();
-
   for (let questionId = 1; questionId <= 40; questionId += 1) {
     const score = questionId === 9 || questionId === 10 ? 2 : 1;
-    const answer = page.locator(`input[name="question-${questionId}"][value="${score}"]`);
+    await expect(progress).toHaveAttribute("aria-valuenow", String(questionId));
+    const answer = page.locator(`input[name="statement-${questionId}"][value="${score}"]`);
     await answer.locator("..").click();
     await expect(answer).toBeChecked();
+    const next = page.getByRole("button", {
+      name: questionId === 40 ? labels.statementFinish : labels.statementNext,
+      exact: true,
+    });
+    await expect(next).toBeEnabled();
+    await next.click();
   }
-  await expect(progress).toHaveAttribute("aria-valuenow", "40");
-  await expect(progress).toHaveAttribute("aria-valuetext", "100%");
-  await expect(continueButton).toBeEnabled();
-  await continueButton.click();
-  await expect(page.locator("#career-quiz-step-heading")).toBeFocused();
 
-  await page.getByRole("button", { name: labels.transition, exact: true }).click();
-  await expect(page.locator("#career-quiz-step-heading")).toBeFocused();
-  const priorityList = page.getByTestId("career-anchor-priority-list");
-  await expect(priorityList.getByRole("button")).toHaveCount(40);
+  const finalDialog = page.getByTestId("career-anchor-final-dialog");
+  await expect(finalDialog).toBeVisible();
+  await finalDialog.getByRole("button", { name: labels.transitionCta, exact: true }).click();
+  const selectionList = page.getByTestId("career-anchor-selection-list");
+  await expect(selectionList.locator('input[type="checkbox"]')).toHaveCount(10);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -342,17 +465,22 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
   ).toBeLessThanOrEqual(1);
   const bonusQuestions = quizData.questions.slice(0, 3);
   for (const [index, question] of bonusQuestions.entries()) {
-    const option = page.getByRole("button", { name: new RegExp(escapeRegex(question.text)) });
+    const option = page
+      .getByTestId(`career-anchor-selection-${question.id}`)
+      .locator('input[type="checkbox"]');
     if (index === 0 && keyboardBonus) {
       await option.focus();
       await page.keyboard.press("Space");
     } else {
-      await option.click();
+      await option.locator("..").click();
     }
-    await expect(option).toHaveAttribute("aria-pressed", "true");
+    await expect(option).toBeChecked();
   }
 
-  await page.getByRole("button", { name: labels.resultButton, exact: true }).click();
+  for (let pageNumber = 1; pageNumber < 4; pageNumber += 1) {
+    await finalDialog.getByRole("button", { name: labels.selectionNext, exact: true }).click();
+  }
+  await finalDialog.getByRole("button", { name: labels.selectionFinish, exact: true }).click();
 
   const resultHeading = page.getByRole("heading", { name: labels.result, exact: true });
   await expect(resultHeading).toBeVisible();
@@ -365,42 +493,173 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
   await expect(page.getByText(/generación asistida|lógica determinística|assisted generation|deterministic logic/i)).toHaveCount(0);
 }
 
+test.describe("authenticated Career Anchors journey", () => {
+  test.skip(
+    !authenticatedStorageState,
+    "E2E_AUTH_STORAGE_STATE is required for authenticated Career Anchor coverage.",
+  );
+  test.use({ storageState: authenticatedStorageState || undefined });
+
+test("real Supabase journey persists, resumes, completes once and reopens the saved result", async ({ page }) => {
+  test.skip(
+    process.env.E2E_REAL_SUPABASE !== "1",
+    "E2E_REAL_SUPABASE=1 is required for the stateful Supabase integration journey.",
+  );
+  test.setTimeout(240_000);
+  const labels = careerLabels.es;
+  const answers = Object.fromEntries(
+    Array.from({ length: 40 }, (_, index) => [String(index + 1), (index % 6) + 1]),
+  );
+
+  await page.goto(labels.route);
+  await expect(page.getByRole("heading", { level: 1, name: labels.introTitle })).toBeVisible();
+  await page.getByRole("button", { name: labels.introCta, exact: true }).click();
+  await page.getByRole("button", { name: labels.readyCta, exact: true }).click();
+
+  for (let statementId = 1; statementId <= 14; statementId += 1) {
+    const value = answers[String(statementId)];
+    await page.locator(`input[name="statement-${statementId}"][value="${value}"]`).locator("..").click();
+    if (statementId < 14) {
+      await page.getByRole("button", { name: labels.statementNext, exact: true }).click();
+    }
+  }
+  await expect(page.getByText("Avance guardado", { exact: true })).toBeVisible();
+
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 1, name: "Tu recorrido sigue guardado" })).toBeVisible();
+  await expect(page.getByText(/retomar desde el enunciado 14/i)).toBeVisible();
+  await page.getByRole("button", { name: "Retomar en el enunciado 14", exact: true }).click();
+  await expect(page.locator(`input[name="statement-14"][value="${answers["14"]}"]`)).toBeChecked();
+  await page.getByRole("button", { name: labels.statementNext, exact: true }).click();
+
+  for (let statementId = 15; statementId <= 40; statementId += 1) {
+    const value = answers[String(statementId)];
+    await page.locator(`input[name="statement-${statementId}"][value="${value}"]`).locator("..").click();
+    await page.getByRole("button", {
+      name: statementId === 40 ? labels.statementFinish : labels.statementNext,
+      exact: true,
+    }).click();
+  }
+
+  const dialog = page.getByTestId("career-anchor-final-dialog");
+  await dialog.getByRole("button", { name: labels.transitionCta, exact: true }).click();
+  for (const statementId of [1, 2, 3]) {
+    await page
+      .getByTestId(`career-anchor-selection-${statementId}`)
+      .locator('input[type="checkbox"]')
+      .locator("..")
+      .click();
+  }
+  for (let selectionPage = 1; selectionPage < 4; selectionPage += 1) {
+    await dialog.getByRole("button", { name: labels.selectionNext, exact: true }).click();
+  }
+  await dialog.getByRole("button", { name: labels.selectionFinish, exact: true }).click();
+
+  await expect(page.getByRole("heading", { level: 1, name: labels.result })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Una lectura para seguir explorando" })).toBeVisible();
+
+  const duplicateCompletion = await page.evaluate(async (payload) => {
+    const response = await fetch("/api/diagnostics/complete-public", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    return { status: response.status, body: await response.json() };
+  }, {
+    rawAnswers: { answers, bonus: [1, 2, 3] },
+    locale: "es",
+    careerStage: "prefer_not_to_say",
+  });
+  expect(duplicateCompletion).toMatchObject({
+    status: 409,
+    body: { code: "already_completed" },
+  });
+
+  await page.goto(labels.route);
+  await expect(page.getByRole("heading", { level: 1, name: "Este recorrido ya forma parte de tu perfil" })).toBeVisible();
+  await expect(page.getByRole("button", { name: labels.readyCta, exact: true })).toHaveCount(0);
+  await page.getByRole("button", { name: "Volver a ver mi resultado", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1, name: labels.result })).toBeVisible();
+
+  await page.goto("/panel#resultado");
+  await expect(page.getByRole("heading", { name: "Mis Anclas de Carrera", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: /ver resultado completo/i })).toBeVisible();
+});
+
+test("final selection remains usable at every required viewport", async ({ page }, testInfo) => {
+  test.setTimeout(240_000);
+  const labels = careerLabels.es;
+  await mockAuthenticatedCareerApis(page, "es");
+  await page.setViewportSize({ width: 1720, height: 900 });
+  await page.goto(labels.route);
+  await page.getByRole("button", { name: labels.introCta, exact: true }).click();
+  await page.getByRole("button", { name: labels.readyCta, exact: true }).click();
+
+  for (let statementId = 1; statementId <= 40; statementId += 1) {
+    const answer = page.locator(`input[name="statement-${statementId}"][value="1"]`);
+    await answer.locator("..").click();
+    await page.getByRole("button", {
+      name: statementId === 40 ? labels.statementFinish : labels.statementNext,
+      exact: true,
+    }).click();
+  }
+
+  const dialog = page.getByTestId("career-anchor-final-dialog");
+  await dialog.getByRole("button", { name: labels.transitionCta, exact: true }).click();
+  for (const statementId of [1, 2, 3]) {
+    await page
+      .getByTestId(`career-anchor-selection-${statementId}`)
+      .locator('input[type="checkbox"]')
+      .locator("..")
+      .click();
+  }
+
+  const viewports = [
+    { name: "desktop-large", width: 1720, height: 900 },
+    { name: "notebook", width: 1366, height: 768 },
+    { name: "tablet", width: 768, height: 1024 },
+    { name: "mobile", width: 390, height: 844 },
+    { name: "mobile-small", width: 320, height: 568 },
+  ] as const;
+
+  for (const [index, viewport] of viewports.entries()) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await expect(dialog, viewport.name).toBeVisible();
+    await expect(page.getByTestId("career-anchor-selection-count"), viewport.name).toContainText("3");
+    await expect(page.getByTestId("career-anchor-selection-list").locator("label"), viewport.name).toHaveCount(10);
+    const horizontalOverflow = await page.evaluate(
+      () => Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth,
+    );
+    expect(horizontalOverflow, `${viewport.name} horizontal overflow`).toBeLessThanOrEqual(1);
+
+    const nextAction = index < 3
+      ? dialog.getByRole("button", { name: labels.selectionNext, exact: true })
+      : dialog.getByRole("button", { name: labels.selectionFinish, exact: true });
+    await nextAction.scrollIntoViewIfNeeded();
+    await expect(nextAction, `${viewport.name} final controls`).toBeVisible();
+    const actionBox = await nextAction.boundingBox();
+    expect(actionBox?.height ?? 0, `${viewport.name} action target`).toBeGreaterThanOrEqual(44);
+
+    if (process.env.E2E_CAPTURE_RESPONSIVE === "1") {
+      await page.screenshot({
+        path: testInfo.outputPath(`career-anchor-selection-${viewport.name}.png`),
+        fullPage: false,
+      });
+    }
+
+    if (index < 3) await nextAction.click();
+  }
+});
+
 test("complete Spanish Career Anchors flow breaks ties into unique positions, auto-generates a reading and allows consented sharing", async ({ page }) => {
   test.slow();
   let analyzeRequests = 0;
-  let persistedPublicAttempts = 0;
-  let interpretationAttempts = 0;
-  let interpretationPayload: Record<string, unknown> | null = null;
   const contactSubmissions: Record<string, unknown>[] = [];
   let contactAttempts = 0;
+  const careerApi = await mockAuthenticatedCareerApis(page, "es");
 
   page.on("request", (request) => {
     if (request.url().endsWith("/api/diagnostics/analyze")) analyzeRequests += 1;
-    if (request.url().endsWith("/api/diagnostics/complete-public")) persistedPublicAttempts += 1;
-  });
-  await page.route("**/api/diagnostics/interpret", async (route) => {
-    interpretationAttempts += 1;
-    interpretationPayload = route.request().postDataJSON() as Record<string, unknown>;
-    await route.fulfill({
-      status: 200,
-      contentType: "application/json",
-      body: JSON.stringify({
-        mode: "ai",
-        title: "Una lectura asistida posible",
-        summary: "La competencia técnica y la gestión comparten el primer lugar sin definir por sí solas una decisión.",
-        tensions: ["Equilibrar profundidad y coordinación.", "Evitar decisiones apresuradas."],
-        reflectionQuestions: ["¿Qué querés preservar?", "¿Qué falta hoy?", "¿Qué podrías probar?"],
-        stageConnection: "El cambio de empleo puede compararse con estos criterios.",
-        relevantServices: [
-          {
-            slug: "/transiciones-laborales/cambiar-empleo",
-            label: "Preparar un cambio de empleo",
-            reason: "Permite ordenar alternativas sin convertir el resultado en una prescripción.",
-          },
-        ],
-        nextSteps: ["Revisar experiencias.", "Comparar una alternativa.", "Definir un experimento pequeño."],
-      }),
-    });
   });
   await page.route("**/api/contact", async (route) => {
     contactAttempts += 1;
@@ -415,7 +674,8 @@ test("complete Spanish Career Anchors flow breaks ties into unique positions, au
   await page.setViewportSize({ width: 1440, height: 900 });
   await completeCareerAnchors(page, "es", true);
   expect(analyzeRequests).toBe(0);
-  expect(persistedPublicAttempts).toBe(0);
+  expect(careerApi.progressPayloads.length).toBeGreaterThan(40);
+  expect(careerApi.completionPayloads).toHaveLength(1);
   expect(contactAttempts).toBe(0);
 
   await expect(page.getByRole("heading", { name: "Una lectura asistida posible" })).toBeVisible();
@@ -423,9 +683,18 @@ test("complete Spanish Career Anchors flow breaks ties into unique positions, au
     "href",
     "/transiciones-laborales/cambiar-empleo",
   );
-  expect(interpretationAttempts).toBe(1);
-  expect(interpretationPayload).toMatchObject({ careerStage: "prefer_not_to_say", locale: "es" });
-  expect(JSON.stringify(interpretationPayload)).not.toMatch(/name|email|phone|ranking/i);
+  expect(careerApi.interpretationPayloads).toEqual([{}]);
+  expect(careerApi.completionPayloads[0]).toMatchObject({
+    rawAnswers: {
+      answers: expect.objectContaining({ "1": 1, "9": 2, "10": 2, "40": 1 }),
+      bonus: [1, 2, 3],
+    },
+    careerStage: "prefer_not_to_say",
+    locale: "es",
+  });
+  expect(JSON.stringify(careerApi.completionPayloads[0])).not.toMatch(
+    /name|email|phone|ranking|dominantResult|resultBase/i,
+  );
 
   const share = page.getByRole("heading", { name: careerLabels.es.shareTitle }).locator("..");
   await share.getByLabel("Nombre", { exact: true }).fill("Grace Hopper");
@@ -464,16 +733,17 @@ test("complete Spanish Career Anchors flow breaks ties into unique positions, au
 test("complete English Career Anchors flow remains usable, themed and overflow-free on mobile", async ({ page }) => {
   test.slow();
   let analyzeRequests = 0;
-  let persistedPublicAttempts = 0;
+  const careerApi = await mockAuthenticatedCareerApis(page, "en");
   page.on("request", (request) => {
     if (request.url().endsWith("/api/diagnostics/analyze")) analyzeRequests += 1;
-    if (request.url().endsWith("/api/diagnostics/complete-public")) persistedPublicAttempts += 1;
   });
 
   await page.setViewportSize({ width: 390, height: 844 });
   await completeCareerAnchors(page, "en");
   expect(analyzeRequests).toBe(0);
-  expect(persistedPublicAttempts).toBe(0);
+  expect(careerApi.progressPayloads.length).toBeGreaterThan(40);
+  expect(careerApi.completionPayloads).toHaveLength(1);
+  expect(careerApi.interpretationPayloads).toEqual([{}]);
   await expect(page.getByRole("heading", { name: careerLabels.en.shareTitle })).toBeVisible();
 
   const overflow = await page.evaluate(
@@ -492,4 +762,5 @@ test("complete English Career Anchors flow remains usable, themed and overflow-f
     return `${style.backgroundColor}|${style.color}`;
   });
   expect(afterTheme).not.toBe(beforeTheme);
+});
 });

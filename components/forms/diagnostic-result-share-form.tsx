@@ -3,15 +3,9 @@
 import { useId, useRef, useState, type FormEvent } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Send } from "lucide-react";
-import {
-  CONTACT_REQUEST_HEADER,
-  CONTACT_REQUEST_HEADER_VALUE,
-} from "@/lib/contact/request-security";
-import {
-  CONTACT_LIMITS,
-  contactSubmissionSchema,
-  type DiagnosticResult,
-} from "@/lib/contact/schema";
+import { Link } from "@/navigation";
+import { CONTACT_REQUEST_HEADER, CONTACT_REQUEST_HEADER_VALUE } from "@/lib/contact/request-security";
+import { CONTACT_LIMITS, contactSubmissionSchema, type DiagnosticResult } from "@/lib/contact/schema";
 import { Button } from "@/components/ui/button";
 
 type PreferredContact = "email" | "whatsapp" | "either";
@@ -28,6 +22,8 @@ type FormValues = {
 
 type DiagnosticResultShareFormProps = {
   result: DiagnosticResult;
+  onAccepted?: () => void;
+  headingLevel?: "h2" | "h3";
 };
 
 const EMPTY_FORM: FormValues = {
@@ -43,7 +39,7 @@ const EMPTY_FORM: FormValues = {
 const controlClassName =
   "w-full rounded-xl border border-[var(--quiz-border)] bg-[var(--quiz-surface)] px-4 py-3 text-base text-[var(--quiz-ink)] transition-[border-color,box-shadow,background-color] placeholder:text-[var(--quiz-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--quiz-accent)]/55 disabled:cursor-not-allowed disabled:opacity-70";
 
-export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormProps) {
+export function DiagnosticResultShareForm({ result, onAccepted, headingLevel = "h3" }: DiagnosticResultShareFormProps) {
   const t = useTranslations("ResultShare");
   const locale = useLocale() === "en" ? "en" : "es";
   const id = useId();
@@ -52,12 +48,16 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
   const successRef = useRef<HTMLParagraphElement>(null);
   const [form, setForm] = useState<FormValues>(EMPTY_FORM);
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
-  const [error, setError] = useState<string | null>(null);
+  const [errorKind, setErrorKind] = useState<"validation" | "submission" | null>(null);
   const [invalidFields, setInvalidFields] = useState<Set<string>>(new Set());
+  const error = errorKind ? t(errorKind === "validation" ? "validationError" : "error") : null;
+  const FormHeading = headingLevel;
 
   function updateField<Field extends keyof FormValues>(field: Field, value: FormValues[Field]) {
     setForm((current) => ({ ...current, [field]: value }));
-    setError(null);
+    if (errorKind === "submission" || (errorKind === "validation" && invalidFields.size === 1 && invalidFields.has(field))) {
+      setErrorKind(null);
+    }
     setInvalidFields((current) => {
       if (!current.has(field)) return current;
       const next = new Set(current);
@@ -74,10 +74,7 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
     event.preventDefault();
     if (status === "submitting") return;
 
-    const route =
-      result.questionnaire === "career_anchors"
-        ? "/test-anclas-de-carrera"
-        : "/encontrar-mi-recorrido";
+    const route = result.questionnaire === "career_anchors" ? "/test-anclas-de-carrera" : "/encontrar-mi-recorrido";
     const sourcePage = locale === "en" ? `/en${route}` : route;
     const parsed = contactSubmissionSchema.safeParse({
       ...form,
@@ -88,25 +85,19 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
     });
 
     if (!parsed.success || parsed.data.formOrigin !== "diagnostic_result") {
-      const fields = parsed.success
-        ? []
-        : parsed.error.issues
-            .map((issue) => issue.path[0])
-            .filter((field): field is string => typeof field === "string");
+      const fields = parsed.success ? [] : parsed.error.issues.map((issue) => issue.path[0]).filter((field): field is string => typeof field === "string");
       setInvalidFields(new Set(fields));
-      setError(t("error"));
+      setErrorKind("validation");
       window.requestAnimationFrame(() => {
         const firstInvalid = fields[0];
-        const control = firstInvalid
-          ? formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)
-          : null;
+        const control = firstInvalid ? formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`) : null;
         (control ?? errorRef.current)?.focus();
       });
       return;
     }
 
     setStatus("submitting");
-    setError(null);
+    setErrorKind(null);
 
     try {
       const response = await fetch("/api/contact", {
@@ -119,47 +110,37 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
         body: JSON.stringify(parsed.data),
       });
       const responseBody: unknown = await response.json().catch(() => null);
-      const accepted =
-        response.status === 200 &&
-        responseBody !== null &&
-        typeof responseBody === "object" &&
-        "ok" in responseBody &&
-        responseBody.ok === true;
+      const accepted = response.status === 200 && responseBody !== null && typeof responseBody === "object" && "ok" in responseBody && responseBody.ok === true;
 
       if (!accepted) {
         setStatus("idle");
-        setError(t("error"));
+        setErrorKind("submission");
         focusError();
         return;
       }
 
       setStatus("success");
       setForm(EMPTY_FORM);
+      onAccepted?.();
       window.requestAnimationFrame(() => successRef.current?.focus());
     } catch {
       setStatus("idle");
-      setError(t("error"));
+      setErrorKind("submission");
       focusError();
     }
   }
 
   const fieldId = (field: string) => `${id}-${field}`;
+  const errorId = fieldId("error");
   const disabled = status === "submitting" || status === "success";
 
   return (
     <div className="rounded-[1.5rem] border border-[var(--quiz-border)] bg-[var(--quiz-surface-soft)] p-6 sm:p-8">
-      <h3 className="font-heading text-2xl font-medium text-[var(--quiz-ink)]">{t("title")}</h3>
-      <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--quiz-muted)]">
-        {t("description")}
-      </p>
+      <FormHeading className="font-heading text-2xl font-medium text-[var(--quiz-ink)]">{t("title")}</FormHeading>
+      <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--quiz-muted)]">{t("description")}</p>
 
       {status === "success" ? (
-        <p
-          ref={successRef}
-          className="mt-6 rounded-xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] p-4 font-medium text-[var(--quiz-ink)]"
-          role="status"
-          tabIndex={-1}
-        >
+        <p ref={successRef} className="mt-6 rounded-xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] p-4 font-medium text-[var(--quiz-ink)]" role="status" tabIndex={-1}>
           {t("success")}
         </p>
       ) : null}
@@ -184,6 +165,7 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
               maxLength={CONTACT_LIMITS.name}
               value={form.name}
               aria-invalid={invalidFields.has("name")}
+              aria-describedby={invalidFields.has("name") ? errorId : undefined}
               disabled={disabled}
               onChange={(event) => updateField("name", event.target.value)}
               className={controlClassName}
@@ -204,6 +186,7 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
               maxLength={CONTACT_LIMITS.email}
               value={form.email}
               aria-invalid={invalidFields.has("email")}
+              aria-describedby={invalidFields.has("email") ? errorId : undefined}
               disabled={disabled}
               onChange={(event) => updateField("email", event.target.value)}
               className={controlClassName}
@@ -224,6 +207,7 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
               maxLength={CONTACT_LIMITS.phone}
               value={form.phone}
               aria-invalid={invalidFields.has("phone")}
+              aria-describedby={invalidFields.has("phone") ? errorId : undefined}
               disabled={disabled}
               onChange={(event) => updateField("phone", event.target.value)}
               className={controlClassName}
@@ -238,6 +222,8 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
               id={fieldId("preferred-contact")}
               name="preferredContact"
               value={form.preferredContact}
+              aria-invalid={invalidFields.has("preferredContact")}
+              aria-describedby={invalidFields.has("preferredContact") ? errorId : undefined}
               disabled={disabled}
               onChange={(event) => updateField("preferredContact", event.target.value as PreferredContact)}
               className={controlClassName}
@@ -260,6 +246,7 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
             maxLength={CONTACT_LIMITS.message}
             value={form.message}
             aria-invalid={invalidFields.has("message")}
+            aria-describedby={invalidFields.has("message") ? errorId : undefined}
             disabled={disabled}
             onChange={(event) => updateField("message", event.target.value)}
             className={controlClassName}
@@ -279,32 +266,36 @@ export function DiagnosticResultShareForm({ result }: DiagnosticResultShareFormP
           />
         </div>
 
-        <label className="flex items-start gap-3 text-sm leading-6 text-[var(--quiz-muted)]">
+        <div className="flex items-start gap-3 text-sm leading-6 text-[var(--quiz-muted)]">
           <input
+            id={fieldId("consent")}
             name="consent"
             type="checkbox"
             checked={form.consent}
             aria-invalid={invalidFields.has("consent")}
+            aria-describedby={invalidFields.has("consent") ? errorId : undefined}
             disabled={disabled}
             required
             onChange={(event) => updateField("consent", event.target.checked)}
             className="mt-1 h-4 w-4 rounded border-[var(--quiz-border)] accent-[var(--quiz-accent)]"
           />
-          <span>{t("consentLabel")}</span>
-        </label>
+          <span>
+            <label htmlFor={fieldId("consent")} className="cursor-pointer">
+              {t("consentLabel")}
+            </label>{" "}
+            <Link href="/privacidad" className="font-semibold text-[var(--quiz-ink)] underline decoration-[var(--quiz-accent)]/55 underline-offset-4 hover:text-[var(--quiz-accent-strong)]">
+              {t("privacyLink")}
+            </Link>
+          </span>
+        </div>
 
         {error ? (
-          <p ref={errorRef} role="alert" tabIndex={-1} className="text-sm font-medium text-destructive">
+          <p id={errorId} ref={errorRef} role="alert" tabIndex={-1} className="text-sm font-medium text-destructive">
             {error}
           </p>
         ) : null}
 
-        <Button
-          type="submit"
-          size="lg"
-          disabled={disabled}
-          className="rounded-full bg-[var(--senda-action)] px-8 text-white hover:bg-[var(--senda-action-hover)]"
-        >
+        <Button type="submit" size="lg" disabled={disabled} className="rounded-full bg-[var(--senda-action)] px-8 text-white hover:bg-[var(--senda-action-hover)]">
           {status === "submitting" ? t("submitting") : t("submit")}
           <Send className="ml-2 h-4 w-4" aria-hidden="true" />
         </Button>

@@ -61,7 +61,7 @@ const targetRoutes = [
   { path: "/equipo", title: { es: "Equipo", en: "Team" }, teamCards: 3 },
   {
     path: "/test-anclas-de-carrera",
-    title: { es: "Test de Anclas de Carrera", en: "Career Anchors Assessment" },
+    title: { es: "Test de Anclas de Carrera", en: "Career Anchors Test" },
   },
   {
     path: "/encontrar-mi-recorrido",

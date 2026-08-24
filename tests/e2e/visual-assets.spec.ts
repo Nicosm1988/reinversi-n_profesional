@@ -102,14 +102,29 @@ test("theme control switches between light and dark modes", async ({ page }) => 
   expect(darkJourneyCard.color).not.toBe(lightJourneyCard.color);
 });
 
-test("career-anchor answers expose labeled radio groups", async ({ page }) => {
+test("career-anchor entry is accessible and authenticated answers expose labeled radio groups", async ({ page }) => {
   await page.goto("/test-anclas-de-carrera");
 
-  const firstQuestion = page.locator("fieldset").first();
-  await expect(firstQuestion).toBeVisible();
-  await expect(firstQuestion).not.toHaveAccessibleName("");
+  await expect(page.getByRole("heading", {
+    level: 1,
+    name: "Las motivaciones detrás de tus decisiones profesionales",
+  })).toBeVisible();
 
-  const choices = firstQuestion.getByRole("radio");
+  const login = page.getByRole("link", { name: "Ingresar con Google para continuar" });
+  if (await login.count()) {
+    await expect(login).toBeVisible();
+    await expect(page.locator("fieldset")).toHaveCount(0);
+    return;
+  }
+
+  await page.getByRole("button", { name: "Continuar", exact: true }).click();
+  await page.getByRole("button", { name: /Empezar el test|Retomar en el enunciado/ }).click();
+
+  const firstStatement = page.locator("fieldset").first();
+  await expect(firstStatement).toBeVisible();
+  await expect(firstStatement).not.toHaveAccessibleName("");
+
+  const choices = firstStatement.getByRole("radio");
   await expect(choices).toHaveCount(6);
   await choices.nth(2).focus();
   await page.keyboard.press("Space");

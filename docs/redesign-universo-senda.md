@@ -48,7 +48,7 @@ Elementos deliberadamente no copiados: textos, preguntas, nombres comerciales, d
 
 - Las seis propuestas adultas pertenecen al territorio `Transiciones laborales`; Brújulas queda fuera de ese catálogo principal.
 - El cuestionario de situación calcula y muestra la orientación en el navegador antes de pedir datos. El nuevo recorrido no usa `/api/initial-diagnostic`, CAPTCHA ni Supabase.
-- El test de Anclas conserva las 40 preguntas, escala 1–6 y tres elecciones adicionales de la implementación propia. Los empates comparten rango y la IA nunca decide el ancla.
+- El test de Anclas conserva los 40 enunciados, la escala 1–6 y las tres elecciones adicionales de la implementación propia. Los empates mantienen el desempate determinístico histórico por orden de catálogo y la IA nunca decide el ancla.
 - La explicación determinística es completa. La persona puede solicitar de forma explícita una interpretación ampliada por IA; se ejecuta en servidor y su ausencia o fallo no impide ver el resultado.
 - El uso anónimo de ambos cuestionarios no persiste respuestas. Si existe una sesión Google, Anclas conserva en Supabase el único intento gratuito para aplicar el límite server-side y permitir volver a consultarlo, de acuerdo con las reglas permanentes del proyecto.
 - Compartir un resultado con Senda es opcional, posterior y exige consentimiento explícito. Se reutiliza `/api/contact`; ese envío no guarda respuestas ni datos en Supabase o planillas.

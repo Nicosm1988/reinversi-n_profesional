@@ -60,8 +60,9 @@ npm run dev
 
 ## Endpoints operativos
 
-- `POST /api/diagnostics/analyze`
-- `POST /api/diagnostics/interpret`
+- `POST /api/diagnostics/progress` (autosave autenticado y versionado de Anclas)
+- `POST /api/diagnostics/complete-public` (finalización autenticada y atómica de Anclas)
+- `POST /api/diagnostics/interpret` (interpretación del resultado guardado)
 - `POST /api/contact`
 - `POST /api/diagnostics/save` (retirado; responde `410 Gone`)
 - `POST /api/initial-diagnostic` (legado; el orientador público no lo utiliza)
@@ -78,25 +79,40 @@ Migraciones relevantes:
 - `supabase/migrations/20260304100000_lead_requests_lockdown.sql`
 - `supabase/migrations/20260531183000_require_auth_for_diagnostics.sql`
 - `supabase/migrations/20260802150000_initial_diagnostics.sql`
+- `supabase/migrations/20260823032739_career_anchor_report_email_outbox.sql`
+- `supabase/migrations/20260824040817_career_anchor_persistent_journey.sql`
+- `supabase/migrations/20260824050000_lock_down_legacy_career_anchor_rpcs.sql`
+
+La migración `20260824050000` retira los RPC legados y se aplica sólo después de publicar el código del recorrido persistente.
 
 El endpoint histórico de diagnóstico inicial persiste en `public.initial_diagnostics`. La tabla tiene RLS activa, no concede acceso a `anon` ni `authenticated`, y recibe escrituras únicamente a través del backend con `service_role`. El orientador público `/encontrar-mi-recorrido` calcula el resultado localmente y no escribe en esa tabla.
 
-Comandos recomendados:
+Comandos de vinculación:
 
 ```bash
 supabase login
 supabase link --project-ref <PROJECT_REF>
-supabase db push
 ```
+
+Para este cambio, no aplicar `20260824040817` y `20260824050000` juntas sobre una
+instalación que todavía ejecuta el código legado. El orden de rollout compatible es:
+
+1. aplicar únicamente `20260824040817` (mantiene temporalmente los RPC legados);
+2. publicar la aplicación del recorrido persistente y comprobar que está activa;
+3. aplicar `20260824050000` para retirar los RPC legados.
+
+En instalaciones nuevas, o una vez completada esa transición, `supabase db push`
+puede volver a utilizarse normalmente para las migraciones posteriores.
 
 ## Acceso a los cuestionarios
 
-- `/encontrar-mi-recorrido` y `/test-anclas-de-carrera` son públicos y muestran resultados sin pedir datos personales, login ni CAPTCHA.
-- La interpretación opcional de Anclas usa `POST /api/diagnostics/interpret`, recalcula el ranking en servidor, no recibe PII y conserva un fallback determinístico.
-- Si ya existe una sesión Google, `POST /api/diagnostics/complete-public` registra atómicamente el único intento gratuito y permite volver a consultar el resultado guardado, sin exigir el preformulario ni CAPTCHA. La API histórica `POST /api/diagnostics/analyze` se conserva para compatibilidad.
+- `/encontrar-mi-recorrido` es público y calcula el resultado en el navegador. `/test-anclas-de-carrera` requiere una cuenta Google autenticada.
+- Anclas guarda el avance mediante `POST /api/diagnostics/progress`, permite reanudarlo y finaliza una sola vez con `POST /api/diagnostics/complete-public`.
+- La interpretación usa `POST /api/diagnostics/interpret`: parte del ranking durable calculado por el servidor (y sólo recalcula registros legados que no lo tengan), no envía PII al modelo y conserva un fallback determinístico.
 - Compartir un resultado con Senda es posterior, voluntario y consentido; usa `POST /api/contact` y no Supabase.
 - El antiguo endpoint `POST /api/diagnostics/save` esta retirado para impedir escrituras separadas o manipuladas.
-- Los resultados se guardan en `public.user_diagnostics` con `user_id` obligatorio y RLS por usuario.
+- El antiguo endpoint `POST /api/diagnostics/analyze` también está retirado; el recorrido persistente usa exclusivamente `progress`, `complete-public` e `interpret`.
+- Los avances y resultados se guardan en `public.user_diagnostics` con `user_id` obligatorio: cada cuenta sólo lee su propia fila mediante RLS y todas las escrituras pasan por el backend.
 
 Configurar en produccion:
 

@@ -3,6 +3,10 @@ import englishQuizData from "@/lib/data/anchors.en.json";
 import spanishQuizData from "@/lib/data/anchors.json";
 
 const questionIds = new Set(spanishQuizData.questions.map((question) => String(question.id)));
+const anchorIds = new Set(spanishQuizData.anchors.map((anchor) => anchor.id));
+
+export const CAREER_ANCHOR_INSTRUMENT_VERSION = "schein-career-anchors-40-v1";
+export const CAREER_ANCHOR_ALGORITHM_VERSION = "senda-career-anchor-score-v1";
 
 export const careerAnchorLocaleSchema = z.enum(["es", "en"]);
 export const careerStageSchema = z.enum([
@@ -16,6 +20,73 @@ export const careerStageSchema = z.enum([
   "prefer_not_to_say",
 ]);
 
+export const careerAnchorPartialStatementAnswersSchema = z
+  .record(z.string(), z.number().int().min(1).max(6))
+  .superRefine((answers, context) => {
+    const answerIds = Object.keys(answers);
+    if (answerIds.length > questionIds.size || answerIds.some((id) => !questionIds.has(id))) {
+      context.addIssue({
+        code: "custom",
+        message: "Answers may only contain known diagnostic statements.",
+      });
+    }
+  });
+
+export const careerAnchorPartialFinalSelectionSchema = z
+  .array(z.number().int().positive())
+  .max(3)
+  .superRefine((selection, context) => {
+    const uniqueIds = new Set(selection.map(String));
+    if (uniqueIds.size !== selection.length || [...uniqueIds].some((id) => !questionIds.has(id))) {
+      context.addIssue({
+        code: "custom",
+        message: "Final selection may only contain unique diagnostic statements.",
+      });
+    }
+  });
+
+export const careerAnchorProgressRequestSchema = z
+  .object({
+    answers: careerAnchorPartialStatementAnswersSchema,
+    bonus: careerAnchorPartialFinalSelectionSchema.optional().default([]),
+    currentStatement: z.number().int().min(1).max(40),
+    clientRevision: z.number().int().positive().max(Number.MAX_SAFE_INTEGER),
+    locale: z.enum(["es", "en"]).optional().default("es"),
+    careerStage: careerStageSchema.optional().default("prefer_not_to_say"),
+  })
+  .strict();
+
+export const careerAnchorStoredScoreSchema = z
+  .array(
+    z
+      .object({
+        id: z.string().min(1),
+        name: z.string().min(1),
+        score: z.number().int().nonnegative(),
+        mean: z.number().nonnegative(),
+        rank: z.number().int().min(1).max(spanishQuizData.anchors.length),
+      })
+      .strict(),
+  )
+  .length(spanishQuizData.anchors.length)
+  .superRefine((ranking, context) => {
+    const storedAnchorIds = new Set(ranking.map((anchor) => anchor.id));
+    const storedRanks = new Set(ranking.map((anchor) => anchor.rank));
+    const hasEveryAnchor =
+      storedAnchorIds.size === anchorIds.size &&
+      [...anchorIds].every((anchorId) => storedAnchorIds.has(anchorId));
+    const hasEveryRank =
+      storedRanks.size === spanishQuizData.anchors.length &&
+      ranking.every((anchor) => storedRanks.has(anchor.rank));
+
+    if (!hasEveryAnchor || !hasEveryRank) {
+      context.addIssue({
+        code: "custom",
+        message: "Stored score must contain every career anchor and rank exactly once.",
+      });
+    }
+  });
+
 export const careerAnchorRawAnswersSchema = z
   .object({
     answers: z.record(z.string(), z.number().int().min(1).max(6)),
@@ -28,7 +99,7 @@ export const careerAnchorRawAnswersSchema = z
       context.addIssue({
         code: "custom",
         path: ["answers"],
-        message: "Answers must contain every diagnostic question exactly once.",
+        message: "Answers must contain every diagnostic statement exactly once.",
       });
     }
 
@@ -37,7 +108,7 @@ export const careerAnchorRawAnswersSchema = z
       context.addIssue({
         code: "custom",
         path: ["bonus"],
-        message: "Bonus selection must contain three unique diagnostic questions.",
+        message: "Final selection must contain three unique diagnostic statements.",
       });
     }
   });
@@ -80,7 +151,7 @@ const interpretationCoreSchema = z
   .object({
     title: z.string().trim().min(1).max(180),
     summary: z.string().trim().min(1).max(2_400),
-    tensions: z.array(z.string().trim().min(1).max(600)).min(2).max(5),
+    tensions: z.array(z.string().trim().min(1).max(600)).max(5),
     reflectionQuestions: z.array(z.string().trim().min(1).max(600)).min(3).max(5),
     stageConnection: z.string().trim().min(1).max(1_400),
     relevantServices: z
@@ -106,6 +177,7 @@ export const careerAnchorInterpretationSchema = interpretationCoreSchema.extend(
 export type CareerAnchorAnalyzeRequest = z.infer<typeof careerAnchorAnalyzeRequestSchema>;
 export type CareerAnchorInterpretRequest = z.infer<typeof careerAnchorInterpretRequestSchema>;
 export type CareerAnchorInterpretation = z.infer<typeof careerAnchorInterpretationSchema>;
+export type CareerAnchorStoredScore = z.infer<typeof careerAnchorStoredScoreSchema>;
 export type CareerAnchor = { name: string };
 export type CareerAnchorLocale = z.infer<typeof careerAnchorLocaleSchema>;
 export type CareerServiceSlug = z.infer<typeof careerServiceSlugSchema>;
@@ -165,6 +237,29 @@ export function calculateCareerAnchorRanking(
       rank,
     };
   });
+}
+
+export function hydrateCareerAnchorStoredRanking(
+  storedScore: CareerAnchorStoredScore,
+  locale: CareerAnchorLocale = "es",
+): CareerAnchorRankingItem[] {
+  const parsedScore = careerAnchorStoredScoreSchema.parse(storedScore);
+  const quizData = locale === "en" ? englishQuizData : spanishQuizData;
+  const anchorsById = new Map(quizData.anchors.map((anchor) => [anchor.id, anchor]));
+
+  return [...parsedScore]
+    .sort((left, right) => left.rank - right.rank)
+    .map((storedAnchor) => {
+      const anchor = anchorsById.get(storedAnchor.id);
+      if (!anchor) throw new Error("Stored career anchor is not present in the instrument catalog.");
+
+      return {
+        ...anchor,
+        score: storedAnchor.score,
+        mean: storedAnchor.mean,
+        rank: storedAnchor.rank,
+      };
+    });
 }
 
 export function getCareerAnchorResultGroups(
@@ -282,11 +377,9 @@ export function buildCareerAnchorFallbackInterpretation(
   careerStage: CareerStage,
   locale: CareerAnchorLocale,
 ): CareerAnchorInterpretation {
-  const { primary, secondary } = getCareerAnchorResultGroups(ranking);
+  const { primary } = getCareerAnchorResultGroups(ranking);
   const primaryNames = primary.map((anchor) => anchor.name);
-  const secondaryNames = secondary.map((anchor) => anchor.name);
   const primaryText = primaryNames.join(locale === "en" ? " and " : " y ");
-  const secondaryText = secondaryNames.join(locale === "en" ? " and " : " y ");
   const service =
     careerStage === "prefer_not_to_say" ? null : serviceCatalog[locale][careerStage];
 
@@ -297,12 +390,9 @@ export function buildCareerAnchorFallbackInterpretation(
           ? `A shared primary result: ${primaryText}`
           : `${primaryText} as a reference point`,
       summary: `Your responses place ${primaryText} at the top of your ranking. This suggests that these motivations and values may deserve particular attention when you evaluate work environments, roles, or decisions. The result is an orientation, not a fixed definition or a prescription.`,
-      tensions: [
-        `An appealing opportunity may still create friction if it leaves too little room for ${primaryText}.`,
-        secondaryText
-          ? `At times, you may need to balance ${primaryText} with the also-relevant pull of ${secondaryText}.`
-          : "External urgency can make it harder to notice what actually sustains your motivation.",
-      ],
+      // The scoring protocol does not define a validated tension threshold.
+      // Keep this empty rather than inventing a conflict from rank order alone.
+      tensions: [],
       reflectionQuestions: [
         `Where in your current experience is ${primaryText} already present, and where is it missing?`,
         "What would you want to preserve even if your role, organization, or field changed?",
@@ -333,12 +423,9 @@ export function buildCareerAnchorFallbackInterpretation(
         ? `Un resultado principal compartido: ${primaryText}`
         : `${primaryText} como punto de referencia`,
     summary: `Tus respuestas ubican ${primaryText} en el primer lugar del ranking. Esto sugiere que esas motivaciones y valores merecen una atención especial cuando evaluás entornos, roles o decisiones laborales. El resultado es una orientación: no constituye una definición cerrada ni indica por sí solo qué deberías hacer.`,
-    tensions: [
-      `Una oportunidad atractiva podría generar fricción si deja poco espacio para ${primaryText}.`,
-      secondaryText
-        ? `En algunas decisiones puede aparecer una tensión entre ${primaryText} y el peso también relevante de ${secondaryText}.`
-        : "La urgencia externa puede dificultar que reconozcas aquello que realmente sostiene tu motivación.",
-    ],
+    // El protocolo de puntuación no define un umbral validado de tensión.
+    // Se deja vacío para no inferir conflictos solamente a partir del ranking.
+    tensions: [],
     reflectionQuestions: [
       `¿Dónde aparece hoy ${primaryText} en tu experiencia y dónde sentís que falta?`,
       "¿Qué querrías preservar aunque cambien tu rol, la organización o el sector?",

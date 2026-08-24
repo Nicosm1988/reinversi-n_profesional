@@ -7,7 +7,7 @@
 ## Qué existe (confirmado)
 
 - App Next.js 16 multipágina: home, seis propuestas bajo `/transiciones-laborales`, Brújulas secundaria, Laboratorio, metodología, equipo, contacto y páginas legales en español e inglés.
-- `/encontrar-mi-recorrido` es un orientador público, local y sin PII. `/test-anclas-de-carrera` recupera las 40 preguntas, la escala 1–6 y tres elecciones adicionales; calcula el resultado antes de cualquier dato o servicio externo.
+- `/encontrar-mi-recorrido` es un orientador público, local y sin PII. `/test-anclas-de-carrera` conserva los 40 enunciados, la escala 1–6 y tres elecciones adicionales; guarda el avance privado en Supabase y calcula el resultado de forma determinística en el servidor antes de solicitar una interpretación opcional sin PII.
 - La interpretación de Anclas por OpenAI es opcional, server-side y cuenta con fallback determinístico. El acceso anónimo no persiste; una sesión Google conserva un único intento por cuenta mediante validación server-side y Supabase/RLS.
 - Compartir un resultado con Senda es posterior y consentido mediante el mismo endpoint SMTP de contacto. El endpoint legado `diagnostics/save` permanece retirado (410).
 - Suite de tests unitarios (Vitest) y e2e (Playwright), CI en GitHub Actions (lint/typecheck/unit/build/e2e).

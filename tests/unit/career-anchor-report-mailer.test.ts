@@ -21,16 +21,6 @@ const input = {
   recipient: "person@example.com",
   deliveryId: "0fcd30d2-7d83-45a5-9854-23c18c5c31f1",
   locale: "es" as const,
-  dominantAnchor: "Dirección General",
-  ranking: Array.from({ length: 8 }, (_, index) => ({
-    rank: index + 1,
-    name: `Ancla ${index + 1}`,
-  })),
-  title: "Una lectura para seguir explorando",
-  summary: "Tu resultado ofrece un punto de partida.",
-  frictionAreas: ["Una tensión posible."],
-  idealEcosystem: "Un entorno con objetivos claros.",
-  strategicQuestion: "¿Qué querés preservar?",
   reportUrl: "https://universosenda.com/panel#resultado",
 };
 
@@ -68,9 +58,9 @@ describe("sendCareerAnchorReportEmail", () => {
         from: { name: "Senda", address: "hola@universosenda.com" },
         to: "person@example.com",
         replyTo: { name: "Equipo Senda", address: "hola@universosenda.com" },
-        subject: "Tu informe de Anclas de Carrera está listo | Senda",
-        text: expect.stringContaining("Tu ranking completo"),
-        html: expect.stringContaining("Tus tres anclas más presentes"),
+        subject: "Tu resultado de Anclas de Carrera está listo | Senda",
+        text: expect.stringContaining("Por privacidad"),
+        html: expect.stringContaining("Ver mi resultado privado"),
         messageId: expect.stringMatching(/^<career-anchor-[a-f0-9]{40}@universosenda\.com>$/),
       }),
     );

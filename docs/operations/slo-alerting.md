@@ -6,7 +6,9 @@
 - API p95 latency:
   - `POST /api/leads` < `700ms`
   - `POST /api/initial-diagnostic` < `700ms`
-  - `POST /api/diagnostics/analyze` < `3500ms`
+  - `POST /api/diagnostics/progress` < `700ms`
+  - `POST /api/diagnostics/complete-public` < `3500ms`
+  - `POST /api/diagnostics/interpret` < `10000ms` en el camino con IA
 - Error budget:
   - 0.1% monthly downtime budget.
 
@@ -38,12 +40,15 @@
 - Synthetic flow:
   - Contact form submit
   - Initial diagnostic submit
-  - Diagnostic analyze submit
+  - Authenticated Career Anchors progress, completion, and stored-result retrieval
 - Log monitor on structured events:
   - `*.error`
   - `*.db_error`
   - `*.captcha_failed`
   - `*.rate_limited`
+  - `career_anchor.progress.*`
+  - `diagnostics.public_completion.*`
+  - `diagnostics.interpret.*`
 
 ## Authenticated E2E
 

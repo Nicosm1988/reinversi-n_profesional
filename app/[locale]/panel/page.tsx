@@ -5,17 +5,28 @@ import { ArrowRight, Compass, UserRound } from "lucide-react";
 import { z } from "zod";
 import { Container } from "@/components/layout/container";
 import { ProfileForm, type PersonalProfile } from "@/components/profile/profile-form";
+import {
+  careerAnchorInterpretationSchema,
+  careerAnchorStoredScoreSchema,
+  hydrateCareerAnchorStoredRanking,
+} from "@/lib/diagnostics/career-anchor";
 import { getAuthenticatedUser } from "@/lib/supabase/auth";
 import { UniverseField } from "@/components/visual/universe-field";
 
 const savedResultSchema = z.object({
   dominant_result: z.object({ name: z.string(), score: z.number().optional() }),
-  ai_feedback: z.object({
-    title: z.string(),
-    summary: z.string(),
-    strategicQuestion: z.string().optional(),
-  }),
+  ai_feedback: z.unknown().nullable().optional(),
+  result_ai: z.unknown().nullable().optional(),
+  result_base: z.unknown().nullable().optional(),
+  score_result: z.unknown().nullable().optional(),
+  completed_at: z.string().nullable().optional(),
   updated_at: z.string(),
+});
+
+const legacyFeedbackSchema = z.object({
+  title: z.string(),
+  summary: z.string(),
+  strategicQuestion: z.string().optional(),
 });
 
 type PanelPageProps = {
@@ -46,12 +57,39 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
 
   const { data: diagnosticData } = await auth.supabase
     .from("user_diagnostics")
-    .select("dominant_result, ai_feedback, updated_at")
+    .select("dominant_result, ai_feedback, result_ai, result_base, score_result, completed_at, updated_at")
     .eq("diagnostic_type", "career_anchor")
     .eq("status", "completed")
     .maybeSingle();
   const parsedResult = savedResultSchema.safeParse(diagnosticData);
   const savedResult = parsedResult.success ? parsedResult.data : null;
+  const fullFeedback = savedResult
+    ? careerAnchorInterpretationSchema.safeParse(
+        savedResult.result_ai ?? savedResult.ai_feedback ?? savedResult.result_base,
+      )
+    : null;
+  const legacyFeedback = savedResult
+    ? legacyFeedbackSchema.safeParse(savedResult.ai_feedback)
+    : null;
+  const feedback = fullFeedback?.success
+    ? {
+        title: fullFeedback.data.title,
+        summary: fullFeedback.data.summary,
+        reflection: fullFeedback.data.reflectionQuestions[0],
+      }
+    : legacyFeedback?.success
+      ? {
+          title: legacyFeedback.data.title,
+          summary: legacyFeedback.data.summary,
+          reflection: legacyFeedback.data.strategicQuestion,
+        }
+      : null;
+  const storedScore = savedResult
+    ? careerAnchorStoredScoreSchema.safeParse(savedResult.score_result)
+    : null;
+  const localizedPrimaryAnchor = storedScore?.success
+    ? hydrateCareerAnchorStoredRanking(storedScore.data, locale === "en" ? "en" : "es")[0]?.name
+    : null;
 
   const metadata = auth.user.user_metadata ?? {};
   const profile: PersonalProfile = {
@@ -88,18 +126,25 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
                 </div>
                 {savedResult ? (
                   <>
-                    <h2 className="mt-4 font-heading text-3xl font-semibold text-foreground">{savedResult.ai_feedback.title}</h2>
-                    <p className="mt-4 leading-relaxed text-muted-foreground">{savedResult.ai_feedback.summary}</p>
+                    <h2 className="mt-4 font-heading text-3xl font-semibold text-foreground">{t("careerAnchorTitle")}</h2>
+                    {feedback ? (
+                      <div className="mt-4">
+                        <h3 className="font-heading text-xl font-semibold text-foreground">{feedback.title}</h3>
+                        <p className="mt-3 leading-relaxed text-muted-foreground">{feedback.summary}</p>
+                      </div>
+                    ) : null}
                     <div className="mt-6 rounded-2xl border bg-background p-5">
                       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-secondary">{t("primaryAnchor")}</p>
-                      <p className="mt-2 font-heading text-xl font-semibold text-foreground">{savedResult.dominant_result.name}</p>
-                      {savedResult.ai_feedback.strategicQuestion && <p className="mt-3 italic text-muted-foreground">“{savedResult.ai_feedback.strategicQuestion}”</p>}
+                      <p className="mt-2 font-heading text-xl font-semibold text-foreground">
+                        {localizedPrimaryAnchor ?? savedResult.dominant_result.name}
+                      </p>
+                      {feedback?.reflection ? <p className="mt-3 italic text-muted-foreground">“{feedback.reflection}”</p> : null}
                     </div>
                     <p className="mt-4 text-xs text-muted-foreground">
                       {t("updatedAt", {
                         date: new Intl.DateTimeFormat(locale === "en" ? "en-US" : "es-AR", {
                           dateStyle: "long",
-                        }).format(new Date(savedResult.updated_at)),
+                        }).format(new Date(savedResult.completed_at ?? savedResult.updated_at)),
                       })}
                     </p>
                   </>
@@ -110,7 +155,7 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
                   </>
                 )}
               </div>
-              <Link href="/test-anclas-de-carrera" className="inline-flex flex-none items-center gap-2 rounded-full bg-[#cc148c] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a80e70]">
+              <Link href={savedResult ? "/test-anclas-de-carrera?resultado=1" : "/test-anclas-de-carrera"} className="inline-flex flex-none items-center gap-2 rounded-full bg-[#cc148c] px-6 py-3 text-sm font-semibold text-white hover:bg-[#a80e70]">
                 {savedResult ? t("viewFullResult") : t("startTest")}
                 <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>

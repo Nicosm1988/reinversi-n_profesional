@@ -6,8 +6,9 @@ import {
   calculateCareerAnchorRanking,
   calculateDominantCareerAnchor,
   careerAnchorAnalyzeRequestSchema,
-  careerAnchorInterpretRequestSchema,
+  careerAnchorStoredScoreSchema,
   getCareerAnchorResultGroups,
+  hydrateCareerAnchorStoredRanking,
 } from "@/lib/diagnostics/career-anchor";
 
 function buildValidPayload() {
@@ -28,7 +29,7 @@ function buildValidPayload() {
 }
 
 describe("careerAnchorAnalyzeRequestSchema", () => {
-  it("accepts the complete 40-question diagnostic", () => {
+  it("accepts the complete 40-statement diagnostic", () => {
     expect(careerAnchorAnalyzeRequestSchema.safeParse(buildValidPayload()).success).toBe(true);
   });
 
@@ -51,7 +52,7 @@ describe("careerAnchorAnalyzeRequestSchema", () => {
     ).toBe(false);
   });
 
-  it("rejects missing and foreign question identifiers", () => {
+  it("rejects missing and foreign statement identifiers", () => {
     const payload = buildValidPayload();
     delete payload.rawAnswers.answers["40"];
     payload.rawAnswers.answers["999"] = 6;
@@ -93,7 +94,7 @@ describe("calculateDominantCareerAnchor", () => {
 });
 
 describe("public career anchor ranking", () => {
-  it("preserves the validated 40-question order and anchor mapping in both locales", () => {
+  it("preserves the validated 40-statement order and anchor mapping in both locales", () => {
     const expectedMappings = [
       [1, 9, 17, 25, 33],
       [2, 10, 18, 26, 34],
@@ -162,30 +163,46 @@ describe("public career anchor ranking", () => {
     });
   });
 
-  it("accepts only non-identifying context and recalculable raw answers", () => {
+  it("hydrates a durable stored ranking without recalculating its order", () => {
     const payload = buildValidPayload();
-    const publicPayload = {
-      rawAnswers: payload.rawAnswers,
-      careerStage: "changing_employment",
-      locale: "es",
-    };
+    const calculated = calculateCareerAnchorRanking(payload.rawAnswers);
+    const stored = calculated.map(({ id, name, score, mean, rank }) => ({
+      id,
+      name,
+      score,
+      mean,
+      rank,
+    }));
+    const durableOrder = [
+      "management",
+      "technical",
+      "autonomy",
+      "security",
+      "entrepreneurial",
+      "service",
+      "challenge",
+      "lifestyle",
+    ];
+    for (const anchor of stored) anchor.rank = durableOrder.indexOf(anchor.id) + 1;
 
-    expect(careerAnchorInterpretRequestSchema.safeParse(publicPayload).success).toBe(true);
-    expect(
-      careerAnchorInterpretRequestSchema.safeParse({
-        ...publicPayload,
-        name: "Dato personal no permitido",
-      }).success,
-    ).toBe(false);
-    expect(
-      careerAnchorInterpretRequestSchema.safeParse({
-        ...publicPayload,
-        ranking: [{ id: "manipulated", score: 999 }],
-      }).success,
-    ).toBe(false);
+    expect(careerAnchorStoredScoreSchema.safeParse(stored).success).toBe(true);
+    expect(hydrateCareerAnchorStoredRanking(stored, "en").slice(0, 2)).toMatchObject([
+      { id: "management", name: "General Management", rank: 1 },
+      { id: "technical", name: "Technical/Functional Competence", rank: 2 },
+    ]);
   });
 
-  it("builds a complete deterministic fallback without personal data", () => {
+  it("rejects stored rankings with duplicate anchors or ranks", () => {
+    const payload = buildValidPayload();
+    const stored = calculateCareerAnchorRanking(payload.rawAnswers).map(
+      ({ id, name, score, mean, rank }) => ({ id, name, score, mean, rank }),
+    );
+    stored[1] = { ...stored[1], id: stored[0]!.id, rank: stored[0]!.rank };
+
+    expect(careerAnchorStoredScoreSchema.safeParse(stored).success).toBe(false);
+  });
+
+  it("builds a complete deterministic fallback without inventing tensions", () => {
     const payload = buildValidPayload();
     const ranking = calculateCareerAnchorRanking(payload.rawAnswers);
     const fallback = buildCareerAnchorFallbackInterpretation(
@@ -195,7 +212,7 @@ describe("public career anchor ranking", () => {
     );
 
     expect(fallback.mode).toBe("fallback");
-    expect(fallback.tensions.length).toBeGreaterThanOrEqual(2);
+    expect(fallback.tensions).toEqual([]);
     expect(fallback.reflectionQuestions.length).toBeGreaterThanOrEqual(3);
     expect(fallback.nextSteps.length).toBeGreaterThanOrEqual(3);
     expect(fallback.relevantServices[0]?.slug).toBe(

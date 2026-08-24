@@ -21,13 +21,16 @@ test("smoke: multipage gateway, public intake and protected account routes are a
   await expect(page).toHaveURL(/\/encontrar-mi-recorrido$/);
   await expect(page.getByRole("group", { name: /situación describe mejor|situation best describes/i })).toBeVisible();
 
-  // The career anchor test is public: no login, captcha, or backend call
-  // should be required to take it and see a result.
+  // The introduction is public, while starting the single saved attempt
+  // requires a Google-authenticated account.
   await page.goto("/test-anclas-de-carrera");
   await expect(page).not.toHaveURL(/\/login/);
-  await expect(
-    page.getByText(/Respondé las 40 afirmaciones a tu ritmo|Answer all 40 statements at your own pace/i),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", {
+    level: 1,
+    name: "Las motivaciones detrás de tus decisiones profesionales",
+  })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Ingresar con Google para continuar" })).toBeVisible();
+  await expect(page.locator('input[name^="statement-"]')).toHaveCount(0);
 
   await page.goto("/panel");
   await expect(page).toHaveURL(/\/login\?next=%2Fpanel/);

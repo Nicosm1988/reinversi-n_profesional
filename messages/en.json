@@ -111,7 +111,7 @@
   },
   "Login": {
     "title": "Welcome",
-    "description": "Sign in with Google to review saved results and manage your account. The public questionnaires do not require sign-in.",
+    "description": "Sign in with Google to complete the test, review saved results, and manage your account.",
     "continueGoogle": "Continue with Google",
     "continueLinkedin": "Continue with LinkedIn",
     "termsNotice": "By continuing, you accept our terms and privacy policy. If you complete Career Anchors while signed in, your single attempt is linked to your account.",
@@ -172,9 +172,9 @@
     "section3Title": "3. Data we collect",
     "section3Text": "We collect the data you choose to provide us voluntarily: name, email address, phone number, message, and, where applicable, the guidance summary from a questionnaire you authorize us to receive. If you create an account, we also process your display name, an optional profile photo, and the answers to the questionnaires you complete. We additionally collect technical data necessary for the site's operation and security, such as IP address, browser type, and pages visited.",
     "section4Title": "4. Purpose and legal basis of processing",
-    "section4Text": "We use your data to answer inquiries, provide the requested services, manage your account, protect the platform against abuse, improve its operation, and comply with legal obligations. The legal basis is your free, express, and informed consent (arts. 5 and 11 of Law 25,326), which you may withdraw at any time without affecting the lawfulness of processing carried out before that withdrawal. We do not use the public questionnaires to send you communications without your express authorization, and we do not carry out unsolicited telemarketing; we respect Argentina's \"Do Not Call\" National Registry (Law 26,951) where applicable.",
+    "section4Text": "We use your data to answer inquiries, provide the requested services, manage your account, protect the platform against abuse, improve its operation, and comply with legal obligations. The legal basis is your free, express, and informed consent (arts. 5 and 11 of Law 25,326), which you may withdraw at any time without affecting the lawfulness of processing carried out before that withdrawal. We do not use your answers or results to send commercial communications without your express authorization, and we do not carry out unsolicited telemarketing; we respect Argentina's \"Do Not Call\" National Registry (Law 26,951) where applicable.",
     "section5Title": "5. Assessments, artificial intelligence and confidentiality",
-    "section5Text": "The public questionnaires calculate your result in your browser and do not ask for personal data to do so. If you voluntarily request an AI-assisted interpretation, your answers, the selected career stage, and the language are sent to the server, but never your name, email, phone number, or location. When an authenticated session already exists, the answers and the result from the single free attempt are linked to that account to enforce that limit and allow you to review it later; this is disclosed before the test is completed. The Senda team receives your result and your contact details only when you complete the follow-up form and give explicit consent. Results are guidance only: they do not constitute a clinical diagnosis and do not replace the intervention of a healthcare professional.",
+    "section5Text": "The Career Anchors Test requires a Google account to protect the single attempt and save progress. Answers are stored progressively, and the server calculates the ranking deterministically. After completion, the server may send only the ranking, optional career stage, and language to an artificial-intelligence provider to draft an interpretation; it does not send your name, email, phone number, location, or individual answers. If that service is unavailable, a deterministic fallback is used. The result remains associated with your private account, and the notification email contains no answers or results. The Senda team receives the summary and your contact details only if you complete the follow-up form and give explicit consent. Results are for orientation only: they are not a clinical diagnosis and do not replace guidance from a qualified professional.",
     "section6Title": "6. Retention period",
     "section6Text": "We keep your data for as long as necessary for the purposes described above and for as long as our relationship with you continues, for example while your account remains active, and afterward for the period required by applicable legal, accounting, or defense-of-claims obligations. You may request early deletion of your data at any time, subject to legal exceptions.",
     "section7Title": "7. Third parties, providers and international data transfer",
@@ -222,12 +222,13 @@
     "title": "My journey",
     "description": "Manage your details and return to the tools that are already part of your journey.",
     "latestResult": "Your latest result",
+    "careerAnchorTitle": "My Career Anchors",
     "primaryAnchor": "Primary anchor",
     "updatedAt": "Updated on {date}.",
     "emptyTitle": "There isn't a saved result yet",
-    "emptyDescription": "Once you complete the Career Anchors assessment, you'll find your latest reading here.",
+    "emptyDescription": "Once you complete the Career Anchors Test, you'll find your latest reading here.",
     "viewFullResult": "View full result",
-    "startTest": "Start assessment"
+    "startTest": "Start the test"
   },
   "Profile": {
     "formLabel": "Personal details",
@@ -264,70 +265,190 @@
     "dark": "Switch to dark mode"
   },
   "CareerQuiz": {
-    "metadataTitle": "Career Anchors Assessment | Senda",
-    "metadataDescription": "Discover your career anchor through Edgar Schein's model. A free interpretation to help you understand your journey and guide your next steps.",
-    "introBadge": "Edgar Schein's Model",
-    "introTitle": "Your career GPS: explore what drives you at work",
+    "metadataTitle": "Career Anchors Test | Senda",
+    "metadataDescription": "Explore which motivations carry the most weight in your career right now through Edgar Schein's Career Anchors model.",
+    "introBadge": "Career Anchors Test · Edgar Schein's model",
+    "introTitle": "The motivations behind your career decisions",
     "introSubtitle": "An inner compass for understanding your journey more clearly.",
     "introParagraph1": "Edgar Schein developed this model to explore the combination of abilities, motivations, and values that a person seeks to preserve throughout their working life.",
-    "introParagraph2": "Your career anchor is the unique combination of abilities, motivations, and values that you would not easily give up. Understanding it can help you make choices that are more consistent with who you are and recognize what you need to protect during a time of change.",
+    "introParagraph2": "Career anchors bring together perceived capabilities, motivations, and values whose relative weight can shift with experience and context. Recognizing them can add perspective and help you notice what you need to protect during a time of change.",
     "introBulletMotivations": "Identify your deepest motivations",
-    "introBulletDecisions": "Avoid incompatible career decisions",
-    "introCta": "Start the Assessment",
+    "introBulletDecisions": "Add perspective when considering decisions",
+    "introCta": "Continue",
     "questionsProgress": "Answered: {answered} of {total}",
-    "questionsTitle": "Identification Questionnaire",
-    "questionsScaleDesc": "Answer each question using the scale from 1 (Never) to 6 (Always)",
+    "questionsTitle": "Statement journey",
+    "questionsScaleDesc": "Answer each statement using the scale from 1 (Never) to 6 (Always)",
     "scaleNever": "Never",
     "scaleAlways": "Always",
     "questionsBack": "Back",
     "questionsContinue": "Continue",
     "questionsRemaining": "{count} responses remaining",
-    "transitionTitle": "One last step — your result is almost ready!",
-    "transitionSubtitle": "There is one final choice to help identify which aspects are truly nonnegotiable for you.",
-    "transitionInstruction": "You'll review all 40 statements again. This time, choose the <strong>3 that best represent what you need to preserve</strong> in your professional life, even as your role or context changes.",
+    "transitionTitle": "You are one step away from your results",
+    "transitionSubtitle": "There is one final choice to help identify which aspects carry the most weight for you right now.",
+    "transitionInstruction": "You'll review all 40 statements again. This time, choose the <strong>3 affirmations that best represent what you need to preserve</strong> in your professional life, even as your role or context changes.",
     "transitionNote": "Your final three choices will carry additional weight in the calculation, helping us identify your primary anchor more clearly.",
-    "transitionCta": "Choose the 3 most important",
+    "transitionCta": "Make my final selection",
     "bonusTitle": "Final selection",
-    "bonusSubtitle": "All 40 statements are gathered here. Choose exactly 3 and review them before confirming.",
-    "bonusInstruction": "Choose the 3 statements that matter most to you",
+    "bonusSubtitle": "All 40 affirmations are gathered here. Choose exactly 3 and review them before confirming.",
+    "bonusInstruction": "Choose the 3 affirmations that matter most to you",
     "bonusSelected": "Selected: {count} / 3",
     "bonusSelectedDetail": "Selected: {count} of 3",
     "bonusRemaining": "{count} selection(s) remaining",
     "bonusBack": "Back",
     "bonusCta": "View my result",
-    "prequizTitle": "We have processed your responses",
-    "prequizSubtitle": "To prepare an initial interpretation of your Dominant Anchor, we need some basic information about your current context.",
+    "prequizTitle": "Your mathematical result is already saved",
+    "prequizSubtitle": "If you wish, you can add one optional detail about your current moment to contextualize the guidance.",
     "resultsBadge": "Interpretation complete",
     "resultsTitle": "Your career anchor map",
     "resultsScheinQuote": "A career anchor brings together the abilities, motivations, and values that a person seeks to preserve throughout their professional journey. — A summary of Edgar Schein's model",
     "resultsRankingTitle": "Your Career Anchor Ranking",
     "resultsProfileTitle": "Your Profile in Depth",
-    "resultsDominant": "Your dominant anchor",
+    "resultsDominant": "Your primary anchor",
     "resultsSecondary": "Your secondary anchor",
     "resultsThird": "Your third anchor",
-    "resultsDominantText": "Because your dominant anchor is <strong>{article} {name}</strong>, any professional move should protect this central part of your profile. Treat it as a starting point for reflection, not a fixed definition. If you'd like to explore it further, you can ask our team for guidance.",
+    "resultsDominantText": "Because <strong>{article} {name}</strong> received the highest score, it may be a useful criterion to notice when comparing career options. Treat it as a snapshot of this moment and a starting point for reflection, not a fixed definition. If you'd like to explore it further, you can ask our team for guidance.",
     "resultsCtaSession": "Receive professional guidance",
-    "resultsAiLoadingTitle": "We are preparing your personalized interpretation...",
-    "resultsAiLoadingText": "Connecting your 40 responses with your profile as {occupation}.",
+    "resultsAiLoadingTitle": "We are preparing your personalized interpretation…",
+    "resultsAiLoadingText": "Connecting the calculated ranking with your career stage and chosen language.",
     "resultsAiTitle": "Your personalized guidance",
-    "resultsAiSubtitle": "Analysis Based on Your Profile (age {age}, {occupation})",
+    "resultsAiSubtitle": "A guidance-oriented reading based on the instrument result",
     "resultsFrictionTitle": "Potential points of friction",
     "resultsEcosystemTitle": "Your natural ecosystem",
     "resultsClosingTitle": "Would you prefer to explore your career and next steps with professional guidance?",
     "resultsClosingText": "If you are navigating a decision, a change, or a period of uncertainty, Senda's individual guidance offers a space to explore your motivations, revisit your career story, and build possible next steps.",
     "resultsClosingCta": "Explore individual guidance",
-    "resultsRestart": "Restart Assessment",
-    "authModalTitle": "Your results are ready",
-    "authModalDescription": "Sign in to save your progress and revisit your Career Anchor result whenever you need it.",
+    "resultsRestart": "Read my result again",
+    "authModalTitle": "Save your journey from the start",
+    "authModalDescription": "Sign in with Google before starting to protect your single attempt, save progress, and revisit your result.",
     "authGoogle": "Sign in with Google",
-    "authLinkedin": "Sign in with LinkedIn",
+    "authLinkedin": "Sign-in unavailable",
     "authNote": "Registration is secure and allows us to store your results for future sessions.",
-    "calculateError": "We couldn't calculate your dominant anchor. Restart the test and try again.",
-    "analyzeRequestError": "We couldn't generate the diagnostic.",
+    "calculateError": "We couldn't calculate your primary anchor. Keep this screen open and try again.",
+    "analyzeRequestError": "We couldn't generate the guidance-oriented reading.",
     "analysisUnavailable": "We couldn't generate your personalized feedback right now, but you can still review the complete ranking.",
-    "introLead": "A warm, clear starting point for understanding what your career needs in order to feel aligned.",
-    "introBlocksTitle": "40 statements in one view",
-    "introBlocksText": "Move through them at your own pace and review any response before continuing.",
+    "introLead": "A guided pause to recognize which values, motivations, and capabilities carry the most weight when you choose, sustain, or change a job.",
+    "introProblemTitle": "When a career decision does not quite add up",
+    "introProblemParagraph1": "You may be facing a change, an opportunity, or a period of strain and still be unsure which criterion should guide your next step. Sometimes an option makes sense on paper but does not feel consistent with what you currently need from work.",
+    "introProblemParagraph2": "This test helps you look beneath the immediate decision: what you seek to preserve, which conditions support your engagement, and which motivations deserve attention before you choose.",
+    "introTheoryTitle": "What career anchors are",
+    "introTheoryText": "Edgar Schein proposed career anchors as a way to explore the combination of perceived capabilities, motivations, and values that takes shape through professional experience. The model includes eight possible orientations, all of which may be present with different relative weight.",
+    "introTheoryClosing": "The result does not put you in a box; it offers a map for asking better questions about your journey.",
+    "introBenefitsTitle": "What can it help you understand?",
+    "introBenefitsLead": "The interpretation offers practical criteria without turning them into a prescription.",
+    "introBenefit1Title": "Core motivations",
+    "introBenefit1Text": "Recognize what supports your engagement beyond a job title or industry.",
+    "introBenefit2Title": "Working conditions",
+    "introBenefit2Text": "Notice which environments help you use your capabilities more fully.",
+    "introBenefit3Title": "Decision criteria",
+    "introBenefit3Text": "Compare alternatives using priorities that are clearer and more personal.",
+    "introBenefit4Title": "Signs of strain",
+    "introBenefit4Text": "Identify which parts of your current experience may be receiving too little space.",
+    "introBenefit5Title": "Questions for moving forward",
+    "introBenefit5Text": "Turn your result into reflection and exploratory next steps.",
+    "introMomentTitle": "A snapshot of your current professional moment",
+    "introMomentText": "Answer from what you think and feel today. Priorities can shift with experience and context; this reading records the moment in which you complete it and remains available in your profile.",
+    "introOutcomeTitle": "What you will receive",
+    "introOutcome1": "A ranking of all eight anchors in the model.",
+    "introOutcome2": "A detailed reading of the motivations with the greatest weight.",
+    "introOutcome3": "Reflection questions connected to your result.",
+    "introOutcome4": "An optional connection to your current professional situation.",
+    "introOutcome5": "The option to revisit the result from your Senda profile.",
+    "introExpectTitle": "Before you begin",
+    "introFactStatements": "40 statements",
+    "introFactTime": "10–15 minutes",
+    "introFactReading": "Personalized feedback",
+    "introFactPrivate": "Private result",
+    "introOneAttemptTitle": "One free attempt per account",
+    "introOneAttemptText": "A free account can complete the test once. You may pause, resume, and review answers before confirming; afterward, the saved result remains available, but the test cannot be restarted.",
+    "introPrivacyTitle": "Privacy and saving",
+    "introPrivacyText": "Your responses are progressively saved, and the private result is visible only through your account. To enrich the reading, the AI provider receives only the server-calculated ranking, optional career stage, and language—not your responses, name, or email. If the service fails, a deterministic interpretation is used. Senda receives your summary only if you later choose to share it with explicit consent.",
+    "introScopeTitle": "Scope of this tool",
+    "introScopeText": "There are no right or wrong answers. This is not an employment evaluation, does not measure performance or ability, is not a clinical diagnosis, and does not determine a profession, job, or decision. It is an orientation tool for gaining perspective, not for putting you in a box or replacing a conversation with a qualified professional when you need contextual guidance.",
+    "introLoginCta": "Sign in with Google to continue",
+    "introUnavailableCta": "Saving is currently unavailable",
+    "introUnavailableNote": "We cannot verify your account or saved results right now. Please try again later.",
+    "introSignedIn": "You will complete it with {email}.",
+    "introAccountNote": "To protect the single attempt, progress, and result, you need to sign in with your Google account.",
+    "readyEyebrow": "Preparation",
+    "readyTitle": "Before you answer",
+    "readyLead": "Find a quiet moment. The best answer is the one that represents your experience today.",
+    "resumeTitle": "Your progress is still saved",
+    "resumeLead": "You can resume at statement {statement} and review any earlier answer before confirming.",
+    "readyInstruction1": "Set aside approximately 10 to 15 minutes and, if possible, avoid interruptions.",
+    "readyInstruction2": "There are no right or wrong answers: respond from what is true for you today, not from what you think should be true.",
+    "readyInstruction3": "You will see one statement per screen and use a scale from 1 to 6.",
+    "readyInstruction4": "You can move forward, go back, and change answers until final confirmation.",
+    "readyInstruction5": "Every response is saved automatically to your account.",
+    "readyInstruction6": "After the 40 statements, you will review them again and choose exactly 3 as your final selection.",
+    "readyPrivacy": "Your progress is private. If your connection drops, we will let you know and you can retry saving without losing what remains on screen.",
+    "privacyLink": "Read the privacy policy",
+    "readyBack": "Back to the introduction",
+    "readyCta": "Start the test",
+    "resumeCta": "Resume at statement {statement}",
+    "completedTitle": "This journey is already part of your profile",
+    "completedText": "You completed your single free attempt. Your result is saved, so you can return to it whenever you need without repeating the test.",
+    "completedDate": "Completed on {date}.",
+    "completedCta": "View my result again",
+    "completedProfileCta": "Go to my profile",
+    "completedPrivate": "The result is private and associated with your account.",
+    "statementProgress": "Statement {current} of {total}",
+    "statementPrompt": "Indicate how often this statement represents your current professional experience.",
+    "statementScaleLabel": "Choose a response from 1, Never, to 6, Always",
+    "scaleOption": "{value} out of 6: {label}",
+    "statementBack": "Previous",
+    "statementNext": "Next",
+    "statementFinish": "Complete the statements",
+    "statementFinishShort": "Complete",
+    "milestoneTen": "You have found the rhythm. Keep answering from your real experience.",
+    "milestoneTwenty": "You are halfway through. Your progress is saved.",
+    "milestoneThirty": "Not far to go. Keep the same criterion and avoid overanalyzing each response.",
+    "milestoneAlmostDone": "Final statements. Next, you will review all 40 and choose only 3.",
+    "saveSaving": "Saving…",
+    "saveSaved": "Progress saved",
+    "saveOffline": "You are offline. We will keep the changes on this screen until saving can be retried.",
+    "saveError": "We could not save the latest change. It remains on this screen so you can retry.",
+    "saveRetry": "Retry saving",
+    "saveConflict": "This journey was updated in another tab. Reload the saved progress before continuing so newer changes are not replaced.",
+    "saveReload": "Reload progress",
+    "transitionEyebrow": "Final selection · 1–2 minutes",
+    "transitionText": "You have completed all 40 statements. Before building your result, you will review them and choose exactly 3: the ones that feel especially representative of you today.",
+    "transitionInstructionTitle": "How to choose",
+    "transitionInstructionText": "Do not look for the highest ratings or an ideal combination. Choose the three that feel most true to you today.",
+    "transitionTimeTitle": "How this affects the result",
+    "transitionTimeText": "Each selection adds extra weight to the calculation. You will see your original response before choosing.",
+    "transitionReview": "Review statement 40",
+    "selectionEyebrow": "Final step",
+    "selectionTitle": "Choose the 3 statements that represent you most today",
+    "selectionDescription": "Review all 40 across four pages. Your original response appears under each statement so you can choose with context.",
+    "selectionCount": "{count} of 3 selected",
+    "selectionCountShort": "{count} / 3",
+    "selectionPage": "Page {current} of {total}",
+    "selectionStatement": "Statement {number}",
+    "selectionOriginalResponse": "Your original response: {value} · {label}",
+    "scaleResponse1": "Never",
+    "scaleResponse2": "Almost never",
+    "scaleResponse3": "Sometimes",
+    "scaleResponse4": "Often",
+    "scaleResponse5": "Almost always",
+    "scaleResponse6": "Always",
+    "selectionBackToTransition": "Back to the instructions",
+    "selectionBackShort": "How to choose",
+    "selectionPrevious": "Previous page",
+    "selectionPreviousShort": "Previous",
+    "selectionNext": "Next page",
+    "selectionNextShort": "Next",
+    "selectionFinish": "Confirm and view my result",
+    "selectionFinishShort": "View result",
+    "selectionPreparing": "Saving your attempt and preparing your result…",
+    "selectionPreparingShort": "Preparing…",
+    "processingTitle": "We are confirming your result",
+    "processingText": "Finalization is already in progress. Your single attempt remains protected, and we will not create a second result. You can safely retry confirmation.",
+    "processingRetryCta": "Retry confirmation",
+    "processingUnavailable": "We could not find all the information required to recover confirmation. Reload the page or contact the Senda team.",
+    "processingContactCta": "Go to contact",
+    "completionStillProcessing": "Confirmation is still in progress. Wait a moment and try again; your responses remain saved.",
+    "introBlocksTitle": "40 statements, one at a time",
+    "introBlocksText": "Move forward, go back, and review responses freely before final confirmation.",
     "introSessionTitle": "Secure session",
     "introSessionText": "Your answers are saved to your account so you can review them later.",
     "introTakeawaysTitle": "What you'll take away",
@@ -335,7 +456,7 @@
     "introTakeawayTopThree": "An in-depth reading of your 3 strongest anchors.",
     "introTakeawayPersonalized": "Personalized feedback grounded in your current context.",
     "introEstimatedTitle": "Estimated time",
-    "introEstimatedText": "8 to 12 minutes, including a final selection of 3 important statements.",
+    "introEstimatedText": "10 to 15 minutes, including a final selection of 3 important affirmations.",
     "introPaceNote": "Take all the time you need — there's no rush. There are no right or wrong answers, so answer honestly, based on what you think and feel today. This matters for you, and every answer counts.",
     "questionsBlock": "First part · 40 statements",
     "questionsRange": "Answer all 40 statements at your own pace",
@@ -346,20 +467,20 @@
     "questionsIncomplete": "Complete all 40 statements to continue to the final selection.",
     "questionsComplete": "First part complete. You can now continue.",
     "transitionReminder": "You don't need to remember your earlier ratings—choose what feels most true to you today.",
-    "bonusRange": "Choose your 3 most important statements",
+    "bonusRange": "Choose your 3 most important affirmations",
     "bonusSelectedLabel": "Selected",
     "bonusSelectionComplete": "You have selected 3. You can change them before viewing the result.",
     "bonusPreviousBlock": "Previous block",
     "bonusNextBlock": "Next block",
     "responsesSaved": "Because you are already signed in, this attempt is stored securely in your account so you can review it later.",
     "responsesWillBeSaved": "Because you are already signed in, this attempt will be stored securely in your account when you finish so you can review it later.",
-    "responsesNotSaved": "The result remains in this browser, but this attempt was not saved to your account.",
+    "responsesNotSaved": "We could not verify saving to your account. Keep this screen open and retry when your connection returns.",
     "recordingAttempt": "Saving your attempt…",
-    "completionUnavailable": "Your result is available, but we couldn't save this attempt to your account. You can review it now and try again later.",
-    "responsesLocalOnly": "Your answers are calculated on this device and are not sent to any server.",
-    "responsesPrivate": "You can see the complete result without signing in or sharing personal details. Answers are sent only when you voluntarily request the initial interpretation.",
-    "prequizPrivacy": "Your information is used to personalize and save the diagnostic in your account.",
-    "prequizPrivacyWithEmail": "Your information is used to personalize and save the diagnostic in your account ({email}).",
+    "completionUnavailable": "We couldn't confirm and save your result. Your answers are still on screen: check your connection and try again.",
+    "responsesLocalOnly": "Your responses are securely sent to the server to save progress and calculate the result associated with your account.",
+    "responsesPrivate": "Your answers and result remain associated with your private account. They are not published or shared with other people.",
+    "prequizPrivacy": "Your information is used to contextualize and save the guidance-oriented reading in your account.",
+    "prequizPrivacyWithEmail": "Your information is used to contextualize and save the guidance-oriented reading in your account ({email}).",
     "resultsRankingDescription": "This order reflects the relative weight of each anchor based on your answers and your three final selections.",
     "resultsTopThreeBadge": "Your priorities",
     "resultsTopThreeTitle": "These are your 3 primary anchors",
@@ -370,8 +491,18 @@
     "occupationUnknown": "not specified",
     "resultsDisclaimer": "This result is for orientation only. It is not a clinical diagnosis or a definitive instruction and can be complemented by a professional conversation.",
     "resultsTiePrimary": "Shared primary anchor",
-    "resultsTiePrimaryText": "Your answers show a shared primary result between {names}. Read this combination as a productive tension to explore, not as a tie the test should resolve for you.",
+    "resultsTiePrimaryText": "Your answers show a shared primary result between {names}. Read this combination as a set of motivations to explore, not as a tie the test should resolve for you.",
     "resultsTieSecondary": "Secondary anchors with equal weight",
+    "resultAnchorLens": {
+      "technical": "In this snapshot, deepening expertise, solving through a specialty, and continuing to build mastery seem to carry weight. When comparing options, notice how much room they offer to learn and use that knowledge, without assuming this excludes leadership or other interests.",
+      "management": "The wish to integrate perspectives, take responsibility, and influence broad decisions appears strongly. You can explore where that participation gives you energy and which form of leadership fits your current moment.",
+      "autonomy": "Having room to organize how you work and exercise your own judgment seems important today. Autonomy can take different forms—time, methods, or decisions—and coexist with collaboration and clear agreements.",
+      "security": "Predictability, continuity, and building on dependable foundations seem to have particular weight today. This does not imply standing still: it can help you identify the conditions that let you navigate change with sustainable safeguards.",
+      "entrepreneurial": "A motivation to create, put ideas into motion, and recognize your own imprint in what is built appears here. It does not require starting a business or taking a leap into uncertainty; it can emerge in an independent project or inside an organization that makes room for initiative.",
+      "service": "The connection between work, values, and contribution seems especially relevant. You can notice which kind of impact matters to you, for whom, and how you want it to inform decisions, without requiring every work experience to serve a single cause.",
+      "challenge": "Complex problems, novelty, and opportunities to test your abilities seem motivating today. It may help to distinguish the challenges that energize you from those that only add pressure or strain.",
+      "lifestyle": "The integration of work with other parts of your life appears as an important criterion. Instead of looking for one fixed formula for balance, you can explore which rhythms, boundaries, and degrees of flexibility make your current experience sustainable."
+    },
     "contextTitle": "Connect the result with your current moment",
     "contextDescription": "This optional context helps build a more situated interpretation. It does not change your anchor calculation.",
     "contextLabel": "What professional situation are you navigating?",
@@ -405,10 +536,12 @@
     "preferredEither": "Either one",
     "messageLabel": "Message",
     "consentLabel": "I agree that Senda may receive these details and the result summary solely to respond to me.",
+    "privacyLink": "Read the privacy policy",
     "submit": "Share my result",
     "submitting": "Sending…",
     "success": "The server accepted the submission. Your request was sent for Senda to review.",
     "error": "We couldn't send the result. Your details remain on screen so you can review them or try again.",
+    "validationError": "Review the marked fields and complete the required information before submitting.",
     "optional": "optional"
   },
   "CareerAnchorIntro": {
@@ -555,7 +688,11 @@
   },
   "TransitionsInterestForm": {
     "labels": { "name": "Name", "phone": "Phone", "email": "Email" },
-    "placeholders": { "name": "Your name", "phone": "Your phone", "email": "you@email.com" },
+    "placeholders": {
+      "name": "Your name",
+      "phone": "Your phone",
+      "email": "you@email.com"
+    },
     "consent": "I agree that Senda uses this data to contact me about this service. See",
     "privacyLink": "privacy policy",
     "submit": "I want them to write to me",
@@ -757,10 +894,26 @@
       "title": "Four movements that organize the journey.",
       "intro": "The depth and tools change with the situation and proposal you choose, while the thread of the work remains consistent.",
       "items": {
-        "listen": { "number": "01", "title": "Listen", "description": "We put the question, its context, and what you need to protect into words." },
-        "map": { "number": "02", "title": "Map", "description": "We recognize experiences, motivations, strengths, constraints, and possibilities." },
-        "define": { "number": "03", "title": "Define", "description": "We build criteria and a possible direction connected to your reality." },
-        "move": { "number": "04", "title": "Move", "description": "We turn that direction into decisions, conversations, and next steps. The decision is always yours." }
+        "listen": {
+          "number": "01",
+          "title": "Listen",
+          "description": "We put the question, its context, and what you need to protect into words."
+        },
+        "map": {
+          "number": "02",
+          "title": "Map",
+          "description": "We recognize experiences, motivations, strengths, constraints, and possibilities."
+        },
+        "define": {
+          "number": "03",
+          "title": "Define",
+          "description": "We build criteria and a possible direction connected to your reality."
+        },
+        "move": {
+          "number": "04",
+          "title": "Move",
+          "description": "We turn that direction into decisions, conversations, and next steps. The decision is always yours."
+        }
       }
     },
     "tools": {
@@ -790,9 +943,21 @@
       "description": "We bring together complementary perspectives on study, work, talent, and professional strategy. We do not offer ready-made answers: we build better questions, personal criteria, and sustainable possibilities."
     },
     "principles": {
-      "multidisciplinary": { "number": "01", "title": "A multidisciplinary perspective", "description": "We integrate guidance, talent, career strategy, and an understanding of the world of work." },
-      "human": { "number": "02", "title": "Human support", "description": "Every journey includes real conversations and space to think without pressure." },
-      "rigor": { "number": "03", "title": "Method and rigor", "description": "Tools provide information; judgment is built with you and never decides for you." }
+      "multidisciplinary": {
+        "number": "01",
+        "title": "A multidisciplinary perspective",
+        "description": "We integrate guidance, talent, career strategy, and an understanding of the world of work."
+      },
+      "human": {
+        "number": "02",
+        "title": "Human support",
+        "description": "Every journey includes real conversations and space to think without pressure."
+      },
+      "rigor": {
+        "number": "03",
+        "title": "Method and rigor",
+        "description": "Tools provide information; judgment is built with you and never decides for you."
+      }
     },
     "closing": {
       "title": "You can tell us what is changing.",
@@ -836,10 +1001,22 @@
       "paragraph2": "Thousands of interviews, working alongside professionals from different backgrounds, and the experience of accompanying individual and collective processes gradually shaped a question that now runs through Senda.",
       "paragraph3": "That question gave rise to the project and continues to guide how we work. Tania is now Senda's spokesperson: the person who communicates our outlook, brings forward the conversations we want to open about work and professional transitions, and coordinates the work of the professionals who are part of each process.",
       "highlights": [
-        { "headline": "+15 years", "description": "accompanying people, teams, and organizations" },
-        { "headline": "Thousands of interviews", "description": "and processes tied to talent development" },
-        { "headline": "Science, technology, and education", "description": "as part of our journey" },
-        { "headline": "People, teams, and organizations", "description": "going through processes of change and transformation" }
+        {
+          "headline": "+15 years",
+          "description": "accompanying people, teams, and organizations"
+        },
+        {
+          "headline": "Thousands of interviews",
+          "description": "and processes tied to talent development"
+        },
+        {
+          "headline": "Science, technology, and education",
+          "description": "as part of our journey"
+        },
+        {
+          "headline": "People, teams, and organizations",
+          "description": "going through processes of change and transformation"
+        }
       ]
     },
     "team": {
@@ -879,13 +1056,34 @@
     },
     "intro": "If your question is not here, write to us. A brief conversation can help locate your situation more clearly.",
     "items": {
-      "choose": { "question": "How do I know which proposal may support my moment?", "answer": "The six proposals begin with different situations: exploring a direction, changing jobs, developing a project, thinking through leadership, resolving a focused challenge, or choosing education. If you are still unsure, the initial orientation helps identify a starting point without asking for personal data." },
-      "compass": { "question": "Is Compass a test that tells me which degree to choose?", "answer": "No. It includes exploration tools, but the process centers on conversation, researching alternatives, building criteria, and recognizing a direction of your own. No result decides for you." },
-      "newStage": { "question": "What do the adult proposals have in common?", "answer": "They all connect the current situation with trajectory, identity, personal criteria, and context. The depth and tools change according to the question you need to work on." },
-      "format": { "question": "Are meetings virtual or in person?", "answer": "Meetings take place online so you can sustain the process from wherever you are. Any available in-person alternative is discussed before you begin." },
-      "duration": { "question": "How long does each journey take?", "answer": "The duration depends on the journey and is discussed before you begin. The stages follow a clear sequence, with room to adapt them to each person's particular moment." },
-      "diagnostic": { "question": "How does the initial orientation work?", "answer": "It is a brief, non-clinical questionnaire about your situation, what you need, and how urgent the change feels. The result appears immediately, without login or personal data, and does not replace a professional conversation." },
-      "results": { "question": "What will I receive at the end?", "answer": "You finish with a personalized synthesis, decision criteria, and a roadmap. The specific materials depend on the journey and the work completed during the process." }
+      "choose": {
+        "question": "How do I know which proposal may support my moment?",
+        "answer": "The six proposals begin with different situations: exploring a direction, changing jobs, developing a project, thinking through leadership, resolving a focused challenge, or choosing education. If you are still unsure, the initial orientation helps identify a starting point without asking for personal data."
+      },
+      "compass": {
+        "question": "Is Compass a test that tells me which degree to choose?",
+        "answer": "No. It includes exploration tools, but the process centers on conversation, researching alternatives, building criteria, and recognizing a direction of your own. No result decides for you."
+      },
+      "newStage": {
+        "question": "What do the adult proposals have in common?",
+        "answer": "They all connect the current situation with trajectory, identity, personal criteria, and context. The depth and tools change according to the question you need to work on."
+      },
+      "format": {
+        "question": "Are meetings virtual or in person?",
+        "answer": "Meetings take place online so you can sustain the process from wherever you are. Any available in-person alternative is discussed before you begin."
+      },
+      "duration": {
+        "question": "How long does each journey take?",
+        "answer": "The duration depends on the journey and is discussed before you begin. The stages follow a clear sequence, with room to adapt them to each person's particular moment."
+      },
+      "diagnostic": {
+        "question": "How does the initial orientation work?",
+        "answer": "It is a brief, non-clinical questionnaire about your situation, what you need, and how urgent the change feels. The result appears immediately, without login or personal data, and does not replace a professional conversation."
+      },
+      "results": {
+        "question": "What will I receive at the end?",
+        "answer": "You finish with a personalized synthesis, decision criteria, and a roadmap. The specific materials depend on the journey and the work completed during the process."
+      }
     },
     "closing": {
       "title": "Would you like to talk about your situation?",
@@ -923,13 +1121,34 @@
         "objective": "Build a possible direction without discarding your trajectory, bringing together identity, experience, interests, context, and real alternatives.",
         "forWhom": "For adults who feel their current work no longer represents them but cannot yet recognize where to move.",
         "stages": {
-          "identity": { "title": "Revisit professional identity", "description": "We explore how you define yourself, what you need to preserve, and which part of your identity is asking for movement." },
-          "interests": { "title": "Recognize interests", "description": "We identify activities, subjects, and problems that sustain curiosity and energy." },
-          "experiences": { "title": "Recover meaningful experiences", "description": "We read moments of learning, enjoyment, contribution, and tension beyond job titles." },
-          "capital": { "title": "Map professional capital", "description": "We make visible the knowledge, capabilities, relationships, and resources you have built." },
-          "alternatives": { "title": "Open alternatives", "description": "We formulate possible scenarios and questions for exploring them without rushing a choice." },
-          "criteria": { "title": "Build criteria", "description": "We bring together desires, responsibilities, boundaries, context, and real decision conditions." },
-          "direction": { "title": "Prioritize a direction", "description": "We turn the exploration into a direction hypothesis and next steps for reality testing." }
+          "identity": {
+            "title": "Revisit professional identity",
+            "description": "We explore how you define yourself, what you need to preserve, and which part of your identity is asking for movement."
+          },
+          "interests": {
+            "title": "Recognize interests",
+            "description": "We identify activities, subjects, and problems that sustain curiosity and energy."
+          },
+          "experiences": {
+            "title": "Recover meaningful experiences",
+            "description": "We read moments of learning, enjoyment, contribution, and tension beyond job titles."
+          },
+          "capital": {
+            "title": "Map professional capital",
+            "description": "We make visible the knowledge, capabilities, relationships, and resources you have built."
+          },
+          "alternatives": {
+            "title": "Open alternatives",
+            "description": "We formulate possible scenarios and questions for exploring them without rushing a choice."
+          },
+          "criteria": {
+            "title": "Build criteria",
+            "description": "We bring together desires, responsibilities, boundaries, context, and real decision conditions."
+          },
+          "direction": {
+            "title": "Prioritize a direction",
+            "description": "We turn the exploration into a direction hypothesis and next steps for reality testing."
+          }
         },
         "takeaways": {
           "identity": "A broader reading of your professional identity.",
@@ -947,14 +1166,38 @@
         "objective": "Build an organized career transition with clear direction, coherent positioning, and sustainable actions.",
         "forWhom": "For people who want to change jobs, functions, employers, or industries and need to prepare that movement without artificial guarantees.",
         "stages": {
-          "trajectory": { "title": "Read the trajectory", "description": "We recognize experiences, achievements, learning, and patterns relevant to the change." },
-          "direction": { "title": "Define direction", "description": "We clarify which roles, problems, environments, or industries are worth exploring." },
-          "value": { "title": "Build a value proposition", "description": "We translate experience and capabilities into clear, relevant contributions." },
-          "narrative": { "title": "Organize the narrative", "description": "We articulate continuity and change without denying your history or performing a false new identity." },
-          "profile": { "title": "Align résumé and profile", "description": "We review materials so they express direction, evidence, and judgment." },
-          "search": { "title": "Design the search", "description": "We choose channels, organizations, networks, and actions that fit the objective." },
-          "conversations": { "title": "Prepare conversations", "description": "We work on outreach, interviews, and questions for assessing opportunities." },
-          "movement": { "title": "Plan the movement", "description": "We organize priorities, timing, follow-up, and possible adjustments." }
+          "trajectory": {
+            "title": "Read the trajectory",
+            "description": "We recognize experiences, achievements, learning, and patterns relevant to the change."
+          },
+          "direction": {
+            "title": "Define direction",
+            "description": "We clarify which roles, problems, environments, or industries are worth exploring."
+          },
+          "value": {
+            "title": "Build a value proposition",
+            "description": "We translate experience and capabilities into clear, relevant contributions."
+          },
+          "narrative": {
+            "title": "Organize the narrative",
+            "description": "We articulate continuity and change without denying your history or performing a false new identity."
+          },
+          "profile": {
+            "title": "Align résumé and profile",
+            "description": "We review materials so they express direction, evidence, and judgment."
+          },
+          "search": {
+            "title": "Design the search",
+            "description": "We choose channels, organizations, networks, and actions that fit the objective."
+          },
+          "conversations": {
+            "title": "Prepare conversations",
+            "description": "We work on outreach, interviews, and questions for assessing opportunities."
+          },
+          "movement": {
+            "title": "Plan the movement",
+            "description": "We organize priorities, timing, follow-up, and possible adjustments."
+          }
         },
         "takeaways": {
           "trajectory": "A strategic reading of your trajectory.",
@@ -973,15 +1216,42 @@
         "objective": "Turn an idea or project into clearer decisions about scope, audience, value proposition, priorities, and possible tests.",
         "forWhom": "For people with an idea, venture, independent practice, or professional project who need to shape it, revisit its viability, or decide how to continue.",
         "stages": {
-          "identity": { "title": "Connect project and identity", "description": "We explore what the project expresses and the place you want it to hold in your professional life." },
-          "scope": { "title": "Define scope", "description": "We clarify what is included, what is not, and which version is possible now." },
-          "audience": { "title": "Understand audiences", "description": "We identify concrete people, needs, and contexts without inventing demand." },
-          "value": { "title": "Formulate the value proposition", "description": "We clarify what the project contributes and why it may matter." },
-          "priorities": { "title": "Organize priorities", "description": "We separate what is important from what is optional and what comes now from what comes later." },
-          "decisions": { "title": "Name pending decisions", "description": "We make options, dependencies, risks, and criteria visible." },
-          "structure": { "title": "Build structure", "description": "We organize resources, activities, and minimum conditions for moving forward." },
-          "reality": { "title": "Test against reality", "description": "We design small tests to learn before committing more resources." },
-          "nextSteps": { "title": "Define next steps", "description": "We close with bounded actions, open questions, and review points." }
+          "identity": {
+            "title": "Connect project and identity",
+            "description": "We explore what the project expresses and the place you want it to hold in your professional life."
+          },
+          "scope": {
+            "title": "Define scope",
+            "description": "We clarify what is included, what is not, and which version is possible now."
+          },
+          "audience": {
+            "title": "Understand audiences",
+            "description": "We identify concrete people, needs, and contexts without inventing demand."
+          },
+          "value": {
+            "title": "Formulate the value proposition",
+            "description": "We clarify what the project contributes and why it may matter."
+          },
+          "priorities": {
+            "title": "Organize priorities",
+            "description": "We separate what is important from what is optional and what comes now from what comes later."
+          },
+          "decisions": {
+            "title": "Name pending decisions",
+            "description": "We make options, dependencies, risks, and criteria visible."
+          },
+          "structure": {
+            "title": "Build structure",
+            "description": "We organize resources, activities, and minimum conditions for moving forward."
+          },
+          "reality": {
+            "title": "Test against reality",
+            "description": "We design small tests to learn before committing more resources."
+          },
+          "nextSteps": {
+            "title": "Define next steps",
+            "description": "We close with bounded actions, open questions, and review points."
+          }
         },
         "takeaways": {
           "coherence": "A reading of coherence between project and identity.",
@@ -1000,15 +1270,42 @@
         "objective": "Build an integrated reading of person, leadership role, and business to make clearer, more sustainable decisions.",
         "forWhom": "For owners, partners, managers, leaders, or team heads who need to think through tensions, decisions, or next movements.",
         "stages": {
-          "solitude": { "title": "Name decision-making solitude", "description": "We open a confidential space for organizing what is difficult to think through inside daily structures." },
-          "role": { "title": "Revisit the role", "description": "We clarify responsibilities, expectations, and the position you currently hold." },
-          "boundaries": { "title": "Work on boundaries", "description": "We distinguish what is yours, what can be delegated, and what needs a conversation." },
-          "conversations": { "title": "Prepare conversations", "description": "We design difficult conversations with clarity of purpose and context." },
-          "organization": { "title": "Read the organization", "description": "We observe dynamics, capabilities, tensions, and dependencies that shape the decision." },
-          "context": { "title": "Integrate current conditions", "description": "We connect market, constraints, timing, and possible scenarios." },
-          "strategy": { "title": "Build strategy", "description": "We organize priorities and decisions without separating strategy from those who must sustain it." },
-          "continuity": { "title": "Think through continuity", "description": "We explore succession, role changes, growth, or closure of stages as appropriate." },
-          "integration": { "title": "Integrate person and business", "description": "We close with criteria and next movements that make sense across both dimensions." }
+          "solitude": {
+            "title": "Name decision-making solitude",
+            "description": "We open a confidential space for organizing what is difficult to think through inside daily structures."
+          },
+          "role": {
+            "title": "Revisit the role",
+            "description": "We clarify responsibilities, expectations, and the position you currently hold."
+          },
+          "boundaries": {
+            "title": "Work on boundaries",
+            "description": "We distinguish what is yours, what can be delegated, and what needs a conversation."
+          },
+          "conversations": {
+            "title": "Prepare conversations",
+            "description": "We design difficult conversations with clarity of purpose and context."
+          },
+          "organization": {
+            "title": "Read the organization",
+            "description": "We observe dynamics, capabilities, tensions, and dependencies that shape the decision."
+          },
+          "context": {
+            "title": "Integrate current conditions",
+            "description": "We connect market, constraints, timing, and possible scenarios."
+          },
+          "strategy": {
+            "title": "Build strategy",
+            "description": "We organize priorities and decisions without separating strategy from those who must sustain it."
+          },
+          "continuity": {
+            "title": "Think through continuity",
+            "description": "We explore succession, role changes, growth, or closure of stages as appropriate."
+          },
+          "integration": {
+            "title": "Integrate person and business",
+            "description": "We close with criteria and next movements that make sense across both dimensions."
+          }
         },
         "takeaways": {
           "role": "A clearer reading of your role.",
@@ -1026,12 +1323,30 @@
         "objective": "Turn a concrete professional problem into a grounded decision and realistic action plan.",
         "forWhom": "For people who recognize a defined challenge and do not need to work through every dimension of a broader transition.",
         "stages": {
-          "problem": { "title": "Define the problem", "description": "We agree on what needs to be resolved, what stays outside, and why it matters now." },
-          "information": { "title": "Gather information", "description": "We identify data, voices, and constraints relevant to the decision." },
-          "alternatives": { "title": "Build alternatives", "description": "We avoid a false binary and formulate possible options." },
-          "criteria": { "title": "Establish criteria", "description": "We organize what the decision must protect and the commitments it involves." },
-          "decision": { "title": "Take a position", "description": "We prioritize an alternative while recognizing limits and uncertainty." },
-          "action": { "title": "Design the plan", "description": "We translate the decision into actions, responsibilities, timing, and review." }
+          "problem": {
+            "title": "Define the problem",
+            "description": "We agree on what needs to be resolved, what stays outside, and why it matters now."
+          },
+          "information": {
+            "title": "Gather information",
+            "description": "We identify data, voices, and constraints relevant to the decision."
+          },
+          "alternatives": {
+            "title": "Build alternatives",
+            "description": "We avoid a false binary and formulate possible options."
+          },
+          "criteria": {
+            "title": "Establish criteria",
+            "description": "We organize what the decision must protect and the commitments it involves."
+          },
+          "decision": {
+            "title": "Take a position",
+            "description": "We prioritize an alternative while recognizing limits and uncertainty."
+          },
+          "action": {
+            "title": "Design the plan",
+            "description": "We translate the decision into actions, responsibilities, timing, and review."
+          }
         },
         "takeaways": {
           "problem": "A clearly defined problem.",
@@ -1048,15 +1363,42 @@
         "objective": "Build an informed learning decision that makes sense within your trajectory, real possibilities, and the professional direction you want to explore.",
         "forWhom": "For adults considering a new degree, master's, postgraduate program, certification, technical course, specialization, or conversion of existing knowledge.",
         "stages": {
-          "trajectory": { "title": "Read the trajectory", "description": "We recognize knowledge, experience, and questions shaping the learning decision." },
-          "interests": { "title": "Clarify interests", "description": "We distinguish curiosity, professional need, desire for change, and external pressure." },
-          "direction": { "title": "Connect with direction", "description": "We ask which professional movement the learning should enable or support." },
-          "options": { "title": "Explore options", "description": "We compare formats, content, institutions, and learning alternatives." },
-          "timeInvestment": { "title": "Review time and investment", "description": "We integrate availability, cost, effort, and conditions for sustaining it." },
-          "technology": { "title": "Consider technological change", "description": "We read how relevant knowledge, roles, and forms of work may change." },
-          "comparison": { "title": "Build comparison criteria", "description": "We organize evidence, relevance, quality, and fit with your reality." },
-          "decision": { "title": "Decide with perspective", "description": "We prioritize an option or recognize what remains to investigate." },
-          "plan": { "title": "Plan the next step", "description": "We define actions, conversations, and review points without asking learning to promise what it cannot deliver." }
+          "trajectory": {
+            "title": "Read the trajectory",
+            "description": "We recognize knowledge, experience, and questions shaping the learning decision."
+          },
+          "interests": {
+            "title": "Clarify interests",
+            "description": "We distinguish curiosity, professional need, desire for change, and external pressure."
+          },
+          "direction": {
+            "title": "Connect with direction",
+            "description": "We ask which professional movement the learning should enable or support."
+          },
+          "options": {
+            "title": "Explore options",
+            "description": "We compare formats, content, institutions, and learning alternatives."
+          },
+          "timeInvestment": {
+            "title": "Review time and investment",
+            "description": "We integrate availability, cost, effort, and conditions for sustaining it."
+          },
+          "technology": {
+            "title": "Consider technological change",
+            "description": "We read how relevant knowledge, roles, and forms of work may change."
+          },
+          "comparison": {
+            "title": "Build comparison criteria",
+            "description": "We organize evidence, relevance, quality, and fit with your reality."
+          },
+          "decision": {
+            "title": "Decide with perspective",
+            "description": "We prioritize an option or recognize what remains to investigate."
+          },
+          "plan": {
+            "title": "Plan the next step",
+            "description": "We define actions, conversations, and review points without asking learning to promise what it cannot deliver."
+          }
         },
         "takeaways": {
           "criteria": "Your own criteria for assessing learning options.",

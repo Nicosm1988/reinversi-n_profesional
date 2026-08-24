@@ -9,14 +9,14 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 - next-intl `^4.8.3` — locales `es` (default) y `en`, `localePrefix: "as-needed"`, `localeDetection: false` (`routing.ts`).
 - Tailwind CSS `^3.4.1` + `tailwindcss-animate`, Framer Motion `^12`, Radix UI + shadcn/ui (`components.json`).
 - Supabase: `@supabase/ssr` + `@supabase/supabase-js`. Clientes separados en `lib/supabase/{server,client,admin,auth,config}.ts`.
-- Vercel AI SDK (`ai@^6`) + `@ai-sdk/openai` — patrón de referencia en `app/api/diagnostics/analyze/route.ts` (`generateObject()` con esquema Zod).
+- Vercel AI SDK (`ai@^6`) + `@ai-sdk/openai` — generación estructurada con Zod en `app/api/diagnostics/interpret/route.ts`.
 - React Hook Form `^7` + Zod `^4` para validación de formularios.
 - Rate limiting: `@upstash/ratelimit` + `@upstash/redis`.
 - Notificaciones: Sonner. Analytics: `@vercel/speed-insights`.
 
 **Estructura de rutas** (`app/`):
 - `app/[locale]/` — páginas canónicas: home, `transiciones-laborales/` con seis propuestas, `brujulas/`, `encontrar-mi-recorrido/`, `test-anclas-de-carrera/`, `laboratorio-narrativas-laborales-alternativas/`, `como-trabajamos/`, `equipo/`, `preguntas-frecuentes/`, `contacto/`, `login/`, `panel/`, `privacidad/` y `terminos/`; las rutas públicas anteriores permanecen solo como redirecciones permanentes.
-- `app/api/` — `contact` (SMTP y tres orígenes tipados), `diagnostics/interpret` (explicación pública sin PII, gpt-4o + fallback), `diagnostics/complete-public` (registro atómico del único intento autenticado de Anclas), `diagnostics/analyze` (flujo autenticado histórico), `diagnostics/save` (retirado, 410 Gone), `initial-diagnostic` (legado), `leads`, `health` (readiness estricta) y `health/live` (liveness sin dependencias).
+- `app/api/` — `contact` (SMTP y tres orígenes tipados), `diagnostics/progress` (autosave autenticado con revisión), `diagnostics/complete-public` (finalización atómica del único intento de Anclas), `diagnostics/interpret` (gpt-4o + fallback sobre el resultado guardado), `diagnostics/save` (retirado, 410 Gone), `initial-diagnostic` (legado), `leads`, `health` (readiness estricta) y `health/live` (liveness sin dependencias).
 - `app/auth/` — callback OAuth.
 - `app/robots.ts`, `app/sitemap.ts`, `app/globals.css` (variables HSL del sistema de diseño).
 
@@ -24,7 +24,7 @@ Estado verificado directamente contra el repositorio en este checkout. "Confirma
 
 **Dominio** (`lib/`): `data/`, `diagnostics/`, `http/`, `leads/`, `observability/`, `security/`, `supabase/`, más `cookie-context.tsx` (Context de consentimiento GDPR, localStorage), `rate-limit.ts`, `site-url.ts`, `utils.ts` (`cn()` = clsx + tailwind-merge).
 
-**Base de datos** (`supabase/migrations/`, 13 migraciones): tablas con RLS incluyen `initial_diagnostics` y `user_diagnostics` (sin acceso `anon`/`authenticated` directo; escritura sólo vía backend con `service_role`); esquema base (`core_platform_schema`), `lead_requests` (con hardening y lockdown posteriores), avatares de perfil y límite de Anclas gratuito único (`single_free_career_anchor`, reforzado sin excepciones por `enforce_single_career_anchor_attempt`). El orientador calcula siempre en el navegador y no persiste. Anclas tampoco persiste en uso anónimo; con una sesión Google registra atómicamente el único intento gratuito para aplicar el límite server-side y permitir volver a consultar el resultado.
+**Base de datos** (`supabase/migrations/`, 17 migraciones): `initial_diagnostics` no concede acceso directo al navegador; `user_diagnostics` permite a cada cuenta autenticada leer sólo su propia fila mediante RLS y reserva todas las escrituras al backend con `service_role`. El recorrido de Anclas persiste avances versionados, finaliza una única vez, conserva ranking/fallback/interpretación y encola el correo en la misma transacción. El orientador `/encontrar-mi-recorrido` calcula en el navegador y no persiste.
 
 **Seguridad** (`next.config.ts`): headers (`x-content-type-options`, `x-frame-options: DENY`, HSTS, `permissions-policy`, CSP con `frame-ancestors 'none'` y soporte para Cloudflare Turnstile + origen de Supabase).
 
