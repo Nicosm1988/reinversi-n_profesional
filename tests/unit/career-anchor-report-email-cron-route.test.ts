@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
   processCareerAnchorReportEmails: vi.fn(),
-  reconcileCareerAnchorCompletionNotifications: vi.fn(),
+  processCareerAnchorInternalResultEmails: vi.fn(),
   processInternalNotificationOutbox: vi.fn(),
   logEvent: vi.fn(),
 }));
@@ -10,12 +10,12 @@ const mocks = vi.hoisted(() => ({
 vi.mock("@/lib/diagnostics/career-anchor-report-delivery", () => ({
   processCareerAnchorReportEmails: mocks.processCareerAnchorReportEmails,
 }));
+vi.mock("@/lib/diagnostics/career-anchor-internal-result-delivery", () => ({
+  processCareerAnchorInternalResultEmails:
+    mocks.processCareerAnchorInternalResultEmails,
+}));
 vi.mock("@/lib/internal-notifications/service", () => ({
   processInternalNotificationOutbox: mocks.processInternalNotificationOutbox,
-}));
-vi.mock("@/lib/internal-notifications/reconcile-career-anchor-completions", () => ({
-  reconcileCareerAnchorCompletionNotifications:
-    mocks.reconcileCareerAnchorCompletionNotifications,
 }));
 vi.mock("@/lib/observability/logger", () => ({ logEvent: mocks.logEvent }));
 
@@ -33,12 +33,11 @@ describe("GET /api/cron/career-anchor-report-emails", () => {
       permanentFailures: 0,
       unavailable: false,
     });
-    mocks.reconcileCareerAnchorCompletionNotifications.mockReset().mockResolvedValue({
-      scanned: 1,
-      reconciled: 1,
-      sent: 0,
-      duplicates: 2,
-      failed: 0,
+    mocks.processCareerAnchorInternalResultEmails.mockReset().mockResolvedValue({
+      claimed: 2,
+      sent: 2,
+      retryScheduled: 0,
+      permanentFailures: 0,
       unavailable: false,
     });
     mocks.processInternalNotificationOutbox.mockReset().mockResolvedValue({
@@ -59,7 +58,7 @@ describe("GET /api/cron/career-anchor-report-emails", () => {
 
     expect(response.status).toBe(401);
     expect(mocks.processCareerAnchorReportEmails).not.toHaveBeenCalled();
-    expect(mocks.reconcileCareerAnchorCompletionNotifications).not.toHaveBeenCalled();
+    expect(mocks.processCareerAnchorInternalResultEmails).not.toHaveBeenCalled();
     expect(mocks.processInternalNotificationOutbox).not.toHaveBeenCalled();
   });
 
@@ -74,7 +73,9 @@ describe("GET /api/cron/career-anchor-report-emails", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toBe("no-store");
     expect(mocks.processCareerAnchorReportEmails).toHaveBeenCalledWith({ maxDeliveries: 5 });
-    expect(mocks.reconcileCareerAnchorCompletionNotifications).toHaveBeenCalledOnce();
+    expect(mocks.processCareerAnchorInternalResultEmails).toHaveBeenCalledWith({
+      maxDeliveries: 5,
+    });
     expect(mocks.processInternalNotificationOutbox).toHaveBeenCalledWith({ maxDeliveries: 25 });
     expect(body).toEqual({
       ok: true,
@@ -83,12 +84,11 @@ describe("GET /api/cron/career-anchor-report-emails", () => {
       retryScheduled: 0,
       permanentFailures: 0,
       unavailable: false,
-      completionReconciliation: {
-        scanned: 1,
-        reconciled: 1,
-        sent: 0,
-        duplicates: 2,
-        failed: 0,
+      internalResultEmails: {
+        claimed: 2,
+        sent: 2,
+        retryScheduled: 0,
+        permanentFailures: 0,
         unavailable: false,
       },
       internalNotifications: {
@@ -132,13 +132,12 @@ describe("GET /api/cron/career-anchor-report-emails", () => {
     expect(JSON.stringify(body)).not.toContain("slot-0");
   });
 
-  it("reports degraded when durable completion reconciliation is unavailable", async () => {
-    mocks.reconcileCareerAnchorCompletionNotifications.mockResolvedValueOnce({
-      scanned: 1,
-      reconciled: 0,
+  it("reports degraded when durable internal result delivery is unavailable", async () => {
+    mocks.processCareerAnchorInternalResultEmails.mockResolvedValueOnce({
+      claimed: 1,
       sent: 0,
-      duplicates: 0,
-      failed: 0,
+      retryScheduled: 1,
+      permanentFailures: 0,
       unavailable: true,
     });
 
@@ -151,12 +150,11 @@ describe("GET /api/cron/career-anchor-report-emails", () => {
 
     expect(response.status).toBe(503);
     expect(body.ok).toBe(false);
-    expect(body.completionReconciliation).toEqual({
-      scanned: 1,
-      reconciled: 0,
+    expect(body.internalResultEmails).toEqual({
+      claimed: 1,
       sent: 0,
-      duplicates: 0,
-      failed: 0,
+      retryScheduled: 1,
+      permanentFailures: 0,
       unavailable: true,
     });
   });

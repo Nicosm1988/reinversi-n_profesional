@@ -7,6 +7,8 @@ const anchorIds = new Set(spanishQuizData.anchors.map((anchor) => anchor.id));
 
 export const CAREER_ANCHOR_INSTRUMENT_VERSION = "schein-career-anchors-40-v1";
 export const CAREER_ANCHOR_ALGORITHM_VERSION = "senda-career-anchor-score-v1";
+export const CAREER_ANCHOR_RESULT_EMAIL_CONSENT_VERSION =
+  "career-anchor-team-result-email-v1";
 
 export const careerAnchorLocaleSchema = z.enum(["es", "en"]);
 export const careerStageSchema = z.enum([

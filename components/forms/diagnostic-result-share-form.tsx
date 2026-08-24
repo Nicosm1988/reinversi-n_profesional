@@ -20,8 +20,13 @@ type FormValues = {
   companyWebsite: string;
 };
 
-type DiagnosticResultShareFormProps = {
+type DiagnosticResultShareFormProps = ({
+  mode?: "share_result";
   result: DiagnosticResult;
+} | {
+  mode: "career_anchor_contact";
+  result?: never;
+}) & {
   onAccepted?: () => void;
   headingLevel?: "h2" | "h3";
 };
@@ -39,7 +44,9 @@ const EMPTY_FORM: FormValues = {
 const controlClassName =
   "w-full rounded-xl border border-[var(--quiz-border)] bg-[var(--quiz-surface)] px-4 py-3 text-base text-[var(--quiz-ink)] transition-[border-color,box-shadow,background-color] placeholder:text-[var(--quiz-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--quiz-accent)]/55 disabled:cursor-not-allowed disabled:opacity-70";
 
-export function DiagnosticResultShareForm({ result, onAccepted, headingLevel = "h3" }: DiagnosticResultShareFormProps) {
+export function DiagnosticResultShareForm(props: DiagnosticResultShareFormProps) {
+  const { onAccepted, headingLevel = "h3" } = props;
+  const contactOnly = props.mode === "career_anchor_contact";
   const t = useTranslations("ResultShare");
   const locale = useLocale() === "en" ? "en" : "es";
   const id = useId();
@@ -50,7 +57,15 @@ export function DiagnosticResultShareForm({ result, onAccepted, headingLevel = "
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
   const [errorKind, setErrorKind] = useState<"validation" | "submission" | null>(null);
   const [invalidFields, setInvalidFields] = useState<Set<string>>(new Set());
-  const error = errorKind ? t(errorKind === "validation" ? "validationError" : "error") : null;
+  const error = errorKind
+    ? t(
+        errorKind === "validation"
+          ? "validationError"
+          : contactOnly
+            ? "contactError"
+            : "error",
+      )
+    : null;
   const FormHeading = headingLevel;
 
   function updateField<Field extends keyof FormValues>(field: Field, value: FormValues[Field]) {
@@ -74,17 +89,33 @@ export function DiagnosticResultShareForm({ result, onAccepted, headingLevel = "
     event.preventDefault();
     if (status === "submitting") return;
 
-    const route = result.questionnaire === "career_anchors" ? "/test-anclas-de-carrera" : "/encontrar-mi-recorrido";
+    const route = contactOnly
+      ? "/test-anclas-de-carrera"
+      : "/encontrar-mi-recorrido";
     const sourcePage = locale === "en" ? `/en${route}` : route;
-    const parsed = contactSubmissionSchema.safeParse({
-      ...form,
-      formOrigin: "diagnostic_result",
-      result,
-      sourcePage,
-      locale,
-    });
+    const parsed = contactSubmissionSchema.safeParse(
+      contactOnly
+        ? {
+            ...form,
+            formOrigin: "career_anchor_contact",
+            sourcePage,
+            locale,
+          }
+        : {
+            ...form,
+            formOrigin: "diagnostic_result",
+            result: props.result,
+            sourcePage,
+            locale,
+          },
+    );
 
-    if (!parsed.success || parsed.data.formOrigin !== "diagnostic_result") {
+    if (
+      !parsed.success
+      || (contactOnly
+        ? parsed.data.formOrigin !== "career_anchor_contact"
+        : parsed.data.formOrigin !== "diagnostic_result")
+    ) {
       const fields = parsed.success ? [] : parsed.error.issues.map((issue) => issue.path[0]).filter((field): field is string => typeof field === "string");
       setInvalidFields(new Set(fields));
       setErrorKind("validation");
@@ -136,12 +167,16 @@ export function DiagnosticResultShareForm({ result, onAccepted, headingLevel = "
 
   return (
     <div className="rounded-[1.5rem] border border-[var(--quiz-border)] bg-[var(--quiz-surface-soft)] p-6 sm:p-8">
-      <FormHeading className="font-heading text-2xl font-medium text-[var(--quiz-ink)]">{t("title")}</FormHeading>
-      <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--quiz-muted)]">{t("description")}</p>
+      <FormHeading className="font-heading text-2xl font-medium text-[var(--quiz-ink)]">
+        {t(contactOnly ? "contactTitle" : "title")}
+      </FormHeading>
+      <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--quiz-muted)]">
+        {t(contactOnly ? "contactDescription" : "description")}
+      </p>
 
       {status === "success" ? (
         <p ref={successRef} className="mt-6 rounded-xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] p-4 font-medium text-[var(--quiz-ink)]" role="status" tabIndex={-1}>
-          {t("success")}
+          {t(contactOnly ? "contactSuccess" : "success")}
         </p>
       ) : null}
 
@@ -281,7 +316,7 @@ export function DiagnosticResultShareForm({ result, onAccepted, headingLevel = "
           />
           <span>
             <label htmlFor={fieldId("consent")} className="cursor-pointer">
-              {t("consentLabel")}
+              {t(contactOnly ? "contactConsentLabel" : "consentLabel")}
             </label>{" "}
             <Link href="/privacidad" className="font-semibold text-[var(--quiz-ink)] underline decoration-[var(--quiz-accent)]/55 underline-offset-4 hover:text-[var(--quiz-accent-strong)]">
               {t("privacyLink")}
@@ -296,7 +331,9 @@ export function DiagnosticResultShareForm({ result, onAccepted, headingLevel = "
         ) : null}
 
         <Button type="submit" size="lg" disabled={disabled} className="rounded-full bg-[var(--senda-action)] px-8 text-white hover:bg-[var(--senda-action-hover)]">
-          {status === "submitting" ? t("submitting") : t("submit")}
+          {status === "submitting"
+            ? t("submitting")
+            : t(contactOnly ? "contactSubmit" : "submit")}
           <Send className="ml-2 h-4 w-4" aria-hidden="true" />
         </Button>
       </form>

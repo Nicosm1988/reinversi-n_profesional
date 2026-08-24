@@ -1,6 +1,6 @@
 import { createHash, timingSafeEqual } from "node:crypto";
+import { processCareerAnchorInternalResultEmails } from "@/lib/diagnostics/career-anchor-internal-result-delivery";
 import { processCareerAnchorReportEmails } from "@/lib/diagnostics/career-anchor-report-delivery";
-import { reconcileCareerAnchorCompletionNotifications } from "@/lib/internal-notifications/reconcile-career-anchor-completions";
 import { processInternalNotificationOutbox } from "@/lib/internal-notifications/service";
 import { getRequestId } from "@/lib/http/request-context";
 import { withRequestHeaders } from "@/lib/http/response-headers";
@@ -51,9 +51,9 @@ export async function GET(req: Request) {
   }
 
   const maxDeliveries = batchSize();
-  const [summary, reconciliation, internalNotificationResult] = await Promise.all([
+  const [summary, internalResultEmailSummary, internalNotificationResult] = await Promise.all([
     processCareerAnchorReportEmails({ maxDeliveries }),
-    reconcileCareerAnchorCompletionNotifications(),
+    processCareerAnchorInternalResultEmails({ maxDeliveries }),
     processInternalNotificationOutbox({ maxDeliveries: internalNotificationBatchSize() }),
   ]);
   const internalNotifications = {
@@ -65,21 +65,20 @@ export async function GET(req: Request) {
       ? { errorCode: internalNotificationResult.errorCode }
       : {}),
   };
-  const completionReconciliation = {
-    scanned: reconciliation.scanned,
-    reconciled: reconciliation.reconciled,
-    sent: reconciliation.sent,
-    duplicates: reconciliation.duplicates,
-    failed: reconciliation.failed,
-    unavailable: reconciliation.unavailable,
+  const internalResultEmails = {
+    claimed: internalResultEmailSummary.claimed,
+    sent: internalResultEmailSummary.sent,
+    retryScheduled: internalResultEmailSummary.retryScheduled,
+    permanentFailures: internalResultEmailSummary.permanentFailures,
+    unavailable: internalResultEmailSummary.unavailable,
   };
   const unavailable =
     summary.unavailable
-    || completionReconciliation.unavailable
+    || internalResultEmails.unavailable
     || internalNotifications.unavailable;
 
   return Response.json(
-    { ok: !unavailable, ...summary, completionReconciliation, internalNotifications },
+    { ok: !unavailable, ...summary, internalResultEmails, internalNotifications },
     { status: unavailable ? 503 : 200, headers },
   );
 }

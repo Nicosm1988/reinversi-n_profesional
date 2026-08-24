@@ -5,6 +5,10 @@ import nodemailer from "nodemailer";
 import { z } from "zod";
 import { smtpAcceptedDelivery } from "@/lib/contact/smtp-result";
 import {
+  buildCareerAnchorInternalResultEmailContent,
+  type CareerAnchorInternalResultEmailContentInput,
+} from "@/lib/diagnostics/career-anchor-internal-result-email-content";
+import {
   buildCareerAnchorReportEmailContent,
   type CareerAnchorReportEmailContentInput,
 } from "@/lib/diagnostics/career-anchor-report-email-content";
@@ -68,11 +72,15 @@ function deterministicMessageId(deliveryId: string, senderAddress: string) {
   return `<career-anchor-${opaqueDeliveryId}@${senderDomain}>`;
 }
 
-export async function sendCareerAnchorReportEmail(
-  input: CareerAnchorReportEmailContentInput & {
-    recipient: string;
-    deliveryId: string;
-  },
+type CareerAnchorEmailContent = {
+  subject: string;
+  text: string;
+  html: string;
+};
+
+async function sendCareerAnchorEmail(
+  input: { recipient: string; deliveryId: string },
+  buildContent: () => CareerAnchorEmailContent,
 ) {
   const config = readSmtpConfig();
   const recipient = recipientSchema.safeParse(input.recipient);
@@ -80,7 +88,7 @@ export async function sendCareerAnchorReportEmail(
     throw new CareerAnchorReportEmailRecipientError();
   }
 
-  const content = buildCareerAnchorReportEmailContent(input);
+  const content = buildContent();
   const messageId = deterministicMessageId(input.deliveryId, config.SMTP_USER);
   const transporter = nodemailer.createTransport({
     host: config.SMTP_HOST,
@@ -113,4 +121,26 @@ export async function sendCareerAnchorReportEmail(
   return {
     messageId: typeof result.messageId === "string" ? result.messageId.slice(0, 500) : messageId,
   };
+}
+
+export async function sendCareerAnchorReportEmail(
+  input: CareerAnchorReportEmailContentInput & {
+    recipient: string;
+    deliveryId: string;
+  },
+) {
+  return sendCareerAnchorEmail(input, () => buildCareerAnchorReportEmailContent(input));
+}
+
+export async function sendCareerAnchorInternalResultEmail(
+  input: CareerAnchorInternalResultEmailContentInput & {
+    recipient: string;
+    deliveryId: string;
+  },
+) {
+  const { recipient, deliveryId, ...contentInput } = input;
+  return sendCareerAnchorEmail(
+    { recipient, deliveryId },
+    () => buildCareerAnchorInternalResultEmailContent(contentInput),
+  );
 }

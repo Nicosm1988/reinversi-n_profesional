@@ -51,7 +51,7 @@ Elementos deliberadamente no copiados: textos, preguntas, nombres comerciales, d
 - El test de Anclas conserva los 40 enunciados, la escala 1–6 y las tres elecciones adicionales de la implementación propia. Los empates mantienen el desempate determinístico histórico por orden de catálogo y la IA nunca decide el ancla.
 - La explicación determinística es completa. La persona puede solicitar de forma explícita una interpretación ampliada por IA; se ejecuta en servidor y su ausencia o fallo no impide ver el resultado.
 - El uso anónimo de ambos cuestionarios no persiste respuestas. Si existe una sesión Google, Anclas conserva en Supabase el único intento gratuito para aplicar el límite server-side y permitir volver a consultarlo, de acuerdo con las reglas permanentes del proyecto.
-- Compartir un resultado con Senda es opcional, posterior y exige consentimiento explícito. Se reutiliza `/api/contact`; ese envío no guarda respuestas ni datos en Supabase o planillas.
+- Antes de iniciar Anclas se solicita consentimiento obligatorio, expreso e informado para que, al completar el test, Senda envíe a `hola@universosenda.com` y `tanisardella@gmail.com` la dirección de correo de la cuenta Google, el momento profesional opcional, el ranking completo de las ocho anclas, sus puntajes y la devolución orientativa determinística persistida. El informe no incluye identificadores técnicos, fecha exacta ni las 40 respuestas individuales, y tampoco habilita marketing; la interpretación por IA permanece separada y no es una dependencia de ese envío. El formulario posterior conserva `/api/contact` exclusivamente para una solicitud voluntaria de contacto.
 - Las rutas anteriores se conservan únicamente como redirecciones permanentes.
 
 ### Archivos y validación

@@ -56,14 +56,26 @@ const VALID_DIAGNOSTIC_RESULT_BODY = {
   message: "Quisiera conversar sobre el resultado.",
   consent: true,
   companyWebsite: "",
-  sourcePage: "/test-anclas-de-carrera",
+  sourcePage: "/encontrar-mi-recorrido",
   locale: "es",
   result: {
-    questionnaire: "career_anchors",
-    primaryAnchors: ["Autonomía/Independencia"],
-    secondaryAnchors: ["Creatividad Emprendedora"],
-    summary: "Una lectura orientativa de las motivaciones vinculadas con el trabajo.",
+    questionnaire: "route_finder",
+    recommendedService: "Explorar una nueva dirección profesional",
+    summary: "Una orientación inicial para elegir el próximo recorrido.",
   },
+};
+
+const VALID_CAREER_ANCHOR_CONTACT_BODY = {
+  formOrigin: "career_anchor_contact",
+  name: "Ana Pérez",
+  email: "ana@example.com",
+  phone: "+54 9 11 1234-5678",
+  preferredContact: "email",
+  message: "Quisiera conversar sobre mi resultado.",
+  consent: true,
+  companyWebsite: "",
+  sourcePage: "/test-anclas-de-carrera",
+  locale: "es",
 };
 
 function contactRequest(body: unknown, overrides: Record<string, string> = {}) {
@@ -135,15 +147,37 @@ describe("POST /api/contact", () => {
         formOrigin: "diagnostic_result",
         preferredContact: "email",
         result: expect.objectContaining({
-          questionnaire: "career_anchors",
-          primaryAnchors: ["Autonomía/Independencia"],
+          questionnaire: "route_finder",
+          recommendedService: "Explorar una nueva dirección profesional",
         }),
       }),
       expect.objectContaining({
-        source: "https://senda.example/test-anclas-de-carrera",
+        source: "https://senda.example/encontrar-mi-recorrido",
       }),
     );
     expect(JSON.stringify(mocks.logEvent.mock.calls)).not.toContain("ana@example.com");
+  });
+
+  it("sends a Career Anchors contact request without accepting a second result", async () => {
+    const response = await POST(contactRequest(VALID_CAREER_ANCHOR_CONTACT_BODY));
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true });
+    const submission = mocks.sendContactEmail.mock.calls[0]?.[0];
+    expect(submission).toMatchObject({
+      formOrigin: "career_anchor_contact",
+      preferredContact: "email",
+      sourcePage: "/test-anclas-de-carrera",
+    });
+    expect(submission).not.toHaveProperty("result");
+
+    const rejected = await POST(
+      contactRequest({
+        ...VALID_CAREER_ANCHOR_CONTACT_BODY,
+        result: VALID_DIAGNOSTIC_RESULT_BODY.result,
+      }),
+    );
+    expect(rejected.status).toBe(400);
   });
 
   it("does not send email when the honeypot is populated", async () => {

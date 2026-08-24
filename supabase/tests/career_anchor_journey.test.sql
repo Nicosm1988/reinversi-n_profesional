@@ -2,7 +2,7 @@ BEGIN;
 
 CREATE EXTENSION IF NOT EXISTS pgtap WITH SCHEMA extensions;
 
-SELECT plan(78);
+SELECT plan(88);
 
 SELECT has_column('public', 'user_diagnostics', 'started_at', 'journey start is durable');
 SELECT has_column('public', 'user_diagnostics', 'completed_at', 'completion time is durable');
@@ -52,6 +52,14 @@ SELECT ok(
   'service role can finalize'
 );
 SELECT ok(
+  has_function_privilege('service_role', 'public.finalize_career_anchor_diagnostic_with_result_email(uuid,jsonb,jsonb,jsonb,jsonb,text,text,text,text,boolean)', 'EXECUTE'),
+  'service role can finalize with a consented internal result email'
+);
+SELECT ok(
+  has_function_privilege('service_role', 'public.claim_career_anchor_internal_result_email_delivery(uuid)', 'EXECUTE'),
+  'service role can claim internal result email deliveries'
+);
+SELECT ok(
   has_function_privilege('service_role', 'public.save_career_anchor_interpretation(uuid,uuid,jsonb)', 'EXECUTE'),
   'service role can save the canonical interpretation'
 );
@@ -70,6 +78,14 @@ SELECT ok(
 SELECT ok(
   NOT has_function_privilege('authenticated', 'public.finalize_career_anchor_diagnostic(uuid,jsonb,jsonb,jsonb,jsonb,text,text,text,text)', 'EXECUTE'),
   'browser users cannot call finalization RPC directly'
+);
+SELECT ok(
+  NOT has_function_privilege('authenticated', 'public.finalize_career_anchor_diagnostic_with_result_email(uuid,jsonb,jsonb,jsonb,jsonb,text,text,text,text,boolean)', 'EXECUTE'),
+  'browser users cannot call consented result-email finalization directly'
+);
+SELECT ok(
+  NOT has_function_privilege('authenticated', 'public.claim_career_anchor_internal_result_email_delivery(uuid)', 'EXECUTE'),
+  'browser users cannot claim internal result email deliveries'
 );
 SELECT ok(
   NOT has_function_privilege('authenticated', 'public.save_career_anchor_interpretation(uuid,uuid,jsonb)', 'EXECUTE'),
@@ -168,6 +184,18 @@ SELECT '{
   ],
   "mode": "ai"
 }'::jsonb AS interpretation;
+
+CREATE TEMP VIEW career_anchor_test_scores AS
+SELECT '[
+  {"id":"technical","name":"Competencia Técnica/Funcional","score":31,"mean":6.2,"rank":1},
+  {"id":"management","name":"Dirección General","score":28,"mean":5.6,"rank":2},
+  {"id":"autonomy","name":"Autonomía/Independencia","score":25,"mean":5,"rank":3},
+  {"id":"security","name":"Seguridad/Estabilidad","score":22,"mean":4.4,"rank":4},
+  {"id":"entrepreneurial","name":"Creatividad Emprendedora","score":19,"mean":3.8,"rank":5},
+  {"id":"service","name":"Servicio/Dedicación a una Causa","score":16,"mean":3.2,"rank":6},
+  {"id":"challenge","name":"Desafío Puro","score":13,"mean":2.6,"rank":7},
+  {"id":"lifestyle","name":"Estilo de Vida","score":10,"mean":2,"rank":8}
+]'::jsonb AS scores;
 
 SELECT ok(
   public.is_valid_career_anchor_interpretation(
@@ -319,17 +347,82 @@ SELECT is(
   'resume cursor follows the latest accepted revision'
 );
 
-SELECT lives_ok(
-  $$SELECT public.finalize_career_anchor_diagnostic(
-    '11111111-1111-4111-8111-111111111111'::uuid,
+SELECT throws_ok(
+  $$SELECT public.finalize_career_anchor_diagnostic_with_result_email(
+    '22222222-2222-4222-8222-222222222222'::uuid,
     (SELECT raw_answers FROM career_anchor_test_payload),
-    '{"id":"technical","name":"Competencia Técnica/Funcional","score":20,"rank":1}'::jsonb,
-    '[]'::jsonb,
-    '{"title":"Lectura base","summary":"Orientativa","mode":"fallback"}'::jsonb,
+    '{"id":"technical","name":"Competencia Técnica/Funcional","score":31,"rank":1}'::jsonb,
+    JSONB_SET((SELECT scores FROM career_anchor_test_scores), '{0,score}', '-1.5'::jsonb),
+    (
+      SELECT interpretation || '{"title":"Lectura base","mode":"fallback"}'::jsonb
+      FROM career_anchor_test_interpretation
+    ),
     'es',
     'exploring_direction',
     'schein-career-anchors-40-v1',
-    'senda-career-anchor-score-v1'
+    'senda-career-anchor-score-v1',
+    TRUE
+  )$$,
+  'P0001',
+  'A complete eight-anchor score result is required',
+  'a negative fractional score cannot finalize or poison its email jobs'
+);
+SELECT throws_ok(
+  $$SELECT public.finalize_career_anchor_diagnostic_with_result_email(
+    '22222222-2222-4222-8222-222222222222'::uuid,
+    (SELECT raw_answers FROM career_anchor_test_payload),
+    '{"id":"technical","name":"Competencia Técnica/Funcional","score":31,"rank":1}'::jsonb,
+    JSONB_SET((SELECT scores FROM career_anchor_test_scores), '{0,mean}', '-0.1'::jsonb),
+    (
+      SELECT interpretation || '{"title":"Lectura base","mode":"fallback"}'::jsonb
+      FROM career_anchor_test_interpretation
+    ),
+    'es',
+    'exploring_direction',
+    'schein-career-anchors-40-v1',
+    'senda-career-anchor-score-v1',
+    TRUE
+  )$$,
+  'P0001',
+  'A complete eight-anchor score result is required',
+  'a negative mean cannot finalize or poison its email jobs'
+);
+SELECT throws_ok(
+  $$SELECT public.finalize_career_anchor_diagnostic_with_result_email(
+    '22222222-2222-4222-8222-222222222222'::uuid,
+    (SELECT raw_answers FROM career_anchor_test_payload),
+    '{"id":"technical","name":"Competencia Técnica/Funcional","score":31,"rank":1}'::jsonb,
+    (SELECT scores #- '{0,name}' FROM career_anchor_test_scores),
+    (
+      SELECT interpretation || '{"title":"Lectura base","mode":"fallback"}'::jsonb
+      FROM career_anchor_test_interpretation
+    ),
+    'es',
+    'exploring_direction',
+    'schein-career-anchors-40-v1',
+    'senda-career-anchor-score-v1',
+    TRUE
+  )$$,
+  'P0001',
+  'A complete eight-anchor score result is required',
+  'a score item missing a strict required field cannot finalize'
+);
+
+SELECT lives_ok(
+  $$SELECT public.finalize_career_anchor_diagnostic_with_result_email(
+    '11111111-1111-4111-8111-111111111111'::uuid,
+    (SELECT raw_answers FROM career_anchor_test_payload),
+    '{"id":"technical","name":"Competencia Técnica/Funcional","score":31,"rank":1}'::jsonb,
+    (SELECT scores FROM career_anchor_test_scores),
+    (
+      SELECT interpretation || '{"title":"Lectura base","mode":"fallback"}'::jsonb
+      FROM career_anchor_test_interpretation
+    ),
+    'es',
+    'exploring_direction',
+    'schein-career-anchors-40-v1',
+    'senda-career-anchor-score-v1',
+    TRUE
   )$$,
   'a complete validated payload finalizes atomically'
 );
@@ -351,16 +444,20 @@ SELECT ok(
   'completion has an explicit timestamp'
 );
 SELECT is(
-  public.finalize_career_anchor_diagnostic(
+  public.finalize_career_anchor_diagnostic_with_result_email(
     '11111111-1111-4111-8111-111111111111'::uuid,
     (SELECT raw_answers FROM career_anchor_test_payload),
-    '{"id":"technical"}'::jsonb,
-    '[]'::jsonb,
-    '{"title":"Otra lectura"}'::jsonb,
+    '{"id":"technical","name":"Competencia Técnica/Funcional","score":31,"rank":1}'::jsonb,
+    (SELECT scores FROM career_anchor_test_scores),
+    (
+      SELECT interpretation || '{"title":"Lectura base","mode":"fallback"}'::jsonb
+      FROM career_anchor_test_interpretation
+    ),
     'es',
     'exploring_direction',
     'schein-career-anchors-40-v1',
-    'senda-career-anchor-score-v1'
+    'senda-career-anchor-score-v1',
+    TRUE
   ),
   NULL::uuid,
   'a completed journey cannot be finalized twice'
@@ -371,8 +468,39 @@ SELECT is(
     FROM public.diagnostic_report_email_deliveries
     WHERE user_id = '11111111-1111-4111-8111-111111111111'
   ),
-  1::bigint,
-  'one completion queues exactly one report'
+  3::bigint,
+  'one consented completion queues one participant notice and two internal reports'
+);
+SELECT is(
+  (
+    SELECT COUNT(*)
+    FROM public.diagnostic_report_email_deliveries
+    WHERE user_id = '11111111-1111-4111-8111-111111111111'
+      AND email_kind IN (
+        'career_anchor_internal_hola_v1',
+        'career_anchor_internal_tanisardella_v1'
+      )
+  ),
+  2::bigint,
+  'the two internal recipients have independent durable deliveries'
+);
+SELECT is(
+  (
+    SELECT user_data->'resultEmailConsent'->>'version'
+    FROM public.user_diagnostics
+    WHERE user_id = '11111111-1111-4111-8111-111111111111'
+  ),
+  'career-anchor-team-result-email-v1',
+  'the exact disclosure version is recorded with the result'
+);
+SELECT is(
+  (
+    SELECT user_data->'resultEmailConsent'->'includes'
+    FROM public.user_diagnostics
+    WHERE user_id = '11111111-1111-4111-8111-111111111111'
+  ),
+  '["account_email","career_stage","eight_anchor_ranking","scores","deterministic_guidance"]'::jsonb,
+  'the consent audit exactly lists every result field emailed to the team'
 );
 SELECT is(
   (

@@ -8,7 +8,7 @@ const mocks = vi.hoisted(() => ({
   limitRequest: vi.fn(),
   logEvent: vi.fn(),
   processCareerAnchorReportEmails: vi.fn(),
-  notifyInternalActivity: vi.fn(),
+  processCareerAnchorInternalResultEmails: vi.fn(),
   after: vi.fn(),
   afterCallbacks: [] as Array<() => void | Promise<void>>,
 }));
@@ -28,8 +28,9 @@ vi.mock("@/lib/observability/logger", () => ({ logEvent: mocks.logEvent }));
 vi.mock("@/lib/diagnostics/career-anchor-report-delivery", () => ({
   processCareerAnchorReportEmails: mocks.processCareerAnchorReportEmails,
 }));
-vi.mock("@/lib/internal-notifications/service", () => ({
-  notifyInternalActivity: mocks.notifyInternalActivity,
+vi.mock("@/lib/diagnostics/career-anchor-internal-result-delivery", () => ({
+  processCareerAnchorInternalResultEmails:
+    mocks.processCareerAnchorInternalResultEmails,
 }));
 
 import { POST } from "@/app/api/diagnostics/complete-public/route";
@@ -44,6 +45,7 @@ function validBody() {
     },
     locale: "es",
     careerStage: "changing_employment",
+    resultEmailConsent: true,
   };
 }
 
@@ -79,10 +81,11 @@ describe("POST /api/diagnostics/complete-public", () => {
       permanentFailures: 0,
       unavailable: false,
     });
-    mocks.notifyInternalActivity.mockReset().mockResolvedValue({
+    mocks.processCareerAnchorInternalResultEmails.mockReset().mockResolvedValue({
+      claimed: 2,
       sent: 2,
-      duplicates: 0,
-      failed: 0,
+      retryScheduled: 0,
+      permanentFailures: 0,
       unavailable: false,
     });
     mocks.limitRequest.mockReset().mockResolvedValue({
@@ -114,51 +117,53 @@ describe("POST /api/diagnostics/complete-public", () => {
     await expect(response.json()).resolves.toEqual({ ok: true });
     expect(mocks.createAdminClient).toHaveBeenCalledTimes(1);
     expect(mocks.adminRpc).toHaveBeenCalledTimes(1);
-    expect(mocks.adminRpc).toHaveBeenCalledWith("finalize_career_anchor_diagnostic", {
-      p_user_id: "user-test-id",
-      p_raw_answers: requestBody.rawAnswers,
-      p_dominant_result: {
-        id: expect.any(String),
-        name: expect.any(String),
-        score: expect.any(Number),
-        rank: 1,
-      },
-      p_score_result: expect.arrayContaining([
-        expect.objectContaining({
+    expect(mocks.adminRpc).toHaveBeenCalledWith(
+      "finalize_career_anchor_diagnostic_with_result_email",
+      {
+        p_user_id: "user-test-id",
+        p_raw_answers: requestBody.rawAnswers,
+        p_dominant_result: {
           id: expect.any(String),
           name: expect.any(String),
           score: expect.any(Number),
-          mean: expect.any(Number),
-          rank: expect.any(Number),
+          rank: 1,
+        },
+        p_score_result: expect.arrayContaining([
+          expect.objectContaining({
+            id: expect.any(String),
+            name: expect.any(String),
+            score: expect.any(Number),
+            mean: expect.any(Number),
+            rank: expect.any(Number),
+          }),
+        ]),
+        p_result_base: expect.objectContaining({
+          mode: "fallback",
+          tensions: [],
+          reflectionQuestions: expect.any(Array),
+          nextSteps: expect.any(Array),
         }),
-      ]),
-      p_result_base: expect.objectContaining({
-        mode: "fallback",
-        tensions: [],
-        reflectionQuestions: expect.any(Array),
-        nextSteps: expect.any(Array),
-      }),
-      p_locale: "es",
-      p_career_stage: "changing_employment",
-      p_instrument_version: "schein-career-anchors-40-v1",
-      p_algorithm_version: "senda-career-anchor-score-v1",
-    });
+        p_locale: "es",
+        p_career_stage: "changing_employment",
+        p_instrument_version: "schein-career-anchors-40-v1",
+        p_algorithm_version: "senda-career-anchor-score-v1",
+        p_result_email_consent: true,
+      },
+    );
     const rpcPayload = mocks.adminRpc.mock.calls[0]?.[1];
     expect(rpcPayload.p_score_result).toHaveLength(8);
     expect(response.headers.get("cache-control")).toBe("no-store");
     expect(mocks.after).toHaveBeenCalledTimes(1);
     expect(mocks.processCareerAnchorReportEmails).not.toHaveBeenCalled();
-    expect(mocks.notifyInternalActivity).not.toHaveBeenCalled();
+    expect(mocks.processCareerAnchorInternalResultEmails).not.toHaveBeenCalled();
     await runAfterCallbacks();
     expect(mocks.processCareerAnchorReportEmails).toHaveBeenCalledWith({
       diagnosticId: "diagnostic-id",
       maxDeliveries: 1,
     });
-    expect(mocks.notifyInternalActivity).toHaveBeenCalledWith({
-      type: "career_anchor_completed",
-      eventId: "diagnostic-id",
-      occurredAt: expect.any(Date),
-      audience: "authenticated",
+    expect(mocks.processCareerAnchorInternalResultEmails).toHaveBeenCalledWith({
+      diagnosticId: "diagnostic-id",
+      maxDeliveries: 2,
     });
     const logs = JSON.stringify(mocks.logEvent.mock.calls);
     expect(logs).not.toContain("person@example.com");
@@ -167,7 +172,9 @@ describe("POST /api/diagnostics/complete-public", () => {
 
   it("keeps completion successful when post-persistence deliveries throw", async () => {
     mocks.processCareerAnchorReportEmails.mockRejectedValueOnce(new Error("worker unavailable"));
-    mocks.notifyInternalActivity.mockRejectedValueOnce(new Error("notification unavailable"));
+    mocks.processCareerAnchorInternalResultEmails.mockRejectedValueOnce(
+      new Error("notification unavailable"),
+    );
 
     const response = await POST(completionRequest(validBody()));
 
@@ -181,7 +188,7 @@ describe("POST /api/diagnostics/complete-public", () => {
     );
     expect(mocks.logEvent).toHaveBeenCalledWith(
       "error",
-      "diagnostics.public_completion.internal_notification_unexpected",
+      "diagnostics.public_completion.internal_result_email_unexpected",
       expect.objectContaining({ reason: "Error" }),
     );
   });
@@ -212,7 +219,7 @@ describe("POST /api/diagnostics/complete-public", () => {
     await expect(response.json()).resolves.toEqual({ ok: false, code: "already_completed" });
     expect(mocks.adminRpc).toHaveBeenCalledTimes(1);
     expect(mocks.processCareerAnchorReportEmails).not.toHaveBeenCalled();
-    expect(mocks.notifyInternalActivity).not.toHaveBeenCalled();
+    expect(mocks.processCareerAnchorInternalResultEmails).not.toHaveBeenCalled();
   });
 
   it("requires an authenticated account and preserves authentication outages", async () => {
@@ -249,6 +256,7 @@ describe("POST /api/diagnostics/complete-public", () => {
         dominantResult: { id: "manipulated", score: 999 },
         resultBase: { mode: "ai" },
         email: "not-accepted@example.com",
+        resultEmailConsent: true,
       }),
     );
 
@@ -257,6 +265,23 @@ describe("POST /api/diagnostics/complete-public", () => {
     expect(mocks.maybeSingle).not.toHaveBeenCalled();
     expect(mocks.createAdminClient).not.toHaveBeenCalled();
   });
+
+  it.each([undefined, false])(
+    "requires express result-email consent before reading or saving answers (%s)",
+    async (resultEmailConsent) => {
+      const body = { ...validBody() } as Record<string, unknown>;
+      if (resultEmailConsent === undefined) delete body.resultEmailConsent;
+      else body.resultEmailConsent = resultEmailConsent;
+
+      const response = await POST(completionRequest(body));
+
+      expect(response.status).toBe(400);
+      await expect(response.json()).resolves.toEqual({ ok: false, code: "invalid" });
+      expect(mocks.maybeSingle).not.toHaveBeenCalled();
+      expect(mocks.createAdminClient).not.toHaveBeenCalled();
+      expect(mocks.processCareerAnchorInternalResultEmails).not.toHaveBeenCalled();
+    },
+  );
 
   it("fails closed on lookup, admin configuration, and finalize RPC errors", async () => {
     mocks.maybeSingle.mockResolvedValueOnce({

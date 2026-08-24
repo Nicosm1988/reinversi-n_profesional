@@ -49,13 +49,26 @@ const DIAGNOSTIC_RESULT_SUBMISSION = {
   message: "Quisiera conversar.",
   consent: true as const,
   companyWebsite: "",
-  sourcePage: "/test-anclas-de-carrera" as const,
+  sourcePage: "/encontrar-mi-recorrido" as const,
   locale: "es" as const,
   result: {
-    questionnaire: "career_anchors" as const,
-    primaryAnchors: ["Autonomía/Independencia"],
+    questionnaire: "route_finder" as const,
+    recommendedService: "Explorar una nueva dirección profesional",
     summary: "Una lectura orientativa.",
   },
+};
+
+const CAREER_ANCHOR_CONTACT_SUBMISSION = {
+  formOrigin: "career_anchor_contact" as const,
+  name: "Ana Pérez",
+  phone: "+54 9 11 1234-5678",
+  email: "ana@example.com",
+  preferredContact: "email" as const,
+  message: "Quisiera conversar sobre mi resultado.",
+  consent: true as const,
+  companyWebsite: "",
+  sourcePage: "/test-anclas-de-carrera" as const,
+  locale: "es" as const,
 };
 
 describe("sendContactEmail", () => {
@@ -127,15 +140,32 @@ describe("sendContactEmail", () => {
   it("uses a server-owned subject for a consented diagnostic result", async () => {
     await sendContactEmail(DIAGNOSTIC_RESULT_SUBMISSION, {
       date: new Date("2026-08-15T12:00:00.000Z"),
-      source: "https://senda.example/test-anclas-de-carrera",
+      source: "https://senda.example/encontrar-mi-recorrido",
     });
 
     expect(mocks.sendMail).toHaveBeenCalledWith(
       expect.objectContaining({
         subject: "Resultado orientativo compartido desde Senda",
-        text: expect.stringContaining("Cuestionario: career_anchors"),
+        text: expect.stringContaining("Cuestionario: route_finder"),
       }),
     );
+  });
+
+  it("uses a contact-only subject for Career Anchors without attaching a result", async () => {
+    await sendContactEmail(CAREER_ANCHOR_CONTACT_SUBMISSION, {
+      date: new Date("2026-08-24T12:00:00.000Z"),
+      source: "https://senda.example/test-anclas-de-carrera",
+    });
+
+    expect(mocks.sendMail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        subject: "Solicitud de contacto sobre Anclas de Carrera",
+        text: expect.stringContaining("Origen: career_anchor_contact"),
+      }),
+    );
+    const message = mocks.sendMail.mock.calls[0]?.[0];
+    expect(message?.text).not.toContain("Resultado orientativo:");
+    expect(message?.text).not.toMatch(/Anclas principales|Anclas secundarias|Resumen:/);
   });
 
   it("fails closed when required SMTP configuration is missing", async () => {

@@ -11,6 +11,7 @@ import {
   careerStageSchema,
   getCareerAnchorResultGroups,
 } from "@/lib/diagnostics/career-anchor";
+import { processCareerAnchorInternalResultEmails } from "@/lib/diagnostics/career-anchor-internal-result-delivery";
 import { processCareerAnchorReportEmails } from "@/lib/diagnostics/career-anchor-report-delivery";
 import { getClientIp, getRequestId } from "@/lib/http/request-context";
 import { readJsonBody } from "@/lib/http/json-body";
@@ -19,7 +20,6 @@ import { logEvent } from "@/lib/observability/logger";
 import { limitRequest, type RateLimitResult } from "@/lib/rate-limit";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getAuthenticatedUser } from "@/lib/supabase/auth";
-import { notifyInternalActivity } from "@/lib/internal-notifications/service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,6 +34,7 @@ const requestSchema = z
     rawAnswers: careerAnchorRawAnswersSchema,
     locale: careerAnchorLocaleSchema.optional().default("es"),
     careerStage: careerStageSchema.optional().default("prefer_not_to_say"),
+    resultEmailConsent: z.literal(true),
   })
   .strict();
 
@@ -101,7 +102,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const { rawAnswers, locale, careerStage } = parsed.data;
+  const { rawAnswers, locale, careerStage, resultEmailConsent } = parsed.data;
   const ranking = calculateCareerAnchorRanking(rawAnswers, locale);
   const groups = getCareerAnchorResultGroups(ranking);
   const fallback = buildCareerAnchorFallbackInterpretation(
@@ -176,7 +177,7 @@ export async function POST(req: Request) {
   }
 
   const { data: diagnosticId, error: completionError } = await admin.rpc(
-    "finalize_career_anchor_diagnostic",
+    "finalize_career_anchor_diagnostic_with_result_email",
     {
       p_user_id: auth.user.id,
       p_raw_answers: rawAnswers,
@@ -193,6 +194,7 @@ export async function POST(req: Request) {
       p_career_stage: careerStage,
       p_instrument_version: CAREER_ANCHOR_INSTRUMENT_VERSION,
       p_algorithm_version: CAREER_ANCHOR_ALGORITHM_VERSION,
+      p_result_email_consent: resultEmailConsent,
     },
   );
 
@@ -215,18 +217,13 @@ export async function POST(req: Request) {
     );
   }
 
-  // The result and delivery jobs are durable before this point. Keep SMTP and
-  // internal notifications outside the user's completion latency; their own
-  // outboxes retain retries independently of the response lifecycle.
+  // The result, consent audit, and all three delivery jobs are durable before
+  // this point. Keep SMTP outside the user's completion latency; Postgres
+  // retains each recipient's retry independently of the response lifecycle.
   after(async () => {
-    const [reportDelivery, internalNotification] = await Promise.allSettled([
+    const [reportDelivery, internalResultDelivery] = await Promise.allSettled([
       processCareerAnchorReportEmails({ diagnosticId, maxDeliveries: 1 }),
-      notifyInternalActivity({
-        type: "career_anchor_completed",
-        eventId: diagnosticId,
-        occurredAt: new Date(),
-        audience: "authenticated",
-      }),
+      processCareerAnchorInternalResultEmails({ diagnosticId, maxDeliveries: 2 }),
     ]);
 
     if (reportDelivery.status === "rejected") {
@@ -236,24 +233,24 @@ export async function POST(req: Request) {
       });
     }
 
-    if (internalNotification.status === "rejected") {
-      logEvent("error", "diagnostics.public_completion.internal_notification_unexpected", {
+    if (internalResultDelivery.status === "rejected") {
+      logEvent("error", "diagnostics.public_completion.internal_result_email_unexpected", {
         requestId,
         reason:
-          internalNotification.reason instanceof Error
-            ? internalNotification.reason.name
+          internalResultDelivery.reason instanceof Error
+            ? internalResultDelivery.reason.name
             : "unknown_error",
       });
-    } else if (internalNotification.value.unavailable) {
-      logEvent("error", "diagnostics.public_completion.internal_notification_unavailable", {
+    } else if (internalResultDelivery.value.unavailable) {
+      logEvent("error", "diagnostics.public_completion.internal_result_email_unavailable", {
         requestId,
-        reason: internalNotification.value.errorCode ?? "outbox_unavailable",
-        failed: internalNotification.value.failed,
+        reason: "outbox_unavailable",
+        retryScheduled: internalResultDelivery.value.retryScheduled,
       });
-    } else if (internalNotification.value.failed > 0) {
-      logEvent("warn", "diagnostics.public_completion.internal_notification_queued_for_retry", {
+    } else if (internalResultDelivery.value.retryScheduled > 0) {
+      logEvent("warn", "diagnostics.public_completion.internal_result_email_queued_for_retry", {
         requestId,
-        failed: internalNotification.value.failed,
+        retryScheduled: internalResultDelivery.value.retryScheduled,
       });
     }
   });

@@ -130,6 +130,64 @@ describe("translation catalogs", () => {
     }
   });
 
+  it("presents Career Anchors consistently as a 40-statement instrument", () => {
+    const spanishPresentations = [
+      spanishMessages.ProcessPopup.description,
+      spanishMessages.Panel.emptyDescription,
+      spanishMessages.Login.termsNotice,
+      spanishMessages.CareerAnchorIntro.metadataTitle,
+      spanishMessages.CareerAnchorIntro.metadataDescription,
+      spanishMessages.CareerAnchorIntro.label,
+      spanishMessages.CareerAnchorIntro.introContinuation,
+      spanishMessages.CareerQuiz.metadataTitle,
+      spanishMessages.CareerQuiz.metadataDescription,
+      spanishMessages.CareerQuiz.introBadge,
+      spanishMessages.CareerQuiz.introLead,
+      spanishMessages.CareerQuiz.introFactStatements,
+    ];
+    const englishPresentations = [
+      englishMessages.ProcessPopup.description,
+      englishMessages.Panel.emptyDescription,
+      englishMessages.Login.termsNotice,
+      englishMessages.CareerAnchorIntro.metadataTitle,
+      englishMessages.CareerAnchorIntro.metadataDescription,
+      englishMessages.CareerAnchorIntro.label,
+      englishMessages.CareerAnchorIntro.introContinuation,
+      englishMessages.CareerQuiz.metadataTitle,
+      englishMessages.CareerQuiz.metadataDescription,
+      englishMessages.CareerQuiz.introBadge,
+      englishMessages.CareerQuiz.introLead,
+      englishMessages.CareerQuiz.introFactStatements,
+    ];
+
+    for (const message of spanishPresentations) {
+      expect(message).toMatch(/\b40 enunciados\b/i);
+    }
+    for (const message of englishPresentations) {
+      expect(message).toMatch(/\b40 statements\b/i);
+    }
+
+    const spanishCareerCopy = JSON.stringify({
+      intro: spanishMessages.CareerAnchorIntro,
+      quiz: spanishMessages.CareerQuiz,
+      popup: spanishMessages.ProcessPopup,
+      panel: spanishMessages.Panel.emptyDescription,
+      login: spanishMessages.Login.termsNotice,
+    });
+    const englishCareerCopy = JSON.stringify({
+      intro: englishMessages.CareerAnchorIntro,
+      quiz: englishMessages.CareerQuiz,
+      popup: englishMessages.ProcessPopup,
+      panel: englishMessages.Panel.emptyDescription,
+      login: englishMessages.Login.termsNotice,
+    });
+
+    expect(spanishCareerCopy).not.toMatch(
+      /\b40\s+(?:preguntas|ítems|items|afirmaciones)\b/i,
+    );
+    expect(englishCareerCopy).not.toMatch(/\b40\s+affirmations\b/i);
+  });
+
   it("does not expose a business-hours block", () => {
     for (const catalog of [spanish, english]) {
       expect(

@@ -27,8 +27,11 @@ import {
   type CareerAnchorStoredScore,
   type CareerStage,
 } from "@/lib/diagnostics/career-anchor";
+import {
+  getCareerAnchorInitialStep,
+  type CareerAnchorJourneyStep,
+} from "@/lib/diagnostics/career-anchor-journey-state";
 
-type Step = "intro" | "ready" | "questions" | "transition" | "bonus" | "processing" | "results" | "completed";
 type SaveStatus = "idle" | "saving" | "saved" | "offline" | "error" | "conflict";
 
 export type ExistingCareerDiagnostic = {
@@ -138,24 +141,16 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
   const quizData = locale === "en" ? englishQuizData : spanishQuizData;
   const storedAnswers = existingDiagnostic ? Object.fromEntries(Object.entries(existingDiagnostic.rawAnswers.answers).map(([questionId, value]) => [Number(questionId), value])) : {};
   const initialAnsweredCount = Object.keys(storedAnswers).length;
-  const initialStep: Step =
-    existingDiagnostic?.status === "completed"
-      ? showStoredResult
-        ? "results"
-        : "completed"
-      : existingDiagnostic?.status === "processing"
-        ? "processing"
-        : existingDiagnostic && initialAnsweredCount === 40
-          ? existingDiagnostic.rawAnswers.bonus.length > 0
-            ? "bonus"
-            : "transition"
-          : existingDiagnostic
-            ? "ready"
-            : "intro";
-  const [step, setStep] = useState<Step>(initialStep);
+  const initialStep = getCareerAnchorInitialStep(
+    existingDiagnostic?.status,
+    showStoredResult,
+  );
+  const [step, setStep] = useState<CareerAnchorJourneyStep>(initialStep);
   const [answers, setAnswers] = useState<Record<number, number>>(storedAnswers);
   const [bonusQuestions, setBonusQuestions] = useState<number[]>(existingDiagnostic?.rawAnswers.bonus ?? []);
   const [careerStage, setCareerStage] = useState<CareerStage>(existingDiagnostic?.careerStage ?? "prefer_not_to_say");
+  const [resultEmailConsent, setResultEmailConsent] = useState(false);
+  const [resultEmailConsentError, setResultEmailConsentError] = useState(false);
   const [currentStatementIndex, setCurrentStatementIndex] = useState(Math.min(Math.max((existingDiagnostic?.currentStatement ?? 1) - 1, 0), 39));
   const [selectionPage, setSelectionPage] = useState(0);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>(existingDiagnostic ? "saved" : "idle");
@@ -166,6 +161,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
   const finalDialogContentRef = useRef<HTMLDivElement>(null);
   const finalDialogTitleRef = useRef<HTMLHeadingElement>(null);
+  const resultEmailConsentRef = useRef<HTMLInputElement>(null);
   const interpretationRequestRef = useRef<AbortController | null>(null);
   const serverRevisionRef = useRef(existingDiagnostic?.progressRevision ?? 0);
   const latestIssuedRevisionRef = useRef(existingDiagnostic?.progressRevision ?? 0);
@@ -407,6 +403,18 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
   }, [analyticsConsent, analyticsLocale, existingDiagnostic?.status, step]);
 
   const startTest = () => {
+    if (!resultEmailConsent) {
+      setResultEmailConsentError(true);
+      window.requestAnimationFrame(() => resultEmailConsentRef.current?.focus());
+      return;
+    }
+
+    setResultEmailConsentError(false);
+    if (existingDiagnostic?.status === "processing") {
+      setStep("processing");
+      return;
+    }
+
     setStep("questions");
     trackCareerAnchorEvent(
       "career_anchor_started",
@@ -521,6 +529,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
           rawAnswers: { answers, bonus: bonusQuestions },
           locale: analyticsLocale,
           careerStage,
+          resultEmailConsent,
         }),
       });
       const responseBody = (await response.json().catch(() => null)) as {
@@ -907,6 +916,66 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
                             {t("privacyLink")}
                           </Link>
                         </Text>
+                      </div>
+
+                      <div className="space-y-4 rounded-2xl border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] p-5">
+                        <div className="space-y-2">
+                          <Heading level="h3" className="text-xl text-[var(--quiz-ink)]">
+                            {t("reportConsentTitle")}
+                          </Heading>
+                          <Text
+                            id="career-anchor-result-email-consent-description"
+                            variant="small"
+                            className="[overflow-wrap:anywhere] leading-relaxed text-[var(--quiz-muted)]"
+                          >
+                            {t("reportConsentDescription")}
+                          </Text>
+                        </div>
+
+                        <label
+                          htmlFor="career-anchor-result-email-consent"
+                          className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-[var(--quiz-ink)]"
+                        >
+                          <input
+                            ref={resultEmailConsentRef}
+                            id="career-anchor-result-email-consent"
+                            name="career-anchor-result-email-consent"
+                            type="checkbox"
+                            required
+                            checked={resultEmailConsent}
+                            aria-invalid={resultEmailConsentError}
+                            aria-describedby={
+                              resultEmailConsentError
+                                ? "career-anchor-result-email-consent-description career-anchor-result-email-consent-error"
+                                : "career-anchor-result-email-consent-description"
+                            }
+                            onChange={(event) => {
+                              setResultEmailConsent(event.target.checked);
+                              if (event.target.checked) setResultEmailConsentError(false);
+                            }}
+                            className="mt-1 h-4 w-4 flex-none rounded border-[var(--quiz-border)] accent-[var(--quiz-accent)]"
+                          />
+                          <span className="[overflow-wrap:anywhere]">
+                            {t("reportConsentLabel")}
+                          </span>
+                        </label>
+
+                        {resultEmailConsentError ? (
+                          <p
+                            id="career-anchor-result-email-consent-error"
+                            role="alert"
+                            className="text-sm font-medium text-destructive"
+                          >
+                            {t("reportConsentRequired")}
+                          </p>
+                        ) : null}
+
+                        <Link
+                          href="/privacidad"
+                          className="inline-flex text-sm font-semibold text-[var(--quiz-ink)] underline decoration-[var(--quiz-accent)]/55 underline-offset-4 hover:text-[var(--quiz-accent-strong)]"
+                        >
+                          {t("privacyLink")}
+                        </Link>
                       </div>
                     </CardContent>
                     <CardFooter className="flex flex-col gap-3 border-t border-[var(--quiz-border-soft)] p-6 sm:flex-row sm:justify-between">
@@ -1498,18 +1567,10 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
 
                   {fallbackInterpretation ? (
                     <DiagnosticResultShareForm
+                      mode="career_anchor_contact"
                       headingLevel="h2"
                       onAccepted={() => {
                         trackCareerAnchorEvent("career_anchor_contact_requested", { locale: analyticsLocale, progress: 100 }, analyticsConsent);
-                      }}
-                      result={{
-                        questionnaire: "career_anchors",
-                        situation: t(careerStageOptions.find((option) => option.value === careerStage)?.labelKey ?? "contextOptionPreferNot"),
-                        recommendedService: (interpretation ?? fallbackInterpretation).relevantServices[0]?.label,
-                        alternativeService: (interpretation ?? fallbackInterpretation).relevantServices[1]?.label,
-                        primaryAnchors: resultGroups.primary.map((anchor) => anchor.name),
-                        secondaryAnchors: resultGroups.secondary.map((anchor) => anchor.name),
-                        summary: (interpretation ?? fallbackInterpretation).summary,
                       }}
                     />
                   ) : null}

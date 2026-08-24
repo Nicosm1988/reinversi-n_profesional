@@ -25,6 +25,7 @@
 
 ## Test gratuito de Anclas de Carrera
 
+- Toda presentación pública del test debe indicar de forma explícita que está compuesto por **40 enunciados** (`40 statements` en inglés). No describir su estructura como 40 preguntas, ítems o afirmaciones; reservar “afirmaciones” para la experiencia subjetiva de selección.
 - Cada cuenta autenticada con Google puede realizar el test gratuito una sola vez.
 - El límite debe aplicarse en el servidor y en Supabase; nunca depender solo de la interfaz.
 - La persona puede volver a consultar el resultado guardado, pero no reiniciar ni repetir el test gratuito.

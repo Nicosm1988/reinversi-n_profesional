@@ -91,28 +91,55 @@ describe("buildContactEmailText", () => {
         message: "Quisiera conversar.",
         consent: true,
         companyWebsite: "",
-        sourcePage: "/test-anclas-de-carrera",
+        sourcePage: "/encontrar-mi-recorrido",
         locale: "es",
         result: {
-          questionnaire: "career_anchors",
-          primaryAnchors: ["Autonomía/Independencia"],
-          secondaryAnchors: ["Creatividad Emprendedora"],
-          summary: "El resultado ofrece un mapa orientativo de motivaciones.",
+          questionnaire: "route_finder",
+          recommendedService: "Explorar una nueva dirección profesional",
+          summary: "El resultado ofrece un punto de partida orientativo.",
         },
       },
       {
         date: new Date("2026-08-15T12:00:00.000Z"),
-        source: "https://senda.example/test-anclas-de-carrera",
+        source: "https://senda.example/encontrar-mi-recorrido",
       },
     );
 
-    expect(text).toContain("Cuestionario: career_anchors");
-    expect(text).toContain("Anclas principales: Autonomía/Independencia");
-    expect(text).toContain("Anclas secundarias: Creatividad Emprendedora");
+    expect(text).toContain("Cuestionario: route_finder");
+    expect(text).toContain(
+      "Recorrido recomendado: Explorar una nueva dirección profesional",
+    );
     expect(text).toContain("Preferencia de contacto: email");
     expect(text).toContain("Fecha: 2026-08-15T12:00:00.000Z");
     expect(text).toContain("Idioma: es");
     expect(text).toContain("Consentimiento explícito: Sí");
     expect(text).not.toContain("rawAnswers");
+  });
+
+  it("renders a Career Anchors contact request without attaching the result again", () => {
+    const text = buildContactEmailText(
+      {
+        formOrigin: "career_anchor_contact",
+        name: "Ana Pérez",
+        phone: "+54 9 11 1234-5678",
+        email: "ana@example.com",
+        preferredContact: "email",
+        message: "Quisiera conversar sobre mi resultado.",
+        consent: true,
+        companyWebsite: "",
+        sourcePage: "/test-anclas-de-carrera",
+        locale: "es",
+      },
+      {
+        date: new Date("2026-08-24T12:00:00.000Z"),
+        source: "https://senda.example/test-anclas-de-carrera",
+      },
+    );
+
+    expect(text).toContain("Solicitud de contacto sobre Anclas de Carrera");
+    expect(text).toContain("Preferencia de contacto: email");
+    expect(text).toContain("Mensaje opcional:\nQuisiera conversar sobre mi resultado.");
+    expect(text).not.toContain("Resultado orientativo:");
+    expect(text).not.toMatch(/Anclas principales|Anclas secundarias|Resumen:/);
   });
 });

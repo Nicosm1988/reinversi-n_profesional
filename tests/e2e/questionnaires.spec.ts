@@ -268,12 +268,13 @@ const careerLabels = {
   es: {
     route: "/test-anclas-de-carrera",
     introTitle: "Las motivaciones detrás de tus decisiones profesionales",
+    statementCount: "40 enunciados",
     loginCta: "Ingresar con Google para continuar",
     accountNote: "Para cuidar el intento único, el progreso y el resultado, necesitás ingresar con tu cuenta de Google.",
     introCta: "Continuar",
     readyCta: "Empezar el test",
     statementNext: "Siguiente",
-    statementFinish: "Completar los enunciados",
+    statementFinish: "Completar los 40 enunciados",
     transitionCta: "Hacer mi selección final",
     selectionNext: "Página siguiente",
     selectionFinish: "Confirmar y ver mi resultado",
@@ -283,18 +284,19 @@ const careerLabels = {
     topThree: "Estas son tus 3 anclas principales",
     contextLabel: "¿Qué situación profesional estás atravesando?",
     contextButton: "Preparar mi lectura orientativa",
-    shareTitle: "Quiero que Senda reciba mi resultado y se contacte conmigo",
-    shareSubmit: "Compartir mi resultado",
+    shareTitle: "Quiero conversar con Senda sobre mi resultado",
+    shareSubmit: "Pedir contacto",
   },
   en: {
     route: "/en/test-anclas-de-carrera",
     introTitle: "The motivations behind your career decisions",
+    statementCount: "40 statements",
     loginCta: "Sign in with Google to continue",
     accountNote: "To protect the single attempt, progress, and result, you need to sign in with your Google account.",
     introCta: "Continue",
     readyCta: "Start the test",
     statementNext: "Next",
-    statementFinish: "Complete the statements",
+    statementFinish: "Complete the 40 statements",
     transitionCta: "Make my final selection",
     selectionNext: "Next page",
     selectionFinish: "Confirm and view my result",
@@ -304,8 +306,8 @@ const careerLabels = {
     topThree: "These are your 3 primary anchors",
     contextLabel: "What professional situation are you navigating?",
     contextButton: "Prepare my initial interpretation",
-    shareTitle: "I want Senda to receive my result and contact me",
-    shareSubmit: "Share my result",
+    shareTitle: "I want to talk with Senda about my result",
+    shareSubmit: "Request contact",
   },
 } as const;
 
@@ -328,6 +330,7 @@ test.describe("anonymous Career Anchors entry", () => {
       await page.goto(labels.route);
 
       await expect(page.getByRole("heading", { level: 1, name: labels.introTitle })).toBeVisible();
+      await expect(page.getByText(labels.statementCount, { exact: true })).toBeVisible();
       await expect(page.getByText(labels.accountNote, { exact: true })).toBeVisible();
       const login = page.getByRole("link", { name: labels.loginCta, exact: true });
       await expect(login).toBeVisible();
@@ -416,6 +419,24 @@ async function mockAuthenticatedCareerApis(page: Page, locale: CareerLocale) {
   return { progressPayloads, completionPayloads, interpretationPayloads };
 }
 
+async function acceptCareerResultEmailConsent(
+  page: Page,
+  startButtonName: string,
+  assertValidation = false,
+) {
+  const consent = page.locator("#career-anchor-result-email-consent");
+  await expect(consent).not.toBeChecked();
+
+  if (assertValidation) {
+    await page.getByRole("button", { name: startButtonName, exact: true }).click();
+    await expect(page.locator("#career-anchor-result-email-consent-error")).toBeVisible();
+    await expect(consent).toBeFocused();
+  }
+
+  await consent.check();
+  await page.getByRole("button", { name: startButtonName, exact: true }).click();
+}
+
 async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardBonus = false) {
   const labels = careerLabels[locale];
   const quizData = locale === "en" ? englishQuizData : spanishQuizData;
@@ -429,7 +450,7 @@ async function completeCareerAnchors(page: Page, locale: CareerLocale, keyboardB
   );
   await expect(page.getByRole("link", { name: labels.loginCta, exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: labels.introCta, exact: true }).click();
-  await page.getByRole("button", { name: labels.readyCta, exact: true }).click();
+  await acceptCareerResultEmailConsent(page, labels.readyCta, true);
 
   await expect(page.getByTestId("career-anchor-statement")).toBeVisible();
   expect(
@@ -514,7 +535,7 @@ test("real Supabase journey persists, resumes, completes once and reopens the sa
   await page.goto(labels.route);
   await expect(page.getByRole("heading", { level: 1, name: labels.introTitle })).toBeVisible();
   await page.getByRole("button", { name: labels.introCta, exact: true }).click();
-  await page.getByRole("button", { name: labels.readyCta, exact: true }).click();
+  await acceptCareerResultEmailConsent(page, labels.readyCta);
 
   for (let statementId = 1; statementId <= 14; statementId += 1) {
     const value = answers[String(statementId)];
@@ -528,18 +549,27 @@ test("real Supabase journey persists, resumes, completes once and reopens the sa
   await page.reload();
   await expect(page.getByRole("heading", { level: 1, name: "Tu recorrido sigue guardado" })).toBeVisible();
   await expect(page.getByText(/retomar desde el enunciado 14/i)).toBeVisible();
-  await page.getByRole("button", { name: "Retomar en el enunciado 14", exact: true }).click();
+  await acceptCareerResultEmailConsent(page, "Retomar en el enunciado 14");
   await expect(page.locator(`input[name="statement-14"][value="${answers["14"]}"]`)).toBeChecked();
   await page.getByRole("button", { name: labels.statementNext, exact: true }).click();
 
   for (let statementId = 15; statementId <= 40; statementId += 1) {
     const value = answers[String(statementId)];
     await page.locator(`input[name="statement-${statementId}"][value="${value}"]`).locator("..").click();
-    await page.getByRole("button", {
-      name: statementId === 40 ? labels.statementFinish : labels.statementNext,
-      exact: true,
-    }).click();
+    if (statementId < 40) {
+      await page.getByRole("button", {
+        name: labels.statementNext,
+        exact: true,
+      }).click();
+    }
   }
+
+  await expect(page.getByText("Avance guardado", { exact: true })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 1, name: "Tu recorrido sigue guardado" })).toBeVisible();
+  await acceptCareerResultEmailConsent(page, "Retomar en el enunciado 40");
+  await expect(page.locator(`input[name="statement-40"][value="${answers["40"]}"]`)).toBeChecked();
+  await page.getByRole("button", { name: labels.statementFinish, exact: true }).click();
 
   const dialog = page.getByTestId("career-anchor-final-dialog");
   await dialog.getByRole("button", { name: labels.transitionCta, exact: true }).click();
@@ -569,6 +599,7 @@ test("real Supabase journey persists, resumes, completes once and reopens the sa
     rawAnswers: { answers, bonus: [1, 2, 3] },
     locale: "es",
     careerStage: "prefer_not_to_say",
+    resultEmailConsent: true,
   });
   expect(duplicateCompletion).toMatchObject({
     status: 409,
@@ -593,7 +624,7 @@ test("final selection remains usable at every required viewport", async ({ page 
   await page.setViewportSize({ width: 1720, height: 900 });
   await page.goto(labels.route);
   await page.getByRole("button", { name: labels.introCta, exact: true }).click();
-  await page.getByRole("button", { name: labels.readyCta, exact: true }).click();
+  await acceptCareerResultEmailConsent(page, labels.readyCta);
 
   for (let statementId = 1; statementId <= 40; statementId += 1) {
     const answer = page.locator(`input[name="statement-${statementId}"][value="1"]`);
@@ -691,10 +722,14 @@ test("complete Spanish Career Anchors flow breaks ties into unique positions, au
     },
     careerStage: "prefer_not_to_say",
     locale: "es",
+    resultEmailConsent: true,
   });
-  expect(JSON.stringify(careerApi.completionPayloads[0])).not.toMatch(
-    /name|email|phone|ranking|dominantResult|resultBase/i,
-  );
+  expect(careerApi.completionPayloads[0]).not.toHaveProperty("name");
+  expect(careerApi.completionPayloads[0]).not.toHaveProperty("email");
+  expect(careerApi.completionPayloads[0]).not.toHaveProperty("phone");
+  expect(careerApi.completionPayloads[0]).not.toHaveProperty("ranking");
+  expect(careerApi.completionPayloads[0]).not.toHaveProperty("dominantResult");
+  expect(careerApi.completionPayloads[0]).not.toHaveProperty("resultBase");
 
   const share = page.getByRole("heading", { name: careerLabels.es.shareTitle }).locator("..");
   await share.getByLabel("Nombre", { exact: true }).fill("Grace Hopper");
@@ -716,18 +751,18 @@ test("complete Spanish Career Anchors flow breaks ties into unique positions, au
   await expect(share.getByRole("status")).toContainText("El servidor aceptó el envío");
   expect(contactAttempts).toBe(2);
   expect(contactSubmissions[0]).toMatchObject({
-    formOrigin: "diagnostic_result",
+    formOrigin: "career_anchor_contact",
     name: "Grace Hopper",
     email: "grace@example.com",
     preferredContact: "email",
     consent: true,
     sourcePage: "/test-anclas-de-carrera",
     locale: "es",
-    result: {
-      questionnaire: "career_anchors",
-      primaryAnchors: ["Técnica/Funcional"],
-    },
   });
+  expect(contactSubmissions[0]).not.toHaveProperty("result");
+  expect(JSON.stringify(contactSubmissions[0])).not.toMatch(
+    /primaryAnchors|secondaryAnchors|recommendedService|alternativeService|summary/i,
+  );
 });
 
 test("complete English Career Anchors flow remains usable, themed and overflow-free on mobile", async ({ page }) => {

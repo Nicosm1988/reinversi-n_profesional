@@ -9,6 +9,7 @@ import { smtpAcceptedDelivery } from "@/lib/contact/smtp-result";
 const LABORATORY_CONTACT_SUBJECT =
   "Interés en el Laboratorio de Narrativas Laborales Alternativas";
 const DIAGNOSTIC_RESULT_SUBJECT = "Resultado orientativo compartido desde Senda";
+const CAREER_ANCHOR_CONTACT_SUBJECT = "Solicitud de contacto sobre Anclas de Carrera";
 const TRANSITIONS_INTEREST_SUBJECT = "Interés en una transición laboral desde la web de Senda";
 
 const smtpEnvironmentSchema = z
@@ -58,6 +59,10 @@ function contactEmailSubject(submission: ContactSubmission) {
 
   if (submission.formOrigin === "diagnostic_result") {
     return DIAGNOSTIC_RESULT_SUBJECT;
+  }
+
+  if (submission.formOrigin === "career_anchor_contact") {
+    return CAREER_ANCHOR_CONTACT_SUBJECT;
   }
 
   if (submission.formOrigin === "transiciones_laborales_interes") {

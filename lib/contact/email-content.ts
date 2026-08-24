@@ -4,6 +4,25 @@ export function buildContactEmailText(
   submission: ContactSubmission,
   context: { date: Date; source: string },
 ) {
+  if (submission.formOrigin === "career_anchor_contact") {
+    return [
+      "Solicitud de contacto sobre Anclas de Carrera",
+      "",
+      `Nombre: ${submission.name}`,
+      `Teléfono: ${submission.phone || "No informado"}`,
+      `Correo: ${submission.email}`,
+      `Preferencia de contacto: ${submission.preferredContact}`,
+      `Fecha: ${context.date.toISOString()}`,
+      `Idioma: ${submission.locale}`,
+      `Consentimiento explícito: ${submission.consent ? "Sí" : "No"}`,
+      `Origen: ${submission.formOrigin}`,
+      `Página de origen: ${context.source}`,
+      "",
+      "Mensaje opcional:",
+      submission.message || "No informado",
+    ].join("\n");
+  }
+
   if (submission.formOrigin === "diagnostic_result") {
     return [
       "Resultado compartido voluntariamente desde Senda",

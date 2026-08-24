@@ -16,6 +16,7 @@ export const CONTACT_FORM_ORIGINS = [
   "contacto",
   "laboratorio_narrativas_laborales_alternativas",
   "diagnostic_result",
+  "career_anchor_contact",
   "transiciones_laborales_interes",
 ] as const;
 
@@ -127,8 +128,6 @@ const transitionsInterestContactSubmissionSchema = z
 const diagnosticResultSourcePageSchema = z.enum([
   "/encontrar-mi-recorrido",
   "/en/encontrar-mi-recorrido",
-  "/test-anclas-de-carrera",
-  "/en/test-anclas-de-carrera",
 ]);
 
 const optionalResultLabel = safeSingleLine(CONTACT_LIMITS.resultLabel)
@@ -146,7 +145,7 @@ const optionalResultLabels = z
 
 export const diagnosticResultSchema = z
   .object({
-    questionnaire: z.enum(["route_finder", "career_anchors"]),
+    questionnaire: z.literal("route_finder"),
     situation: optionalResultLabel,
     recommendedService: optionalResultLabel,
     alternativeService: optionalResultLabel,
@@ -171,11 +170,29 @@ const diagnosticResultContactSubmissionSchema = z
   })
   .strict();
 
+const careerAnchorContactSourcePageSchema = z.enum([
+  "/test-anclas-de-carrera",
+  "/en/test-anclas-de-carrera",
+]);
+
+const careerAnchorContactSubmissionSchema = z
+  .object({
+    ...commonContactFields,
+    formOrigin: z.literal("career_anchor_contact"),
+    preferredContact: z.enum(["email", "whatsapp", "either"]),
+    message: safeMultiline(CONTACT_LIMITS.message)
+      .optional()
+      .transform((value) => value ?? ""),
+    sourcePage: careerAnchorContactSourcePageSchema,
+  })
+  .strict();
+
 const submissionWithExplicitOriginSchema = z
   .discriminatedUnion("formOrigin", [
     standardContactSubmissionSchema,
     laboratoryContactSubmissionSchema,
     diagnosticResultContactSubmissionSchema,
+    careerAnchorContactSubmissionSchema,
     transitionsInterestContactSubmissionSchema,
   ])
   .superRefine((value, context) => {
@@ -183,13 +200,8 @@ const submissionWithExplicitOriginSchema = z
 
     if (value.formOrigin === "diagnostic_result") {
       const localePrefix = value.locale === "en" ? "/en" : "";
-      const expectedQuestionnaire = normalizedSourcePage.endsWith("/test-anclas-de-carrera")
-        ? "career_anchors"
-        : "route_finder";
-      const allowedSources = [
-        `${localePrefix}/encontrar-mi-recorrido`,
-        `${localePrefix}/test-anclas-de-carrera`,
-      ];
+      const expectedQuestionnaire = "route_finder";
+      const allowedSources = [`${localePrefix}/encontrar-mi-recorrido`];
 
       if (!allowedSources.includes(normalizedSourcePage)) {
         context.addIssue({
@@ -204,6 +216,22 @@ const submissionWithExplicitOriginSchema = z
           code: "custom",
           path: ["result", "questionnaire"],
           message: "Questionnaire does not match source page",
+        });
+      }
+
+      return;
+    }
+
+    if (value.formOrigin === "career_anchor_contact") {
+      const expectedSourcePage = value.locale === "en"
+        ? "/en/test-anclas-de-carrera"
+        : "/test-anclas-de-carrera";
+
+      if (normalizedSourcePage !== expectedSourcePage) {
+        context.addIssue({
+          code: "custom",
+          path: ["sourcePage"],
+          message: "Source page does not match locale",
         });
       }
 

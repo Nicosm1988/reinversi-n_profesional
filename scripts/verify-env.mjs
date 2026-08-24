@@ -173,15 +173,7 @@ function main() {
     }
   }
 
-  if (!isPresent(process.env.INTERNAL_NOTIFICATION_STARTED_AT)) {
-    const message =
-      "INTERNAL_NOTIFICATION_STARTED_AT missing: authenticated completion reconciliation is disabled.";
-    if (strict) {
-      errors.push(message);
-    } else {
-      warnings.push(message);
-    }
-  } else {
+  if (isPresent(process.env.INTERNAL_NOTIFICATION_STARTED_AT)) {
     const notificationStartedAt = process.env.INTERNAL_NOTIFICATION_STARTED_AT.trim();
     if (!isIsoDateTime(notificationStartedAt)) {
       errors.push("INTERNAL_NOTIFICATION_STARTED_AT must be an ISO 8601 date-time with timezone.");

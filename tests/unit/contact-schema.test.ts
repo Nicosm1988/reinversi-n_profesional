@@ -37,14 +37,27 @@ const VALID_DIAGNOSTIC_RESULT_SUBMISSION = {
   message: "Me gustaría conversar sobre este resultado.",
   consent: true,
   companyWebsite: "",
-  sourcePage: "/test-anclas-de-carrera",
+  sourcePage: "/encontrar-mi-recorrido",
   locale: "es",
   result: {
-    questionnaire: "career_anchors",
-    primaryAnchors: ["Autonomía/Independencia"],
-    secondaryAnchors: ["Creatividad Emprendedora"],
-    summary: "Una lectura orientativa de las motivaciones vinculadas con el trabajo.",
+    questionnaire: "route_finder",
+    situation: "Explorar una nueva dirección profesional",
+    recommendedService: "Explorar una nueva dirección profesional",
+    summary: "Una orientación inicial para elegir el próximo recorrido.",
   },
+};
+
+const VALID_CAREER_ANCHOR_CONTACT_SUBMISSION = {
+  formOrigin: "career_anchor_contact",
+  name: "  Ana   Pérez  ",
+  email: " ANA@EXAMPLE.COM ",
+  phone: " +54 9 11 1234-5678 ",
+  preferredContact: "email",
+  message: "Me gustaría conversar sobre mi resultado.",
+  consent: true,
+  companyWebsite: "",
+  sourcePage: "/test-anclas-de-carrera",
+  locale: "es",
 };
 
 describe("contactSubmissionSchema", () => {
@@ -194,13 +207,40 @@ describe("contactSubmissionSchema", () => {
       name: "Ana Pérez",
       email: "ana@example.com",
       preferredContact: "email",
-      sourcePage: "/test-anclas-de-carrera",
+      sourcePage: "/encontrar-mi-recorrido",
       result: {
-        questionnaire: "career_anchors",
-        primaryAnchors: ["Autonomía/Independencia"],
+        questionnaire: "route_finder",
+        recommendedService: "Explorar una nueva dirección profesional",
       },
     });
     expect(JSON.stringify(parsed)).not.toContain("rawAnswers");
+  });
+
+  it("accepts a Career Anchors contact request only when no result is attached", () => {
+    const parsed = contactSubmissionSchema.parse(
+      VALID_CAREER_ANCHOR_CONTACT_SUBMISSION,
+    );
+
+    expect(parsed).toMatchObject({
+      formOrigin: "career_anchor_contact",
+      name: "Ana Pérez",
+      email: "ana@example.com",
+      preferredContact: "email",
+      sourcePage: "/test-anclas-de-carrera",
+    });
+    expect(parsed).not.toHaveProperty("result");
+    expect(
+      contactSubmissionSchema.safeParse({
+        ...VALID_CAREER_ANCHOR_CONTACT_SUBMISSION,
+        result: VALID_DIAGNOSTIC_RESULT_SUBMISSION.result,
+      }).success,
+    ).toBe(false);
+    expect(
+      contactSubmissionSchema.safeParse({
+        ...VALID_CAREER_ANCHOR_CONTACT_SUBMISSION,
+        locale: "en",
+      }).success,
+    ).toBe(false);
   });
 
   it("rejects diagnostic source mismatches, missing consent and raw answer injection", () => {
@@ -228,7 +268,18 @@ describe("contactSubmissionSchema", () => {
     expect(
       contactSubmissionSchema.safeParse({
         ...VALID_DIAGNOSTIC_RESULT_SUBMISSION,
-        sourcePage: "/encontrar-mi-recorrido",
+        sourcePage: "/test-anclas-de-carrera",
+      }).success,
+    ).toBe(false);
+    expect(
+      contactSubmissionSchema.safeParse({
+        ...VALID_DIAGNOSTIC_RESULT_SUBMISSION,
+        sourcePage: "/test-anclas-de-carrera",
+        result: {
+          questionnaire: "career_anchors",
+          primaryAnchors: ["Autonomía/Independencia"],
+          summary: "Una lectura orientativa.",
+        },
       }).success,
     ).toBe(false);
   });

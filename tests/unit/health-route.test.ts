@@ -42,7 +42,7 @@ describe("GET /api/health", () => {
     expect(body.checks.contactSmtp).toBe(true);
     expect(body.checks.reportEmailCron).toBe(true);
     expect(body.checks.internalNotifications).toBe(true);
-    expect(body.checks.completionNotificationReconciliation).toBe(true);
+    expect(body.checks).not.toHaveProperty("completionNotificationReconciliation");
   });
 
   it("reports degraded when internal notification recipients are missing", async () => {
@@ -56,15 +56,15 @@ describe("GET /api/health", () => {
     expect(body.readiness.internalNotifications).toBe(false);
   });
 
-  it("reports degraded when completion notification reconciliation has no cutoff", async () => {
+  it("does not gate health on the retired completion-notification reconciliation cutoff", async () => {
     vi.stubEnv("INTERNAL_NOTIFICATION_STARTED_AT", "");
 
     const response = await GET(new Request("https://senda.example/api/health"));
     const body = await response.json();
 
-    expect(response.status).toBe(503);
-    expect(body.status).toBe("degraded");
-    expect(body.readiness.completionNotificationReconciliation).toBe(false);
+    expect(response.status).toBe(200);
+    expect(body.status).toBe("ok");
+    expect(body.readiness).not.toHaveProperty("completionNotificationReconciliation");
   });
 
   it("reports degraded when contact SMTP is incomplete", async () => {
