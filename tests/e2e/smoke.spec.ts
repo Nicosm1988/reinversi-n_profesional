@@ -2,6 +2,10 @@ import { expect, test } from "@playwright/test";
 
 const whatsappMessage =
   "Hola, estuve recorriendo la web de Senda y quisiera recibir más información.";
+const hasSupabasePublicConfig = Boolean(
+  process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+  && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim(),
+);
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -29,8 +33,27 @@ test("smoke: multipage gateway, public intake and protected account routes are a
     level: 1,
     name: "Las motivaciones detrás de tus decisiones profesionales",
   })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Ingresar con Google para continuar" })).toBeVisible();
+  const login = page.getByRole("link", { name: "Ingresar con Google para continuar" });
+  if (hasSupabasePublicConfig) {
+    await expect(login).toBeVisible();
+  } else {
+    await expect(login).toHaveCount(0);
+    await expect(
+      page.getByRole("button", { name: "Guardado no disponible por el momento", exact: true }),
+    ).toBeDisabled();
+    await expect(page.getByText(
+      "No podemos verificar tu cuenta o tus resultados guardados en este momento. Probá nuevamente más tarde.",
+      { exact: true },
+    )).toBeVisible();
+  }
   await expect(page.locator('input[name^="statement-"]')).toHaveCount(0);
+  await expect(page.locator("#career-anchor-result-email-consent")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Cómo recibe Senda tu resultado", exact: true }),
+  ).toHaveCount(0);
+  await expect(page.locator(".career-quiz")).not.toContainText(
+    /hola@universosenda\.com|tanisardella@gmail\.com/i,
+  );
 
   await page.goto("/panel");
   await expect(page).toHaveURL(/\/login\?next=%2Fpanel/);

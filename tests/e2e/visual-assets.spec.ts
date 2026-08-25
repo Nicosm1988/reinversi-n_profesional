@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
 
+const hasSupabasePublicConfig = Boolean(
+  process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+  && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim(),
+);
+
 test("Senda loads its visual identity, fonts and images", async ({ page }) => {
   const failedResources: string[] = [];
   page.on("requestfailed", (request) => {
@@ -110,14 +115,6 @@ test("career-anchor entry is accessible and authenticated answers expose labeled
     name: "Las motivaciones detrás de tus decisiones profesionales",
   })).toBeVisible();
 
-  const login = page.getByRole("link", { name: "Ingresar con Google para continuar" });
-  if (await login.count()) {
-    await expect(login).toBeVisible();
-    await expect(page.locator("fieldset")).toHaveCount(0);
-    return;
-  }
-
-  await page.getByRole("button", { name: "Continuar", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Cómo recibe Senda tu resultado", exact: true }),
   ).toHaveCount(0);
@@ -125,6 +122,28 @@ test("career-anchor entry is accessible and authenticated answers expose labeled
   await expect(page.locator(".career-quiz")).not.toContainText(
     /hola@universosenda\.com|tanisardella@gmail\.com/i,
   );
+
+  const login = page.getByRole("link", { name: "Ingresar con Google para continuar" });
+  if (!hasSupabasePublicConfig) {
+    await expect(login).toHaveCount(0);
+    await expect(
+      page.getByRole("button", { name: "Guardado no disponible por el momento", exact: true }),
+    ).toBeDisabled();
+    await expect(page.getByText(
+      "No podemos verificar tu cuenta o tus resultados guardados en este momento. Probá nuevamente más tarde.",
+      { exact: true },
+    )).toBeVisible();
+    await expect(page.locator("fieldset")).toHaveCount(0);
+    return;
+  }
+
+  if (await login.count()) {
+    await expect(login).toBeVisible();
+    await expect(page.locator("fieldset")).toHaveCount(0);
+    return;
+  }
+
+  await page.getByRole("button", { name: "Continuar", exact: true }).click();
   await page.getByRole("button", { name: /Empezar el test|Retomar en el enunciado/ }).click();
 
   const firstStatement = page.locator("fieldset").first();

@@ -3,6 +3,10 @@ import englishQuizData from "@/lib/data/anchors.en.json";
 import spanishQuizData from "@/lib/data/anchors.json";
 
 const authenticatedStorageState = process.env.E2E_AUTH_STORAGE_STATE;
+const hasSupabasePublicConfig = Boolean(
+  process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+  && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim(),
+);
 
 type RouteFinderAnswers = {
   situation: string;
@@ -271,6 +275,8 @@ const careerLabels = {
     statementCount: "40 enunciados",
     loginCta: "Ingresar con Google para continuar",
     accountNote: "Para cuidar el intento único, el progreso y el resultado, necesitás ingresar con tu cuenta de Google.",
+    unavailableCta: "Guardado no disponible por el momento",
+    unavailableNote: "No podemos verificar tu cuenta o tus resultados guardados en este momento. Probá nuevamente más tarde.",
     introCta: "Continuar",
     readyCta: "Empezar el test",
     internalNoticeTitle: "Cómo recibe Senda tu resultado",
@@ -294,6 +300,8 @@ const careerLabels = {
     statementCount: "40 statements",
     loginCta: "Sign in with Google to continue",
     accountNote: "To protect the single attempt, progress, and result, you need to sign in with your Google account.",
+    unavailableCta: "Saving is currently unavailable",
+    unavailableNote: "We cannot verify your account or saved results right now. Please try again later.",
     introCta: "Continue",
     readyCta: "Start the test",
     internalNoticeTitle: "How Senda receives your result",
@@ -315,7 +323,7 @@ const careerLabels = {
 
 test.describe("anonymous Career Anchors entry", () => {
   for (const locale of ["es", "en"] as const) {
-    test(`shows only the ${locale} introduction and Google sign-in path`, async ({ page }) => {
+    test(`shows only the ${locale} introduction and expected authentication state`, async ({ page }) => {
       const labels = careerLabels[locale];
       const mutationRequests: string[] = [];
       page.on("request", (request) => {
@@ -333,13 +341,21 @@ test.describe("anonymous Career Anchors entry", () => {
 
       await expect(page.getByRole("heading", { level: 1, name: labels.introTitle })).toBeVisible();
       await expect(page.getByText(labels.statementCount, { exact: true })).toBeVisible();
-      await expect(page.getByText(labels.accountNote, { exact: true })).toBeVisible();
       const login = page.getByRole("link", { name: labels.loginCta, exact: true });
-      await expect(login).toBeVisible();
-      await expect(login).toHaveAttribute(
-        "href",
-        new RegExp(`/login\\?next=${encodeURIComponent(labels.route).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`),
-      );
+      if (hasSupabasePublicConfig) {
+        await expect(page.getByText(labels.accountNote, { exact: true })).toBeVisible();
+        await expect(login).toBeVisible();
+        await expect(login).toHaveAttribute(
+          "href",
+          new RegExp(`/login\\?next=${encodeURIComponent(labels.route).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`),
+        );
+      } else {
+        await expect(login).toHaveCount(0);
+        await expect(
+          page.getByRole("button", { name: labels.unavailableCta, exact: true }),
+        ).toBeDisabled();
+        await expect(page.getByText(labels.unavailableNote, { exact: true })).toBeVisible();
+      }
       await expect(page.locator('input[name^="statement-"]')).toHaveCount(0);
       await expect(page.locator("#career-anchor-result-email-consent")).toHaveCount(0);
       await expect(
