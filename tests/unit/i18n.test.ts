@@ -188,6 +188,37 @@ describe("translation catalogs", () => {
     expect(englishCareerCopy).not.toMatch(/\b40\s+affirmations\b/i);
   });
 
+  it("keeps internal notification recipients and consent copy out of public messages", () => {
+    for (const catalog of [spanishMessages, englishMessages]) {
+      const publicCopy = JSON.stringify({
+        privacy: catalog.Privacy,
+        terms: catalog.Terms,
+        careerQuiz: catalog.CareerQuiz,
+        resultShare: catalog.ResultShare,
+      });
+
+      expect(publicCopy).not.toContain("tanisardella@gmail.com");
+      expect(JSON.stringify(catalog.CareerQuiz)).not.toContain(
+        "hola@universosenda.com",
+      );
+      expect(Object.keys(catalog.CareerQuiz)).not.toEqual(
+        expect.arrayContaining([
+          "reportConsentTitle",
+          "reportConsentDescription",
+          "reportConsentLabel",
+          "reportConsentRequired",
+        ]),
+      );
+    }
+
+    expect(spanishMessages.Privacy.section1Text).toContain(
+      "hola@universosenda.com",
+    );
+    expect(englishMessages.Privacy.section1Text).toContain(
+      "hola@universosenda.com",
+    );
+  });
+
   it("does not expose a business-hours block", () => {
     for (const catalog of [spanish, english]) {
       expect(

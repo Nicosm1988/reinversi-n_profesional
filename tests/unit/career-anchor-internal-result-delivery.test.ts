@@ -95,21 +95,6 @@ function validReport(overrides: Record<string, unknown> = {}) {
     user_data: {
       locale: "es",
       careerStage: "changing_employment",
-      resultEmailConsent: {
-        granted: true,
-        version: "career-anchor-team-result-email-v1",
-        recordedAt: "2026-08-24T14:35:20.000Z",
-        purpose: "senda_team_result_review",
-        recipients: ["hola@universosenda.com", "tanisardella@gmail.com"],
-        includes: [
-          "account_email",
-          "career_stage",
-          "eight_anchor_ranking",
-          "scores",
-          "deterministic_guidance",
-        ],
-        excludes: ["raw_answers"],
-      },
     },
     ...overrides,
   };
@@ -162,7 +147,7 @@ describe("processCareerAnchorInternalResultEmails", () => {
     });
   });
 
-  it("reads only the consented derived result and maps each kind to exactly one recipient", async () => {
+  it("delivers the derived result without consent metadata and maps each kind to exactly one recipient", async () => {
     mocks.claims.push(
       claim("career_anchor_internal_hola_v1"),
       claim("career_anchor_internal_tanisardella_v1"),
@@ -222,35 +207,6 @@ describe("processCareerAnchorInternalResultEmails", () => {
   });
 
   it.each([
-    [
-      "missing consent",
-      () => {
-        const report = validReport();
-        return {
-          ...report,
-          user_data: {
-            locale: report.user_data.locale,
-            careerStage: report.user_data.careerStage,
-          },
-        };
-      },
-    ],
-    [
-      "an obsolete consent version",
-      () => {
-        const report = validReport();
-        return {
-          ...report,
-          user_data: {
-            ...report.user_data,
-            resultEmailConsent: {
-              ...report.user_data.resultEmailConsent,
-              version: "career-anchor-team-result-email-v0",
-            },
-          },
-        };
-      },
-    ],
     ["fewer than eight scores", () => validReport({ score_result: scoreResult.slice(0, 7) })],
     ["a non-deterministic result", () => validReport({ result_base: { ...resultBase, mode: "ai" } })],
   ])("permanently rejects %s before resolving or sending email", async (_label, reportFactory) => {

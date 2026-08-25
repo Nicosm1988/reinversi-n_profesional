@@ -45,7 +45,6 @@ function validBody() {
     },
     locale: "es",
     careerStage: "changing_employment",
-    resultEmailConsent: true,
   };
 }
 
@@ -118,7 +117,7 @@ describe("POST /api/diagnostics/complete-public", () => {
     expect(mocks.createAdminClient).toHaveBeenCalledTimes(1);
     expect(mocks.adminRpc).toHaveBeenCalledTimes(1);
     expect(mocks.adminRpc).toHaveBeenCalledWith(
-      "finalize_career_anchor_diagnostic_with_result_email",
+      "finalize_career_anchor_diagnostic_with_internal_result_emails",
       {
         p_user_id: "user-test-id",
         p_raw_answers: requestBody.rawAnswers,
@@ -147,11 +146,11 @@ describe("POST /api/diagnostics/complete-public", () => {
         p_career_stage: "changing_employment",
         p_instrument_version: "schein-career-anchors-40-v1",
         p_algorithm_version: "senda-career-anchor-score-v1",
-        p_result_email_consent: true,
       },
     );
     const rpcPayload = mocks.adminRpc.mock.calls[0]?.[1];
     expect(rpcPayload.p_score_result).toHaveLength(8);
+    expect(rpcPayload).not.toHaveProperty("p_result_email_consent");
     expect(response.headers.get("cache-control")).toBe("no-store");
     expect(mocks.after).toHaveBeenCalledTimes(1);
     expect(mocks.processCareerAnchorReportEmails).not.toHaveBeenCalled();
@@ -256,7 +255,6 @@ describe("POST /api/diagnostics/complete-public", () => {
         dominantResult: { id: "manipulated", score: 999 },
         resultBase: { mode: "ai" },
         email: "not-accepted@example.com",
-        resultEmailConsent: true,
       }),
     );
 
@@ -266,22 +264,30 @@ describe("POST /api/diagnostics/complete-public", () => {
     expect(mocks.createAdminClient).not.toHaveBeenCalled();
   });
 
-  it.each([undefined, false])(
-    "requires express result-email consent before reading or saving answers (%s)",
-    async (resultEmailConsent) => {
-      const body = { ...validBody() } as Record<string, unknown>;
-      if (resultEmailConsent === undefined) delete body.resultEmailConsent;
-      else body.resultEmailConsent = resultEmailConsent;
+  it("temporarily accepts a legacy true field but ignores it", async () => {
+    const response = await POST(
+      completionRequest({ ...validBody(), resultEmailConsent: true }),
+    );
 
-      const response = await POST(completionRequest(body));
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ ok: true });
+    expect(mocks.adminRpc).toHaveBeenCalledTimes(1);
+    expect(mocks.adminRpc.mock.calls[0]?.[1]).not.toHaveProperty(
+      "p_result_email_consent",
+    );
+  });
 
-      expect(response.status).toBe(400);
-      await expect(response.json()).resolves.toEqual({ ok: false, code: "invalid" });
-      expect(mocks.maybeSingle).not.toHaveBeenCalled();
-      expect(mocks.createAdminClient).not.toHaveBeenCalled();
-      expect(mocks.processCareerAnchorInternalResultEmails).not.toHaveBeenCalled();
-    },
-  );
+  it("rejects a legacy false field before reading or saving answers", async () => {
+    const response = await POST(
+      completionRequest({ ...validBody(), resultEmailConsent: false }),
+    );
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toEqual({ ok: false, code: "invalid" });
+    expect(mocks.maybeSingle).not.toHaveBeenCalled();
+    expect(mocks.createAdminClient).not.toHaveBeenCalled();
+    expect(mocks.processCareerAnchorInternalResultEmails).not.toHaveBeenCalled();
+  });
 
   it("fails closed on lookup, admin configuration, and finalize RPC errors", async () => {
     mocks.maybeSingle.mockResolvedValueOnce({

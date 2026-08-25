@@ -118,7 +118,13 @@ test("career-anchor entry is accessible and authenticated answers expose labeled
   }
 
   await page.getByRole("button", { name: "Continuar", exact: true }).click();
-  await page.locator("#career-anchor-result-email-consent").check();
+  await expect(
+    page.getByRole("heading", { name: "Cómo recibe Senda tu resultado", exact: true }),
+  ).toHaveCount(0);
+  await expect(page.locator("#career-anchor-result-email-consent")).toHaveCount(0);
+  await expect(page.locator(".career-quiz")).not.toContainText(
+    /hola@universosenda\.com|tanisardella@gmail\.com/i,
+  );
   await page.getByRole("button", { name: /Empezar el test|Retomar en el enunciado/ }).click();
 
   const firstStatement = page.locator("fieldset").first();

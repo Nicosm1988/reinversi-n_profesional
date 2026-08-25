@@ -2,7 +2,6 @@ import "next/dist/compiled/server-only";
 
 import { z } from "zod";
 import {
-  CAREER_ANCHOR_RESULT_EMAIL_CONSENT_VERSION,
   careerAnchorInterpretationSchema,
   careerAnchorStoredScoreSchema,
   careerStageSchema,
@@ -38,27 +37,6 @@ const deliveryClaimSchema = z
   })
   .strict();
 
-const resultEmailConsentSchema = z
-  .object({
-    granted: z.literal(true),
-    version: z.literal(CAREER_ANCHOR_RESULT_EMAIL_CONSENT_VERSION),
-    recordedAt: z.iso.datetime({ offset: true }),
-    purpose: z.literal("senda_team_result_review"),
-    recipients: z.tuple([
-      z.literal("hola@universosenda.com"),
-      z.literal("tanisardella@gmail.com"),
-    ]),
-    includes: z.tuple([
-      z.literal("account_email"),
-      z.literal("career_stage"),
-      z.literal("eight_anchor_ranking"),
-      z.literal("scores"),
-      z.literal("deterministic_guidance"),
-    ]),
-    excludes: z.tuple([z.literal("raw_answers")]),
-  })
-  .strict();
-
 const storedReportSchema = z
   .object({
     status: z.literal("completed"),
@@ -70,7 +48,6 @@ const storedReportSchema = z
     user_data: z
       .object({
         careerStage: careerStageSchema,
-        resultEmailConsent: resultEmailConsentSchema,
       })
       .passthrough(),
   })

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { getCareerAnchorInitialStep } from "@/lib/diagnostics/career-anchor-journey-state";
 
 describe("getCareerAnchorInitialStep", () => {
-  it("routes every unfinished journey through the consent screen before resuming", () => {
+  it("routes every unfinished journey through the preparation screen before resuming", () => {
     expect(getCareerAnchorInitialStep("in_progress", false)).toBe("ready");
     expect(getCareerAnchorInitialStep("processing", false)).toBe("ready");
   });

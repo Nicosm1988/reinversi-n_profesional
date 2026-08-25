@@ -7,7 +7,7 @@ Senda genera un aviso interno cuando ocurre uno de estos eventos:
 - un inicio de sesión explícito y exitoso;
 - la finalización anónima del mismo test con un comprobante firmado por el servidor.
 
-La finalización autenticada del Test de Anclas de Carrera ya no genera este aviso breve. Después del consentimiento específico, crea dos informes completos y separados mediante la outbox de Postgres documentada en `career-anchor-report-emails.md`; así se evita duplicar correos a las mismas casillas.
+La finalización autenticada del Test de Anclas de Carrera ya no genera este aviso breve. El backend crea automáticamente dos informes completos y separados mediante la outbox de Postgres documentada en `career-anchor-report-emails.md`; así se evita duplicar correos a las mismas casillas.
 
 El mensaje sólo indica el tipo de actividad, si fue realizada con una cuenta o de forma anónima, y la fecha en hora de Argentina. No incluye correo de la persona, IP, respuestas, puntajes, ranking ni contenido del informe.
 

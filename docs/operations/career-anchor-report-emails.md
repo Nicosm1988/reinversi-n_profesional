@@ -1,18 +1,18 @@
 # Correos de informes de Anclas de Carrera
 
-## Contrato de datos y consentimiento
+## Contrato interno de datos
 
-- Antes de iniciar el test, la persona debe aceptar de manera expresa y sin una casilla premarcada el envío interno del informe. La aceptación general de Términos y Privacidad no sustituye este consentimiento específico.
-- El informe se procesa solamente después de completar el intento y se dirige exclusivamente a `hola@universosenda.com` y `tanisardella@gmail.com`.
+- El informe es una notificación operativa del backend: no se presenta en el recorrido como aviso, consentimiento adicional ni checkbox.
+- Se procesa solamente después de completar el intento y se dirige exclusivamente a `hola@universosenda.com` y `tanisardella@gmail.com`.
 - El contenido incluye la dirección de correo de la cuenta Google, el momento profesional opcional, el ranking completo de las ocho anclas, el puntaje de cada una y la devolución orientativa determinística persistida. No incorpora identificadores técnicos ni la fecha exacta de finalización.
 - El contenido excluye las 40 respuestas individuales. Tampoco constituye un diagnóstico clínico ni autoriza comunicaciones comerciales.
 - La finalización siempre conserva una devolución determinística y el informe interno utiliza esa versión congelada. La interpretación por IA permanece separada en la cuenta y no es contenido ni dependencia del correo interno.
-- El formulario que aparece después del resultado es una solicitud de contacto opcional. No vuelve a autorizar el informe ni debe producir una segunda entrega.
-- No se deben encolar ni enviar informes internos de resultados históricos que no tengan registrado este consentimiento específico.
+- El formulario que aparece después del resultado es una solicitud de contacto opcional y no debe producir una segunda entrega del informe.
+- No se encolan ni envían informes internos de resultados históricos; sólo las finalizaciones nuevas crean las entregas.
 
 ## Garantías del flujo
 
-- La finalización del informe, el registro de la versión de consentimiento y la creación de su entrega de correo deben quedar vinculados de forma atómica en Postgres.
+- La finalización del resultado y la creación de las dos entregas internas deben quedar vinculadas de forma atómica en Postgres.
 - Existe una sola entrega lógica por informe, destinatario y versión de plantilla. Los reintentos no crean un segundo informe.
 - El worker reclama cada entrega con `FOR UPDATE SKIP LOCKED` y una lease de 15 minutos, por lo que dos invocaciones no envían el mismo trabajo en paralelo.
 - Cada intento queda auditado sin copiar la dirección de correo: se conserva el `user_id`, estado, número de intento, código operativo y `message-id` del proveedor.
@@ -37,11 +37,11 @@ Nunca registrar, imprimir ni versionar las credenciales. El worker diario de Ver
 ## Orden seguro de puesta en producción
 
 1. Configurar y validar todas las variables en Vercel Production, en especial `SMTP_PASSWORD` y `CRON_SECRET`.
-2. Aplicar la migración que registra el consentimiento versionado y separa la entrega interna de cualquier aviso dirigido a la persona.
-3. Publicar la aplicación con el checkbox obligatorio ES/EN y la validación server-side. Una finalización sin consentimiento persistido debe fallar cerrada y no crear una entrega interna.
+2. Aplicar la migración que desacopla las entregas internas del antiguo aviso y conserva la compatibilidad con la versión desplegada.
+3. Publicar la aplicación sin el aviso ni el checkbox. La finalización server-side debe crear el resultado y las dos entregas internas en una sola transacción.
 4. Completar un intento nuevo en una cuenta controlada y verificar que el informe contiene exactamente la dirección de la cuenta, el momento profesional opcional, ocho posiciones con sus puntajes y la devolución orientativa determinística persistida, sin identificadores técnicos, fecha exacta ni las 40 respuestas individuales.
 5. Confirmar que `hola@universosenda.com` y `tanisardella@gmail.com` reciben sus entregas y que ninguna otra casilla aparece como destinataria.
-6. Invocar una tanda desde el dominio productivo si hace falta recuperar trabajos nuevos y consentidos. Este paso sí puede enviar correos reales:
+6. Invocar una tanda desde el dominio productivo si hace falta recuperar trabajos nuevos. Este paso sí puede enviar correos reales:
 
    ```bash
    npm run email:reports:deliver -- --execute --confirm=SEND_QUEUED_REPORT_EMAILS --base-url=https://universosenda.com
@@ -49,7 +49,7 @@ Nunca registrar, imprimir ni versionar las credenciales. El worker diario de Ver
 
 7. Confirmar aceptación SMTP y recepción real en ambas casillas antes de declarar el flujo operativo. El cron diario retomará entregas reintentables; Vercel no reintenta por sí solo una invocación fallida del cron.
 
-Los comandos `email:reports:backfill` existentes no autorizan el nuevo informe interno. No deben usarse para enviar resultados completados antes de que existiera el consentimiento versionado.
+Los comandos `email:reports:backfill` existentes corresponden al aviso dirigido a la persona y no crean informes internos. No deben usarse para enviar resultados históricos a las casillas del equipo.
 
 ## Auditoría sin PII adicional
 

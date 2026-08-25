@@ -34,7 +34,9 @@ const requestSchema = z
     rawAnswers: careerAnchorRawAnswersSchema,
     locale: careerAnchorLocaleSchema.optional().default("es"),
     careerStage: careerStageSchema.optional().default("prefer_not_to_say"),
-    resultEmailConsent: z.literal(true),
+    // Temporary rollout compatibility for a page loaded before this hotfix.
+    // The field is ignored and is not recorded as consent.
+    resultEmailConsent: z.literal(true).optional(),
   })
   .strict();
 
@@ -102,7 +104,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const { rawAnswers, locale, careerStage, resultEmailConsent } = parsed.data;
+  const { rawAnswers, locale, careerStage } = parsed.data;
   const ranking = calculateCareerAnchorRanking(rawAnswers, locale);
   const groups = getCareerAnchorResultGroups(ranking);
   const fallback = buildCareerAnchorFallbackInterpretation(
@@ -177,7 +179,7 @@ export async function POST(req: Request) {
   }
 
   const { data: diagnosticId, error: completionError } = await admin.rpc(
-    "finalize_career_anchor_diagnostic_with_result_email",
+    "finalize_career_anchor_diagnostic_with_internal_result_emails",
     {
       p_user_id: auth.user.id,
       p_raw_answers: rawAnswers,
@@ -194,7 +196,6 @@ export async function POST(req: Request) {
       p_career_stage: careerStage,
       p_instrument_version: CAREER_ANCHOR_INSTRUMENT_VERSION,
       p_algorithm_version: CAREER_ANCHOR_ALGORITHM_VERSION,
-      p_result_email_consent: resultEmailConsent,
     },
   );
 
@@ -217,9 +218,9 @@ export async function POST(req: Request) {
     );
   }
 
-  // The result, consent audit, and all three delivery jobs are durable before
-  // this point. Keep SMTP outside the user's completion latency; Postgres
-  // retains each recipient's retry independently of the response lifecycle.
+  // The result and all three delivery jobs are durable before this point. Keep
+  // SMTP outside the user's completion latency; Postgres retains each
+  // recipient's retry independently of the response lifecycle.
   after(async () => {
     const [reportDelivery, internalResultDelivery] = await Promise.allSettled([
       processCareerAnchorReportEmails({ diagnosticId, maxDeliveries: 1 }),
