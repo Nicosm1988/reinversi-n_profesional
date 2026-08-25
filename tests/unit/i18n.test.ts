@@ -219,6 +219,29 @@ describe("translation catalogs", () => {
     );
   });
 
+  it("keeps AI processing copy out of the Career Anchors introduction", () => {
+    expect(spanishMessages.CareerQuiz.introPrivacyTitle).toBe("Privacidad");
+    expect(spanishMessages.CareerQuiz.introProfessionalDisclaimer).toBe(
+      "Este test no reemplaza una consulta con una persona profesional.",
+    );
+    expect(englishMessages.CareerQuiz.introPrivacyTitle).toBe("Privacy");
+    expect(englishMessages.CareerQuiz.introProfessionalDisclaimer).toBe(
+      "This test does not replace a consultation with a qualified professional.",
+    );
+
+    for (const catalog of [spanishMessages, englishMessages]) {
+      expect(JSON.stringify(catalog.CareerQuiz)).not.toMatch(
+        /\b(?:IA|AI)\b|inteligencia artificial|artificial intelligence/i,
+      );
+      expect("introPrivacyText" in catalog.CareerQuiz).toBe(false);
+      expect("introScopeTitle" in catalog.CareerQuiz).toBe(false);
+      expect("introScopeText" in catalog.CareerQuiz).toBe(false);
+      expect(catalog.CareerQuiz.resultsDisclaimer).toMatch(
+        /no reemplaza una consulta|does not replace a consultation/i,
+      );
+    }
+  });
+
   it("does not expose a business-hours block", () => {
     for (const catalog of [spanish, english]) {
       expect(

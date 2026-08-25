@@ -779,7 +779,6 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
                           {t("introPrivacyTitle")}
                         </Heading>
                         <Text className="mt-3 leading-relaxed text-[var(--quiz-muted)]">
-                          {t("introPrivacyText")}{" "}
                           <Link
                             href="/privacidad"
                             className="font-semibold text-[var(--quiz-ink)] underline decoration-[var(--quiz-accent)]/55 underline-offset-4 hover:text-[var(--quiz-accent-strong)]"
@@ -790,12 +789,9 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
                       </div>
                     </div>
 
-                    <details className="group rounded-[24px] border border-[var(--quiz-border-soft)] bg-[var(--quiz-surface-raised)] p-5">
-                      <summary className="cursor-pointer font-semibold text-[var(--quiz-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--quiz-accent)]">
-                        {t("introScopeTitle")}
-                      </summary>
-                      <Text className="mt-4 leading-relaxed text-[var(--quiz-muted)]">{t("introScopeText")}</Text>
-                    </details>
+                    <Text className="text-center leading-relaxed text-[var(--quiz-muted)]">
+                      {t("introProfessionalDisclaimer")}
+                    </Text>
                   </section>
 
                   <div className="mx-auto max-w-3xl space-y-4 text-center">

@@ -277,6 +277,10 @@ const careerLabels = {
     accountNote: "Para cuidar el intento único, el progreso y el resultado, necesitás ingresar con tu cuenta de Google.",
     unavailableCta: "Guardado no disponible por el momento",
     unavailableNote: "No podemos verificar tu cuenta o tus resultados guardados en este momento. Probá nuevamente más tarde.",
+    privacyTitle: "Privacidad",
+    professionalDisclaimer: "Este test no reemplaza una consulta con una persona profesional.",
+    privacyLink: "Leer la política de privacidad",
+    retiredScopeTitle: "Alcance de la herramienta",
     introCta: "Continuar",
     readyCta: "Empezar el test",
     internalNoticeTitle: "Cómo recibe Senda tu resultado",
@@ -302,6 +306,10 @@ const careerLabels = {
     accountNote: "To protect the single attempt, progress, and result, you need to sign in with your Google account.",
     unavailableCta: "Saving is currently unavailable",
     unavailableNote: "We cannot verify your account or saved results right now. Please try again later.",
+    privacyTitle: "Privacy",
+    professionalDisclaimer: "This test does not replace a consultation with a qualified professional.",
+    privacyLink: "Read the privacy policy",
+    retiredScopeTitle: "Scope of this tool",
     introCta: "Continue",
     readyCta: "Start the test",
     internalNoticeTitle: "How Senda receives your result",
@@ -358,6 +366,25 @@ test.describe("anonymous Career Anchors entry", () => {
       }
       await expect(page.locator('input[name^="statement-"]')).toHaveCount(0);
       await expect(page.locator("#career-anchor-result-email-consent")).toHaveCount(0);
+      const privacyCard = page
+        .getByRole("heading", { name: labels.privacyTitle, exact: true })
+        .locator("..");
+      await expect(privacyCard).toHaveText(
+        `${labels.privacyTitle}${labels.privacyLink}`,
+      );
+      await expect(
+        privacyCard.getByRole("link", { name: labels.privacyLink, exact: true }),
+      ).toBeVisible();
+      await expect(privacyCard).not.toContainText(labels.professionalDisclaimer);
+      await expect(
+        page.getByText(labels.professionalDisclaimer, { exact: true }),
+      ).toBeVisible();
+      await expect(
+        page.getByText(labels.retiredScopeTitle, { exact: true }),
+      ).toHaveCount(0);
+      await expect(page.locator(".career-quiz")).not.toContainText(
+        /\b(?:IA|AI)\b|inteligencia artificial|artificial intelligence|proveedor de IA|AI provider/i,
+      );
       await expect(
         page.getByRole("heading", { name: labels.internalNoticeTitle, exact: true }),
       ).toHaveCount(0);
