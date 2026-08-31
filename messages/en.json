@@ -1021,6 +1021,20 @@
           "headline": "People, teams, and organizations",
           "description": "going through processes of change and transformation"
         }
+      ],
+      "members": [
+        {
+          "name": "Alejandra Méndez Djedjedian",
+          "role": "Licensed Psychologist",
+          "description": "Specialist in psychodiagnosis and psychotherapeutic support across different life stages. Educator and university lecturer.",
+          "photo": "/aleweb.png"
+        },
+        {
+          "name": "Stephanie Pralong",
+          "role": "Licensed Psychologist",
+          "description": "Specialist in clinical psychology and diverse therapeutic approaches in educational settings.",
+          "photo": "/stepbynweb.png"
+        }
       ]
     },
     "team": {

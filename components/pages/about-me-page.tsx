@@ -6,6 +6,7 @@ export function AboutMePage() {
   const t = useTranslations("AboutMe");
   const principles = t.raw("outlook.principles") as string[];
   const highlights = t.raw("story.highlights") as { headline: string; description: string }[];
+  const members = t.raw("story.members") as { name: string; role: string; description: string; photo: string }[];
 
   return (
     <div className="overflow-hidden bg-[var(--senda-bg)] text-[var(--senda-ink)]">
@@ -77,6 +78,30 @@ export function AboutMePage() {
               ))}
             </ul>
           </div>
+        </div>
+
+        <div className="mt-14 grid gap-6 sm:grid-cols-2">
+          {members.map((member) => (
+            <div
+              key={member.name}
+              className="flex items-center gap-4 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] p-4"
+            >
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[1rem]">
+                <Image
+                  src={member.photo}
+                  alt={member.name}
+                  fill
+                  sizes="5rem"
+                  className="object-cover grayscale"
+                />
+              </div>
+              <div>
+                <span className="block text-sm font-bold text-[var(--senda-ink)]">{member.name}</span>
+                <span className="block text-sm font-semibold text-[var(--senda-muted)]">{member.role}</span>
+                <span className="mt-1 block text-sm leading-6 text-[var(--senda-muted)]">{member.description}</span>
+              </div>
+            </div>
+          ))}
         </div>
       </PageSection>
 

@@ -1025,6 +1025,20 @@
           "headline": "Personas, equipos y organizaciones",
           "description": "atravesando procesos de cambio y transformación"
         }
+      ],
+      "members": [
+        {
+          "name": "Alejandra Méndez Djedjedian",
+          "role": "Lic. en Psicología",
+          "description": "Especialista en Psicodiagnóstico y Acompañamiento psicoterapéutico en diferentes ciclos vitales. Pedagoga y docente universitaria.",
+          "photo": "/aleweb.png"
+        },
+        {
+          "name": "Stephanie Pralong",
+          "role": "Lic. en Psicología",
+          "description": "Especialista en psicología clínica y abordajes terapéuticos diversos en el ámbito educativo.",
+          "photo": "/stepbynweb.png"
+        }
       ]
     },
     "team": {
