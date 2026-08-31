@@ -14,7 +14,7 @@ test("home is a short gateway to the career anchors test and secondary proposals
   await page.goto("/");
 
   const home = page.locator("main .senda-home");
-  await expect(home.locator(":scope > section")).toHaveCount(3);
+  await expect(home.locator(":scope > section")).toHaveCount(4);
   await expect(home.locator("article")).toHaveCount(0);
   await expect(home.locator("details")).toHaveCount(0);
 

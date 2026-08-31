@@ -574,8 +574,7 @@
       "titleAccent": "transiciones laborales",
       "rhythm": "Tu trayectoria no se desecha.\nLas alternativas se exploran.\nLos próximos pasos se construyen.",
       "description": "Un espacio para explorar intereses, <strong>reconocer alternativas y construir decisiones</strong> en relación con tu trayectoria, tus intereses y en diálogo con el contexto actual.",
-      "primaryCta": "Reconocer mis anclas de carrera",
-      "secondaryCta": "Explorar transiciones laborales"
+      "primaryCta": "Reconocer mis anclas de carrera"
     },
     "signals": {
       "eyebrow": "Señales para reconocerte",
@@ -675,6 +674,12 @@
       "title": "Laboratorio de Narrativas Laborales Alternativas",
       "description": "Encuentros grupales para indagar la trayectoria, intercambiar miradas, construir narrativas alternativas y orientar próximos pasos.",
       "cta": "Conocer el Laboratorio"
+    },
+    "transitions": {
+      "eyebrow": "Acompañamiento profesional",
+      "title": "Transiciones laborales",
+      "description": "Un espacio para revisar tu trayectoria, reconocer alternativas y construir próximos pasos frente a un cambio, una decisión o una etapa de incertidumbre en tu vida profesional.",
+      "cta": "Explorar transiciones laborales"
     },
     "compass": {
       "eyebrow": "Primeras decisiones",

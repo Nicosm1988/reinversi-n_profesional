@@ -574,8 +574,7 @@
       "titleAccent": "career transitions",
       "rhythm": "Your trajectory is not discarded.\nAlternatives can be explored.\nNext steps can be built.",
       "description": "A space to explore interests, <strong>recognize alternatives, and build decisions</strong> in relation to your trajectory, your interests, and in dialogue with today's context.",
-      "primaryCta": "Recognize my career anchors",
-      "secondaryCta": "Explore career transitions"
+      "primaryCta": "Recognize my career anchors"
     },
     "signals": {
       "eyebrow": "Signals you may recognize",
@@ -675,6 +674,12 @@
       "title": "Alternative Work Narratives Lab",
       "description": "Group sessions to explore your trajectory, exchange perspectives, build alternative narratives, and orient possible next steps.",
       "cta": "Explore the Lab"
+    },
+    "transitions": {
+      "eyebrow": "Professional support",
+      "title": "Career transitions",
+      "description": "A space to revisit your path, recognize alternatives, and build next steps through a change, a decision, or a moment of uncertainty in your professional life.",
+      "cta": "Explore career transitions"
     },
     "compass": {
       "eyebrow": "First decisions",

@@ -46,9 +46,6 @@ export function SendaHome() {
               <Link href="/test-anclas-de-carrera" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] shadow-[0_20px_50px_-28px_rgba(0,0,0,.55)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]">
                 {t("hero.primaryCta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
-              <Link href="/transiciones-laborales" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-atmosphere-control)] px-7 py-3 text-sm font-bold text-[var(--senda-atmosphere-ink)] backdrop-blur-sm transition-colors hover:bg-[var(--senda-atmosphere-control-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]">
-                {t("hero.secondaryCta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
             </div>
           </div>
           <RouteMap />
@@ -61,6 +58,21 @@ export function SendaHome() {
           Los componentes y las rutas siguen disponibles para reactivarlos más adelante. */}
 
       <section className="border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)] px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
+        <div className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
+          <p className="senda-kicker">{t("transitions.eyebrow")}</p>
+          <div>
+            <h2 className="max-w-[20ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">{t("transitions.title")}</h2>
+            <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--senda-muted)] sm:text-lg">
+              {t("transitions.description")}
+            </p>
+            <Link href="/transiciones-laborales" className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-action)] px-7 py-3 text-sm font-bold text-white hover:bg-[var(--senda-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-accent)]">
+              {t("transitions.cta")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[var(--senda-border)] bg-[var(--senda-section)] px-5 py-16 sm:px-8 md:py-20 lg:px-12 xl:px-20">
         <div className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
           <p className="senda-kicker">{t("compass.eyebrow")}</p>
           <div>
