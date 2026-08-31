@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 import { useCallback, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import {
   initializeGoogleIdentityOnce,
@@ -16,9 +16,11 @@ import { Container } from "@/components/layout/container";
 import { Heading, Text } from "@/components/ui/typography";
 import { FadeIn } from "@/components/motion";
 import { UniverseField } from "@/components/visual/universe-field";
+import { EmailPasswordForm } from "@/components/auth/email-password-form";
 
 export default function LoginPage() {
   const t = useTranslations("Login");
+  const locale = useLocale() as "es" | "en";
   const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
   const buttonContainerRef = useRef<HTMLDivElement>(null);
@@ -37,6 +39,14 @@ export default function LoginPage() {
     return sanitizeNextPath(params.get("next"), fallback);
   }, []);
 
+  const finishLogin = useCallback(async () => {
+    await Promise.race([
+      requestLoginNotification(),
+      new Promise((resolve) => window.setTimeout(resolve, 5_000)),
+    ]);
+    window.location.replace(getNextPath());
+  }, [getNextPath]);
+
   const handleGoogleCredential = useCallback(async (response: GoogleCredentialResponse) => {
     if (!supabase || !response.credential || !nonceRef.current || credentialInFlightRef.current) {
       if (!credentialInFlightRef.current) setLoginError(t("oauthError"));
@@ -48,18 +58,14 @@ export default function LoginPage() {
       setLoginError("");
       setIsLoading(true);
       await replaceSessionWithGoogleIdToken(supabase, response.credential, nonceRef.current);
-      await Promise.race([
-        requestLoginNotification(),
-        new Promise((resolve) => window.setTimeout(resolve, 5_000)),
-      ]);
-      window.location.replace(getNextPath());
+      await finishLogin();
     } catch (error) {
       console.error("Error logging in with Google:", error);
       setLoginError(t("oauthError"));
       setIsLoading(false);
       credentialInFlightRef.current = false;
     }
-  }, [getNextPath, supabase, t]);
+  }, [finishLogin, supabase, t]);
 
   const initializeGoogleButton = useCallback(async () => {
     const buttonContainer = buttonContainerRef.current;
@@ -136,6 +142,16 @@ export default function LoginPage() {
                         </div>
                       ) : null}
                     </div>
+
+                    <div className="flex items-center gap-4 py-2" role="separator" aria-label={t("emailDivider")}>
+                      <span className="h-px flex-1 bg-border" aria-hidden="true" />
+                      <Text variant="small" className="text-muted-foreground">{t("emailDivider")}</Text>
+                      <span className="h-px flex-1 bg-border" aria-hidden="true" />
+                    </div>
+
+                    {supabase ? (
+                      <EmailPasswordForm supabase={supabase} onAuthenticated={() => void finishLogin()} locale={locale} />
+                    ) : null}
                   </>
                 ) : null}
 

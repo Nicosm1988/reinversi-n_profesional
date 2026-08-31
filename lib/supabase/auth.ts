@@ -19,20 +19,10 @@ export type AuthenticatedUserResult =
       reason: "supabase-unavailable" | "auth-required";
     };
 
-function hasGoogleIdentity(user: User) {
-  // app_metadata and identities come from Supabase Auth. Do not trust the
-  // user-editable user_metadata when enforcing the allowed identity provider.
-  const providers = user.app_metadata?.providers;
-  const identities = user.identities;
-
-  if (user.is_anonymous) return false;
-
-  return (
-    user.app_metadata?.provider === "google" ||
-    (Array.isArray(providers) && providers.includes("google")) ||
-    (Array.isArray(identities) &&
-      identities.some((identity) => identity.provider === "google"))
-  );
+function isAllowedIdentity(user: User) {
+  // Google and email/password are both accepted identity providers. Anonymous
+  // sessions never count: the single-attempt limit is enforced per real account.
+  return !user.is_anonymous;
 }
 
 export async function getAuthenticatedUser(): Promise<AuthenticatedUserResult> {
@@ -87,7 +77,7 @@ export async function getAuthenticatedUser(): Promise<AuthenticatedUserResult> {
     };
   }
 
-  if (!user || !hasGoogleIdentity(user)) {
+  if (!user || !isAllowedIdentity(user)) {
     return {
       ok: false,
       user: null,

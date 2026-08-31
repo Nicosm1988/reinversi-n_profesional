@@ -38,12 +38,12 @@ describe("getAuthenticatedUser", () => {
 
   it.each([
     authUser({ app_metadata: { provider: "google" } }),
-    authUser({ app_metadata: { provider: "email", providers: ["email", "google"] } }),
+    authUser({ app_metadata: { provider: "email", providers: ["email"] } }),
     authUser({
       app_metadata: { provider: "email" },
-      identities: [{ id: "identity-id", user_id: "user-test-id", provider: "google" }],
+      identities: [{ id: "identity-id", user_id: "user-test-id", provider: "email" }],
     }),
-  ])("accepts a Google identity asserted by Supabase Auth", async (user) => {
+  ])("accepts any real (non-anonymous) identity asserted by Supabase Auth", async (user) => {
     mocks.getUser.mockResolvedValueOnce({ data: { user }, error: null });
 
     const result = await getAuthenticatedUser();
@@ -54,11 +54,11 @@ describe("getAuthenticatedUser", () => {
     }
   });
 
-  it("rejects a non-Google user even when editable user metadata claims Google", async () => {
+  it("rejects an anonymous session even when editable user metadata claims a real provider", async () => {
     const user = authUser({
-      app_metadata: { provider: "email", providers: ["email"] },
+      app_metadata: { provider: "anonymous" },
       user_metadata: { provider: "google" },
-      identities: [{ id: "identity-id", user_id: "user-test-id", provider: "email" }],
+      is_anonymous: true,
     });
     mocks.getUser.mockResolvedValueOnce({ data: { user }, error: null });
 
