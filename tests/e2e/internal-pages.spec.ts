@@ -174,7 +174,7 @@ for (const locale of locales) {
       expect(canonicalPath).toBe(expectedPath);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       await expect(page.getByRole("link", { name: locale.whatsappLabel, exact: true })).toBeVisible();
-      await expect(page.locator("main img")).toHaveCount(route.path === "/sobre-mi" ? 1 : 0);
+      await expect(page.locator("main img")).toHaveCount(route.path === "/sobre-mi" ? 3 : 0);
 
       const publicSurface = [
         await page.title(),
