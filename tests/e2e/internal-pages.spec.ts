@@ -9,7 +9,7 @@ const targetRoutes = [
   {
     path: "/transiciones-laborales",
     active: { es: "Transiciones laborales", en: "Career transitions" },
-    serviceCards: 6,
+    serviceCards: 7,
   },
   {
     path: "/transiciones-laborales/explorar-direccion",
@@ -46,6 +46,12 @@ const targetRoutes = [
     active: { es: "Elegir una formación para el próximo paso", en: "Choose learning for your next step" },
     servicesMenu: true,
     stages: 9,
+  },
+  {
+    path: "/transiciones-laborales/transicion-a-otro-rol",
+    active: { es: "Transición a otro rol", en: "Transition to another role" },
+    servicesMenu: true,
+    stages: 7,
   },
   {
     path: "/brujulas",
@@ -277,7 +283,7 @@ test("desktop services dropdown opens from the keyboard, focuses its first route
   await expect(firstService).toBeVisible();
   await expect(firstService).toBeFocused();
   const menuLinks = page.locator("#senda-services-menu a");
-  await expect(menuLinks).toHaveCount(7);
+  await expect(menuLinks).toHaveCount(8);
   await expect(menuLinks.last()).toHaveAttribute("href", "/brujulas");
   await expect(page.locator('#senda-services-menu a[href*="laboratorio"]')).toHaveCount(0);
 

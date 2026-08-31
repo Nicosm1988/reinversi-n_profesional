@@ -7,9 +7,10 @@ type PageHeroProps = {
   eyebrow: string;
   title: string;
   description: string;
+  children?: ReactNode;
 };
 
-export function PageHero({ eyebrow, title, description }: PageHeroProps) {
+export function PageHero({ eyebrow, title, description, children }: PageHeroProps) {
   return (
     <header className="senda-night border-b border-[var(--senda-atmosphere-border)] px-5 pb-20 pt-32 text-[var(--senda-atmosphere-ink)] sm:px-8 sm:pb-24 sm:pt-36 lg:px-12 xl:px-20">
       <UniverseField className="left-[30%] text-[var(--senda-atmosphere-sky)] opacity-20" />
@@ -23,6 +24,7 @@ export function PageHero({ eyebrow, title, description }: PageHeroProps) {
             {description}
           </p>
         </div>
+        {children ? <div className="mt-9 flex flex-col gap-3 sm:flex-row">{children}</div> : null}
       </div>
     </header>
   );
@@ -32,6 +34,7 @@ type PageSectionProps = {
   children: ReactNode;
   tone?: "default" | "muted" | "warm";
   className?: string;
+  id?: string;
 };
 
 const sectionTones = {
@@ -40,9 +43,9 @@ const sectionTones = {
   warm: "border-y border-[var(--senda-border)] bg-[var(--senda-section-warm)]",
 };
 
-export function PageSection({ children, tone = "default", className = "" }: PageSectionProps) {
+export function PageSection({ children, tone = "default", className = "", id }: PageSectionProps) {
   return (
-    <section className={`${sectionTones[tone]} px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20 ${className}`}>
+    <section id={id} className={`${sectionTones[tone]} px-5 py-20 sm:px-8 md:py-24 lg:px-12 xl:px-20 ${className}`}>
       <div className="mx-auto max-w-[1290px]">{children}</div>
     </section>
   );

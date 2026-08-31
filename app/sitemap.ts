@@ -10,6 +10,7 @@ const routes = [
   "/transiciones-laborales/liderazgo-empresa",
   "/transiciones-laborales/desafio-puntual",
   "/transiciones-laborales/elegir-formacion",
+  "/transiciones-laborales/transicion-a-otro-rol",
   "/brujulas",
   "/como-trabajamos",
   "/sobre-mi",

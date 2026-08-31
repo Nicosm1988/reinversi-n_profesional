@@ -19,6 +19,7 @@
     "serviceLeadership": "Pensar el liderazgo y la continuidad de una empresa",
     "serviceFocused": "Abordar un desafío profesional puntual",
     "serviceEducation": "Elegir una formación para el próximo paso",
+    "serviceRoleTransition": "Transición a otro rol",
     "navCompass": "Brújulas",
     "closeMenu": "Cerrar menú",
     "ctaDiagnostic": "Reconocer en qué momento estoy",
@@ -37,15 +38,15 @@
     "processNavigation": "Transiciones laborales",
     "siteNavigation": "Explorar Senda",
     "colProcesses": "Transiciones laborales",
-    "colExplore": "Explorar",
+    "colExplore": "Por dónde empezar",
+    "exploreDescription": "Dos formas de empezar a mirar tu momento profesional.",
     "linkCompass": "Brújulas",
-    "linkTransitions": "Ver transiciones laborales",
     "serviceDirection": "Explorar una nueva dirección profesional",
     "serviceJobChange": "Preparar un cambio de empleo",
-    "serviceProject": "Proyecto propio",
-    "serviceLeadership": "Liderazgo y continuidad de empresa",
-    "serviceFocused": "Desafío profesional puntual",
-    "serviceEducation": "Elegir una formación",
+    "serviceProject": "Construir o reordenar un proyecto propio",
+    "serviceFocused": "Abordar un desafío profesional puntual",
+    "serviceEducation": "Elegir una formación para el próximo paso",
+    "serviceRoleTransition": "Transición a otro rol",
     "linkAbout": "Quiénes somos",
     "linkTeam": "Equipo",
     "linkLaboratory": "Laboratorio",
@@ -380,6 +381,7 @@
     "readyInstruction6": "Después de los 40 enunciados, vas a volver a ver las afirmaciones y elegir exactamente 3 como selección final.",
     "readyPrivacy": "Tu avance queda protegido en tu cuenta y no se publica. Si perdés conexión, te avisaremos y podés reintentar el guardado sin perder lo que ves en pantalla.",
     "privacyLink": "Leer la política de privacidad",
+    "termsLink": "Leer los términos y condiciones",
     "readyBack": "Volver a la introducción",
     "readyCta": "Empezar el test",
     "resumeCta": "Retomar en el enunciado {statement}",
@@ -637,6 +639,12 @@
           "title": "Elegir una formación para el próximo paso",
           "lead": "Cuando una carrera, posgrado o certificación necesita evaluarse dentro de una dirección mayor.",
           "description": "Trayectoria, intereses, tiempo, inversión, tecnología, contexto laboral y posibilidades reales."
+        },
+        "roleTransition": {
+          "label": "Situación 07",
+          "title": "Transición a otro rol",
+          "lead": "Cuando buscás moverte a un rol distinto, dentro o fuera de tu organización actual.",
+          "description": "Rol actual, rol al que te dirigís, habilidades, posicionamiento y conversaciones necesarias para dar el paso."
         }
       }
     },
@@ -805,16 +813,166 @@
   "Journeys": {
     "meta": {
       "title": "Transiciones laborales",
-      "description": "Seis propuestas de Senda para explorar una dirección, cambiar de empleo, construir un proyecto, pensar el liderazgo, abordar un desafío o elegir una formación."
+      "description": "Siete propuestas de Senda para explorar una dirección, cambiar de empleo, construir un proyecto, pensar el liderazgo, transicionar a otro rol, abordar un desafío o elegir una formación."
     },
     "hero": {
       "eyebrow": "Transiciones laborales",
-      "title": "Asesorías personalizadas",
-      "description": "Darse una pausa para tomar perspectiva es un acto de salud frente a las exigencias laborales. En Senda trabajamos con personas, equipos y organizaciones que atraviesan momentos de cambio, incertidumbre o revisión y necesitan un espacio para comprender lo que está pasando, ponerlo en palabras y explorar cómo seguir."
+      "title": "Hay momentos en que seguir de la misma manera deja de alcanzar.",
+      "description": "Senda acompaña procesos de transición, orientación y redefinición profesional: un espacio para pensar qué está pasando, explorar alternativas y construir una dirección propia, sin presuponer la respuesta.",
+      "primaryCta": "Conocer el acompañamiento",
+      "secondaryCta": "Explorar mi situación"
     },
-    "intro": {
-      "title": "Identifica qué propuesta puede acompañar mejor el momento que estás atravesando.",
-      "description": "Acompañamos transiciones laborales sin reducirlas a recetas, respuestas prefabricadas ni mandatos de productividad. Proponemos recorridos personalizados para revisar trayectorias, reconocer intereses, abrir posibilidades y recuperar espacio para elegir cómo continuar."
+    "recognition": {
+      "eyebrow": "Cuando algo empieza a cambiar",
+      "title": "No hace falta tener la pregunta resuelta para reconocerla.",
+      "statements": [
+        "Estoy bien, pero ya no quiero seguir así.",
+        "No sé si quiero cambiar de trabajo o cambiar mi relación con el trabajo.",
+        "Sé lo que no quiero. Todavía no sé qué quiero.",
+        "Llegué a un lugar que antes deseaba y hoy ya no me representa.",
+        "Quiero hacer algo distinto, pero no sé por dónde empezar.",
+        "Tengo que decidir y hay demasiadas variables dando vueltas.",
+        "Estoy atravesando una transición que no elegí."
+      ]
+    },
+    "core": {
+      "eyebrow": "Antes de elegir",
+      "title": "No todo cambio empieza con una respuesta.",
+      "paragraph": "Antes de decidir qué hacer, muchas veces hace falta entender desde dónde se está eligiendo: qué experiencias trajeron hasta acá, qué deseos y necesidades pesan hoy, y qué margen real existe para moverse.",
+      "quote": "No buscamos una respuesta escondida dentro tuyo. Trabajamos para construir los criterios desde los que puedas decidir."
+    },
+    "dimensions": {
+      "eyebrow": "Qué trabajamos",
+      "title": "Siete dimensiones de una misma pregunta.",
+      "items": {
+        "path": {
+          "title": "Tu recorrido",
+          "description": "Qué experiencias te trajeron hasta acá y qué aprendiste de ellas."
+        },
+        "present": {
+          "title": "Tu presente",
+          "description": "Qué está funcionando, qué dejó de hacerlo y qué necesita revisión."
+        },
+        "motivations": {
+          "title": "Tus motivaciones",
+          "description": "Qué te despierta hoy interés, energía o curiosidad real."
+        },
+        "relationship": {
+          "title": "Tu relación con el trabajo",
+          "description": "Qué lugar querés que ocupe en tu vida, y qué lugar ocupa hoy."
+        },
+        "possibilities": {
+          "title": "Tus posibilidades",
+          "description": "Qué alternativas existen y cuáles tienen sentido para vos."
+        },
+        "decisions": {
+          "title": "Tus decisiones",
+          "description": "Criterios propios para elegir, más allá de la presión del momento."
+        },
+        "movement": {
+          "title": "Tu próximo movimiento",
+          "description": "Traducir la reflexión en pasos concretos y posibles."
+        }
+      }
+    },
+    "context": {
+      "eyebrow": "Contexto",
+      "title": "No trabajamos con una persona aislada de su contexto.",
+      "paragraph1": "Las decisiones laborales están atravesadas por condiciones reales: economía, vínculos, edad, formación, responsabilidades, territorio y momento vital. Ninguna de ellas desaparece porque decidamos mirar para otro lado.",
+      "paragraph2": "Construir posibilidades también implica mirar con claridad las condiciones reales desde las que cada persona está decidiendo."
+    },
+    "process": {
+      "eyebrow": "Cómo es el proceso",
+      "title": "Un recorrido con etapas, no una fórmula.",
+      "note": "No todas las personas necesitan atravesar exactamente el mismo recorrido.",
+      "steps": {
+        "understand": {
+          "number": "01",
+          "title": "Comprender",
+          "description": "Ponemos en palabras qué está pasando y qué pregunta trae la persona."
+        },
+        "retrace": {
+          "number": "02",
+          "title": "Recorrer",
+          "description": "Reconstruimos experiencias, decisiones y momentos que resultan relevantes."
+        },
+        "explore": {
+          "number": "03",
+          "title": "Explorar",
+          "description": "Intereses, motivaciones, capacidades, deseos y alternativas posibles."
+        },
+        "contrast": {
+          "number": "04",
+          "title": "Contrastar",
+          "description": "Investigamos posibilidades reales y las ponemos en diálogo con el contexto."
+        },
+        "build": {
+          "number": "05",
+          "title": "Construir",
+          "description": "Definimos criterios, escenarios y próximos pasos."
+        },
+        "move": {
+          "number": "06",
+          "title": "Moverse",
+          "description": "Traducimos la reflexión en decisiones y acciones concretas."
+        }
+      }
+    },
+    "tools": {
+      "eyebrow": "Herramientas",
+      "title": "Apoyos para pensar, no diagnósticos que deciden por vos.",
+      "paragraph": "Algunas herramientas pueden sumar información y perspectiva antes o durante un proceso. Ninguna reemplaza la conversación ni define un resultado cerrado.",
+      "items": {
+        "careerAnchor": {
+          "title": "Test de Anclas de Carrera",
+          "description": "40 enunciados para reconocer qué motivaciones pesan hoy en tus decisiones profesionales.",
+          "cta": "Conocer el test"
+        },
+        "diagnostic": {
+          "title": "Encontrar mi recorrido",
+          "description": "Un mapa breve y no clínico para reconocer qué tipo de acompañamiento puede tener sentido para tu momento.",
+          "cta": "Explorar"
+        }
+      }
+    },
+    "stages": {
+      "eyebrow": "A lo largo de la vida laboral",
+      "title": "Distintos momentos piden preguntas distintas.",
+      "items": [
+        "Primeras decisiones educativas y profesionales",
+        "Reorientación profesional",
+        "Cambio de carrera",
+        "Cambio de rol",
+        "Transición laboral",
+        "Reinserción laboral",
+        "Reconversión profesional",
+        "Regreso después de una pausa",
+        "Cambios vinculados con maternidad o paternidad",
+        "Retiro o nuevas etapas",
+        "Necesidad de redefinir la relación con el trabajo"
+      ],
+      "compassIntro": "Para quienes están dando sus primeros pasos, eligiendo qué estudiar o hacia dónde orientar una carrera que recién empieza, existe Brújulas."
+    },
+    "outcomes": {
+      "eyebrow": "Al final del proceso",
+      "title": "El objetivo no es una certeza absoluta.",
+      "items": [
+        "Mayor claridad sobre tu situación actual",
+        "Comprensión de tu propio recorrido",
+        "Criterios propios para decidir",
+        "Alternativas mejor exploradas",
+        "Hipótesis de futuro",
+        "Prioridades más claras",
+        "Conversaciones pendientes identificadas",
+        "Próximos pasos concretos",
+        "Herramientas para futuras decisiones"
+      ],
+      "closingLine": "El objetivo no es salir con una certeza absoluta. Es poder avanzar con más comprensión, criterio y dirección."
+    },
+    "service": {
+      "eyebrow": "El acompañamiento",
+      "title": "Un espacio para trabajar tu próximo movimiento.",
+      "description": "Cada propuesta parte de una situación concreta. Elegí la que más se acerca a la tuya, o escribinos si todavía no la tenés clara."
     },
     "items": {
       "direction": {
@@ -859,6 +1017,13 @@
         "description": "Relacionamos la decisión educativa con trayectoria, intereses, tiempo, inversión, tecnología, dirección profesional y contexto laboral.",
         "cta": "Evaluar la formación"
       },
+      "roleTransition": {
+        "eyebrow": "Propuesta 07",
+        "title": "Transición a otro rol",
+        "lead": "Buscás moverte a un rol distinto, dentro o fuera de tu organización actual.",
+        "description": "Trabajamos tu rol actual, el rol al que te dirigís, tus habilidades, tu posicionamiento y las conversaciones necesarias para dar el paso.",
+        "cta": "Explorar esta transición"
+      },
       "compass": {
         "eyebrow": "Primeras decisiones",
         "title": "Brújulas",
@@ -868,9 +1033,9 @@
       }
     },
     "closing": {
-      "title": "¿Todavía no sabés qué propuesta corresponde a tu momento?",
-      "description": "La orientación inicial ofrece un mapa breve y no clínico antes de pedirte datos personales.",
-      "cta": "Reconocer en qué momento estoy"
+      "title": "Podés empezar por entender dónde estás.",
+      "description": "Una primera conversación para reconocer qué estás atravesando y evaluar qué tipo de acompañamiento puede tener sentido.",
+      "cta": "Explorar mi situación"
     }
   },
   "Methodology": {
@@ -1085,7 +1250,7 @@
     "items": {
       "choose": {
         "question": "¿Cómo sé qué propuesta puede acompañar mi momento?",
-        "answer": "Las seis propuestas parten de situaciones diferentes: explorar una dirección, cambiar de empleo, desarrollar un proyecto, pensar el liderazgo, resolver un desafío puntual o elegir una formación. Si todavía no lo tenés claro, la orientación inicial te ayuda a reconocer un punto de partida sin pedirte datos personales."
+        "answer": "Las siete propuestas parten de situaciones diferentes: explorar una dirección, cambiar de empleo, desarrollar un proyecto, pensar el liderazgo, transicionar a otro rol, resolver un desafío puntual o elegir una formación. Si todavía no lo tenés claro, la orientación inicial te ayuda a reconocer un punto de partida sin pedirte datos personales."
       },
       "compass": {
         "question": "¿Brújulas es un test que indica qué carrera elegir?",
@@ -1433,6 +1598,52 @@
           "comparison": "Una lectura de tiempo, inversión y contexto.",
           "decision": "Una decisión o pregunta de investigación más clara.",
           "plan": "Próximos pasos realistas."
+        }
+      },
+      "roleTransition": {
+        "title": "Transición a otro rol",
+        "lead": "Ordenar un movimiento hacia un rol distinto, dentro o fuera de tu organización actual.",
+        "cardDescription": "Ordená tu rol actual, el rol al que te dirigís y las conversaciones necesarias para dar el paso.",
+        "metaDescription": "Acompañamiento de Senda para preparar una transición a otro rol, dentro o fuera de tu organización actual.",
+        "objective": "Construir un camino claro hacia un rol distinto, integrando tus habilidades, tu posicionamiento y las conversaciones necesarias para sostener el cambio.",
+        "forWhom": "Para personas que buscan cambiar de rol, función o área -dentro de su organización actual o en una nueva- y necesitan ordenar ese movimiento con criterio.",
+        "stages": {
+          "currentRole": {
+            "title": "Revisar el rol actual",
+            "description": "Reconocemos responsabilidades, alcance y lo que hoy sostiene tu rol, más allá del título del puesto."
+          },
+          "motivation": {
+            "title": "Identificar qué impulsa el cambio",
+            "description": "Diferenciamos si buscás crecer, cambiar de área, salir de un rol que ya no te representa o asumir mayor responsabilidad."
+          },
+          "targetRole": {
+            "title": "Definir el rol al que te dirigís",
+            "description": "Precisamos qué tipo de rol, alcance o función tiene sentido explorar a partir de tus intereses y capacidades."
+          },
+          "skills": {
+            "title": "Mapear habilidades y brechas",
+            "description": "Identificamos qué capacidades ya tenés, cuáles necesitás desarrollar y cómo mostrar evidencia de ellas."
+          },
+          "positioning": {
+            "title": "Construir tu posicionamiento",
+            "description": "Ordenamos cómo comunicar tu valor y tu candidatura para el nuevo rol, dentro o fuera de tu organización actual."
+          },
+          "conversations": {
+            "title": "Preparar conversaciones clave",
+            "description": "Diseñamos los intercambios con tu jefatura, RR. HH. o referentes necesarios para dar el paso."
+          },
+          "transition": {
+            "title": "Planificar la transición",
+            "description": "Organizamos tiempos, condiciones y próximos pasos para sostener el cambio de rol."
+          }
+        },
+        "takeaways": {
+          "currentRole": "Una lectura clara de tu rol actual y lo que buscás dejar atrás.",
+          "targetRole": "Claridad sobre el rol o la función hacia la que te dirigís.",
+          "skills": "Un mapa de habilidades transferibles y brechas a trabajar.",
+          "positioning": "Un posicionamiento para comunicar tu candidatura.",
+          "conversations": "Un plan para las conversaciones clave del proceso.",
+          "plan": "Próximos pasos para sostener la transición."
         }
       },
       "compass": {

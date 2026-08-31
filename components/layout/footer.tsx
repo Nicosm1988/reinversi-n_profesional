@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { SendaLogo } from "@/components/brand/senda-logo";
 import { Link } from "@/navigation";
 import { UniverseField } from "@/components/visual/universe-field";
@@ -28,34 +28,48 @@ export function Footer() {
           <nav aria-label={t("processNavigation")}>
             <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-atmosphere-muted)]">{t("colProcesses")}</h2>
             <ul className="mt-7 space-y-4 text-sm font-semibold text-[var(--senda-atmosphere-muted)]">
-              <li><Link href="/transiciones-laborales" className="text-[var(--senda-atmosphere-ink)] hover:text-[var(--senda-atmosphere-gold)]">{t("linkTransitions")}</Link></li>
               <li><Link href="/transiciones-laborales/explorar-direccion" className="hover:text-[var(--senda-atmosphere-ink)]">{t("serviceDirection")}</Link></li>
               <li><Link href="/transiciones-laborales/cambiar-empleo" className="hover:text-[var(--senda-atmosphere-ink)]">{t("serviceJobChange")}</Link></li>
               <li><Link href="/transiciones-laborales/proyecto-propio" className="hover:text-[var(--senda-atmosphere-ink)]">{t("serviceProject")}</Link></li>
-              <li><Link href="/transiciones-laborales/liderazgo-empresa" className="hover:text-[var(--senda-atmosphere-ink)]">{t("serviceLeadership")}</Link></li>
+              <li><Link href="/transiciones-laborales/transicion-a-otro-rol" className="hover:text-[var(--senda-atmosphere-ink)]">{t("serviceRoleTransition")}</Link></li>
               <li><Link href="/transiciones-laborales/desafio-puntual" className="hover:text-[var(--senda-atmosphere-ink)]">{t("serviceFocused")}</Link></li>
               <li><Link href="/transiciones-laborales/elegir-formacion" className="hover:text-[var(--senda-atmosphere-ink)]">{t("serviceEducation")}</Link></li>
               <li className="border-t border-[var(--senda-atmosphere-border)] pt-4"><Link href="/brujulas" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkCompass")}</Link></li>
             </ul>
           </nav>
 
-          <nav aria-label={t("siteNavigation")}>
+          <div>
             <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--senda-atmosphere-muted)]">{t("colExplore")}</h2>
-            <ul className="mt-7 space-y-4 text-sm font-semibold text-[var(--senda-atmosphere-muted)]">
+            <p className="mt-4 max-w-xs text-sm leading-6 text-[var(--senda-atmosphere-muted)]">{t("exploreDescription")}</p>
+            <div className="mt-7 flex flex-col gap-3">
+              <Link
+                href="/test-anclas-de-carrera"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--senda-atmosphere-action-bg)] px-6 py-3 text-sm font-bold text-[var(--senda-atmosphere-action-ink)] transition-colors hover:bg-[var(--senda-atmosphere-action-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--senda-atmosphere-ring-offset)]"
+              >
+                {t("linkCareerAnchor")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/encontrar-mi-recorrido"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[var(--senda-atmosphere-border)] bg-[var(--senda-atmosphere-control)] px-6 py-3 text-sm font-bold text-[var(--senda-atmosphere-ink)] backdrop-blur-sm transition-colors hover:bg-[var(--senda-atmosphere-control-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--senda-atmosphere-ring)]"
+              >
+                {t("linkInitialDiagnostic")} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-6 py-8 text-xs leading-6 text-[var(--senda-atmosphere-muted)] sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+          <p>{t("copyright", { year: new Date().getFullYear() })}</p>
+          <nav aria-label={t("siteNavigation")}>
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
               <li><Link href="/sobre-mi" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkAbout")}</Link></li>
               <li><Link href="/como-trabajamos" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkHow")}</Link></li>
-              <li><Link href="/encontrar-mi-recorrido" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkInitialDiagnostic")}</Link></li>
-              <li><Link href="/test-anclas-de-carrera" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkCareerAnchor")}</Link></li>
               <li><Link href="/preguntas-frecuentes" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkFaq")}</Link></li>
               <li><Link href="/contacto" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkContact")}</Link></li>
               <li><Link href="/privacidad" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkPrivacy")}</Link></li>
               <li><Link href="/terminos" className="hover:text-[var(--senda-atmosphere-ink)]">{t("linkTerms")}</Link></li>
             </ul>
           </nav>
-        </div>
-
-        <div className="py-8 text-xs leading-6 text-[var(--senda-atmosphere-muted)]">
-          <p>{t("copyright", { year: new Date().getFullYear() })}</p>
         </div>
       </div>
     </footer>

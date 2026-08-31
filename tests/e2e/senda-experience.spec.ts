@@ -48,6 +48,7 @@ for (const locale of [{ prefix: "" }, { prefix: "/en" }] as const) {
       { path: "/transiciones-laborales/liderazgo-empresa", stages: 9 },
       { path: "/transiciones-laborales/desafio-puntual", stages: 6 },
       { path: "/transiciones-laborales/elegir-formacion", stages: 9 },
+      { path: "/transiciones-laborales/transicion-a-otro-rol", stages: 7 },
       { path: "/brujulas", stages: 0 },
     ] as const) {
       await page.goto(`${locale.prefix}${service.path}`);
@@ -308,7 +309,7 @@ test("each transiciones-laborales service has an inline lead form that submits t
 
   await page.goto("/transiciones-laborales");
   const rows = page.locator("main article");
-  await expect(rows).toHaveCount(6);
+  await expect(rows).toHaveCount(7);
 
   const secondRow = rows.nth(1);
   await secondRow.getByLabel("Nombre").fill("Ada Lovelace");

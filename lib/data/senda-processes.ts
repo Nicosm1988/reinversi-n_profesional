@@ -7,6 +7,7 @@ export const transitionServiceSlugs = [
   "liderazgo-empresa",
   "desafio-puntual",
   "elegir-formacion",
+  "transicion-a-otro-rol",
 ] as const;
 
 export type TransitionServiceSlug = (typeof transitionServiceSlugs)[number];
@@ -21,12 +22,13 @@ export type SendaProcessKey =
   | "leadership"
   | "focused"
   | "education"
+  | "roleTransition"
   | "compass";
 
 export type SendaProcessDefinition = {
   slug: SendaProcessSlug;
   key: SendaProcessKey;
-  number: "01" | "02" | "03" | "04" | "05" | "06" | "B";
+  number: "01" | "02" | "03" | "04" | "05" | "06" | "07" | "B";
   durationMeetings: number | null;
   stageKeys: readonly string[];
   takeawayKeys: readonly string[];
@@ -88,6 +90,15 @@ export const transitionServices = [
     accent: "charcoal",
     stageKeys: ["trajectory", "interests", "direction", "options", "timeInvestment", "technology", "comparison", "decision", "plan"],
     takeawayKeys: ["criteria", "options", "comparison", "decision", "plan"],
+  },
+  {
+    slug: "transicion-a-otro-rol",
+    key: "roleTransition",
+    number: "07",
+    durationMeetings: null,
+    accent: "olive",
+    stageKeys: ["currentRole", "motivation", "targetRole", "skills", "positioning", "conversations", "transition"],
+    takeawayKeys: ["currentRole", "targetRole", "skills", "positioning", "conversations", "plan"],
   },
 ] as const satisfies readonly SendaProcessDefinition[];
 

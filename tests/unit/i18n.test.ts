@@ -47,6 +47,7 @@ describe("translation catalogs", () => {
       "leadership",
       "focused",
       "education",
+      "roleTransition",
     ];
 
     expect(Object.keys(spanishMessages.Journeys.items)).toEqual([
@@ -102,6 +103,7 @@ describe("translation catalogs", () => {
       "leadership",
       "focused",
       "education",
+      "roleTransition",
       "compass",
     ]);
     expect(Object.keys(spanishMessages.Processes.items.direction.stages)).toHaveLength(7);

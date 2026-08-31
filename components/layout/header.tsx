@@ -81,6 +81,7 @@ export function Header() {
     { name: t("serviceLeadership"), href: "/transiciones-laborales/liderazgo-empresa" },
     { name: t("serviceFocused"), href: "/transiciones-laborales/desafio-puntual" },
     { name: t("serviceEducation"), href: "/transiciones-laborales/elegir-formacion" },
+    { name: t("serviceRoleTransition"), href: "/transiciones-laborales/transicion-a-otro-rol" },
   ] as const;
 
   useEffect(() => {

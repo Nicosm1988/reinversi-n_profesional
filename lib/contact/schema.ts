@@ -29,6 +29,7 @@ export const transitionServiceInterestSlugs = [
   "liderazgo-empresa",
   "desafio-puntual",
   "elegir-formacion",
+  "transicion-a-otro-rol",
 ] as const;
 
 export type ContactFormOrigin = (typeof CONTACT_FORM_ORIGINS)[number];

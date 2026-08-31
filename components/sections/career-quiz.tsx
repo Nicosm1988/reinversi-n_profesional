@@ -785,6 +785,13 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
                           >
                             {t("privacyLink")}
                           </Link>
+                          {" · "}
+                          <Link
+                            href="/terminos"
+                            className="font-semibold text-[var(--quiz-ink)] underline decoration-[var(--quiz-accent)]/55 underline-offset-4 hover:text-[var(--quiz-accent-strong)]"
+                          >
+                            {t("termsLink")}
+                          </Link>
                         </Text>
                       </div>
                     </div>
@@ -899,6 +906,13 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
                             className="font-semibold text-[var(--quiz-ink)] underline decoration-[var(--quiz-accent)]/55 underline-offset-4 hover:text-[var(--quiz-accent-strong)]"
                           >
                             {t("privacyLink")}
+                          </Link>
+                          {" · "}
+                          <Link
+                            href="/terminos"
+                            className="font-semibold text-[var(--quiz-ink)] underline decoration-[var(--quiz-accent)]/55 underline-offset-4 hover:text-[var(--quiz-accent-strong)]"
+                          >
+                            {t("termsLink")}
                           </Link>
                         </Text>
                       </div>

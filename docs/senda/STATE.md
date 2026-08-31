@@ -6,7 +6,7 @@
 
 ## Qué existe (confirmado)
 
-- App Next.js 16 multipágina: home, seis propuestas bajo `/transiciones-laborales`, Brújulas secundaria, Laboratorio, metodología, equipo, contacto y páginas legales en español e inglés.
+- App Next.js 16 multipágina: home, siete propuestas bajo `/transiciones-laborales` (incluye "Transición a otro rol", agregada 2026-08-31), Brújulas secundaria, Laboratorio, metodología, equipo, contacto y páginas legales en español e inglés.
 - `/encontrar-mi-recorrido` es un orientador público, local y sin PII. `/test-anclas-de-carrera` conserva los 40 enunciados, la escala 1–6 y tres elecciones adicionales; guarda el avance protegido en Supabase y calcula el resultado de forma determinística en el servidor antes de solicitar una interpretación opcional sin PII.
 - La interpretación de Anclas por OpenAI es opcional, server-side y cuenta con fallback determinístico. El acceso anónimo no persiste; una sesión Google conserva un único intento por cuenta mediante validación server-side y Supabase/RLS.
 - Al completar Anclas, el servidor encola automáticamente dos informes internos para las casillas configuradas del equipo. El trigger no aparece como aviso ni como consentimiento adicional en la interfaz. El informe excluye identificadores técnicos, fecha exacta y las 40 respuestas individuales; la interpretación por IA permanece separada. El formulario SMTP posterior queda reservado para pedir contacto de manera opcional. El endpoint legado `diagnostics/save` permanece retirado (410).

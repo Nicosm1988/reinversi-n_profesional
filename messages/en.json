@@ -19,6 +19,7 @@
     "serviceLeadership": "Think through leadership and business continuity",
     "serviceFocused": "Address a focused professional challenge",
     "serviceEducation": "Choose learning for your next step",
+    "serviceRoleTransition": "Transition to another role",
     "navCompass": "Compass",
     "closeMenu": "Close menu",
     "ctaDiagnostic": "Recognize where I am now",
@@ -37,15 +38,15 @@
     "processNavigation": "Career transitions",
     "siteNavigation": "Explore Senda",
     "colProcesses": "Career transitions",
-    "colExplore": "Explore",
+    "colExplore": "Where to start",
+    "exploreDescription": "Two ways to start looking at your professional moment.",
     "linkCompass": "Compass",
-    "linkTransitions": "View career transitions",
     "serviceDirection": "Explore a new professional direction",
     "serviceJobChange": "Prepare for a job change",
-    "serviceProject": "Build your own project",
-    "serviceLeadership": "Leadership and business continuity",
-    "serviceFocused": "A focused professional challenge",
+    "serviceProject": "Build or reorganize your own project",
+    "serviceFocused": "Address a focused professional challenge",
     "serviceEducation": "Choose learning for your next step",
+    "serviceRoleTransition": "Transition to another role",
     "linkAbout": "Who we are",
     "linkTeam": "Team",
     "linkLaboratory": "Laboratory",
@@ -380,6 +381,7 @@
     "readyInstruction6": "After the 40 statements, you will review them again and choose exactly 3 as your final selection.",
     "readyPrivacy": "Your progress remains protected in your account and is not published. If your connection drops, we will let you know and you can retry saving without losing what remains on screen.",
     "privacyLink": "Read the privacy policy",
+    "termsLink": "Read the terms and conditions",
     "readyBack": "Back to the introduction",
     "readyCta": "Start the test",
     "resumeCta": "Resume at statement {statement}",
@@ -637,6 +639,12 @@
           "title": "Choose learning for your next step",
           "lead": "When a degree, graduate program, or certification needs to be assessed within a broader direction.",
           "description": "Trajectory, interests, time, investment, technology, work context, and real possibilities."
+        },
+        "roleTransition": {
+          "label": "Situation 07",
+          "title": "Transition to another role",
+          "lead": "When you want to move into a different role, inside or outside your current organization.",
+          "description": "Current role, the role you're aiming for, skills, positioning, and the conversations needed to take the step."
         }
       }
     },
@@ -801,16 +809,166 @@
   "Journeys": {
     "meta": {
       "title": "Career transitions",
-      "description": "Six Senda proposals for exploring direction, changing jobs, building a project, thinking through leadership, addressing a challenge, or choosing further learning."
+      "description": "Seven Senda proposals for exploring direction, changing jobs, building a project, thinking through leadership, transitioning to another role, addressing a challenge, or choosing further learning."
     },
     "hero": {
       "eyebrow": "Career transitions",
-      "title": "Personalized advisory sessions",
-      "description": "Taking a pause to gain perspective is an act of health in the face of work pressures. At Senda we work with people, teams, and organizations going through moments of change, uncertainty, or reassessment who need a space to understand what's happening, put it into words, and explore how to move forward."
+      "title": "There are moments when continuing the same way stops being enough.",
+      "description": "Senda accompanies transition, orientation, and professional redefinition processes: a space to think through what's happening, explore alternatives, and build a direction of your own, without presuming the answer.",
+      "primaryCta": "Learn about the process",
+      "secondaryCta": "Explore my situation"
     },
-    "intro": {
-      "title": "Identify which proposal can best support the moment you're going through.",
-      "description": "We support career transitions without reducing them to formulas, prefabricated answers, or productivity mandates. We offer personalized paths to review trajectories, recognize interests, open up possibilities, and reclaim the space to choose how to continue."
+    "recognition": {
+      "eyebrow": "When something starts to shift",
+      "title": "You don't need the question resolved to recognize it.",
+      "statements": [
+        "I'm fine, but I don't want to keep going like this.",
+        "I don't know if I want to change jobs or change my relationship with work.",
+        "I know what I don't want. I still don't know what I do want.",
+        "I got to a place I used to want, and it no longer represents me.",
+        "I want to do something different, but I don't know where to start.",
+        "I have to decide, and there are too many variables in play.",
+        "I'm going through a transition I didn't choose."
+      ]
+    },
+    "core": {
+      "eyebrow": "Before choosing",
+      "title": "Not every change starts with an answer.",
+      "paragraph": "Before deciding what to do, it often takes understanding where you're choosing from: what experiences brought you here, what desires and needs weigh on you today, and what real room there is to move.",
+      "quote": "We're not looking for a hidden answer inside you. We work to help you build the criteria you can decide from."
+    },
+    "dimensions": {
+      "eyebrow": "What we work on",
+      "title": "Seven dimensions of the same question.",
+      "items": {
+        "path": {
+          "title": "Your path",
+          "description": "What experiences brought you here, and what you learned from them."
+        },
+        "present": {
+          "title": "Your present",
+          "description": "What's working, what stopped working, and what needs review."
+        },
+        "motivations": {
+          "title": "Your motivations",
+          "description": "What genuinely sparks interest, energy, or curiosity for you today."
+        },
+        "relationship": {
+          "title": "Your relationship with work",
+          "description": "What place you want it to hold in your life, and what place it holds today."
+        },
+        "possibilities": {
+          "title": "Your possibilities",
+          "description": "What alternatives exist, and which ones make sense for you."
+        },
+        "decisions": {
+          "title": "Your decisions",
+          "description": "Criteria of your own to choose, beyond the pressure of the moment."
+        },
+        "movement": {
+          "title": "Your next move",
+          "description": "Translating reflection into concrete, possible steps."
+        }
+      }
+    },
+    "context": {
+      "eyebrow": "Context",
+      "title": "We don't work with a person in isolation from their context.",
+      "paragraph1": "Work decisions are shaped by real conditions: economics, relationships, age, education, responsibilities, location, and life stage. None of them disappears because we decide to look away.",
+      "paragraph2": "Building possibilities also means looking clearly at the real conditions each person is deciding from."
+    },
+    "process": {
+      "eyebrow": "How the process works",
+      "title": "A path with stages, not a formula.",
+      "note": "Not everyone needs to go through exactly the same path.",
+      "steps": {
+        "understand": {
+          "number": "01",
+          "title": "Understand",
+          "description": "We put into words what's happening and what question the person brings."
+        },
+        "retrace": {
+          "number": "02",
+          "title": "Retrace",
+          "description": "We reconstruct experiences, decisions, and moments that turn out to be relevant."
+        },
+        "explore": {
+          "number": "03",
+          "title": "Explore",
+          "description": "Interests, motivations, capabilities, desires, and possible alternatives."
+        },
+        "contrast": {
+          "number": "04",
+          "title": "Contrast",
+          "description": "We investigate real possibilities and put them in dialogue with the context."
+        },
+        "build": {
+          "number": "05",
+          "title": "Build",
+          "description": "We define criteria, scenarios, and next steps."
+        },
+        "move": {
+          "number": "06",
+          "title": "Move",
+          "description": "We translate reflection into concrete decisions and actions."
+        }
+      }
+    },
+    "tools": {
+      "eyebrow": "Tools",
+      "title": "Support for thinking, not diagnoses that decide for you.",
+      "paragraph": "Some tools can add information and perspective before or during a process. None of them replaces the conversation or defines a closed result.",
+      "items": {
+        "careerAnchor": {
+          "title": "Career Anchors test",
+          "description": "40 statements to recognize which motivations weigh most in your professional decisions today.",
+          "cta": "Learn about the test"
+        },
+        "diagnostic": {
+          "title": "Find my path",
+          "description": "A brief, non-clinical map to recognize what kind of support might make sense for your moment.",
+          "cta": "Explore"
+        }
+      }
+    },
+    "stages": {
+      "eyebrow": "Across a working life",
+      "title": "Different moments call for different questions.",
+      "items": [
+        "First educational and professional decisions",
+        "Career reorientation",
+        "Career change",
+        "Role change",
+        "Career transition",
+        "Returning to the workforce",
+        "Professional reconversion",
+        "Coming back after a pause",
+        "Changes tied to becoming a parent",
+        "Retirement or new stages",
+        "The need to redefine your relationship with work"
+      ],
+      "compassIntro": "For those taking their first steps, choosing what to study or where to direct a career that's just beginning, there's Compass."
+    },
+    "outcomes": {
+      "eyebrow": "By the end of the process",
+      "title": "The goal isn't absolute certainty.",
+      "items": [
+        "Greater clarity about your current situation",
+        "Understanding of your own path",
+        "Your own criteria for deciding",
+        "Better-explored alternatives",
+        "Hypotheses about the future",
+        "Clearer priorities",
+        "Identified pending conversations",
+        "Concrete next steps",
+        "Tools for future decisions"
+      ],
+      "closingLine": "The goal isn't to walk away with absolute certainty. It's to move forward with more understanding, criteria, and direction."
+    },
+    "service": {
+      "eyebrow": "The process",
+      "title": "A space to work on your next move.",
+      "description": "Each proposal starts from a concrete situation. Choose the one closest to yours, or write to us if it's still not clear."
     },
     "items": {
       "direction": {
@@ -855,6 +1013,13 @@
         "description": "We connect the learning decision with trajectory, interests, time, investment, technology, professional direction, and work context.",
         "cta": "Assess the learning path"
       },
+      "roleTransition": {
+        "eyebrow": "Proposal 07",
+        "title": "Transition to another role",
+        "lead": "You want to move into a different role, inside or outside your current organization.",
+        "description": "We work on your current role, the role you're aiming for, your skills, your positioning, and the conversations you need to have to take the step.",
+        "cta": "Explore this transition"
+      },
       "compass": {
         "eyebrow": "First decisions",
         "title": "Compass",
@@ -864,9 +1029,9 @@
       }
     },
     "closing": {
-      "title": "Still unsure which proposal fits your moment?",
-      "description": "The initial orientation offers a brief, non-clinical map before asking for personal information.",
-      "cta": "Recognize where I am now"
+      "title": "You can start by understanding where you are.",
+      "description": "A first conversation to recognize what you're going through and assess what kind of support might make sense.",
+      "cta": "Explore my situation"
     }
   },
   "Methodology": {
@@ -1081,7 +1246,7 @@
     "items": {
       "choose": {
         "question": "How do I know which proposal may support my moment?",
-        "answer": "The six proposals begin with different situations: exploring a direction, changing jobs, developing a project, thinking through leadership, resolving a focused challenge, or choosing education. If you are still unsure, the initial orientation helps identify a starting point without asking for personal data."
+        "answer": "The seven proposals begin with different situations: exploring a direction, changing jobs, developing a project, thinking through leadership, transitioning to another role, resolving a focused challenge, or choosing education. If you are still unsure, the initial orientation helps identify a starting point without asking for personal data."
       },
       "compass": {
         "question": "Is Compass a test that tells me which degree to choose?",
@@ -1429,6 +1594,52 @@
           "comparison": "A reading of time, investment, and context.",
           "decision": "A clearer decision or research question.",
           "plan": "Realistic next steps."
+        }
+      },
+      "roleTransition": {
+        "title": "Transition to another role",
+        "lead": "Organizing a move toward a different role, inside or outside your current organization.",
+        "cardDescription": "Organize your current role, the role you're aiming for, and the conversations you need to take the step.",
+        "metaDescription": "Senda's support to prepare a transition to another role, inside or outside your current organization.",
+        "objective": "Build a clear path toward a different role, integrating your skills, your positioning, and the conversations needed to sustain the change.",
+        "forWhom": "For people who want to change role, function, or area - within their current organization or in a new one - and need to organize that move with clear criteria.",
+        "stages": {
+          "currentRole": {
+            "title": "Review your current role",
+            "description": "We recognize the responsibilities, scope, and what actually sustains your role today, beyond its job title."
+          },
+          "motivation": {
+            "title": "Identify what's driving the change",
+            "description": "We distinguish whether you're looking to grow, change area, leave a role that no longer represents you, or take on more responsibility."
+          },
+          "targetRole": {
+            "title": "Define the role you're aiming for",
+            "description": "We clarify what type of role, scope, or function makes sense to explore based on your interests and capabilities."
+          },
+          "skills": {
+            "title": "Map skills and gaps",
+            "description": "We identify what capabilities you already have, which ones you need to develop, and how to show evidence of them."
+          },
+          "positioning": {
+            "title": "Build your positioning",
+            "description": "We organize how to communicate your value and your candidacy for the new role, inside or outside your current organization."
+          },
+          "conversations": {
+            "title": "Prepare key conversations",
+            "description": "We design the exchanges with your manager, HR, or key contacts needed to take the step."
+          },
+          "transition": {
+            "title": "Plan the transition",
+            "description": "We organize timing, conditions, and next steps to sustain the role change."
+          }
+        },
+        "takeaways": {
+          "currentRole": "A clear reading of your current role and what you want to leave behind.",
+          "targetRole": "Clarity about the role or function you're aiming for.",
+          "skills": "A map of transferable skills and gaps to work on.",
+          "positioning": "A positioning to communicate your candidacy.",
+          "conversations": "A plan for the key conversations in the process.",
+          "plan": "Next steps to sustain the transition."
         }
       },
       "compass": {
