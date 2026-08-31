@@ -82,7 +82,7 @@
   },
   "ProcessPopup": {
     "title": "Tal vez no falte una respuesta, sino entender qué te mueve.",
-    "description": "El Test de Anclas de Carrera reúne 40 enunciados para ayudarte a reconocer las motivaciones que influyen en tus decisiones y comprender mejor qué buscás en esta etapa.",
+    "description": "El Test de Anclas de Carrera te ayuda a reconocer las motivaciones que influyen en tus decisiones y a comprender mejor qué buscás en esta etapa. Se completa en 10 a 15 minutos.",
     "cta": "Explorar mis motivaciones",
     "closeLabel": "Cerrar invitación"
   },
@@ -1200,7 +1200,7 @@
         {
           "name": "Alejandra Méndez Djedjedian",
           "role": "Lic. en Psicología",
-          "description": "Especialista en Psicodiagnóstico y Acompañamiento psicoterapéutico en diferentes ciclos vitales. Pedagoga y docente universitaria.",
+          "description": "Especialista en psicodiagnóstico y acompañamiento psicoterapéutico en diferentes ciclos vitales. Pedagoga y docente universitaria.",
           "photo": "/aleweb.png"
         },
         {

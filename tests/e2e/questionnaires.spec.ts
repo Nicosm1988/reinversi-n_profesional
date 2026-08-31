@@ -280,6 +280,7 @@ const careerLabels = {
     privacyTitle: "Privacidad",
     professionalDisclaimer: "Este test no reemplaza una consulta con una persona profesional.",
     privacyLink: "Leer la política de privacidad",
+    termsLink: "Leer los términos y condiciones",
     retiredScopeTitle: "Alcance de la herramienta",
     introCta: "Continuar",
     readyCta: "Empezar el test",
@@ -309,6 +310,7 @@ const careerLabels = {
     privacyTitle: "Privacy",
     professionalDisclaimer: "This test does not replace a consultation with a qualified professional.",
     privacyLink: "Read the privacy policy",
+    termsLink: "Read the terms and conditions",
     retiredScopeTitle: "Scope of this tool",
     introCta: "Continue",
     readyCta: "Start the test",
@@ -370,10 +372,13 @@ test.describe("anonymous Career Anchors entry", () => {
         .getByRole("heading", { name: labels.privacyTitle, exact: true })
         .locator("..");
       await expect(privacyCard).toHaveText(
-        `${labels.privacyTitle}${labels.privacyLink}`,
+        `${labels.privacyTitle}${labels.privacyLink} · ${labels.termsLink}`,
       );
       await expect(
         privacyCard.getByRole("link", { name: labels.privacyLink, exact: true }),
+      ).toBeVisible();
+      await expect(
+        privacyCard.getByRole("link", { name: labels.termsLink, exact: true }),
       ).toBeVisible();
       await expect(privacyCard).not.toContainText(labels.professionalDisclaimer);
       await expect(

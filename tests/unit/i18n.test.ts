@@ -134,7 +134,6 @@ describe("translation catalogs", () => {
 
   it("presents Career Anchors consistently as a 40-statement instrument", () => {
     const spanishPresentations = [
-      spanishMessages.ProcessPopup.description,
       spanishMessages.Panel.emptyDescription,
       spanishMessages.Login.termsNotice,
       spanishMessages.CareerAnchorIntro.metadataTitle,
@@ -148,7 +147,6 @@ describe("translation catalogs", () => {
       spanishMessages.CareerQuiz.introFactStatements,
     ];
     const englishPresentations = [
-      englishMessages.ProcessPopup.description,
       englishMessages.Panel.emptyDescription,
       englishMessages.Login.termsNotice,
       englishMessages.CareerAnchorIntro.metadataTitle,

@@ -84,14 +84,14 @@ export function AboutMePage() {
           {members.map((member) => (
             <div
               key={member.name}
-              className="flex items-center gap-4 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] p-4"
+              className="flex items-start gap-5 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] p-5"
             >
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[1rem]">
+              <div className="relative aspect-[3/4] w-28 shrink-0 overflow-hidden rounded-[1rem]">
                 <Image
                   src={member.photo}
                   alt={member.name}
                   fill
-                  sizes="5rem"
+                  sizes="7rem"
                   className="object-cover grayscale"
                 />
               </div>
