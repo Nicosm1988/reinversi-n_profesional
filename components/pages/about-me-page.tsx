@@ -49,7 +49,7 @@ export function AboutMePage() {
 
       <PageSection>
         <div className="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:items-start lg:gap-14">
-          <div className="relative mx-auto w-full max-w-[24rem] [aspect-ratio:4/5] lg:mx-0">
+          <div className="relative mx-auto w-full max-w-[24rem] [aspect-ratio:4/5] lg:col-start-1 lg:row-start-1 lg:mx-0">
             <Image
               src="/tania-marquez.jpg"
               alt={t("story.photoAlt")}
@@ -59,7 +59,7 @@ export function AboutMePage() {
               className="rounded-[1.5rem] object-cover grayscale"
             />
           </div>
-          <div>
+          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2">
             <p className="senda-kicker">{t("story.eyebrow")}</p>
             <h2 className="mt-4 max-w-[28ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
               {t("story.title")}
@@ -78,30 +78,30 @@ export function AboutMePage() {
               ))}
             </ul>
           </div>
-        </div>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2">
-          {members.map((member) => (
-            <div
-              key={member.name}
-              className="flex items-start gap-5 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] p-5"
-            >
-              <div className="relative aspect-[3/4] w-28 shrink-0 overflow-hidden rounded-[1rem]">
-                <Image
-                  src={member.photo}
-                  alt={member.name}
-                  fill
-                  sizes="7rem"
-                  className="object-cover grayscale"
-                />
+          <div className="grid gap-4 sm:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:mx-0 lg:max-w-[24rem] lg:grid-cols-1">
+            {members.map((member) => (
+              <div
+                key={member.name}
+                className="flex items-start gap-5 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] p-5"
+              >
+                <div className="relative aspect-[3/4] w-24 shrink-0 overflow-hidden rounded-[1rem]">
+                  <Image
+                    src={member.photo}
+                    alt={member.name}
+                    fill
+                    sizes="6rem"
+                    className="object-cover grayscale"
+                  />
+                </div>
+                <div>
+                  <span className="block text-sm font-bold text-[var(--senda-ink)]">{member.name}</span>
+                  <span className="block text-sm font-semibold text-[var(--senda-muted)]">{member.role}</span>
+                  <span className="mt-1 block text-sm leading-6 text-[var(--senda-muted)]">{member.description}</span>
+                </div>
               </div>
-              <div>
-                <span className="block text-sm font-bold text-[var(--senda-ink)]">{member.name}</span>
-                <span className="block text-sm font-semibold text-[var(--senda-muted)]">{member.role}</span>
-                <span className="mt-1 block text-sm leading-6 text-[var(--senda-muted)]">{member.description}</span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </PageSection>
 
