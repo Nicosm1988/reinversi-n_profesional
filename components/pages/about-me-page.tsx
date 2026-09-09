@@ -2,6 +2,12 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ClosingCta, PageHero, PageSection } from "@/components/pages/page-primitives";
 
+// Encuadre por foto para que los retratos del equipo se vean con el mismo plano (rostro centrado).
+const memberPhotoFraming: Record<string, string> = {
+  "/aleweb.png": "object-[50%_40%]",
+  "/stepbynweb.png": "scale-[1.45] object-[50%_30%] [transform-origin:50%_28%]",
+};
+
 export function AboutMePage() {
   const t = useTranslations("AboutMe");
   const principles = t.raw("outlook.principles") as string[];
@@ -48,18 +54,18 @@ export function AboutMePage() {
       </PageSection>
 
       <PageSection>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:items-start lg:gap-14">
-          <div className="relative mx-auto w-full max-w-[18rem] [aspect-ratio:4/5] lg:col-start-1 lg:row-start-1 lg:mx-0">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,24rem)_1fr] lg:items-start lg:gap-x-14 lg:gap-y-10">
+          <div className="relative mx-auto w-full max-w-[16rem] [aspect-ratio:4/5]">
             <Image
               src="/tania-marquez.jpg"
               alt={t("story.photoAlt")}
               fill
-              sizes="(min-width: 1024px) 18rem, 80vw"
+              sizes="(min-width: 1024px) 16rem, 80vw"
               priority
               className="rounded-[1.5rem] object-cover grayscale"
             />
           </div>
-          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2">
+          <div>
             <p className="senda-kicker">{t("story.eyebrow")}</p>
             <h2 className="mt-4 max-w-[28ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
               {t("story.title")}
@@ -69,29 +75,21 @@ export function AboutMePage() {
               <p>{t("story.paragraph2")}</p>
               <p>{t("story.paragraph3")}</p>
             </div>
-            <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-              {highlights.map((highlight) => (
-                <li key={highlight.headline} className="rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] px-4 py-3">
-                  <span className="block text-sm font-bold text-[var(--senda-ink)]">{highlight.headline}</span>
-                  <span className="block text-sm leading-6 text-[var(--senda-muted)]">{highlight.description}</span>
-                </li>
-              ))}
-            </ul>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:mx-0 lg:max-w-none lg:grid-cols-1">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             {members.map((member) => (
               <div
                 key={member.name}
                 className="flex items-start gap-5 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] p-5"
               >
-                <div className="relative aspect-[3/4] w-24 shrink-0 overflow-hidden rounded-[1rem]">
+                <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[1rem]">
                   <Image
                     src={member.photo}
                     alt={member.name}
                     fill
                     sizes="6rem"
-                    className="object-cover grayscale"
+                    className={`object-cover grayscale ${memberPhotoFraming[member.photo] ?? "object-center"}`}
                   />
                 </div>
                 <div>
@@ -102,6 +100,15 @@ export function AboutMePage() {
               </div>
             ))}
           </div>
+
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {highlights.map((highlight) => (
+              <li key={highlight.headline} className="rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] px-4 py-3">
+                <span className="block text-sm font-bold text-[var(--senda-ink)]">{highlight.headline}</span>
+                <span className="block text-sm leading-6 text-[var(--senda-muted)]">{highlight.description}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </PageSection>
 
