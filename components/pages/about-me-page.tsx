@@ -48,13 +48,13 @@ export function AboutMePage() {
       </PageSection>
 
       <PageSection>
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:items-start lg:gap-14">
-          <div className="relative mx-auto w-full max-w-[24rem] [aspect-ratio:4/5] lg:col-start-1 lg:row-start-1 lg:mx-0">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:items-start lg:gap-14">
+          <div className="relative mx-auto w-full max-w-[18rem] [aspect-ratio:4/5] lg:col-start-1 lg:row-start-1 lg:mx-0">
             <Image
               src="/tania-marquez.jpg"
               alt={t("story.photoAlt")}
               fill
-              sizes="(min-width: 1024px) 24rem, 90vw"
+              sizes="(min-width: 1024px) 18rem, 80vw"
               priority
               className="rounded-[1.5rem] object-cover grayscale"
             />
@@ -79,7 +79,7 @@ export function AboutMePage() {
             </ul>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:mx-0 lg:max-w-[24rem] lg:grid-cols-1">
+          <div className="grid gap-4 sm:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:mx-0 lg:max-w-none lg:grid-cols-1">
             {members.map((member) => (
               <div
                 key={member.name}
