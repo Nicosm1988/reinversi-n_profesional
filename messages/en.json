@@ -303,7 +303,7 @@
   "CareerQuiz": {
     "metadataTitle": "Career Anchors Test: 40 statements | Senda",
     "metadataDescription": "Explore, through 40 statements, which motivations carry the most weight in your career right now using Edgar Schein's Career Anchors model.",
-    "introBadge": "Career Anchors Test · 40 statements · Edgar Schein's model",
+    "introBadge": "Career Anchors Test · Edgar Schein's model",
     "introTitle": "The motivations behind your career decisions",
     "introSubtitle": "An inner compass for understanding your journey more clearly.",
     "introParagraph1": "Edgar Schein developed this model to explore the combination of abilities, motivations, and values that a person seeks to preserve throughout their working life.",
@@ -362,7 +362,7 @@
     "calculateError": "We couldn't calculate your primary anchor. Keep this screen open and try again.",
     "analyzeRequestError": "We couldn't generate the guidance-oriented reading.",
     "analysisUnavailable": "We couldn't generate your personalized feedback right now, but you can still review the complete ranking.",
-    "introLead": "A guided pause through 40 statements to recognize which values, motivations, and capabilities carry the most weight when you choose, sustain, or change a job.",
+    "introLead": "A guided pause to recognize which values, motivations, and capabilities carry the most weight when you choose, sustain, or change a job.",
     "introProblemTitle": "When a career decision does not quite add up",
     "introProblemParagraph1": "You may be facing a change, an opportunity, or a period of strain and still be unsure which criterion should guide your next step. Sometimes an option makes sense on paper but does not feel consistent with what you currently need from work.",
     "introProblemParagraph2": "This test helps you look beneath the immediate decision: what you seek to preserve, which conditions support your engagement, and which motivations deserve attention before you choose.",
@@ -390,13 +390,12 @@
     "introOutcome4": "An optional connection to your current professional situation.",
     "introOutcome5": "The option to revisit the result from your Senda profile.",
     "introExpectTitle": "Before you begin",
-    "introFactStatements": "40 statements",
+    "introFactStatements": "Pause and resume anytime",
     "introFactTime": "10–15 minutes",
-    "introFactReading": "Personalized feedback",
+    "introFactReading": "Individual feedback",
     "introFactPrivate": "Protected result",
     "introOneAttemptTitle": "One attempt per account",
-    "introOneAttemptText": "Your account can complete the test's 40 statements once. You may pause, resume, and review answers before confirming; afterward, the saved result remains available, but the test cannot be restarted.",
-    "introPrivacyTitle": "Privacy",
+    "introOneAttemptText": "Your account can complete the test once. You may pause, resume, and review answers before confirming; afterward, the saved result remains available, but the test cannot be restarted.",
     "introProfessionalDisclaimer": "This test does not replace a consultation with a qualified professional.",
     "introLoginCta": "Sign in with Google to continue",
     "introUnavailableCta": "Saving is currently unavailable",
@@ -489,7 +488,7 @@
     "introTakeawaysTitle": "What you'll take away",
     "introTakeawayRanking": "A complete ranking of your 8 career anchors.",
     "introTakeawayTopThree": "An in-depth reading of your 3 strongest anchors.",
-    "introTakeawayPersonalized": "Personalized feedback grounded in your current context.",
+    "introTakeawayPersonalized": "Individual feedback grounded in your current context.",
     "introEstimatedTitle": "Estimated time",
     "introEstimatedText": "10 to 15 minutes for 40 statements, including a final selection of 3 important affirmations.",
     "introPaceNote": "Take all the time you need — there's no rush. There are no right or wrong answers, so answer honestly, based on what you think and feel today. This matters for you, and every answer counts.",
@@ -622,7 +621,7 @@
         "jobChange": "You want to change roles, employers, or functions and need to organize the move.",
         "project": "You have an idea or independent project and need to shape it or reconsider how to continue.",
         "leadership": "You are carrying leadership or business decisions that need a professional thinking space.",
-        "decision": "You recognize a focused challenge and want to turn it into a decision or practical plan.",
+        "decision": "You recognize a focused challenge and want to turn it into a decision and concrete next steps.",
         "education": "You are considering further learning and want to connect it with your trajectory and real possibilities."
       }
     },
@@ -666,8 +665,8 @@
         "focused": {
           "label": "Situation 05",
           "title": "Address a focused professional challenge",
-          "lead": "When the problem is defined and you need to build a decision or focused plan.",
-          "description": "Problem definition, relevant information, alternatives, criteria, decision, and action plan."
+          "lead": "When the problem is defined and you need to build a focused decision and outline your next steps.",
+          "description": "Problem definition, relevant information, alternatives, criteria, decision, and next steps."
         },
         "education": {
           "label": "Situation 06",
@@ -1017,7 +1016,7 @@
         "eyebrow": "Proposal 02",
         "title": "Prepare for a job change",
         "lead": "You want to change roles, employers, functions, or industries and need to organize the transition.",
-        "description": "We work on trajectory, direction, value proposition, narrative, profile, search, conversations, and a movement plan.",
+        "description": "We work on trajectory, direction, value proposition, narrative, profile, search, conversations, and next steps.",
         "cta": "Prepare the change"
       },
       "project": {
@@ -1037,7 +1036,7 @@
       "focused": {
         "eyebrow": "Proposal 05",
         "title": "Address a focused professional challenge",
-        "lead": "You recognize a defined problem and need to organize a decision or build a focused plan.",
+        "lead": "You recognize a defined problem and need to organize a decision and outline your next steps.",
         "description": "We define the problem, gather information, assess alternatives and criteria, and translate the decision into action.",
         "cta": "Address the challenge"
       },
@@ -1378,7 +1377,7 @@
           "capital": "A map of transferable experience and professional capital.",
           "alternatives": "Relevant alternatives to investigate.",
           "criteria": "Your own criteria for comparing them.",
-          "plan": "Next steps for exploration and reality testing."
+          "plan": "A way to outline your next steps for exploration and reality testing."
         }
       },
       "jobChange": {
@@ -1428,7 +1427,7 @@
           "value": "An evidence-based value proposition.",
           "profile": "Aligned résumé, profile, and narrative.",
           "strategy": "A search and conversation strategy.",
-          "plan": "A reviewable movement plan."
+          "plan": "A way to outline your next steps, reviewable as you move forward."
         }
       },
       "project": {
@@ -1482,7 +1481,7 @@
           "value": "A value proposition to test.",
           "priorities": "Visible priorities and decisions.",
           "validation": "Small tests for learning from reality.",
-          "plan": "Next steps and review points."
+          "plan": "A way to outline your next steps and review points."
         }
       },
       "leadership": {
@@ -1541,9 +1540,9 @@
       "focused": {
         "title": "Address a focused professional challenge",
         "lead": "A focused process for organizing a defined problem.",
-        "cardDescription": "Define the problem, assess alternatives, and build a decision with an action plan.",
-        "metaDescription": "A focused Senda proposal for addressing a specific professional challenge and building a decision or action plan.",
-        "objective": "Turn a concrete professional problem into a grounded decision and realistic action plan.",
+        "cardDescription": "Define the problem, assess alternatives, and build a decision with clear next steps.",
+        "metaDescription": "A focused Senda proposal for addressing a specific professional challenge, building a decision, and outlining next steps.",
+        "objective": "Turn a concrete professional problem into a grounded decision and a realistic way to outline your next steps.",
         "forWhom": "For people who recognize a defined challenge and do not need to work through every dimension of a broader transition.",
         "stages": {
           "problem": {
@@ -1567,7 +1566,7 @@
             "description": "We prioritize an alternative while recognizing limits and uncertainty."
           },
           "action": {
-            "title": "Design the plan",
+            "title": "Outline the next steps",
             "description": "We translate the decision into actions, responsibilities, timing, and review."
           }
         },
@@ -1575,7 +1574,7 @@
           "problem": "A clearly defined problem.",
           "criteria": "Explicit decision criteria.",
           "decision": "A reasoned position.",
-          "action": "A focused, reviewable plan."
+          "action": "A focused, reviewable way to outline your next steps."
         }
       },
       "education": {
@@ -1628,7 +1627,7 @@
           "options": "Relevant options compared.",
           "comparison": "A reading of time, investment, and context.",
           "decision": "A clearer decision or research question.",
-          "plan": "Realistic next steps."
+          "plan": "A realistic way to outline your next step."
         }
       },
       "roleTransition": {
@@ -1673,8 +1672,8 @@
           "targetRole": "Clarity about the role or function you're aiming for.",
           "skills": "A map of transferable skills and gaps to work on.",
           "positioning": "A positioning to communicate your candidacy.",
-          "conversations": "A plan for the key conversations in the process.",
-          "plan": "Next steps to sustain the transition."
+          "conversations": "Preparation for the key conversations in the process.",
+          "plan": "A way to outline the next steps to sustain the transition."
         }
       },
       "compass": {
@@ -1813,7 +1812,7 @@
             "information": "Available and missing information.",
             "alternatives": "Possible alternatives.",
             "criteria": "Decision criteria and consequences.",
-            "plan": "Decision and action plan."
+            "plan": "Decision and next steps."
           }
         },
         "chooseEducation": {

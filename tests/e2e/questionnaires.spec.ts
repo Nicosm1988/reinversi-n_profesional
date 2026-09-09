@@ -272,7 +272,7 @@ const careerLabels = {
   es: {
     route: "/test-anclas-de-carrera",
     introTitle: "Las motivaciones detrás de tus decisiones profesionales",
-    statementCount: "40 enunciados",
+    pauseFact: "Podés pausar y retomar",
     loginCta: "Ingresar con Google para continuar",
     accountNote: "Para cuidar el intento único, el progreso y el resultado, necesitás ingresar con tu cuenta de Google.",
     unavailableCta: "Guardado no disponible por el momento",
@@ -302,7 +302,7 @@ const careerLabels = {
   en: {
     route: "/en/test-anclas-de-carrera",
     introTitle: "The motivations behind your career decisions",
-    statementCount: "40 statements",
+    pauseFact: "Pause and resume anytime",
     loginCta: "Sign in with Google to continue",
     accountNote: "To protect the single attempt, progress, and result, you need to sign in with your Google account.",
     unavailableCta: "Saving is currently unavailable",
@@ -350,7 +350,8 @@ test.describe("anonymous Career Anchors entry", () => {
       await page.goto(labels.route);
 
       await expect(page.getByRole("heading", { level: 1, name: labels.introTitle })).toBeVisible();
-      await expect(page.getByText(labels.statementCount, { exact: true })).toBeVisible();
+      await expect(page.getByText(labels.pauseFact, { exact: true })).toBeVisible();
+      await expect(page.locator(".career-quiz")).not.toContainText(/\b40\b/);
       const login = page.getByRole("link", { name: labels.loginCta, exact: true });
       if (hasSupabasePublicConfig) {
         await expect(page.getByText(labels.accountNote, { exact: true })).toBeVisible();
@@ -368,19 +369,15 @@ test.describe("anonymous Career Anchors entry", () => {
       }
       await expect(page.locator('input[name^="statement-"]')).toHaveCount(0);
       await expect(page.locator("#career-anchor-result-email-consent")).toHaveCount(0);
-      const privacyCard = page
-        .getByRole("heading", { name: labels.privacyTitle, exact: true })
-        .locator("..");
-      await expect(privacyCard).toHaveText(
-        `${labels.privacyTitle}${labels.privacyLink} · ${labels.termsLink}`,
-      );
       await expect(
-        privacyCard.getByRole("link", { name: labels.privacyLink, exact: true }),
-      ).toBeVisible();
+        page.getByRole("heading", { name: labels.privacyTitle, exact: true }),
+      ).toHaveCount(0);
       await expect(
-        privacyCard.getByRole("link", { name: labels.termsLink, exact: true }),
-      ).toBeVisible();
-      await expect(privacyCard).not.toContainText(labels.professionalDisclaimer);
+        page.getByRole("link", { name: labels.privacyLink, exact: true }),
+      ).toHaveCount(0);
+      await expect(
+        page.getByRole("link", { name: labels.termsLink, exact: true }),
+      ).toHaveCount(0);
       await expect(
         page.getByText(labels.professionalDisclaimer, { exact: true }),
       ).toBeVisible();

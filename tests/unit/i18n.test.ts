@@ -142,9 +142,6 @@ describe("translation catalogs", () => {
       spanishMessages.CareerAnchorIntro.introContinuation,
       spanishMessages.CareerQuiz.metadataTitle,
       spanishMessages.CareerQuiz.metadataDescription,
-      spanishMessages.CareerQuiz.introBadge,
-      spanishMessages.CareerQuiz.introLead,
-      spanishMessages.CareerQuiz.introFactStatements,
     ];
     const englishPresentations = [
       englishMessages.Panel.emptyDescription,
@@ -155,9 +152,6 @@ describe("translation catalogs", () => {
       englishMessages.CareerAnchorIntro.introContinuation,
       englishMessages.CareerQuiz.metadataTitle,
       englishMessages.CareerQuiz.metadataDescription,
-      englishMessages.CareerQuiz.introBadge,
-      englishMessages.CareerQuiz.introLead,
-      englishMessages.CareerQuiz.introFactStatements,
     ];
 
     for (const message of spanishPresentations) {
@@ -220,11 +214,11 @@ describe("translation catalogs", () => {
   });
 
   it("keeps AI processing copy out of the Career Anchors introduction", () => {
-    expect(spanishMessages.CareerQuiz.introPrivacyTitle).toBe("Privacidad");
+    expect(spanishMessages.CareerQuiz).not.toHaveProperty("introPrivacyTitle");
     expect(spanishMessages.CareerQuiz.introProfessionalDisclaimer).toBe(
       "Este test no reemplaza una consulta con una persona profesional.",
     );
-    expect(englishMessages.CareerQuiz.introPrivacyTitle).toBe("Privacy");
+    expect(englishMessages.CareerQuiz).not.toHaveProperty("introPrivacyTitle");
     expect(englishMessages.CareerQuiz.introProfessionalDisclaimer).toBe(
       "This test does not replace a consultation with a qualified professional.",
     );

@@ -5,7 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { motion, AnimatePresence, MotionConfig, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useLocale, useTranslations } from "next-intl";
-import { ArrowLeft, ArrowRight, BookOpenText, Camera, CheckCircle2, Clock3, Compass, LockKeyhole, RefreshCw, Save, Sparkles, WifiOff } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpenText, Camera, CheckCircle2, Clock3, Compass, LockKeyhole, PauseCircle, RefreshCw, Save, Sparkles, WifiOff } from "lucide-react";
 import { Link } from "@/navigation";
 import englishQuizData from "@/lib/data/anchors.en.json";
 import spanishQuizData from "@/lib/data/anchors.json";
@@ -750,7 +750,7 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
                     </Heading>
                     <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                       {[
-                        [BookOpenText, t("introFactStatements")],
+                        [PauseCircle, t("introFactStatements")],
                         [Clock3, t("introFactTime")],
                         [Sparkles, t("introFactReading")],
                         [LockKeyhole, t("introFactPrivate")],
@@ -767,33 +767,11 @@ export function CareerQuiz({ userEmail, existingDiagnostic = null, authState, sh
                       })}
                     </div>
 
-                    <div className="grid gap-4 md:grid-cols-2">
-                      <div className="rounded-[24px] border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] p-6">
-                        <Heading level="h3" className="text-xl text-[var(--quiz-ink)]">
-                          {t("introOneAttemptTitle")}
-                        </Heading>
-                        <Text className="mt-3 leading-relaxed text-[var(--quiz-muted)]">{t("introOneAttemptText")}</Text>
-                      </div>
-                      <div className="rounded-[24px] border border-[var(--quiz-border)] bg-[var(--quiz-surface-accent)] p-6">
-                        <Heading level="h3" className="text-xl text-[var(--quiz-ink)]">
-                          {t("introPrivacyTitle")}
-                        </Heading>
-                        <Text className="mt-3 leading-relaxed text-[var(--quiz-muted)]">
-                          <Link
-                            href="/privacidad"
-                            className="font-semibold text-[var(--quiz-ink)] underline decoration-[var(--quiz-accent)]/55 underline-offset-4 hover:text-[var(--quiz-accent-strong)]"
-                          >
-                            {t("privacyLink")}
-                          </Link>
-                          {" · "}
-                          <Link
-                            href="/terminos"
-                            className="font-semibold text-[var(--quiz-ink)] underline decoration-[var(--quiz-accent)]/55 underline-offset-4 hover:text-[var(--quiz-accent-strong)]"
-                          >
-                            {t("termsLink")}
-                          </Link>
-                        </Text>
-                      </div>
+                    <div className="rounded-[24px] border border-[var(--quiz-border)] bg-[var(--quiz-surface-warm)] p-6">
+                      <Heading level="h3" className="text-xl text-[var(--quiz-ink)]">
+                        {t("introOneAttemptTitle")}
+                      </Heading>
+                      <Text className="mt-3 leading-relaxed text-[var(--quiz-muted)]">{t("introOneAttemptText")}</Text>
                     </div>
 
                     <Text className="text-center leading-relaxed text-[var(--quiz-muted)]">

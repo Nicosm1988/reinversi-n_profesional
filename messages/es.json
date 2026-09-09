@@ -303,7 +303,7 @@
   "CareerQuiz": {
     "metadataTitle": "Test de Anclas de Carrera: 40 enunciados | Senda",
     "metadataDescription": "Explorá, a través de 40 enunciados, qué motivaciones tienen hoy mayor peso en tu recorrido profesional con el modelo de Anclas de Carrera de Edgar Schein.",
-    "introBadge": "Test de Anclas de Carrera · 40 enunciados · Modelo de Edgar Schein",
+    "introBadge": "Test de Anclas de Carrera · Modelo de Edgar Schein",
     "introTitle": "Las motivaciones detrás de tus decisiones profesionales",
     "introSubtitle": "Una brújula interna para comprender mejor tu recorrido.",
     "introParagraph1": "Edgar Schein desarrolló este modelo para explorar la combinación de capacidades, motivaciones y valores que una persona procura preservar en su recorrido laboral.",
@@ -362,7 +362,7 @@
     "calculateError": "No pudimos calcular tu ancla principal. Conservá esta pantalla y probá nuevamente.",
     "analyzeRequestError": "No se pudo generar la lectura orientativa.",
     "analysisUnavailable": "No pudimos generar la lectura personalizada en este momento, pero ya podés consultar el ranking completo.",
-    "introLead": "Una pausa guiada de 40 enunciados para reconocer qué valores, motivaciones y capacidades pesan más cuando elegís, sostenés o cambiás un trabajo.",
+    "introLead": "Una pausa guiada para reconocer qué valores, motivaciones y capacidades pesan más cuando elegís, sostenés o cambiás un trabajo.",
     "introProblemTitle": "Cuando una decisión profesional no termina de cerrar",
     "introProblemParagraph1": "Podés estar ante un cambio, una oportunidad o una etapa de desgaste y aun así no tener claro qué criterio debería orientar el próximo paso. A veces una opción parece razonable en el papel, pero no se siente coherente con lo que hoy necesitás del trabajo.",
     "introProblemParagraph2": "Este test te ayuda a mirar debajo de la decisión concreta: qué buscás preservar, qué condiciones sostienen tu compromiso y qué motivaciones conviene tener presentes antes de elegir.",
@@ -390,13 +390,12 @@
     "introOutcome4": "Una devolución personalizada sobre los aspectos que hoy parecen tener mayor peso en tu vida profesional.",
     "introOutcome5": "La posibilidad de volver a consultar el resultado desde tu perfil de Senda.",
     "introExpectTitle": "Antes de empezar",
-    "introFactStatements": "40 enunciados",
+    "introFactStatements": "Podés pausar y retomar",
     "introFactTime": "10–15 minutos",
-    "introFactReading": "Devolución personalizada",
+    "introFactReading": "Devolución individual",
     "introFactPrivate": "Resultado protegido",
     "introOneAttemptTitle": "Un intento por cuenta",
-    "introOneAttemptText": "Tu cuenta permite completar los 40 enunciados del test una sola vez. Podés pausar, retomar y revisar respuestas antes de confirmar; después, el resultado queda guardado para volver a consultarlo, pero el test no se reinicia.",
-    "introPrivacyTitle": "Privacidad",
+    "introOneAttemptText": "Tu cuenta permite completar el test una sola vez. Podés pausar, retomar y revisar respuestas antes de confirmar; después, el resultado queda guardado para volver a consultarlo, pero el test no se reinicia.",
     "introProfessionalDisclaimer": "Este test no reemplaza una consulta con una persona profesional.",
     "introLoginCta": "Ingresar con Google para continuar",
     "introUnavailableCta": "Guardado no disponible por el momento",
@@ -489,7 +488,7 @@
     "introTakeawaysTitle": "Qué te vas a llevar",
     "introTakeawayRanking": "Un ranking completo de tus 8 anclas de carrera.",
     "introTakeawayTopThree": "Una lectura profunda de tus 3 anclas más fuertes.",
-    "introTakeawayPersonalized": "Una devolución personalizada sobre tu contexto actual.",
+    "introTakeawayPersonalized": "Una devolución individual sobre tu contexto actual.",
     "introEstimatedTitle": "Tiempo estimado",
     "introEstimatedText": "Entre 10 y 15 minutos para recorrer 40 enunciados, incluida una selección final de 3 afirmaciones importantes.",
     "introPaceNote": "Tomate el tiempo que necesites: no hay apuro. No existen respuestas correctas ni incorrectas, así que respondé con honestidad, según lo que pensás y sentís hoy. Es importante para vos, y cada respuesta cuenta.",
@@ -622,7 +621,7 @@
         "jobChange": "Querés cambiar de empleo, función u organización y necesitás ordenar el movimiento.",
         "project": "Tenés una idea o proyecto propio y necesitás darle forma o revisar cómo continuar.",
         "leadership": "Sostenés decisiones de liderazgo o empresa que necesitan un espacio profesional de pensamiento.",
-        "decision": "Reconocés un desafío puntual y querés convertirlo en una decisión o plan concreto.",
+        "decision": "Reconocés un desafío puntual y querés convertirlo en una decisión y en próximos pasos concretos.",
         "education": "Estás evaluando una formación y querés relacionarla con tu trayectoria y posibilidades reales."
       }
     },
@@ -666,8 +665,8 @@
         "focused": {
           "label": "Situación 05",
           "title": "Abordar un desafío profesional puntual",
-          "lead": "Cuando el problema está delimitado y necesitás construir una decisión o plan focalizado.",
-          "description": "Definición del problema, información, alternativas, criterios, decisión y plan de acción."
+          "lead": "Cuando el problema está delimitado y necesitás construir una decisión focalizada y plantear los próximos pasos.",
+          "description": "Definición del problema, información, alternativas, criterios, decisión y próximos pasos."
         },
         "education": {
           "label": "Situación 06",
@@ -1021,7 +1020,7 @@
         "eyebrow": "Propuesta 02",
         "title": "Preparar un cambio de empleo",
         "lead": "Querés cambiar de puesto, organización, función o industria y necesitás ordenar la transición.",
-        "description": "Trabajamos trayectoria, dirección, propuesta de valor, narrativa, perfil, búsqueda, conversaciones y plan de movimiento.",
+        "description": "Trabajamos trayectoria, dirección, propuesta de valor, narrativa, perfil, búsqueda, conversaciones y próximos pasos.",
         "cta": "Preparar el cambio"
       },
       "project": {
@@ -1041,7 +1040,7 @@
       "focused": {
         "eyebrow": "Propuesta 05",
         "title": "Abordar un desafío profesional puntual",
-        "lead": "Reconocés un problema delimitado y necesitás ordenar una decisión o construir un plan focalizado.",
+        "lead": "Reconocés un problema delimitado y necesitás ordenar una decisión y plantear los próximos pasos.",
         "description": "Definimos el problema, reunimos información, evaluamos alternativas y criterios, y traducimos la decisión en acción.",
         "cta": "Abordar el desafío"
       },
@@ -1382,7 +1381,7 @@
           "capital": "Un mapa de experiencia y capital laboral transferible.",
           "alternatives": "Alternativas relevantes para investigar.",
           "criteria": "Criterios propios para compararlas.",
-          "plan": "Próximos pasos de exploración y contraste."
+          "plan": "Una forma de plantear tus próximos pasos de exploración y contraste."
         }
       },
       "jobChange": {
@@ -1432,7 +1431,7 @@
           "value": "Una propuesta de valor con evidencia.",
           "profile": "CV, perfil y narrativa alineados.",
           "strategy": "Una estrategia de búsqueda y conversaciones.",
-          "plan": "Un plan de movimiento revisable."
+          "plan": "Una forma de plantear tus próximos pasos, revisable a medida que avanzás."
         }
       },
       "project": {
@@ -1486,7 +1485,7 @@
           "value": "Una propuesta de valor para contrastar.",
           "priorities": "Prioridades y decisiones visibles.",
           "validation": "Pruebas pequeñas para aprender de la realidad.",
-          "plan": "Próximos pasos y puntos de revisión."
+          "plan": "Una forma de plantear tus próximos pasos y puntos de revisión."
         }
       },
       "leadership": {
@@ -1545,9 +1544,9 @@
       "focused": {
         "title": "Abordar un desafío profesional puntual",
         "lead": "Un proceso focalizado para ordenar un problema delimitado.",
-        "cardDescription": "Definí el problema, evaluá alternativas y construí una decisión con plan de acción.",
-        "metaDescription": "Propuesta focalizada de Senda para abordar un desafío profesional puntual y construir una decisión o plan de acción.",
-        "objective": "Transformar un problema profesional concreto en una decisión fundada y un plan de acción realista.",
+        "cardDescription": "Definí el problema, evaluá alternativas y construí una decisión con próximos pasos claros.",
+        "metaDescription": "Propuesta focalizada de Senda para abordar un desafío profesional puntual, construir una decisión y plantear los próximos pasos.",
+        "objective": "Transformar un problema profesional concreto en una decisión fundada y una forma realista de plantear los próximos pasos.",
         "forWhom": "Para personas que reconocen un desafío delimitado y no necesitan recorrer todas las dimensiones de una transición más amplia.",
         "stages": {
           "problem": {
@@ -1571,7 +1570,7 @@
             "description": "Priorizamos una alternativa con conciencia de límites e incertidumbre."
           },
           "action": {
-            "title": "Diseñar el plan",
+            "title": "Plantear los próximos pasos",
             "description": "Traducimos la decisión en acciones, responsables, tiempos y revisión."
           }
         },
@@ -1579,7 +1578,7 @@
           "problem": "Un problema claramente delimitado.",
           "criteria": "Criterios explícitos para decidir.",
           "decision": "Una posición argumentada.",
-          "action": "Un plan focalizado y revisable."
+          "action": "Una forma de plantear tus próximos pasos, focalizada y revisable."
         }
       },
       "education": {
@@ -1632,7 +1631,7 @@
           "options": "Opciones relevantes comparadas.",
           "comparison": "Una lectura de tiempo, inversión y contexto.",
           "decision": "Una decisión o pregunta de investigación más clara.",
-          "plan": "Próximos pasos realistas."
+          "plan": "Una forma realista de plantear tu próximo paso."
         }
       },
       "roleTransition": {
@@ -1677,8 +1676,8 @@
           "targetRole": "Claridad sobre el rol o la función hacia la que te dirigís.",
           "skills": "Un mapa de habilidades transferibles y brechas a trabajar.",
           "positioning": "Un posicionamiento para comunicar tu candidatura.",
-          "conversations": "Un plan para las conversaciones clave del proceso.",
-          "plan": "Próximos pasos para sostener la transición."
+          "conversations": "Una preparación para las conversaciones clave del proceso.",
+          "plan": "Una forma de plantear los próximos pasos para sostener la transición."
         }
       },
       "compass": {
@@ -1817,7 +1816,7 @@
             "information": "Información disponible y faltante.",
             "alternatives": "Alternativas posibles.",
             "criteria": "Criterios y consecuencias de la decisión.",
-            "plan": "Decisión y plan de acción."
+            "plan": "Decisión y próximos pasos."
           }
         },
         "chooseEducation": {
