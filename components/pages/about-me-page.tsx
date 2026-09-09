@@ -54,41 +54,29 @@ export function AboutMePage() {
       </PageSection>
 
       <PageSection>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,24rem)_1fr] lg:items-start lg:gap-x-14 lg:gap-y-10">
-          <div className="relative mx-auto w-full max-w-[16rem] [aspect-ratio:4/5]">
-            <Image
-              src="/tania-marquez.jpg"
-              alt={t("story.photoAlt")}
-              fill
-              sizes="(min-width: 1024px) 16rem, 80vw"
-              priority
-              className="rounded-[1.5rem] object-cover grayscale"
-            />
-          </div>
-          <div>
-            <p className="senda-kicker">{t("story.eyebrow")}</p>
-            <h2 className="mt-4 max-w-[28ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
-              {t("story.title")}
-            </h2>
-            <div className="mt-6 max-w-2xl space-y-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">
-              <p>{t("story.paragraph1")}</p>
-              <p>{t("story.paragraph2")}</p>
-              <p>{t("story.paragraph3")}</p>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:items-start lg:gap-14">
+          <div className="mx-auto w-full max-w-[22rem] space-y-4 lg:mx-0">
+            <div className="relative mx-auto w-full max-w-[14rem] [aspect-ratio:4/5] lg:mx-0">
+              <Image
+                src="/tania-marquez.jpg"
+                alt={t("story.photoAlt")}
+                fill
+                sizes="(min-width: 1024px) 14rem, 70vw"
+                priority
+                className="rounded-[1.5rem] object-cover grayscale"
+              />
             </div>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             {members.map((member) => (
               <div
                 key={member.name}
-                className="flex items-start gap-5 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] p-5"
+                className="flex items-start gap-4 rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] p-5"
               >
-                <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[1rem]">
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[1rem]">
                   <Image
                     src={member.photo}
                     alt={member.name}
                     fill
-                    sizes="6rem"
+                    sizes="5rem"
                     className={`object-cover grayscale ${memberPhotoFraming[member.photo] ?? "object-center"}`}
                   />
                 </div>
@@ -101,14 +89,25 @@ export function AboutMePage() {
             ))}
           </div>
 
-          <ul className="grid gap-3 sm:grid-cols-2">
-            {highlights.map((highlight) => (
-              <li key={highlight.headline} className="rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] px-4 py-3">
-                <span className="block text-sm font-bold text-[var(--senda-ink)]">{highlight.headline}</span>
-                <span className="block text-sm leading-6 text-[var(--senda-muted)]">{highlight.description}</span>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <p className="senda-kicker">{t("story.eyebrow")}</p>
+            <h2 className="mt-4 max-w-[28ch] text-pretty font-heading text-[clamp(1.875rem,3.5vw,3rem)] leading-[1.08] tracking-[-0.035em]">
+              {t("story.title")}
+            </h2>
+            <div className="mt-6 max-w-2xl space-y-5 text-base leading-7 text-[var(--senda-muted)] sm:text-lg sm:leading-8">
+              <p>{t("story.paragraph1")}</p>
+              <p>{t("story.paragraph2")}</p>
+              <p>{t("story.paragraph3")}</p>
+            </div>
+            <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+              {highlights.map((highlight) => (
+                <li key={highlight.headline} className="rounded-xl border border-[var(--senda-border)] bg-[var(--senda-section)] px-4 py-3">
+                  <span className="block text-sm font-bold text-[var(--senda-ink)]">{highlight.headline}</span>
+                  <span className="block text-sm leading-6 text-[var(--senda-muted)]">{highlight.description}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </PageSection>
 
