@@ -132,41 +132,14 @@ describe("translation catalogs", () => {
     }
   });
 
-  it("presents Career Anchors consistently as a 40-statement instrument", () => {
-    const spanishPresentations = [
-      spanishMessages.Panel.emptyDescription,
-      spanishMessages.Login.termsNotice,
-      spanishMessages.CareerAnchorIntro.metadataTitle,
-      spanishMessages.CareerAnchorIntro.metadataDescription,
-      spanishMessages.CareerAnchorIntro.label,
-      spanishMessages.CareerAnchorIntro.introContinuation,
-      spanishMessages.CareerQuiz.metadataTitle,
-      spanishMessages.CareerQuiz.metadataDescription,
-    ];
-    const englishPresentations = [
-      englishMessages.Panel.emptyDescription,
-      englishMessages.Login.termsNotice,
-      englishMessages.CareerAnchorIntro.metadataTitle,
-      englishMessages.CareerAnchorIntro.metadataDescription,
-      englishMessages.CareerAnchorIntro.label,
-      englishMessages.CareerAnchorIntro.introContinuation,
-      englishMessages.CareerQuiz.metadataTitle,
-      englishMessages.CareerQuiz.metadataDescription,
-    ];
-
-    for (const message of spanishPresentations) {
-      expect(message).toMatch(/\b40 enunciados\b/i);
-    }
-    for (const message of englishPresentations) {
-      expect(message).toMatch(/\b40 statements\b/i);
-    }
-
+  it("presents Career Anchors without advertising a statement count", () => {
     const spanishCareerCopy = JSON.stringify({
       intro: spanishMessages.CareerAnchorIntro,
       quiz: spanishMessages.CareerQuiz,
       popup: spanishMessages.ProcessPopup,
       panel: spanishMessages.Panel.emptyDescription,
       login: spanishMessages.Login.termsNotice,
+      home: spanishMessages.Home,
     });
     const englishCareerCopy = JSON.stringify({
       intro: englishMessages.CareerAnchorIntro,
@@ -174,12 +147,15 @@ describe("translation catalogs", () => {
       popup: englishMessages.ProcessPopup,
       panel: englishMessages.Panel.emptyDescription,
       login: englishMessages.Login.termsNotice,
+      home: englishMessages.Home,
     });
 
     expect(spanishCareerCopy).not.toMatch(
-      /\b40\s+(?:preguntas|ítems|items|afirmaciones)\b/i,
+      /\b40\s+(?:enunciados|preguntas|ítems|items|afirmaciones)\b/i,
     );
-    expect(englishCareerCopy).not.toMatch(/\b40\s+affirmations\b/i);
+    expect(englishCareerCopy).not.toMatch(
+      /\b40\s+(?:statements|questions|items|affirmations)\b/i,
+    );
   });
 
   it("keeps internal notification recipients and consent copy out of public messages", () => {
