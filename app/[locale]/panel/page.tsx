@@ -116,6 +116,14 @@ export default async function PersonalPanelPage({ params }: PanelPageProps) {
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{t("description")}</p>
         </div>
 
+        <section className="mb-8 space-y-3 rounded-[28px] border bg-card p-6">
+          <h2 className="font-heading text-2xl">{locale === "en" ? "Services and payments" : "Servicios y pagos"}</h2>
+          <ul className="space-y-3">
+            <li><Link className="underline" href="/pagos/orientacion-vocacional">Orientación Vocacional</Link></li>
+            <li>Acompañamiento en Proyectos: <Link className="underline" href="/contacto">{locale === "en" ? "Contact us" : "Comunicate con nosotros"}</Link></li>
+            <li><Link className="underline" href="/pagos/transiciones-laborales">Transiciones Laborales</Link></li>
+          </ul>
+        </section>
         <div className="space-y-8">
           <section id="resultado" className="scroll-mt-28 rounded-[28px] border bg-card p-6 shadow-sm md:p-10">
             <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
