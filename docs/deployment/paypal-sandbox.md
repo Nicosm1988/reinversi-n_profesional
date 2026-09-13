@@ -2,6 +2,21 @@
 
 Integración local, sin despliegue productivo ni cobros reales. No modifica Universo Psi.
 
+## Estado vigente — activación Live autorizada
+
+El titular autorizó usar la base productiva existente y habilitar cobros reales en la web. Esta decisión reemplaza el alcance exclusivamente Sandbox de la fase inicial descrita más abajo. No autoriza por sí sola que el agente ejecute una compra real de prueba.
+
+- GitHub resuelto: `sandbox/paypal-senda` publicada; `main` todavía no incorpora PayPal.
+- Migración `20260913194343_paypal_service_payments.sql` **aplicada y registrada** en `reinvension-profesional-prod` (`yhpjbetvxdiawostlkon`) en una transacción. No se modificaron registros existentes.
+- Verificación posterior en producción: RLS activa en ambas tablas, política de propietario presente, tres restricciones únicas; `anon` sin lectura, `authenticated` sin escritura ni ejecución del RPC y `service_role` con permiso de confirmación. Cero pagos creados.
+- Vercel Production: `PAYPAL_ENV=live` y `PAYPAL_PRODUCTS_OR_PLANS` configurados con `environment: live`, Orientación Vocacional USD 450.00 y Transiciones Laborales USD 850.00. Variables Sandbox de Preview conservadas.
+- **Pendiente imprescindible:** crear/seleccionar la app Merchant **Live** del titular y cargar `PAYPAL_CLIENT_ID` y `PAYPAL_CLIENT_SECRET` Live sólo en Production; no copiar los valores Sandbox. Registrar/verificar su webhook y configurar `PAYPAL_WEBHOOK_ID` Live. Nunca pegar secretos en el chat.
+- URL productiva prevista del webhook: `https://universosenda.com/api/webhooks/paypal`. El handler todavía no está desplegado en producción; debe comprobarse su disponibilidad y la firma antes de habilitar el checkout.
+- Pendiente: validar OAuth Live y origen configurado, ejecutar `npm run release:check` con el build Webpack ya utilizado y publicar por `push-and-deploy.sh` desde un checkout limpio que excluya cambios ajenos. No se publicará hasta completar los controles.
+- No se realizó E2E Sandbox ni compra real. No se enviaron emails de prueba. Todavía no hay despliegue productivo de PayPal.
+
+La siguiente sección conserva la guía y el registro de la fase Sandbox; los bloqueos de GitHub y de base aislada allí relatados ya no son los bloqueos vigentes.
+
 ## Oferta autorizada
 
 - Orientación Vocacional: **USD 450.00**, pago único.
