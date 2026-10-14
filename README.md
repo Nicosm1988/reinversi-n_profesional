@@ -142,3 +142,5 @@ GitHub Actions de CI:
 5. smoke e2e
 
 Workflow: `.github/workflows/ci.yml`
+
+_README revisado en octubre de 2026._
